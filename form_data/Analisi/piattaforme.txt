@@ -1,0 +1,22 @@
+#### Statistica di risposta alla domanda "Conosci o usi servizi per la condivisione di appunti, se si quali?" ####
+
+ACADEMIA.EDU: 1
+DOCSITY: 7
+DRIVE: 23
+DROPBOX: 13
+FACEBOOK: 1
+KHAN ACADEMY: 1
+MEGA: 2
+MOODLE: 4
+NO: 120
+NOTE: 2
+PIAZZA: 1
+SKUOLA: 1
+SOCIALNOTES.EU: 1
+STUDOCU: 2
+TELEGRAM: 4
+TUTORED: 1
+UNIWHERE: 1
+WHATSAPP: 13
+YOUMATH: 1
+YOUTUBE: 1

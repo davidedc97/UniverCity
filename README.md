@@ -1,10 +1,9 @@
 # UniverCity
-Progetto per il Google Workshop 2018/19
-È tutto in fase di allestimento va tutto tradotto e sistemato
-[__LA WIKI DI UNIVERCITY__](https://github.com/davidedc97/UniverCity/wiki "Wiki of UniverCity")
+Project for the Google Workshop 2018/19
+[__WIKI OF UNIVERCITY__](https://github.com/davidedc97/UniverCity/wiki "Wiki of UniverCity")
 
-## Chi siamo noi ?
-Siamo sei ragazzi al terzo anno di ingegneria informatica presso l'università Sapienza di Roma.
+## Who we are ?
+We are six students in the third year of computer engineering at the Sapienza University of Rome.
 - Davide Di Campi
 - Riccardo Pagliuca
 - Michele Di Lollo
@@ -12,10 +11,10 @@ Siamo sei ragazzi al terzo anno di ingegneria informatica presso l'università S
 - Lucian Medrihan
 - Tiziano Colagrossi
 
-## Che cos'è UniverCity
-UniverCity sarà una piattaforma dove si potranno condividere e cercare appunti scritti da studenti universitari in ogni formato(scritti a mano o testo formattato).
+## What is UniverCity
+UniverCity will be a platform where you can share and search for notes written by university students in any format (hand-written or formatted text and many others).
 
 ### main features
-- mashup appunti
-- gestione tag automatica
-- condivisione file tramite permalink
+- mashup notes
+- automatic tag management
+- file sharing via permalink

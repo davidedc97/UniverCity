@@ -1,5 +1,6 @@
 # UniverCity
 Progetto per il Google Workshop 2018/19
+È tutto in fase di allestimento va tutto tradotto e sistemato
 [__LA WIKI DI UNIVERCITY__](https://github.com/davidedc97/UniverCity/wiki "Wiki of UniverCity")
 
 ## Chi siamo noi ?

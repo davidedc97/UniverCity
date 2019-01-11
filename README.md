@@ -15,7 +15,6 @@ Siamo sei ragazzi al terzo anno di ingegneria informatica presso l'università S
 UniverCity sarà una piattaforma dove si potranno condividere e cercare appunti scritti da studenti universitari in ogni formato(scritti a mano o testo formattato).
 
 ### main features
-- meshup appunti
+- mashup appunti
 - gestione tag automatica
 - condivisione file tramite permalink
-

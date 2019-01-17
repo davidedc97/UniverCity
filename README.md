@@ -6,7 +6,7 @@ Project for the Google Workshop 2018/19
 We are six students that attend the third year of computer science at " La Sapienza" University of Rome.
 - Davide Di Campi
 - Riccardo Pagliuca
-- Michele Di Lollo
+- Michele Dilollo
 - Marco Collalti
 - Lucian Medrihan
 - Tiziano Colagrossi

@@ -15,6 +15,6 @@ We are six students that attend the third year of computer science at " La Sapie
 UniverCity will be a platform where everyone, students and teacher, can share and search for notes written in any format (hand-written or formatted text and many others).
 
 ### Main features
-- mashup notes from different users
-- automatic tag management
-- 
+- Mashup notes from different users
+- Automatic tag management
+- Efficient indexing of notes

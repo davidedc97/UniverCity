@@ -17,4 +17,4 @@ UniverCity will be a platform where everyone, students and teacher, can share an
 ### Main features [__SEE WIKI FOR FEATURES__](https://github.com/davidedc97/UniverCity/wiki/1.-List-of-possible-features)
 - Mashup notes from different users
 - Automatic tag management
-- Efficient indexing of notes
+- Digital sign on documents

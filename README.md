@@ -14,7 +14,7 @@ We are six students that attend the third year of computer science at " La Sapie
 ## What is UniverCity
 UniverCity will be a platform where everyone, students and teacher, can share and search for notes written in any format (hand-written or formatted text and many others).
 
-### Main features [__SEE WIKI FOR FEATURES__](https://github.com/davidedc97/UniverCity/wiki/1.-List-of-possible-features)
+### Main features [__SEE WIKI FOR FEATURES DESCRIPTION__](https://github.com/davidedc97/UniverCity/wiki/1.-List-of-possible-features)
 - Mashup notes from different users
 - Automatic tag management
 - Digital sign on documents

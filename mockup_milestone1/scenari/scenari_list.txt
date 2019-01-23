@@ -1,6 +1,6 @@
-Scenario 1: Voglio cercare degli appunti che non trovo e vorrei filtrarli per universita/corso/professore posso?
-Scenario 2: Voglio caricare degli appunti che ho gia salvati nel dispositivo posso?
-Scenario 3: Voglio caricare degli appunti che ho davanti al momento, posso caricarli fotografandoli o al momento?
-Scenario 4: Voglio salvarmi degli appunti tra  preferiti senza scaricarli posso ?
-Scenario 5: Voglio condividere un appunto con un mio amico tramite link posso ?
+Scenario 1: Voglio cercare degli appunti che non trovo e vorrei filtrarli per universita/corso/professore, posso?
+Scenario 2: Voglio caricare degli appunti che ho gia salvati nel dispositivo, posso?
+Scenario 3: Voglio caricare degli appunti che ho davanti al momento, posso caricarli fotografandoli?
+Scenario 4: Voglio salvarmi degli appunti tra i preferiti senza scaricarli, posso ?
+Scenario 5: Voglio condividere un appunto con un mio amico tramite link, posso ?
 Scenario 6: Ho visto un appunto interessante circa 6 giorni fa, ma non mi ricordo come si chiama, posso ritrovarlo ?

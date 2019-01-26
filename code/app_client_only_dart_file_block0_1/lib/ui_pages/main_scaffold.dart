@@ -81,7 +81,7 @@ class _MainScaffoldState extends State<MainScaffold> {
       )
     ];
 
-
+    //########################################################################## FAB Button
     return Scaffold(
       //######################################################################## AppBar HOME
       appBar: AppBar(
@@ -95,7 +95,15 @@ class _MainScaffoldState extends State<MainScaffold> {
         ),
       ),
       body: _getDrawerItemWidget(_selectedDrawerIndex),
+      //######################################################################## FAB if in home c'è altrimenti no
+      floatingActionButton: (_selectedDrawerIndex == 0)// 0 == home body
+          ? FloatingActionButton(
+          child: Icon(Icons.add),
+          onPressed: null,
+      ) : null
     );
   }
 }
+
+
 

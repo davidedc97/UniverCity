@@ -4,6 +4,7 @@ import 'package:univer_city_app_block0_1/ui_pages/history.dart';
 import 'package:univer_city_app_block0_1/ui_pages/report_bug.dart';
 import 'package:univer_city_app_block0_1/ui_pages/send_feedback.dart';
 import 'package:univer_city_app_block0_1/ui_pages/mashups.dart';
+import 'package:univer_city_app_block0_1/elements/fab.dart';
 
 class DrawerEntry{
   String title;
@@ -97,13 +98,9 @@ class _MainScaffoldState extends State<MainScaffold> {
       body: _getDrawerItemWidget(_selectedDrawerIndex),
       //######################################################################## FAB if in home c'è altrimenti no
       floatingActionButton: (_selectedDrawerIndex == 0)// 0 == home body
-          ? FloatingActionButton(
-          child: Icon(Icons.add),
-          onPressed: null,
-      ) : null
+          ? FAB() : null
     );
   }
 }
-
 
 

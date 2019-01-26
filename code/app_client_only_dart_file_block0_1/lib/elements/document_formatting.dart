@@ -53,7 +53,7 @@ class DocFormatCard{
   final Icon _formatted = Icon(Icons.subject);
 
   //############################################################################
-  //## docCard restituisce Card a partire da                           ##
+  //## docCard restituisce Card a partire da                                  ##
   //## (DocumentInfo doc)                                                     ##
   //############################################################################
 
@@ -69,7 +69,7 @@ class DocFormatCard{
   //## (String title, String subtitle, bool isWrittenByHand)                  ##
   //############################################################################
   Card docCardRaw(String title, String subtitle, bool isWrittenByHand){
-    
+
     ListTile lt = new DocFormatList().docTileRaw(title, subtitle, isWrittenByHand);
     return Card(
       child: lt,

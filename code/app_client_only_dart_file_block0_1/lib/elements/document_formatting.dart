@@ -18,7 +18,7 @@ class DocFormatList{
   final Icon _formatted = Icon(Icons.subject);
 
   //############################################################################
-  //## docTyle restituisce ListRaw a partire da                           ##
+  //## docTyle restituisce ListRaw a partire da                               ##
   //## (DocumentInfo doc)                                                     ##
   //############################################################################
 
@@ -32,7 +32,7 @@ class DocFormatList{
   }
 
   //############################################################################
-  //## docTyleRaw restituisce ListRaw a partire da                        ##
+  //## docTyleRaw restituisce ListRaw a partire da                            ##
   //## (String title, String subtitle, bool isWrittenByHand)                  ##
   //############################################################################
   ListTile docTileRaw(String title, String subtitle, bool isWrittenByHand){
@@ -58,7 +58,6 @@ class DocFormatCard{
   //############################################################################
 
   Card docCard(DocumentInfo doc){
-    Icon icoDoc = doc.isWrittenByHand?_writtenHand:_formatted;
     ListTile lt = new DocFormatList().docTile(doc);
     return Card(
       child: lt,
@@ -70,8 +69,7 @@ class DocFormatCard{
   //## (String title, String subtitle, bool isWrittenByHand)                  ##
   //############################################################################
   Card docCardRaw(String title, String subtitle, bool isWrittenByHand){
-
-    Icon icoDoc = isWrittenByHand?_writtenHand:_formatted;
+    
     ListTile lt = new DocFormatList().docTileRaw(title, subtitle, isWrittenByHand);
     return Card(
       child: lt,

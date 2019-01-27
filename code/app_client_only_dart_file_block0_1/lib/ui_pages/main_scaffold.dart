@@ -5,6 +5,7 @@ import 'package:univer_city_app_block0_1/ui_pages/report_bug.dart';
 import 'package:univer_city_app_block0_1/ui_pages/send_feedback.dart';
 import 'package:univer_city_app_block0_1/ui_pages/mashups.dart';
 import 'package:univer_city_app_block0_1/elements/fab.dart';
+import 'package:univer_city_app_block0_1/elements/app_bar.dart';
 
 class DrawerEntry{
   String title;
@@ -66,41 +67,30 @@ class _MainScaffoldState extends State<MainScaffold> {
     for(var i=0; i< widget.drawerEntry.length; i++){
       var d = widget.drawerEntry[i];
       drawerOptions.add(
-        ListTile(
-          leading: Icon(d.icon),
-          title: Text(d.title),
-          selected: i == _selectedDrawerIndex,
-          onTap: () => _onSelectItem(i),
-        )
+          ListTile(
+            leading: Icon(d.icon),
+            title: Text(d.title),
+            selected: i == _selectedDrawerIndex,
+            onTap: () => _onSelectItem(i),
+          )
       );
     }
-//############################################################################## ActionList
-    var actionList = <Widget>[
-      IconButton(
-        icon: Icon(Icons.search),
-        onPressed: ()=> debugPrint('Premuto'),
-      )
-    ];
+
 
     //########################################################################## FAB Button
     return Scaffold(
       //######################################################################## AppBar HOME
-      appBar: AppBar(
-        title: Text('UniverCity'),
-        actions: actionList,
-      ),
-      drawer: Drawer(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: drawerOptions
+        appBar: MainAppBar(),
+        drawer: Drawer(
+          child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: drawerOptions
+          ),
         ),
-      ),
-      body: _getDrawerItemWidget(_selectedDrawerIndex),
-      //######################################################################## FAB if in home c'è altrimenti no
-      floatingActionButton: (_selectedDrawerIndex == 0)// 0 == home body
-          ? FAB() : null
+        body: _getDrawerItemWidget(_selectedDrawerIndex),
+        //######################################################################## FAB if in home c'è altrimenti no
+        floatingActionButton: (_selectedDrawerIndex == 0)// 0 == home body
+            ? FAB() : null
     );
   }
 }
-
-

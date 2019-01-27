@@ -1,21 +1,42 @@
 import 'package:flutter/material.dart';
 import 'package:univer_city_app_block0_1/ui_pages/main_scaffold.dart';
+import 'package:univer_city_app_block0_1/ui_pages/search_scaffold.dart';
+import 'package:univer_city_app_block0_1/elements/search_model.dart';
+import 'package:scoped_model/scoped_model.dart';
+
 
 void main() => runApp(UniverCity());
 
-class UniverCity extends StatelessWidget {
-// per disabilitare il layout orizzontale################################### DISAB LAYOUT ORIZZONTALE
- //<TODO>
+class UniverCity extends StatefulWidget {
+  @override
+  _UniverCityState createState() => _UniverCityState();
+}
+
+class _UniverCityState extends State<UniverCity> {
+  //############ Evitare la rotazione dello schermo
+  //<TODO>
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'UniverCity PREALPHA',
-      theme: ThemeData(
-        primaryColor: Colors.pink[900],
-        primaryColorLight: Color.fromARGB(255, 188, 71, 123),
-        primaryColorDark: Color.fromARGB(255, 148, 2, 70),
+
+    return ScopedModel(
+      model: SearchModel(),
+      child: MaterialApp(
+        title: 'UniverCity PREALPHA',
+        theme: ThemeData(
+          primaryColor: Colors.pink[900],
+          primaryColorLight: Color.fromARGB(255, 188, 71, 123),
+          primaryColorDark: Color.fromARGB(255, 148, 2, 70),
+        ),
+        //home: MainScaffold(),
+        //######################################################################SMDescendant<SearchModel>
+        home: ScopedModelDescendant<SearchModel>(
+          builder: (context, _, model)=>(model.isSearching)
+              ?SearchScaffold()
+              :MainScaffold(),
+        ),
+        //home: SearchScaffold(),
       ),
-      home: MainScaffold(),
     );
   }
 }

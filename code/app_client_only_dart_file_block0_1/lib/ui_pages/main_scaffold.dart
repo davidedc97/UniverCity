@@ -4,7 +4,6 @@ import 'package:univer_city_app_block0_1/ui_pages/history.dart';
 import 'package:univer_city_app_block0_1/ui_pages/report_bug.dart';
 import 'package:univer_city_app_block0_1/ui_pages/send_feedback.dart';
 import 'package:univer_city_app_block0_1/ui_pages/mashups.dart';
-import 'package:univer_city_app_block0_1/elements/fab.dart';
 import 'package:univer_city_app_block0_1/elements/app_bar.dart';
 
 class DrawerEntry{
@@ -88,9 +87,16 @@ class _MainScaffoldState extends State<MainScaffold> {
           ),
         ),
         body: _getDrawerItemWidget(_selectedDrawerIndex),
-        //######################################################################## FAB if in home c'è altrimenti no
-        floatingActionButton: (_selectedDrawerIndex == 0)// 0 == home body
-            ? FAB() : null
+
+        floatingActionButton: (_selectedDrawerIndex == 0)
+            // Controllo se sto in home oppure no in modo tale da mostrare o non mostrare il fab
+            ?FloatingActionButton.extended(
+          backgroundColor: Colors.grey[900],
+          icon: Icon(Icons.add),
+          label: Text('UPLOAD'),
+          // callback onPressed #################################################### Da Implementare
+          onPressed: ()=>debugPrint('Fab Premuto'),
+        ):null
     );
   }
 }

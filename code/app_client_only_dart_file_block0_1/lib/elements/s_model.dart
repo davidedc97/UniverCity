@@ -1,9 +1,10 @@
 import 'package:scoped_model/scoped_model.dart';
+import 'package:flutter/material.dart';
 
 // Classe SearchModel chr tiene traccia dello stato del main per
 // fargli capire se l'utente ha premuto l'icona per cercare oppure no
 
-class SearchModel extends Model{
+class SModel extends Model{
   // ###########################################################################STATO
   bool _isSearching = false;
 
@@ -17,4 +18,5 @@ class SearchModel extends Model{
     //##############################Importante altrimenti non refresha la pagina
     notifyListeners();
   }
+
 }

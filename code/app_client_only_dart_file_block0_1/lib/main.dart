@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:univer_city_app_block0_1/ui_pages/main_scaffold.dart';
 import 'package:univer_city_app_block0_1/ui_pages/search_scaffold.dart';
-import 'package:univer_city_app_block0_1/elements/search_model.dart';
+import 'package:univer_city_app_block0_1/elements/s_model.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 
@@ -13,14 +13,15 @@ class UniverCity extends StatefulWidget {
 }
 
 class _UniverCityState extends State<UniverCity> {
-  //############ Evitare la rotazione dello schermo
+  //############ Evitare la rotaziojne dello schermo
   //<TODO>
+
 
   @override
   Widget build(BuildContext context) {
 
     return ScopedModel(
-      model: SearchModel(),
+      model: SModel(),
       child: MaterialApp(
         title: 'UniverCity PREALPHA',
         theme: ThemeData(
@@ -30,7 +31,7 @@ class _UniverCityState extends State<UniverCity> {
         ),
         //home: MainScaffold(),
         //######################################################################SMDescendant<SearchModel>
-        home: ScopedModelDescendant<SearchModel>(
+        home: ScopedModelDescendant<SModel>(
           builder: (context, _, model)=>(model.isSearching)
               ?SearchScaffold()
               :MainScaffold(),

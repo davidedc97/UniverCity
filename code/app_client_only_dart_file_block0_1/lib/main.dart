@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:univer_city_app_block0_1/ui_pages/main_scaffold.dart';
-import 'package:univer_city_app_block0_1/ui_pages/search_scaffold.dart';
-import 'package:univer_city_app_block0_1/elements/s_model.dart';
+import 'package:univer_city_app_client_block01/ui_pages/main_scaffold.dart';
+import 'package:univer_city_app_client_block01/ui_pages/search_scaffold.dart';
+import 'package:univer_city_app_client_block01/elements/s_model.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 
@@ -28,6 +28,11 @@ class _UniverCityState extends State<UniverCity> {
           primaryColor: Colors.pink[900],
           primaryColorLight: Color.fromARGB(255, 188, 71, 123),
           primaryColorDark: Color.fromARGB(255, 148, 2, 70),
+          accentColor: Colors.grey[900],
+          scaffoldBackgroundColor: Colors.grey[300],
+          cardColor: Colors.white,
+          dividerColor: Colors.black,
+
         ),
         //home: MainScaffold(),
         //######################################################################SMDescendant<SearchModel>

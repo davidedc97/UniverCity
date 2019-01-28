@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:univer_city_app_block0_1/elements/app_bar.dart';
+import 'package:univer_city_app_client_block01/elements/app_bar.dart';
 
 
 class SearchScaffold extends StatefulWidget {

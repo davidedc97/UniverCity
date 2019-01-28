@@ -1,5 +1,4 @@
 import 'package:scoped_model/scoped_model.dart';
-import 'package:flutter/material.dart';
 
 // Classe SearchModel chr tiene traccia dello stato del main per
 // fargli capire se l'utente ha premuto l'icona per cercare oppure no

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
-import 'package:univer_city_app_block0_1/elements/s_model.dart';
+import 'package:univer_city_app_client_block01/elements/s_model.dart';
+
 
 
 //############################################################################## MainAppBar
@@ -33,7 +34,10 @@ class _MainAppBarState extends State<MainAppBar> {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: Text('UniverCity'),
+      title: Padding(
+        padding: EdgeInsets.symmetric(vertical: 14.0) ,
+        child: Image.asset('assets/images/topbarlogo.png', fit: BoxFit.contain),
+      ), //Text('UniverCity'),
       actions: widget.actionList,
     );
   }
@@ -53,10 +57,12 @@ class SearchAppBar extends StatefulWidget implements PreferredSizeWidget {
 class _SearchAppBarState extends State<SearchAppBar> {
 
   Widget _searchbar() => Theme(
-      data: Theme.of(context).copyWith(primaryColor: Colors.white),
-      child: TextField(
+      data: Theme.of(context).copyWith(primaryColor: Colors.white, ),
+      child: TextFormField(
+        style: TextStyle(color: Colors.white),
         decoration: InputDecoration(
-          prefixIcon: Icon(Icons.search),
+          hintStyle: TextStyle(color: Colors.pink[700]),
+          prefixIcon: Icon(Icons.search,),
           hintText: 'search...',
         ),
       ),
@@ -77,6 +83,9 @@ class _SearchAppBarState extends State<SearchAppBar> {
         ),
       ),
       title: _searchbar(),
+      actions: <Widget>[
+        IconButton(icon: Icon(Icons.close), onPressed: ()=> debugPrint('cancel'))
+      ],
     );
   }
 }

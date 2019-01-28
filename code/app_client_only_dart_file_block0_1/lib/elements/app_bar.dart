@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
-import 'package:univer_city_app_client_block01/elements/s_model.dart';
+import 'package:univer_city_app_block0_1/elements/s_model.dart';
 
 
 

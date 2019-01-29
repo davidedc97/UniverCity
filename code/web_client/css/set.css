@@ -5,6 +5,9 @@
 .ah{
    height: 50px;
     background-color:#822433;
+    overflow: hidden;
+}.ico{
+    filter:invert(100%);
 }
 
 

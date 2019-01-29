@@ -1,0 +1,17 @@
+.logotxt{
+    height: 50px;
+    background-position-y: 0%;
+   }
+.ah{
+   height: 50px;
+    background-color:#822433;
+}
+
+
+
+@keyframes odio {
+    from {background-color: rgb(188, 71, 123);}
+    to {background-color: yellow;}
+   from {background-color: yellow;}
+   to {background-color: rgb(188, 71, 123);}
+  }

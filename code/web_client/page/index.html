@@ -1,0 +1,116 @@
+<html lang="en">
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="../css/bootstrap.min.css" >
+  <link rel="stylesheet" href="../css/dashboard.css">
+  <link rel="stylesheet" href="../css/set.css">
+  <script src="../js/dashboard.js"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>
+</head>
+<body>
+<nav class="ah navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow" >
+  <a class="ah navbar-brand col-sm-3 col-md-2 mr-0" href="#"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 408.35 113.19"><defs><style>.cls-1,.cls-2,.cls-3,.cls-4,.cls-5,.cls-6,.cls-7{isolation:isolate;}.cls-2,.cls-4,.cls-6{font-size:100px;letter-spacing:0.04em;}.cls-2,.cls-3,.cls-4,.cls-5{fill:none;}.cls-2,.cls-3{stroke:#263238;stroke-width:12px;}.cls-2,.cls-3,.cls-4,.cls-5,.cls-6,.cls-7{font-family:College;}.cls-3,.cls-5,.cls-7{font-size:72px;letter-spacing:0.04em;}.cls-4,.cls-5{stroke:#f1f2f2;stroke-width:6px;}.cls-6,.cls-7{fill:#263238;}</style></defs><title>Risorsa 1</title><g id="Livello_2" data-name="Livello 2"><g id="Livello_1-2" data-name="Livello 1"><g class="cls-1"><text class="cls-2" transform="translate(7.18 90.2)">U</text><text class="cls-3" transform="translate(70.37 90.2)">niver</text><text class="cls-2" transform="translate(248.65 90.2)">C</text><text class="cls-3" transform="translate(302.08 90.2)">ity</text></g><g class="cls-1"><text class="cls-4" transform="translate(7.18 90.2)">U</text><text class="cls-5" transform="translate(70.37 90.2)">niver</text><text class="cls-4" transform="translate(248.65 90.2)">C</text><text class="cls-5" transform="translate(302.08 90.2)">ity</text></g><g class="cls-1"><text class="cls-6" transform="translate(7.18 90.2)">U</text><text class="cls-7" transform="translate(70.37 90.2)">niver</text><text class="cls-6" transform="translate(248.65 90.2)">C</text><text class="cls-7" transform="translate(302.08 90.2)">ity</text></g></g></g></svg></a>
+  <input  class="form-control form-control-dark w-100"  type="text" placeholder="Search" aria-label="Search">
+  <ul class="navbar-nav px-3" >
+    <li class="nav-item text-nowrap">
+      <a class="nav-link" href="#">Sign out</a>
+    </li>
+  </ul>
+</nav>
+ <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+  <div class="container-fluid">
+    <div class="row">
+      <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+        <div class="sidebar-sticky">
+          <ul class="nav flex-column">
+            <li class="nav-item">
+              <a class="nav-link active" href="#">
+                <span data-feather="home"></span>
+                My Place <span class="sr-only">(current)</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">
+                <span data-feather="shopping-cart"></span>
+                Mashup
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">
+                <span data-feather="users"></span>
+                Report a bug
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">
+                <span data-feather="bar-chart-2"></span>
+                Send feedback
+              </a>
+            </li>
+         
+          </ul>
+  
+          <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+            <span>My History</span>
+            <a class="d-flex align-items-center text-muted" href="#">
+              <span data-feather="plus-circle"></span>
+            </a>
+          </h6>
+          <ul class="nav flex-column mb-2">
+            <li class="nav-item">
+              <a class="nav-link" href="#">
+                <span data-feather="file-text"></span>
+                file 1
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">
+                <span data-feather="file-text"></span>
+                file 2
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">
+                <span data-feather="file-text"></span>
+                file 3
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">
+                <span data-feather="file-text"></span>
+                file 4
+              </a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+  
+      <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+          <h1 class="h2">My Place</h1>
+          <div class="btn-toolbar mb-2 mb-md-0">
+            <div class="btn-group mr-2">
+              <button type="button" class="btn btn-sm btn-outline-secondary">Upload</button>
+              
+            </div>
+          
+          </div>
+        </div>
+  
+        <canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas>
+  
+     
+      </main>
+    </div>
+  </div>
+  
+</body>
+</html>

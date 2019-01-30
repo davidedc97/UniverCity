@@ -16,6 +16,23 @@
     filter: opacity(97%);
     color:black;
 }
+.up{
+    width: 150%;
+}
+.tas{
+    padding:10px;
+}
+.sel{
+        background-color: #eeeeee;
+        border-style: solid;
+        border-width: 1px;
+        border-radius: 20px;
+        border-top-left-radius: 0px;
+        border-bottom-left-radius: 0px;
+        border-width: 200%;
+  
+
+}
 
 
 

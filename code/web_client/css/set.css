@@ -7,7 +7,14 @@
     background-color:#822433;
     overflow: hidden;
 }.ico{
-    filter:invert(100%);
+    filter:invert(95%);
+}
+.ri{
+    background-image:url('../ico/ri.svg');
+    background-repeat: no-repeat;
+    background-position: 1%;
+    filter: opacity(97%);
+    color:black;
 }
 
 

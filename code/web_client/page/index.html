@@ -9,19 +9,35 @@
   <link rel="stylesheet" href="../css/dashboard.css">
   <link rel="stylesheet" href="../css/set.css">
   <script src="../js/dashboard.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
  <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>
+
 </head>
 <body>
+    <script>
+       $(document).ready(function(){
+          $("#sear").click(function() {
+            $( this ).css("background-image","none");
+            $(this).attr("placeholder","");
+          }).mouseout(function() {
+            $( this ).css("background-image","url('../ico/ri.svg')");
+            $(this).attr("placeholder","     Search");
+          });
+        });
+     </script>
 <nav class="ah navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow" >
   <a class="ah navbar-brand col-sm-3 col-md-2 mr-0" href="#" ><img src="../img/UniverCity.svg" class="logotxt"></a>
   <table style="width:100%" >
-      <tr>
-        <th>
-  <input  class="col-8 form-control form-control-dark w-100"  type="text" placeholder="Search" aria-label="Search" >
- </th> 
-
-</tr>
+  <tr>
+   
+    <input id="sear" class="ri col-8 form-control form-control-dark w-100"  type="text" placeholder="     Search" aria-label="Search" >
+    
+    
+      <a class="nav-link" href="#"><img class="ico" src="../ico/tl.svg" ></a>
+      <a class="nav-link" href="#"><img class="ico" src="../ico/im.svg" ></a>
+   
+  </tr>
 </table>
 
   <ul class="navbar-nav px-3" >
@@ -50,9 +66,15 @@
             <li class="nav-item">
               <a class="nav-link" href="#">
                 <span data-feather="shopping-cart"></span>
-                Mashup
+                Complete History
               </a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">
+                  <span data-feather="shopping-cart"></span>
+                  Mashup
+                </a>
+              </li>
             <li class="nav-item">
               <a class="nav-link" href="#">
                 <span data-feather="users"></span>

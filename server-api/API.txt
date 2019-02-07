@@ -1,0 +1,80 @@
+In the metadataDB there are 3 tables:
+                                     - users
+                                     - documents
+                                     - pages
+
+User:
+    - ID
+      It must refer to an existing user in the userDB
+    - universita
+    - facolta
+    - corso
+
+Document:
+    - ID
+    - Creator 
+      The creator is NOT NULL only if the type is "mash-up".
+    - Owner(s) (Infos about university can be retrieved by user table)
+      If the type is "mash-up" this field is a list which includes the owner of each document
+      which composes the mash-up.
+    - type
+      It can be either "original" or "mash-up".
+    - pages
+      It's a list of all the pages that compose the document. Each element of the list (a page) has
+      to be an ID of an existing document
+    - # likes
+    - # downloads
+    - materia
+    - professore
+    - other
+
+Page:
+    - ID
+      It has to be unique.
+      //TO DO
+      It can be a hash and can be used to prevent the copy of a document
+    - # likes
+    - # views
+
+    //TO DO
+    Implement a way to dislike a document/page
+
+###############################################################################################
+
+POST /doc --data = { ID_UTENTE, type, pages, tags = { materia, professore } }
+
+Insert a new document.
+
+If type == "M" (mash-up):
+    - pages is an array of available pages IDs
+
+If type == "O" (original):
+    - pages is an array of pictures/files/etc.
+
+###############################################################################################
+
+POST /user --data = { ID_UTENTE, universita, facolta, corso }
+
+Insert a new user in the user table.
+
+TO CHECK
+Sending of params
+
+###############################################################################################
+
+POST /like --data = { ID_UTENTE, ID_DOC, type }
+
+Increase by 1 the # likes of a document/page.
+
+###############################################################################################
+
+GET /docs --data = { TAG }
+
+Retrieve a list of documents sorted by an algorithm
+
+###############################################################################################
+
+GET /user --data = { USER_ID }
+
+Get the infos about a user
+

@@ -13,10 +13,7 @@ User:
 Document:
     - ID
     - Creator 
-      The creator is NOT NULL only if the type is "mash-up".
-    - Owner(s) (Infos about university can be retrieved by user table)
-      If the type is "mash-up" this field is a list which includes the owner of each document
-      which composes the mash-up.
+      The user who uploaded the document
     - type
       It can be either "original" or "mash-up".
     - pages
@@ -33,6 +30,7 @@ Page:
       It has to be unique.
       //TO DO
       It can be a hash and can be used to prevent the copy of a document
+    - Owner (Infos about university can be retrieved by user table)
     - # likes
     - # views
 

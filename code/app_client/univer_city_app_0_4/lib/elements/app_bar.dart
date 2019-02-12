@@ -1,23 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:univer_city_app_0_4/bloc/main_bloc_provider.dart';
 
 //############################################################################## MainAppBar
-class MainAppBar extends StatefulWidget implements PreferredSizeWidget {
-  //############################################################################ ActionList
 
-
-  @override
-  _MainAppBarState createState() => _MainAppBarState();
+class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   // TODO: implement preferredSize
   Size get preferredSize => Size.fromHeight(kToolbarHeight);
-}
 
-class _MainAppBarState extends State<MainAppBar> {
   @override
   Widget build(BuildContext context) {
-    final _blocHome = BlocProvider.of(context);
     return AppBar(
       title: Padding(
         padding: EdgeInsets.symmetric(vertical: 14.0),
@@ -43,38 +35,38 @@ class _MainAppBarState extends State<MainAppBar> {
   }
 }
 
+
+
+
 //############################################################################## SearchAppBar
-class SearchAppBar extends StatefulWidget implements PreferredSizeWidget {
-  @override
-  _SearchAppBarState createState() => _SearchAppBarState();
+
+class SearchAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   // TODO: implement preferredSize
   Size get preferredSize => Size.fromHeight(kToolbarHeight);
-}
 
-class _SearchAppBarState extends State<SearchAppBar> {
-  Widget _searchbar() => Theme(
-        data: Theme.of(context).copyWith(
-          primaryColor: Colors.brown[900],
+  Widget _searchbar(context) => Theme(
+    data: Theme.of(context).copyWith(
+      primaryColor: Colors.brown[900],
+    ),
+    child: TextFormField(
+      style: TextStyle(color: Colors.brown[900]),
+      decoration: InputDecoration(
+        hintStyle: TextStyle(color: Colors.brown[100]),
+        prefixIcon: Icon(
+          Icons.search,
         ),
-        child: TextFormField(
-          style: TextStyle(color: Colors.brown[900]),
-          decoration: InputDecoration(
-            hintStyle: TextStyle(color: Colors.brown[100]),
-            prefixIcon: Icon(
-              Icons.search,
-            ),
-            hintText: 'search...',
-          ),
-        ),
-      );
+        hintText: 'search...',
+      ),
+    ),
+  );
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
       //########################################################################SMDescendant<SearchModel>
-      title: _searchbar(),
+      title: _searchbar(context),
       actions: <Widget>[
         IconButton(
             icon: Icon(Icons.close), onPressed: () => debugPrint('cancel'))

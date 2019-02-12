@@ -36,7 +36,6 @@ class _MainScaffoldState extends State<MainScaffold> {
     switch (index) {
       case 0:
         return MyHome();
-
       case 1:
         return MyHistory();
       case 2:
@@ -45,17 +44,21 @@ class _MainScaffoldState extends State<MainScaffold> {
         return SendFeedback();
       case 4:
         return ReportBug();
-      case 5:
-        return Text('Logout non implementato');
       default:
         return Text('Errore switch Drawer outOfIndex ;) ');
     }
   }
 
   _onSelectItem(int index) {
-    setState(() => _selectedDrawerIndex = index);
-    Navigator.of(context).pop(); // chiude il drawer
+    if(index != 5) {
+      setState(() => _selectedDrawerIndex = index);
+      Navigator.of(context).pop();
+    }else {
+      //TODO funzione di logout e poi v questo qua sotto per riportare alla schermata do login
+      Navigator.popAndPushNamed(context, '/login');
+    }//chiude il drawer
   }
+
 
   @override
   Widget build(BuildContext context) {

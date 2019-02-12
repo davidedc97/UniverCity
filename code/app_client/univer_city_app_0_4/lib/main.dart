@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:univer_city_app_0_4/routes/login_scaffold.dart';
 import 'package:univer_city_app_0_4/routes/main_scaffold.dart';
 import 'package:univer_city_app_0_4/routes/search_scaffold.dart';
 import 'package:univer_city_app_0_4/routes/page_404_not_found.dart';
@@ -24,6 +25,7 @@ class UniverCity extends StatelessWidget {
           accentColor: Colors.brown[800],
           fontFamily: 'Bahnschrift',
       ),
+      initialRoute: '/login',
       onGenerateRoute: _myRoutes,
     );
   }
@@ -31,13 +33,20 @@ class UniverCity extends StatelessWidget {
   Route _myRoutes(RouteSettings settings){
 
     switch(settings.name){
-      case '/':
+      case '/login':
+        return MaterialPageRoute(
+            builder: (context){
+              return BlocProvider(
+                child: LoginScaffold(),
+              );
+            }
+        );
+      case '/home':
         return MaterialPageRoute(
           builder: (context){
             return BlocProvider(
-              child: BlocProvider(
                 child: MainScaffold(),
-              ));
+              );
           }
         );
       case '/search':

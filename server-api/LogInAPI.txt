@@ -1,0 +1,27 @@
+In UserDB there is a single table
+
+
+		User
+-UserName
+-Name
+-Surname
+-email
+-pass
+-(credit card data):
+	-number
+	-cvv
+	-date
+
+###########################################################################################################
+
+POST /userData = {UserName, NAME, SURNAME, EMAIL, PASS, [credit_card (number,cvv,date)]}
+	
+	Registration process. Credit card_data are optional. Send data to MetaDataDB
+
+###########################################################################################################
+
+GET /userData = {UserName, Pass}
+	
+	Login process
+
+

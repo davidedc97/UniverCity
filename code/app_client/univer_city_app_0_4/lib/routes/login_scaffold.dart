@@ -1,83 +1,96 @@
 import 'package:flutter/material.dart';
+import 'package:univer_city_app_0_4/elements/box_decoration.dart';
+import 'package:univer_city_app_0_4/elements/button_login.dart';
+import 'package:univer_city_app_0_4/elements/divider_text.dart';
 
 class LoginScaffold extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Container(
-            color: Colors.brown[100],
-            child: Column(
-              children: <Widget>[
-                Expanded(
-                  flex: 2,
-                    child: Container(
-                      color: Colors.brown[100],
-                    )),
-                Expanded(
-                  child: SizedBox.expand(
-                    child: Container(
-                      padding: EdgeInsets.only(top: 25),
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            boxShadow: [
-                              BoxShadow(
-                                  blurRadius: 4.0,
-                                  color: Colors.black,
-                                  offset: Offset(0.0, 0.0))
-                            ]),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.max,
+      body: loginBody(context),
+    );
+  }
+
+  /// body per il Login
+  loginBody(context) {
+    return Container(
+        child: Column(
+      children: <Widget>[
+        ///
+        ///
+        /// Spazio per un eventuale logo o immagine di sfondo per il login
+        ///
+        ///
+        Expanded(
+            flex: 2,
+            child: Container(
+              color: Colors.brown[100],
+            )),
+
+        ///
+        ///
+        /// Spazio per i bottoni del login
+        ///
+        ///Expanded infatti dice di espandersi
+        Expanded(
+          child: SizedBox.expand(
+            child: Container(
+                padding: EdgeInsets.only(top: 25),
+                decoration: boxBgeOmbra, // Applico sfondo bianco e ombra
+                child: ListView(
+                  children: <Widget>[
+                    Column(
+                      ///
+                      ///Centro la colonna
+                      ///
+                      mainAxisSize: MainAxisSize.max,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        /// Qui ci sono i bottoni che appariranno nella schermata
+                        /// in basso dentro il container con sfondo bianco e
+                        /// ombreggiato i [BtnLogin] sono dei wrap a dei bottoni
+                        /// personalizzati da me e per comodita nel caso voglia
+                        /// modificarli modofico la classe e sono apposto
+                        //##################################################inizio bottone google
+                        BtnLogin(
+                          title: 'JOIN US WITH GOOGLE',
+                          color: Colors.lightGreenAccent[700],
+                          onPressed: () => debugPrint('google join'),
+                        ),
+                        //################################################## ------------ OR -----------
+                        DividerTextOr(),
+                        //################################################## bottone form complicata
+                        BtnLogin(
+                          title: 'JOIN US WITH A COMPLICATED FORM',
+                          color: Colors.redAccent[700],
+                          onPressed: () =>
+                              Navigator.pushNamed(context, '/complicatedForm'),
+                        ),
+                        //################################################## LOGIN if already have an account
+                        Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
-                            //##################################################inizio bottone google
-                            SizedBox(
-                              width: 300,
-                              height: 45,
-                              child: RaisedButton(
-                                  color: Colors.lightGreenAccent[700],
-                                  child: Text('JOIN US WITH GOOGLE'),
-                                  onPressed: () =>
-                                      debugPrint('test google join'))),
-                            //################################################## ------------ OR -----------
-                            SizedBox(
-                              height: 30,
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: <Widget>[
-                                  Container(height: 1.5, width: 120,color: Colors.grey,margin: EdgeInsets.only(right: 12),),
-                                  Text('OR'),
-                                  Container(height: 1.5, width: 120,color: Colors.grey,margin: EdgeInsets.only(left: 12),),
-                                ],
-                              ),
-                            ),
-                            //################################################## bottone form complicata
-                            SizedBox(
-                              width: 300,
-                              height: 45,
-                              child: RaisedButton(
-                                  color: Colors.redAccent[700],
-                                  child: Text('JOIN US WITH A COMPLICATED FORM'),
-                                  onPressed: () => debugPrint('test jooin form'))),
-                            //################################################## LOGIN if already have an account
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                Text('Alredy have an acount?'),
-                                FlatButton(
-                                  onPressed: ()=>Navigator.popAndPushNamed(context,'/home'),
-                                  child: Text('LOGIN',
-                                    style: TextStyle(color: Colors.redAccent[700])))
-                              ],
-                            )
-                          ],
+                            Text('Alredy have an acount?'),
+                            FlatButton(
 
-                        )),
-                  ),
-                )
-              ],
-            )));
+                              ///Login per ora ti rimanda nell'home page
+                              ///Poi ci saranno da gestire piu cose
+                                onPressed: () {
+                                  Navigator.pushNamed(context, '/loginForm');
+                                },
+                                child: Text('LOGIN',
+                                    style: TextStyle(color: Colors.redAccent[700])))
+                          ],
+                        )
+                      ],
+                    )
+                  ],
+                )),
+          ),
+        )
+      ],
+    ));
   }
 }

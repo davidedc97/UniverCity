@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:univer_city_app_0_4/elements/button_login.dart';
 
-class CompFormScaffold extends StatelessWidget {
+class LoginFormScaffold extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,13 +18,8 @@ class CompFormScaffold extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.end,
             children: <Widget>[
-              Text('COMPLICATED FORM',style: TextStyle(fontSize: 18),),
+              Text('LOGIN',style: TextStyle(fontSize: 18),),
               SizedBox(height: 24,),
-              TextField(
-                  textAlign: TextAlign.center,
-                  decoration: InputDecoration(
-                    hintText: 'Nome',
-                  )),
               TextField(
                   textAlign: TextAlign.center,
                   decoration: InputDecoration(
@@ -33,35 +28,32 @@ class CompFormScaffold extends StatelessWidget {
               TextField(
                   textAlign: TextAlign.center,
                   decoration: InputDecoration(
+                    border: InputBorder.none,
                     hintText: 'Password',
                   )),
-              TextField(
-                  textAlign: TextAlign.center,
-                  decoration: InputDecoration(
-                    border: InputBorder.none,
-                    hintText: 'Facoltà',
-                  )),
               SizedBox(height: 42,),
-              //################################################################ Get Started Button
+              //################################################################ LOGIN BUTTON
               BtnLogin(
                 color: Colors.redAccent[700],
-                title: 'GET STARTED',
-                onPressed: ()=>debugPrint('get started'),
+                title: 'LOGIN',
+                onPressed: (){
+                  Navigator.pushNamedAndRemoveUntil(context, '/', (Route<dynamic> route) => false);
+                },
               ),
               //################################################## LOGIN if already have an account
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  Text('Alredy have an acount?'),
+                  Text('Forgot password?'),
                   FlatButton(
 
                     ///Login per ora ti rimanda nell'home page
                     ///Poi ci saranno da gestire piu cose
                       onPressed: () {
-                        Navigator.popAndPushNamed(context, '/loginForm');
+                        debugPrint('Recover');
                       },
-                      child: Text('LOGIN',
+                      child: Text('RECOVER',
                           style: TextStyle(color: Colors.redAccent[700])))
                 ],
               )

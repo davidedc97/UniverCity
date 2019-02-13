@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
 //############################################################################## MainAppBar
-
 class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
 
+  ///Serve per specificare di che altezza deve essere l'app bar
+  ///Perche deve avere una preferred size
   @override
-  // TODO: implement preferredSize
   Size get preferredSize => Size.fromHeight(kToolbarHeight);
 
   @override
@@ -43,7 +43,6 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
 class SearchAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
-  // TODO: implement preferredSize
   Size get preferredSize => Size.fromHeight(kToolbarHeight);
 
   Widget _searchbar(context) => Theme(

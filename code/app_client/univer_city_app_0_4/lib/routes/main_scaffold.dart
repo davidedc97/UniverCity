@@ -6,6 +6,7 @@ import 'package:univer_city_app_0_4/bodies_drawer/home.dart';
 import 'package:univer_city_app_0_4/bodies_drawer/mashups.dart';
 import 'package:univer_city_app_0_4/bodies_drawer/report_bug.dart';
 import 'package:univer_city_app_0_4/bodies_drawer/send_feedback.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class DrawerEntry {
   String title;
@@ -43,6 +44,7 @@ class _MainScaffoldState extends State<MainScaffold> {
       case 3:
         return SendFeedback();
       case 4:
+        launch('https://github.com/davidedc97/UniverCity/issues/new/', forceSafariVC: false);
         return ReportBug();
       default:
         return Text('Errore switch Drawer outOfIndex ;) ');
@@ -55,13 +57,17 @@ class _MainScaffoldState extends State<MainScaffold> {
       Navigator.of(context).pop();
     }else {
       //TODO funzione di logout e poi v questo qua sotto per riportare alla schermata do login
-      Navigator.popAndPushNamed(context, '/login');
+      Navigator.pushNamedAndRemoveUntil(context, '/login', (Route<dynamic> route) => false);
+      //Navigator.popAndPushNamed(context, '/login');
     }//chiude il drawer
   }
 
 
   @override
   Widget build(BuildContext context) {
+    ///
+    ///Assemblo le entry nel drawer prendendo i valori in drawerEntry
+    ///
     var drawerOptions = <Widget>[];
     for (var i = 0; i < widget.drawerEntry.length; i++) {
       var d = widget.drawerEntry[i];

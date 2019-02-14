@@ -1,0 +1,72 @@
+<html>
+<head>
+      <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+      <script>
+
+            var fileData = null;
+
+            function loadFile() {
+                var preview = document.querySelector('file');
+                var file    = document.querySelector('input[type=file]').files[0];
+                var reader  = new FileReader();
+
+                reader.onloadend = function () {
+                    fileData = file;
+                }
+                if (file) {
+                    reader.readAsDataURL(file);
+                }
+            }
+
+            function uploadFile() {
+                data = new FormData();
+                data.append("name",$("#name").val());
+                data.append('file', fileData);
+
+                $.ajax({
+                  url: "/document",
+                  type: "POST",
+                  data: data,
+                  processData: false,
+                  contentType: false,
+                  success: function(data) {
+                      if(data === "mash-up") document.getElementById("result").innerHTML = 'Result: Upload successful => mash-up';
+                      else document.getElementById("result").innerHTML = 'Result: Upload successful => original';
+                  },
+                  error: function(e) {
+                      document.getElementById("result").innerHTML = 'Result: Error occurred: ' + e.message;
+                  }
+                });
+            }
+
+            function uploadFile2() {
+                data = new FormData();
+                data.append("name",$("#name").val());
+                alert($("#name").val());
+                data.append('file', fileData);
+
+                $.ajax({
+                  url: "/tmp",
+                  type: "POST",
+                  data: data,
+                  processData: false,
+                  contentType: false,
+                  success: function(data) {
+                      document.getElementById("result").innerHTML = 'Result: Upload successful';
+                  },
+                  error: function(e) {
+                      document.getElementById("result").innerHTML = 'Result: Error occurred: ' + e.message;
+                  }
+                });
+            }
+
+      </script>
+</head>
+<body>
+<input type="file" onchange="loadFile()"><br>
+<input type="text" id="name" size="20"><br>
+<button onclick="uploadFile()">Upload..</button>
+<button onclick="uploadFile2()">Upload2...</button>
+<div id='result'></div>
+</body>
+</html>

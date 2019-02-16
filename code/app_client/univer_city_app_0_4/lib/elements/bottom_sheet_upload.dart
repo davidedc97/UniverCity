@@ -51,7 +51,7 @@ class BottomSheetUpload extends StatelessWidget {
                       size: 48.0,
                     ),
                     onPressed:(){
-                      _fromDevice();
+                      _fromDevice(_contextSc);
                     }),
               ),
               Padding(
@@ -102,8 +102,9 @@ class BottomSheetUpload extends StatelessWidget {
 }
 
 //############################################################################## From Device
-_fromDevice() async{
-  String path = await DocumentChooser.chooseDocument();
+_fromDevice(context) async{
+  Navigator.pop(context);
+  String path = await DocumentChooser.chooseDocument()??'';
   debugPrint(path);
   //TODO Navigator per gestione tag upload
 
@@ -111,10 +112,11 @@ _fromDevice() async{
 //############################################################################## From Camera
 _fromCamera(context) async{
   Navigator.pop(context);
-  final _snak = SnackBar(content: Text('ci stiamo ancora lavorando! ;) '));
-  Scaffold.of(context).showSnackBar(_snak);
+  final _snk = SnackBar(content: Text('ci stiamo ancora lavorando! ;) '));
+  Scaffold.of(context).showSnackBar(_snk);
   debugPrint('from camera');
 }
+
 
 
 

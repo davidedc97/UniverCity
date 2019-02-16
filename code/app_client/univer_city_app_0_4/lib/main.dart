@@ -7,11 +7,9 @@ import 'package:univer_city_app_0_4/bloc/main_bloc_provider.dart';
 import 'package:univer_city_app_0_4/routes/complicated_form.dart';
 import 'package:univer_city_app_0_4/routes/login_form.dart';
 
-// TODO pagina form complicata
-// TODO pagina form di login
 // TODO test pdf online
 // TODO feedback sistemare
-// TODO BUG sistemare
+// TODO BUG in app
 
 void main() => runApp(UniverCity());
 

@@ -21,8 +21,8 @@ dependencies:
   cupertino_icons: ^0.1.2
   rxdart: ^0.18.0
   flutter_pdf_viewer: ^0.0.7
-  flutter_pdf_renderer: ^1.2.1
   url_launcher: ^5.0.1
+  document_chooser: ^0.0.2
 
 dev_dependencies:
   flutter_test:

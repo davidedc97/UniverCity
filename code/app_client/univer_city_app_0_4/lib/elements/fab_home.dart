@@ -3,6 +3,8 @@ import 'package:univer_city_app_0_4/elements/bottom_sheet_upload.dart';
 
 //############################################################################## Fab home STATELESS
 class MainFab extends StatelessWidget {
+  final BuildContext _contextSc;
+  MainFab(this._contextSc);
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton.extended(
@@ -13,7 +15,7 @@ class MainFab extends StatelessWidget {
           debugPrint('FAB home pressed');
           showModalBottomSheet(
               context: context,
-              builder: (BuildContext context) => BottomSheetUpload());
+              builder: (BuildContext context) => BottomSheetUpload(_contextSc));
         });
   }
 }

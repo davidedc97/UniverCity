@@ -72,19 +72,19 @@ class _MainScaffoldState extends State<MainScaffold> {
     for (var i = 0; i < widget.drawerEntry.length; i++) {
       var d = widget.drawerEntry[i];
       drawerOptions.add(
-        Container(
-          decoration: BoxDecoration(
-            color: (i == _selectedDrawerIndex)
-                ?Colors.brown[200]
-                :null,
-          ),
-          child: ListTile(
-            leading: Icon(d.icon),
-            title: Text(d.title),
-            selected: i == _selectedDrawerIndex,
-            onTap: () => _onSelectItem(i),
-          ),
-        )
+          Container(
+            decoration: BoxDecoration(
+              color: (i == _selectedDrawerIndex)
+                  ?Colors.brown[200]
+                  :null,
+            ),
+            child: ListTile(
+              leading: Icon(d.icon),
+              title: Text(d.title),
+              selected: i == _selectedDrawerIndex,
+              onTap: () => _onSelectItem(i),
+            ),
+          )
       );
     }
 
@@ -98,9 +98,15 @@ class _MainScaffoldState extends State<MainScaffold> {
               children: drawerOptions),
         ),
         body: _getDrawerItemWidget(_selectedDrawerIndex),
-        floatingActionButton: (_selectedDrawerIndex == 0)
-        // Controllo se sto in home oppure no in modo tale da mostrare o non mostrare il fab
-            ? MainFab()
-            : null);
+        floatingActionButton:(_selectedDrawerIndex == 0)
+          // Controllo se sto in home oppure no in modo tale da mostrare o non mostrare il fab
+              ? Builder(builder: (BuildContext contextSc){return MainFab(contextSc);})
+                ///
+                /// Qui mi serve un Builder per referenziare poi ai figli del fab
+                /// questo scaffold qui
+                ///
+              : null,
+
+    );
   }
 }

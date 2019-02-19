@@ -7,7 +7,6 @@ class SendFeedback extends StatefulWidget {
 
 class _SendFeedbackState extends State<SendFeedback> {
   double _slider1 = 1;
-  int _radioVal;
   @override
   Widget build(BuildContext context) {
     return Container(

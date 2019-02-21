@@ -39,26 +39,26 @@ class HttpHandler {
                                 /*########     USER  HANDLING     ########*/
 
 
-  static Future send_registration(nome, email, password, facolta) async {
+  static Future send_form_registration(user, name, surname, email, pw, faculty) async {
 
     final response =
       await http.post(
         URL + "/userData",
-        body: {"nome": nome, "email": email, "password": password, "facolta": facolta});
+        body: {"user": user, "name": name, "surname": surname, "email": email, "pass": pw, "faculty": faculty});
     if(response.statusCode == 200) {
-      return Post.fromJson(json.decode(response.body));
+      return json.decode(response.body);
     }
     else{
       throw Exception("Error: "+ response.statusCode.toString());
     }
   }
 
-  static Future validate_login(email, password, flag) async {
+  static Future validate_login(user, pw, flag) async {
 
     final response =
       await http.post(
         URL + "/userData",
-        body: {"email": email, "password": password, "flag": flag});
+        body: {"user": user, "pass": pw, "flag": flag});
     if(response.statusCode == 200) {
       return json.decode(response.body);
     }
@@ -70,8 +70,19 @@ class HttpHandler {
 
                                 /*########     DOCUMENT  HANDLING     ########*/
 
-  static Future upload_document(document /*e altri argomenti tipo i tag ecc*/) async {
+  static Future upload_document(user, type, pages, tags) async {
+    //POST /doc --data = { ID_UTENTE, type, pages, tags = { materia, professore } }
+    final response =
+        await http.post(
+          URL + "/doc",
+          body: {"user": user, "type": type, "pages": pages, "tags": tags});
 
+    if(response.statusCode == 200) {
+      return json.decode(response.body);
+    }
+    else{
+      throw Exception("Error: " + response.statusCode.toString());
+    }
   }
 
   static Future download_document() async {

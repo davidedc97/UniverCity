@@ -1,11 +1,20 @@
 APP's API:
 
-1) static Future send_registration (nome, email, password, facolta) async :
-	POST to registration server to create a new user with name "nome", email "email", password "password" and faculty "facolta".
+1) static Future send_form_registration(user, name, surname, email, pw, faculty) async
+
+	POST to user server to create a new user with name "nome", email "email", password "password" and faculty "facolta".
 	--> TODO: return a Future value that perhaps will be a code, still to decide
+
+##################################################################
 	
-2) static Future validate_login (email, password, flag) async :
-	POST to login server to verify the existence of an account with email "email" and password "password". The value of "flag" is still to decide
+2) static Future validate_login(user, pw, flag) async :
+
+	POST to user server to verify the existence of an account with email "email" and password "password". The value of "flag" is still to decide
 	--> return a Future value that will be a boolean: TRUE if the user is registered and the password is correct, FALSE otherwise.
 	
-3)
+##################################################################
+
+3) static Future upload_document(user, type, pages, tags) async
+
+	POST to doc server to upload a new document
+##################################################################

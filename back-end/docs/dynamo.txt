@@ -1,0 +1,187 @@
+User:
+
+var params = {
+    TableName: 'users',
+    KeySchema: [
+        {
+            AttributeName: 'ID',
+            KeyType: 'HASH',
+        },
+    ],
+    AttributeDefinitions: [ // The names and types of all primary and index key attributes only
+        {
+            AttributeName: 'ID',
+            AttributeType: 'S', // (S | N | B) for string, number, binary
+        },
+    ],
+    ProvisionedThroughput: { // required provisioned throughput for the table
+        ReadCapacityUnits: 1, 
+        WriteCapacityUnits: 1, 
+    }
+};
+
+dynamodb.createTable(params, function(err, data) {
+    if (err) ppJson(err); // an error occurred
+    else ppJson(data); // successful response
+
+});
+
+###############################################################################################
+
+Documents:
+
+var params = {
+    TableName: 'documents',
+    KeySchema: [
+        {
+            AttributeName: 'ID',
+            KeyType: 'HASH',
+        },
+    ],
+    AttributeDefinitions: [ // The names and types of all primary and index key attributes only
+        {
+            AttributeName: 'ID',
+            AttributeType: 'S', // (S | N | B) for string, number, binary
+        },
+    ],
+    ProvisionedThroughput: { // required provisioned throughput for the table
+        ReadCapacityUnits: 1, 
+        WriteCapacityUnits: 1, 
+    }
+};
+
+dynamodb.createTable(params, function(err, data) {
+    if (err) ppJson(err); // an error occurred
+    else ppJson(data); // successful response
+
+});
+
+###############################################################################################
+
+Pages:
+
+var params = {
+    TableName: 'pages',
+    KeySchema: [
+        {
+            AttributeName: 'ID',
+            KeyType: 'HASH',
+        },
+    ],
+    AttributeDefinitions: [ // The names and types of all primary and index key attributes only
+        {
+            AttributeName: 'ID',
+            AttributeType: 'S', // (S | N | B) for string, number, binary
+        },
+    ],
+    ProvisionedThroughput: { // required provisioned throughput for the table
+        ReadCapacityUnits: 1, 
+        WriteCapacityUnits: 1, 
+    }
+};
+
+dynamodb.createTable(params, function(err, data) {
+    if (err) ppJson(err); // an error occurred
+    else ppJson(data); // successful response
+
+});
+
+###############################################################################################
+
+User:
+
+var params = {
+    TableName: 'likes',
+    KeySchema: [
+        {
+            AttributeName: 'ID',
+            KeyType: 'HASH',
+        },
+    ],
+    AttributeDefinitions: [ // The names and types of all primary and index key attributes only
+        {
+            AttributeName: 'ID',
+            AttributeType: 'S', // (S | N | B) for string, number, binary
+        },
+    ],
+    ProvisionedThroughput: { // required provisioned throughput for the table
+        ReadCapacityUnits: 1, 
+        WriteCapacityUnits: 1, 
+    }
+};
+
+dynamodb.createTable(params, function(err, data) {
+    if (err) ppJson(err); // an error occurred
+    else ppJson(data); // successful response
+
+});
+
+###############################################################################################
+
+To list all the tables:
+
+dynamodb.listTables({}, function(err, data) {
+    if (err) ppJson(err); // an error occurred
+    else ppJson(data); // successful response
+});
+
+###############################################################################################
+
+To put a new item:
+
+var params = {
+  Item: {
+   "AlbumTitle": {
+     S: "Somewhat Famous"
+    }, 
+   "Artist": {
+     S: "No One You Know"
+    }, 
+   "SongTitle": {
+     S: "Call Me Today"
+    }
+  }, 
+  ReturnConsumedCapacity: "TOTAL", 
+  TableName: "Music"
+ };
+ 
+ dynamodb.putItem(params, function(err, data) {
+   if (err) console.log(err, err.stack); // an error occurred
+   else     console.log(data);           // successful response
+   /*
+   data = {
+    ConsumedCapacity: {
+     CapacityUnits: 1, 
+     TableName: "Music"
+    }
+   }
+   */
+ });
+
+###############################################################################################
+
+Count the elements in a table:
+
+var params = {
+    TableName: 'documents'
+};
+
+dynamodb.scan(params, function(err, data) {
+    if (err) ppJson(err); // an error occurred
+    else ppJson(data); // successful response
+});
+
+###############################################################################################
+
+Get item:
+
+var params = {
+    TableName: 'documents',
+    Key: {
+        docID: "15",
+    }
+};
+docClient.get(params, function(err, data) {
+    if (err) ppJson(err); // an error occurred
+    else ppJson(data); // successful response
+});

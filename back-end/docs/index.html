@@ -1,0 +1,41 @@
+<html>
+<head>
+      <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+      <script>
+
+
+            function send() {
+                var data = {
+                    "creator": $("#creator").val(),
+                    "type": $("#type").val(),
+                    "pages": $("#pages").val().split(" ")
+                };
+
+                $.ajax({
+                  url: "/doc",
+                  type: "POST",
+                  data: data,
+                  success: function(data) {
+                      document.getElementById("result").innerHTML = 'Result: Upload successful';
+                  },
+                  error: function(e) {
+                      document.getElementById("result").innerHTML = 'Result: Error occurred: ' + e.message;
+                  }
+                });
+            }
+
+      </script>
+</head>
+<body>
+id:
+<input type="text" id="id" size="20"><br><br>
+creator:
+<input type="text" id="creator" size="20"><br><br>
+type:
+<input type="text" id="type" size="20"><br><br>
+pages:
+<input type="text" id="pages" size="50"><br>
+<button onclick="send()">Send</button>
+<div id='result'></div>
+</body>
+</html>

@@ -9,10 +9,20 @@ var hummus = require('hummus');
 var fs = require('fs');
 var streams = require('memory-streams');
 var PDFRStreamForBuffer = require('./pdfr-stream-for-buffer.js');
+var request = require("request");
 var app = Express();
 
 app.use(BodyParser.json({limit: "4mb"}));
 app.use(Express.static(__dirname));
+
+const {DYNAMO_ENDPOINT} = process.env;
+
+AWS.config.update({
+    region: "us-west-2",
+    endpoint: DYNAMO_ENDPOINT
+});
+  
+var dynamodb = new AWS.DynamoDB();
 
 //https://docs.minio.io/docs/javascript-client-api-reference
 //https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html
@@ -39,7 +49,7 @@ const getNthPage = function (buffer,idx,maxPages) {
     let outStream = new streams.WritableStream();
     //Using PDFStreamForResponse to be able to pass a writable stream
     let pdfWriter = hummus.createWriter(new hummus.PDFStreamForResponse(outStream));
-    //let pdfReader = hummus.createReader(new PDFRStreamForBuffer(buffer));
+
     if(idx >= maxPages){
         return null;
     };
@@ -64,6 +74,11 @@ const getNthPage = function (buffer,idx,maxPages) {
 };
 
 //##################################################################################################
+/**
+ * 
+ * POST /document
+ */
+
 
 function putPage(key,body){
     var params = {
@@ -89,7 +104,7 @@ var pagePromise = function(idx,buffer,maxPages){
 
         //Creating the hash
         var hash = require('crypto').createHash('sha1');
-        hash.update(page.toString("utf-8"));
+        hash.update(page.toString("utf-8").substring(0,2000));
         var id = hash.digest("hex");
 
         var params = {
@@ -110,7 +125,7 @@ var pagePromise = function(idx,buffer,maxPages){
             }
             //Otherwise I don't
             else{
-                console.log("The page already exists");
+                console.log("[*] The page already exists");
                 resolve({"e":1,"id":id});
             }
         });
@@ -119,8 +134,7 @@ var pagePromise = function(idx,buffer,maxPages){
 
 app.post("/document", upload.any(), function(req,res){
     if(req.files){
-        console.log('POST /document');
-        console.log('Files: ', req.files);
+        console.log('[*] POST /document');
 
         if(req.files[0].mimetype !== "application/pdf"){
             res.status(500).send('You should send a pdf file');
@@ -140,36 +154,64 @@ app.post("/document", upload.any(), function(req,res){
 
             Promise.all(promises).then(function(values){
                 console.log(JSON.stringify(values));
-                var counter = 0;
                 var ids = [];
-                for(var i=0; i < values.length; i++){
-                    ids.push(values[i].id);
+                //var pagesToAdd = [];
+                var counter = 0;
+                var len = values.length; 
+                for(var i=0; i < len; i++){
+                    ids[i] = values[i].id;
                     counter += values[i].e;
                 }
 
+                console.log("[*] Ids: " + JSON.stringify(ids));
+
+                var type = "M";
                 //If counter === 0 the document is original
                 if(counter === 0){
-                    //TO DO
-                    //Send request to server
-                    console.log("[*] 'POST /doc' to metaServer => ORIGINAL");
-                    res.status(200).send("original");
+                    type = "O";
                 }
-                else {
-                    //TO DO
-                    //Send request to server
-                    console.log("[*] 'POST /doc' to metaServer => MASH-UP");
-                    res.status(200).send("mash-up");
-                }
+                
+                //I suppose that the creator is consistent so it will exist
+                //Send request to metaserver
+                request({ method: 'POST',
+                        uri: 'http://metaserver:8888/original',
+                        headers: {'content-type': 'application/json'},
+                        body: JSON.stringify({"creator": "1","type": type,"pages": ids})
+                    }, function (error, response, body) {
+                    if(error){
+                        console.log('[*] Error ' + response.statusCode + ': ' + response);
+                        res.status(500).send(error.code);
+                    }
+                    else if(response.statusCode === 201){
+                        console.log("[*] Fine");
+                        res.status(200).send(type);
+                    }
+                    else {
+                        console.log('[*] Error ' + response.statusCode + ': ' + response.body);
+                        res.status(500).send(response);
+                    }
+                });
+
             }).catch(function(err){
                 //TO DO
                 //Error handler
-                console.log("Error");
+                console.log("[*] Error " + err);
+                res.status(500).send("no");
             });
 
         }
     }
+    else{
+        res.status(400).send("Bad parameter");
+    }
 });
 
+
+//######################################################################################################
+/**
+ * 
+ * GET /document
+ */
 
 var getPagePromise = function(id){
     return new Promise(function(resolve,reject){
@@ -221,86 +263,63 @@ const downloadFiles = (pages,res) => {
     }).catch(function(err){
         //This error is caused by an error in the storage
         console.log("[*] " + err);
-        res.status(500).send("Error");
+        res.status(500).send(err);
     });
 
+}
+
+const getPagesForDoc = function(doc){
+    return new Promise(function(resolve,reject){
+        var params = {
+            Key: {
+             "docID": {
+               S: doc
+              },
+            },
+            AttributesToGet: [
+                'pages',
+            ], 
+            TableName: "documents"
+        };
+        dynamodb.getItem(params, function(err, data) {
+            if (err){
+                console.log(err, err.stack);
+                reject(err);
+            }
+            else if(!data.Item){
+                console.log("[*] Document not found");
+                reject("404");
+            }
+            else{
+                console.log(data.Item.pages.SS);
+                resolve(data.Item.pages.SS);
+            }
+        });
+    });
 }
 
 app.get("/document", function(req,res){
     if(req.query.id){
 
-        //TO DO
         //get the pages id from the metaServer
-
-        var page1 = "21142dc434f7881426efd3605de746fb87d52a23";
-        var page2 = "7fc6ab186ccccf407ceb4c1e119d20799bcb5df1";
-        var pages = [page1,page2];
-
-        //The array 'pages' will contain the IDs of the requested pages
-        downloadFiles(pages,res);
-    }
-});
-
-
-
-
-
-
-
-
-
-
-
-
-
-//###################################################################################################à
-//Function that I just used to check if everything was ok
-
-app.get("/tmp", function(req,res){
-    var id = "prova.pdf";
-    var w = fs.createWriteStream("./tmp/" + id + ".pdf");
-
-    var params = {Bucket: 'test', Key: id};
-    var stream = s3.getObject(params, function(err,data){
-        if(err){
-            console.log("Error: " + err);
-        }
-    }).createReadStream();
-
-    stream.on('data', function(data) {
-        w.write(data);
-    });
-
-    stream.on('finish', function() {
-        w.end(function(){
-        console.log("[*] Prima");
-        var pdfWriter = hummus.createWriter(new hummus.PDFStreamForResponse(res));
-        //let copyingContext = pdfWriter.createPDFCopyingContext(new PDFRStreamForBuffer(b));
-        //Get the first page.
-        //copyingContext.appendPDFPageFromPDF(0);
-        pdfWriter.appendPDFPagesFromPDF("./tmp/" + id + ".pdf");
-        pdfWriter.end();
-        res.end();
+        getPagesForDoc(req.query.id).then(function(pages){
+            downloadFiles(pages,res);
+        }).catch(function(err){
+            if(err === "404") res.status(404).send("Document not found");
+            else res.status(500).send(err);
         });
-    });
-});
-
-app.post("/tmp", upload.any(), function(req,res){
-    if(req.files && req.body.name){
-        console.log('POST /document');
-        console.log('Files: ', req.files);
-        
-        var buffer = req.files[0].buffer;
-
-        if(putPage(req.body.name,buffer)) res.status(500).send();
-        else res.status(200).send();
     }
     else{
-        res.status(500).send();
+        res.status(400).send("Bad parameter");
     }
 });
 
 
+
+
+
+
+//###################################################################################################
 
 var server = app.listen(3000, function() {
     console.log("[*] Listening on port %s...", server.address().port);

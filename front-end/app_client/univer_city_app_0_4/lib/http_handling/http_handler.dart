@@ -2,7 +2,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 
-class Post {
+class Post {                 //classe di esempio presa da internet
   final int userId;
   final int id;
   final String title;
@@ -23,7 +23,7 @@ class HttpHandler {
   static final _URL = "http://www.porcaccioiltuodio.mam";
   static final _client = new http.Client();
 
-  static Future<Post> fetchPost() async {   //funzione di esempio presa da internet
+  static Future<Post> fetchPost() async {       //funzione di esempio presa da internet
     final response =
         await http.get('https://jsonplaceholder.typicode.com/posts/1');
 

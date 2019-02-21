@@ -20,8 +20,8 @@ class Post {
 }
 
 class HttpHandler {
-  static final URL = "http://www.porcaccioiltuodio.mam";
-  static final client = new http.Client();
+  static final _URL = "http://www.porcaccioiltuodio.mam";
+  static final _client = new http.Client();
 
   static Future<Post> fetchPost() async {   //funzione di esempio presa da internet
     final response =
@@ -43,7 +43,7 @@ class HttpHandler {
 
     final response =
       await http.post(
-        URL + "/userData",
+        _URL + "/userData",
         body: {"user": user, "name": name, "surname": surname, "email": email, "pass": pw, "faculty": faculty});
     if(response.statusCode == 200) {
       return json.decode(response.body);
@@ -57,7 +57,7 @@ class HttpHandler {
 
     final response =
       await http.post(
-        URL + "/userData",
+        _URL + "/userData",
         body: {"user": user, "pass": pw, "flag": flag});
     if(response.statusCode == 200) {
       return json.decode(response.body);
@@ -71,10 +71,10 @@ class HttpHandler {
                                 /*########     DOCUMENT  HANDLING     ########*/
 
   static Future upload_document(user, type, pages, tags) async {
-    //POST /doc --data = { ID_UTENTE, type, pages, tags = { materia, professore } }
+
     final response =
         await http.post(
-          URL + "/doc",
+          _URL + "/doc",
           body: {"user": user, "type": type, "pages": pages, "tags": tags});
 
     if(response.statusCode == 200) {
@@ -93,7 +93,30 @@ class HttpHandler {
 
   }
 
-  static Future like_document() async{
+  static Future add_like(user) async{
+    final response =
+        await http.post(
+          _URL + "/like",
+          body: {"user": user});
 
+    if(response.statusCode == 200) {
+      return json.decode(response.body);
+      // non so cosa tornare, se richiamare qualcosa per refreshare il numero di like visualizzati in pagina
+    }
+    else{
+      throw Exception("Error: " + response.statusCode.toString());
+    }
+  }
+
+  static Future retrieve_likes() async{
+    final response =
+        await http.get( _URL + "/like");
+
+    if(response.statusCode == 200){
+      return json.decode(response.body);
+    }
+    else{
+      throw Exception("Error :" + response.statusCode.toString());
+    }
   }
 }

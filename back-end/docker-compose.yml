@@ -1,0 +1,71 @@
+version: '3'
+volumes:
+  storage:
+
+services:
+  storage:
+    image: "minio/minio"
+    volumes:
+      - ./storage/data:/data
+    ports:
+      - "9000:9000"
+    expose:
+      - "9000"
+    environment:
+      MINIO_ACCESS_KEY: "Q3AM3UQ867SPQQA43P2F"
+      MINIO_SECRET_KEY: "zuf+tfteSlswRu7BJ86wekitnifILbZam1KYY3TG"
+    command: server /data
+
+  storageserver:
+    image: "mynode:latest"
+    user: node
+    environment:
+      DYNAMO_ENDPOINT: http://dynamo:8000
+      # Note: even though these keys are garbage values, access key and
+      # secret key are still required. Otherwise, `aws-sdk` will attempt
+      # to read credentials from Amazon's `169.254.169.254` service and
+      # fail.
+      AWS_ACCESS_KEY_ID: "abc"
+      AWS_SECRET_ACCESS_KEY: "xyz"
+    depends_on:
+      - dynamo
+    working_dir: /home/node
+    volumes:
+      - ./storage:/home/node
+    ports:
+      - "8888:3000"
+    command: npm start
+
+  dynamo:
+    image: "dwmkerr/dynamodb"
+    volumes:
+      - ./docs/.data/dynamodb:/data
+    command: -dbPath "/data" -sharedDb
+    ports:
+      - "8000:8000"
+    expose:
+      - "8000"
+
+  metaserver:
+    image: "metanode:latest"
+    user: node
+    working_dir: /home/node
+    environment:
+      DYNAMO_ENDPOINT: http://dynamo:8000
+      # Note: even though these keys are garbage values, access key and
+      # secret key are still required. Otherwise, `aws-sdk` will attempt
+      # to read credentials from Amazon's `169.254.169.254` service and
+      # fail.
+      AWS_ACCESS_KEY_ID: "abc"
+      AWS_SECRET_ACCESS_KEY: "xyz"
+      # Used to activate/deactivate debugging mode (1 = activated)
+      DEBUG: 1
+    depends_on:
+      - dynamo
+    volumes:
+      - ./docs:/home/node
+    ports:
+      - "8080:8888"
+    expose:
+      - "8888"
+    command: npm start

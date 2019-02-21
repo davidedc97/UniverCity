@@ -1,0 +1,13 @@
+I documenti sono salvati come pagine singole in pdf.
+Nei metadati di un documento è presente una lista che contiene gli indirizzi delle pagine che compongono 
+il documento.
+Un documento può essere originale o può essere un mash-up.
+Un documento originale ha un proprietario. Se è un mash-up ha più proprietari che corrispondono ai
+proprietari dei documenti che compongono il mash-up.
+Inoltre un mash-up ha un creatore.
+
+MASH-UP
+Un utente può creare un mash-up. Un mash-up è un documento formato da pagine prese da altri documenti.
+Per creare un mash-up bisogna selezionare pagine quando le si leggono e aggiungerle al mash-up che si
+sta creando. Quando un mash-up viene creato non si crea una copia delle pagine ma ci crea esclusivamente
+una nuova entry nel database dei metadati.

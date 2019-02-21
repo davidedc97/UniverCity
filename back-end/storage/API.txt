@@ -14,6 +14,7 @@ and returns the pdf document.
 2) POST /document  params = { doc (application/pdf) } return application/json
 
    If all the pages are original the response contains "document".
+
    Otherwise it is "mash-up".
    
 E LA RICERCA BRUTTI CANI?

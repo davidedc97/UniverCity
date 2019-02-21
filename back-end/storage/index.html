@@ -20,7 +20,6 @@
 
             function uploadFile() {
                 data = new FormData();
-                data.append("name",$("#name").val());
                 data.append('file', fileData);
 
                 $.ajax({
@@ -30,7 +29,7 @@
                   processData: false,
                   contentType: false,
                   success: function(data) {
-                      if(data === "mash-up") document.getElementById("result").innerHTML = 'Result: Upload successful => mash-up';
+                      if(data === "M") document.getElementById("result").innerHTML = 'Result: Upload successful => mash-up';
                       else document.getElementById("result").innerHTML = 'Result: Upload successful => original';
                   },
                   error: function(e) {

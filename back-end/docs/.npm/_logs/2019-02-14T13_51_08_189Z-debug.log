@@ -1,0 +1,34 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/local/bin/node', '/usr/local/bin/npm', 'run', 'dev' ]
+2 info using npm@6.5.0
+3 info using node@v11.9.0
+4 verbose config Skipping project config: /home/node/.npmrc. (matches userconfig)
+5 verbose run-script [ 'predev', 'dev', 'postdev' ]
+6 info lifecycle @~predev: @
+7 info lifecycle @~dev: @
+8 verbose lifecycle @~dev: unsafe-perm in lifecycle true
+9 verbose lifecycle @~dev: PATH: /usr/local/lib/node_modules/npm/node_modules/npm-lifecycle/node-gyp-bin:/home/node/node_modules/.bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+10 verbose lifecycle @~dev: CWD: /home/node
+11 silly lifecycle @~dev: Args: [ '-c', 'nodemon server.js' ]
+12 info lifecycle @~dev: Failed to exec dev script
+13 verbose stack Error: @ dev: `nodemon server.js`
+13 verbose stack spawn ENOENT
+13 verbose stack     at ChildProcess.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/npm-lifecycle/lib/spawn.js:48:18)
+13 verbose stack     at ChildProcess.emit (events.js:197:13)
+13 verbose stack     at maybeClose (internal/child_process.js:978:16)
+13 verbose stack     at Process.ChildProcess._handle.onexit (internal/child_process.js:265:5)
+14 verbose pkgid @
+15 verbose cwd /home/node
+16 verbose Linux 4.9.125-linuxkit
+17 verbose argv "/usr/local/bin/node" "/usr/local/bin/npm" "run" "dev"
+18 verbose node v11.9.0
+19 verbose npm  v6.5.0
+20 error file sh
+21 error code ELIFECYCLE
+22 error errno ENOENT
+23 error syscall spawn
+24 error @ dev: `nodemon server.js`
+24 error spawn ENOENT
+25 error Failed at the @ dev script.
+25 error This is probably not a problem with npm. There is likely additional logging output above.
+26 verbose exit [ 1, true ]

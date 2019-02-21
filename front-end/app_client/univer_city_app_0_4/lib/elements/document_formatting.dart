@@ -18,6 +18,12 @@ class DocumentInfo{
   bool get isWrittenByHand => _isWrittenByHand;
   String get url => _url;
 
+  DocumentInfo.fromJson(Map<String, dynamic> json) {
+    //funzione-costruttore da usare in http_handler dentro la search_document
+    this._title = json['userId'];
+    //etc
+  }
+
 }
 
 

@@ -93,15 +93,14 @@ class HttpHandler {
 
   }
 
-  static Future add_like(user) async{
+  static Future add_like(user, doc_id) async{
     final response =
         await http.post(
           _URL + "/like",
-          body: {"user": user});
+          body: {"user": user, "doc_id": doc_id});
 
     if(response.statusCode == 200) {
       return json.decode(response.body);
-      // non so cosa tornare, se richiamare qualcosa per refreshare il numero di like visualizzati in pagina
     }
     else{
       throw Exception("Error: " + response.statusCode.toString());

@@ -9,7 +9,7 @@ APP's API:
 	
 2) static Future validate_login(user, pw, flag) async 
 
-	POST to user server to verify the existence of an account with email "email" and password "password". The value of "flag" is still to decide
+	POST to user server to verify the existence of an account with username "user" and password "pw". The value of "flag" is still to decide
 	--> return a Future value that will be a boolean: TRUE if the user is registered and the password is correct, FALSE otherwise.
 	
 ##################################################################
@@ -21,6 +21,6 @@ APP's API:
 	
 ##################################################################
 
-4) static Future add_like(user) async 
+4) static Future add_like(user, doc_id) async 
 
-	POST to like server to add +1 to the likes of a document
+	POST to like server to add +1 to the likes of a document with id "doc_id"

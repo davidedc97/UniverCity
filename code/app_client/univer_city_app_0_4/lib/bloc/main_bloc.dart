@@ -24,6 +24,31 @@ class MainBloc{
     preferitiSink.add(info);
     recentiSink.add(info);}
   }
+
+  //############################################################################gestione login
+  //############################################################################email password
+
+  final _email = PublishSubject<String>();
+  final _password = PublishSubject<String>();
+
+  //getters dellgli stream per form login
+
+  Observable<String> get getPassword  => _password.stream;
+  Sink<String> get password => _password.sink;
+
+  Observable<String> get getEmail => _email.stream;
+  Sink<String> get email => _email.sink;
+
+
+
+
+
+
+
+
+
+
+
   // per eliminare errore di dart perche gli stream
   // dovrebbero essere chiusi prima o poi
   dispose(){

@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:univer_city_app_0_4/elements/button_login.dart';
+import 'package:univer_city_app_0_4/bloc/main_bloc_provider.dart';
 
 class LoginFormScaffold extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+
+    final bloc = BlocProvider.of(context);
+
+    bloc.getEmail.listen((val){debugPrint(val);});
     return Scaffold(
       backgroundColor: Colors.white,
       body: Stack(children: <Widget>[
@@ -21,6 +26,9 @@ class LoginFormScaffold extends StatelessWidget {
               Text('LOGIN',style: TextStyle(fontSize: 18),),
               SizedBox(height: 24,),
               TextField(
+                onChanged: (value){
+                  bloc.email.add(value);
+                },
                   textAlign: TextAlign.center,
                   decoration: InputDecoration(
                     hintText: 'Email',

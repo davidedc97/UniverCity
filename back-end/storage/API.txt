@@ -20,9 +20,12 @@ E LA RICERCA BRUTTI CANI?
 
 Mi servono API per:
                                       TIPO (da client a server)
+=> 2) upload di un documento                     POST
+=> 3) download di un documento                   GET
+
+-Arrivano subito
+
 1) ricerca di un documento                    GET
-2) upload di un documento                     POST
-3) download di un documento                   GET
 4) autenticazione di un utente                GET
 5) registrazione di un nuovo utente           POST
 

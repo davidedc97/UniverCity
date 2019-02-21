@@ -36,11 +36,14 @@ class HttpHandler {
     }
   }
 
+                                /*########     USER  HANDLING     ########*/
+
+
   static Future send_registration(nome, email, password, facolta) async {
 
     final response =
       await http.post(
-        URL,
+        URL + "/userData",
         body: {"nome": nome, "email": email, "password": password, "facolta": facolta});
     if(response.statusCode == 200) {
       return Post.fromJson(json.decode(response.body));
@@ -54,7 +57,7 @@ class HttpHandler {
 
     final response =
       await http.post(
-        URL + "/server_che_controlla_il_login",
+        URL + "/userData",
         body: {"email": email, "password": password, "flag": flag});
     if(response.statusCode == 200) {
       return json.decode(response.body);
@@ -62,5 +65,24 @@ class HttpHandler {
     else{
       throw Exception("Error: "+ response.statusCode.toString());
     }
+  }
+
+
+                                /*########     DOCUMENT  HANDLING     ########*/
+
+  static Future upload_document(document /*e altri argomenti tipo i tag ecc*/) async {
+
+  }
+
+  static Future download_document() async {
+
+  }
+
+  static Future search_document() async {
+
+  }
+
+  static Future like_document() async{
+
   }
 }

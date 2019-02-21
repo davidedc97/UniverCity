@@ -15,8 +15,7 @@ class Post {
       userId: json['userId'],
       id: json['id'],
       title: json['title'],
-      body: json['body'],
-    );
+      body: json['body']);
   }
 }
 
@@ -24,7 +23,7 @@ class HttpHandler {
   static final URL = "http://www.porcaccioiltuodio.mam";
   static final client = new http.Client();
 
-  static Future<Post> fetchPost() async {
+  static Future<Post> fetchPost() async {   //funzione di esempio presa da internet
     final response =
         await http.get('https://jsonplaceholder.typicode.com/posts/1');
 
@@ -38,6 +37,7 @@ class HttpHandler {
   }
 
   static Future send_registration(nome, email, password, facolta) async {
+
     final response =
       await http.post(
         URL,
@@ -46,7 +46,21 @@ class HttpHandler {
       return Post.fromJson(json.decode(response.body));
     }
     else{
-      throw Exception("maybe 404 ?");
+      throw Exception("Error: "+ response.statusCode.toString());
+    }
+  }
+
+  static Future validate_login(email, password, flag) async {
+
+    final response =
+      await http.post(
+        URL + "/server_che_controlla_il_login",
+        body: {"email": email, "password": password, "flag": flag});
+    if(response.statusCode == 200) {
+      return json.decode(response.body);
+    }
+    else{
+      throw Exception("Error: "+ response.statusCode.toString());
     }
   }
 }

@@ -34,7 +34,7 @@ class UniverCity extends StatelessWidget {
   /// [_myRoutes] è la funzione che sfecifica in base alla NamedRoute pop o pushata
   /// cosa mostrare nello schermo. Il valore [settings] assume il valore della route
   /// pushata nello stack, perche lo schermo viene gestito come se fosse uno stack
-  /// e le schermate vengano messe una sopra l'altra e l'utente può vedere solo
+  /// e le schermate vengono messe una sopra l'altra e l'utente può vedere solo
   /// la più in alto tra le schermate. Ovviamente per evitare uno stack pieno di
   /// roba inutile si usano le funzioni [.popAndPushNamed] che elimina la schermata
   /// al top dello stack e ne pusha un altra in cima, mantenendo sosi lo stack con

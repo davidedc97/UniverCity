@@ -15,3 +15,15 @@ and returns the pdf document.
 
    If all the pages are original the response contains "document".
    Otherwise it is "mash-up".
+   
+E LA RICERCA BRUTTI CANI?
+
+Mi servono API per:
+                                      TIPO (da client a server)
+1) ricerca di un documento                    GET
+2) upload di un documento                     POST
+3) download di un documento                   GET
+4) autenticazione di un utente                GET
+5) registrazione di un nuovo utente           POST
+
+

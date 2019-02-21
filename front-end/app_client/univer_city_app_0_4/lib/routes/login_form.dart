@@ -7,6 +7,7 @@ class LoginFormScaffold extends StatelessWidget {
   Widget build(BuildContext context) {
 
     final bloc = BlocProvider.of(context);
+    String _usem, _pw;
 
     bloc.getEmail.listen((val){debugPrint(val);});
     return Scaffold(
@@ -27,13 +28,16 @@ class LoginFormScaffold extends StatelessWidget {
               SizedBox(height: 24,),
               TextField(
                 onChanged: (value){
-                  bloc.email.add(value);
+                  //bloc.email.add(value);
+                  _usem=value;
                 },
                   textAlign: TextAlign.center,
                   decoration: InputDecoration(
-                    hintText: 'Email',
+                    hintText: 'User o Email',
                   )),
               TextField(
+                  obscureText: true,
+                  onChanged: (value){_pw=value;},
                   textAlign: TextAlign.center,
                   decoration: InputDecoration(
                     border: InputBorder.none,
@@ -45,6 +49,7 @@ class LoginFormScaffold extends StatelessWidget {
                 color: Colors.redAccent[700],
                 title: 'LOGIN',
                 onPressed: (){
+                  debugPrint('email: $_usem, pass: $_pw ');
                   Navigator.pushNamedAndRemoveUntil(context, '/', (Route<dynamic> route) => false);
                 },
               ),

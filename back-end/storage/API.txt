@@ -23,7 +23,7 @@ Mi servono API per:
 1) ricerca di un documento                    GET
 2) upload di un documento                     POST
 3) download di un documento                   GET
-4) autenticazione di un utente                GET
+4) autenticazione di un utente                POST
 5) registrazione di un nuovo utente           POST
 
 

@@ -2,11 +2,12 @@ In UserDB there is a single table
 
 
 		User
--UserName
+-Username
 -Name
 -Surname
 -email
 -pass
+-faculty
 -(credit card data):
 	-number
 	-cvv
@@ -14,13 +15,13 @@ In UserDB there is a single table
 
 ###########################################################################################################
 
-POST /userData = {UserName, NAME, SURNAME, EMAIL, PASS, [credit_card (number,cvv,date)]}
+POST /userData = {user, name, surname, email, pass, faculty, [credit_card (number,cvv,date)]}
 	
 	Registration process. Credit card_data are optional. Send data to MetaDataDB
 
 ###########################################################################################################
 
-GET /userData = {UserName, Pass}
+POST /userData = {user, pass, flag}
 	
 	Login process
 

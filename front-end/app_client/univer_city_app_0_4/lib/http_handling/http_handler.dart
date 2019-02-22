@@ -97,8 +97,9 @@ class HttpHandler {
     }
   }
 
-  static Future searchDocument() async {
-
+  static Future searchDocument(title) async {
+    final response =
+        await http.
   }
 
 

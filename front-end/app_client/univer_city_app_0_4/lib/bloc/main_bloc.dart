@@ -1,5 +1,5 @@
 import 'package:rxdart/rxdart.dart';
-import 'package:univer_city_app_0_4/elements/document_formatting.dart';
+import 'package:univer_city_app_0_4/elements/document.dart';
 
 
 Document info = Document('Telecomunicazioni', 'ing. Giovanni Gianbene', 'assets/doc/Dispense_Reti_Benelli_Giambene.pdf');

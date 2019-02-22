@@ -26,6 +26,15 @@ class Document{
     };
   }
 
+  static List<Document> parseJsonList(List<Map<String, dynamic>> input){
+    List<Document> result = [];
+    var elem;
+    for(elem in input){
+      result.add(Document.fromJson(elem));
+    }
+    return result;
+  }
+
 }
 
 

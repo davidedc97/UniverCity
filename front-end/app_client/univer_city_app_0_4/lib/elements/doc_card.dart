@@ -4,7 +4,7 @@ import 'package:univer_city_app_0_4/elements/doc_list.dart';
 
 class DocCard extends StatelessWidget {
 
-  final DocumentInfo _info;
+  final Document _info;
 
   DocCard(this._info);
 

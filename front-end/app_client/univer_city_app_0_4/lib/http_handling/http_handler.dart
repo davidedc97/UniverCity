@@ -88,7 +88,7 @@ class HttpHandler {
 
   static Future downloadDocument(docId) async {
     final response =
-        await http.get(_URL + "/doc" + ":" + docId);
+        await http.get(_URL + "/doc" + "/" + docId);
     if(response.statusCode == 200){
       return Document.fromJson(json.decode(response.body));
     }

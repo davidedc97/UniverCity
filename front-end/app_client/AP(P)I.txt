@@ -24,3 +24,9 @@ APP's API:
 4) static Future add_like(user, doc_id) async 
 
 	POST to like server to add +1 to the likes of a document with id "doc_id"
+	
+	
+
+#############################################################################################à
+
+Il codice delle funzioni si trova nella cartella front-end/app_clinet/univer_city_app_0_4/lib/http_handling/http_handler.dart

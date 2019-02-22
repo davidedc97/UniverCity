@@ -39,12 +39,12 @@ class HttpHandler {
                                 /*########     USER  HANDLING     ########*/
 
 
-  static Future sendFormRegistration(user, name, surname, email, pw, faculty) async {
+  static Future sendFormRegistration(user, name, surname, email, pw, faculty, university) async {
 
     final response =
       await http.post(
         _URL + "/userData",
-        body: {"user": user, "name": name, "surname": surname, "email": email, "pass": pw, "faculty": faculty});
+        body: {"user": user, "name": name, "surname": surname, "email": email, "pass": pw, "faculty": faculty, "university":university});
     if(response.statusCode == 200) {
       return json.decode(response.body);
     }

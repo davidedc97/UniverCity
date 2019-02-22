@@ -93,13 +93,22 @@ class HttpHandler {
       return Document.fromJson(json.decode(response.body));
     }
     else{
-      throw Exception("Error: "+ response.statusCode.toString());
+      throw Exception("Error: " + response.statusCode.toString());
     }
   }
 
   static Future searchDocument(title) async {
     final response =
-        await http.
+        await http.post(
+          _URL + "/doc",
+          body: {"title": title});
+
+    if(response.statusCode == 200){
+      return json.decode(response.body); //da vedere cosa mi ritornano
+    }
+    else{
+      throw Exception("Error: " + response.statusCode.toString());
+    }
   }
 
 

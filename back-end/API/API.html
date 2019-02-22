@@ -197,6 +197,7 @@
   <ul>
   <li><a href="#getLikes"><code><span class="http-method">get</span> /like</code></a></li>
   <li><a href="#putLike"><code><span class="http-method">post</span> /like</code></a></li>
+  <li><a href="#putMashup"><code><span class="http-method">post</span> /mashup</code></a></li>
   </ul>
   <h4><a href="#Storage">Storage</a></h4>
   <ul>
@@ -290,6 +291,50 @@
         <a href="#"></a>
     <h4 class="field-label">400</h4>
     bad input parameter
+        <a href="#"></a>
+    <h4 class="field-label">500</h4>
+    internal error
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="putMashup"></a>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /mashup</code></pre></div>
+    <div class="method-summary">inserts a mashup (<span class="nickname">putMashup</span>)</div>
+    <div class="method-notes">Inserts a mashup given a list of existing page ids. If one of the pages doesn&#x27;t exist the document is not created</div>
+
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="header">Content-Type</span> request header:
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">body <a href="#Mashup">Mashup</a> (optional)</div>
+      
+            <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash;  </div>
+    </div>  <!-- field-items -->
+
+
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">201</h4>
+    mashup inserted
+        <a href="#"></a>
+    <h4 class="field-label">400</h4>
+    bad input parameter
+        <a href="#"></a>
+    <h4 class="field-label">404</h4>
+    one or more pages don&#x27;t exist
         <a href="#"></a>
     <h4 class="field-label">500</h4>
     internal error
@@ -408,6 +453,7 @@ you are looking for.</div>
   <ol>
     <li><a href="#Document"><code>Document</code></a></li>
     <li><a href="#GetLikes"><code>GetLikes</code></a></li>
+    <li><a href="#Mashup"><code>Mashup</code></a></li>
     <li><a href="#PutLike"><code>PutLike</code></a></li>
   </ol>
 
@@ -425,6 +471,14 @@ you are looking for.</div>
     <div class="field-items">
       <div class="param">n </div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  format: int32</div>
 <div class="param">liked </div><div class="param-desc"><span class="param-type"><a href="#boolean">Boolean</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="Mashup"><code>Mashup</code></a> <a class="up" href="#__Models">Up</a></h3>
+    
+    <div class="field-items">
+      <div class="param">user </div><div class="param-desc"><span class="param-type"><a href="#UUID">UUID</a></span>  format: uuid</div>
+<div class="param">pages </div><div class="param-desc"><span class="param-type"><a href="#string">array[String]</a></span>  </div>
     </div>  <!-- field-items -->
   </div>
   <div class="model">

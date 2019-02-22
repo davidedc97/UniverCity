@@ -6,31 +6,30 @@ In the metadataDB there are 3 tables:
 User:
     - ID
       It must refer to an existing user in the userDB
-    - universita
-    - facolta
-    - corso
+    - university :string
+    - faculty :string
+    - course :string
 
 Document:
     - ID
-    - Creator 
+    - Creator [Name, Surname] :string
       The user who uploaded the document
-    - type
+    - type [o,m] :char
       It can be either "original" or "mash-up".
     - pages
       It's a list of all the pages that compose the document. Each element of the list (a page) has
       to be an ID of an existing document
-    - # likes
-    - # downloads
-    - materia
-    - professore
-    - other
+    - # likes       /*
+    - # downloads   ** 
+    - # materia     ** optional tags [todo]
+    - # professore  **
+    - # other       */
 
 Page:
     - ID
       It has to be unique.
       //TO DO
       It can be a hash and can be used to prevent the copy of a document
-    - Owner (Infos about university can be retrieved by user table)
     - # likes
     - # views
 

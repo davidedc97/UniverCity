@@ -21,16 +21,15 @@ class Post {                 //classe di esempio presa da internet
 
 class HttpHandler {
 
-  static final _URL = "http://www.porcaccioiltuodio.mam";
-  static final _client = new http.Client();
+  static const _URL = "http://www.porcaccioiltuodio.mam";
 
-  static Future<Post> fetchPost() async {       //funzione di esempio presa da internet
+  Future<Post> fetchPost() async {
     final response =
-        await http.get('https://jsonplaceholder.typicode.com/posts/1');
+    await http.get('https://jsonplaceholder.typicode.com/posts/1');
 
     if (response.statusCode == 200) {
       // If server returns an OK response, parse the JSON
-      return json.decode(response.body);
+      return Post.fromJson(json.decode(response.body));
     } else {
       // If that response was not OK, throw an error.
       throw Exception('Failed to load post');

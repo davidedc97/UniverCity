@@ -72,7 +72,7 @@ class LoginScaffold extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
-                            Text('Alredy have an acount?'),
+                            Text('Already have an account?'),
                             FlatButton(
 
                               ///Login per ora ti rimanda nell'home page

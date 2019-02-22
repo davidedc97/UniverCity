@@ -15,7 +15,7 @@ class DocList extends StatelessWidget {
       color: Colors.white,
       child: ListTile(
         title:Text(_info.title),
-        subtitle: _info.proprietario ?? Text(''),
+        subtitle: _info.owner ?? Text(''),
         leading: Icon(Icons.description),
         trailing: IconButton(
             icon: Icon(Icons.more_vert),
@@ -23,7 +23,7 @@ class DocList extends StatelessWidget {
               showModalBottomSheet(
                   context: context,
                   builder: (BuildContext context)=>
-                      BottomSheetInfoFile(_info.title, _info.proprietario, _info.uuid)
+                      BottomSheetInfoFile(_info.title, _info.owner, _info.uuid)
 
               );
             }

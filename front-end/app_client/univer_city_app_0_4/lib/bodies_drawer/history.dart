@@ -3,8 +3,7 @@ import 'package:univer_city_app_0_4/elements/document_formatting.dart';
 import 'package:univer_city_app_0_4/elements/doc_list.dart';
 import 'package:univer_city_app_0_4/elements/title_div.dart';
 
-DocumentInfo info = DocumentInfo('Telecomunicazioni', 'ing. Giovanni Gianbene', 'Giovanni Gianbene',
-    '8/10', '1', false, 'assets/doc/Dispense_Reti_Benelli_Giambene.pdf');
+Document info = Document('Telecomunicazioni', 'ing. Giovanni Gianbene','assets/doc/Dispense_Reti_Benelli_Giambene.pdf');
 
 class MyHistory extends StatelessWidget {
   @override

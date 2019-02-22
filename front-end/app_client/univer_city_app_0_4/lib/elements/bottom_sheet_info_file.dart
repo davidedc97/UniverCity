@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 class BottomSheetInfoFile extends StatelessWidget {
-  final String title, proprietario, rank, downloads;
+  final String title, proprietario, _uuid;
 
-  BottomSheetInfoFile(this.title, this.proprietario, this.rank, this.downloads);
+  BottomSheetInfoFile(this.title, this.proprietario, this._uuid);
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +21,6 @@ class BottomSheetInfoFile extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   IconButton(icon: Icon(Icons.thumb_up), onPressed: ()=>debugPrint('like')),
-                  IconButton(icon: Icon(Icons.thumb_down), onPressed: ()=>debugPrint('dislike')),
                   IconButton(icon: Icon(Icons.favorite_border), onPressed: ()=>debugPrint('love'))
                 ],
               ),
@@ -29,8 +28,8 @@ class BottomSheetInfoFile extends StatelessWidget {
           ),
           Divider(),
           InfoRow('Proprietario', proprietario),
-          InfoRow('Rank', rank),
-          InfoRow('Downloads', downloads),
+          InfoRow('Rank', 'todo'),
+          InfoRow('Downloads', 'todo'),
           Divider(),
           ListTile(
             leading: Icon(Icons.content_copy),

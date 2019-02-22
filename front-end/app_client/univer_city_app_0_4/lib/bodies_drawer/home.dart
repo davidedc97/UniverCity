@@ -11,8 +11,8 @@ class MyHome extends StatefulWidget {
 }
 
 class _MyHomeState extends State<MyHome> {
-  List<DocumentInfo> _recenti = <DocumentInfo>[];
-  List<DocumentInfo> _preferiti = <DocumentInfo>[];
+  List<Document> _recenti = <Document>[];
+  List<Document> _preferiti = <Document>[];
 
   List<Widget> _reFo = <Widget>[];
   List<Widget> _prFo = <Widget>[];

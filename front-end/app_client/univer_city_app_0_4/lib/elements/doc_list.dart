@@ -5,7 +5,7 @@ import 'package:flutter_pdf_viewer/flutter_pdf_viewer.dart';
 
 class DocList extends StatelessWidget {
 
-  final DocumentInfo _info;
+  final Document _info;
 
   DocList(this._info);
 
@@ -15,26 +15,21 @@ class DocList extends StatelessWidget {
       color: Colors.white,
       child: ListTile(
         title:Text(_info.title),
-        subtitle: (_info.subtitle == '' || _info.subtitle == null)
-            ?null
-            :Text(_info.subtitle),
-        leading: (_info.isWrittenByHand)
-            ?Icon(Icons.gesture)
-            :Icon(Icons.description),
+        subtitle: _info.proprietario ?? Text(''),
+        leading: Icon(Icons.description),
         trailing: IconButton(
             icon: Icon(Icons.more_vert),
             onPressed: (){
               showModalBottomSheet(
                   context: context,
                   builder: (BuildContext context)=>
-                      BottomSheetInfoFile(_info.title, _info.proprietario,
-                          _info.rank, _info.downloads)
+                      BottomSheetInfoFile(_info.title, _info.proprietario, _info.uuid)
 
               );
             }
         ),
         onTap: (){
-          PdfViewer.loadAsset(_info.url);
+          PdfViewer.loadAsset(_info.uuid);
         },
       ),
     );

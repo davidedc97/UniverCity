@@ -1,5 +1,6 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:univer_city_app_0_4/elements/document.dart';
 
 
 class Post {                 //classe di esempio presa da internet
@@ -85,8 +86,15 @@ class HttpHandler {
     }
   }
 
-  static Future downloadDocument() async {
-
+  static Future downloadDocument(docId) async {
+    final response =
+        await http.get(_URL + "/doc" + ":" + docId);
+    if(response.statusCode == 200){
+      return Document.fromJson(json.decode(response.body));
+    }
+    else{
+      throw Exception("Error: "+ response.statusCode.toString());
+    }
   }
 
   static Future searchDocument() async {
@@ -96,11 +104,12 @@ class HttpHandler {
 
                                 /*########     LIKES  HANDLING     ########*/
 
-  static Future addLike(user, doc_id) async{
+
+  static Future addLike(user, docId) async{
     final response =
         await http.post(
           _URL + "/like",
-          body: {"user": user, "doc_id": doc_id});
+          body: {"user": user, "doc_id": docId});
 
     if(response.statusCode == 200) {
       return json.decode(response.body);

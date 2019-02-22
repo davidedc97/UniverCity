@@ -20,6 +20,7 @@ class Post {                 //classe di esempio presa da internet
 }
 
 class HttpHandler {
+
   static final _URL = "http://www.porcaccioiltuodio.mam";
   static final _client = new http.Client();
 
@@ -39,7 +40,7 @@ class HttpHandler {
                                 /*########     USER  HANDLING     ########*/
 
 
-  static Future send_form_registration(user, name, surname, email, pw, faculty) async {
+  static Future sendFormRegistration(user, name, surname, email, pw, faculty) async {
 
     final response =
       await http.post(
@@ -53,7 +54,7 @@ class HttpHandler {
     }
   }
 
-  static Future validate_login(user, pw, flag) async {
+  static Future validateLogin(user, pw, flag) async {
 
     final response =
       await http.post(
@@ -70,7 +71,7 @@ class HttpHandler {
 
                                 /*########     DOCUMENT  HANDLING     ########*/
 
-  static Future upload_document(user, type, pages, tags) async {
+  static Future uploadDocument(user, type, pages, tags) async {
 
     final response =
         await http.post(
@@ -85,15 +86,18 @@ class HttpHandler {
     }
   }
 
-  static Future download_document() async {
+  static Future downloadDocument() async {
 
   }
 
-  static Future search_document() async {
+  static Future searchDocument() async {
 
   }
 
-  static Future add_like(user, doc_id) async{
+
+                                /*########     LIKES  HANDLING     ########*/
+
+  static Future addLike(user, doc_id) async{
     final response =
         await http.post(
           _URL + "/like",
@@ -107,7 +111,7 @@ class HttpHandler {
     }
   }
 
-  static Future retrieve_likes() async{
+  static Future retrieveLikes() async{
     final response =
         await http.get( _URL + "/like");
 

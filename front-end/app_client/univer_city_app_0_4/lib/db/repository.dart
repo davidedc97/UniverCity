@@ -21,6 +21,18 @@ class DocumentProvider{
           title TEXT NOT NULL,
           owner TEXT NOT NULL,
           uuid TEXT PRIMARY KEY,
+          
+        )
+        
+        CREATE TABLE History(
+          title TEXT NOT NULL,
+          owner TEXT NOT NULL,
+          uuid TEXT PRIMARY KEY,
+          dd INT PRIMARY KEY,
+          mm INT PRIMARY KEY,
+          yy INT PRIMARY KEY,
+          hh INT PRIMARY KEY,
+          mm INT PRIMARY KEY,
         )
         ''');
       }

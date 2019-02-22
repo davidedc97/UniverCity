@@ -1,24 +1,19 @@
 
 //######################################################################################### DocumentInfo
-class DocumentInfo{
+class Document{
+
   String _title;
-  String _subtitle;
-  String _proprietario, _rank, _downloads;
-  //tipo TRUE = SCRITTO A MANO, FALSE = FORMATTATO
-  bool _isWrittenByHand;
-  String _url;
-  DocumentInfo(this._title, this._subtitle, this._proprietario,
-               this._rank, this._downloads, this._isWrittenByHand, this._url);
+  String _proprietario;
+  String _uuid;
+
+
+  Document(this._title, this._proprietario, this._uuid );
 
   String get title => _title;
-  String get subtitle => _subtitle;
   String get proprietario => _proprietario;
-  String get rank => _rank;
-  String get downloads => _downloads;
-  bool get isWrittenByHand => _isWrittenByHand;
-  String get url => _url;
+  String get uuid => _uuid;
 
-  DocumentInfo.fromJson(Map<String, dynamic> json) {
+  Document.fromJson(Map<String, dynamic> json) {
     //funzione-costruttore da usare in http_handler dentro la search_document
     this._title = json['userId'];
     //etc

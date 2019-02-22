@@ -3,7 +3,7 @@ import 'package:univer_city_app_0_4/elements/title_div.dart';
 import 'package:univer_city_app_0_4/bloc/main_bloc_provider.dart';
 import 'package:univer_city_app_0_4/elements/doc_list.dart';
 import 'package:univer_city_app_0_4/elements/doc_card.dart';
-import 'package:univer_city_app_0_4/elements/document_formatting.dart';
+import 'package:univer_city_app_0_4/elements/document.dart';
 
 class MyHome extends StatefulWidget {
   @override

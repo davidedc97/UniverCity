@@ -20,6 +20,14 @@ class Document{
     this._uuid = json["uuid"];
   }
 
+  Map<String, dynamic> toMap(){
+    return <String, dynamic>{
+    'title': _title,
+    'owner': _owner,
+    'uuid': _uuid,
+    };
+  }
+
 }
 
 

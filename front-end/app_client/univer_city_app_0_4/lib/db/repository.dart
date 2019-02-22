@@ -17,18 +17,43 @@ class DocumentProvider{
       version: 1,
       onCreate: (Database newDB, int version){
         newDB.execute('''
-        CREATE TABLE Documenti(
+        CREATE TABLE Documents(
           title TEXT NOT NULL,
           owner TEXT NOT NULL,
-          documentuuid TEXT PRIMARY KEY,
+          uuid TEXT PRIMARY KEY,
         )
         ''');
       }
     );
   }
 
-  fetchItem() async{
-
+  fetchAllPrefDocs() async{
+    return db.query('Documents');
   }
 
+  fetchPrefDoc(String uuid) async{
+    final map = await db.query(
+      'Documents',
+      columns: null,
+      where: 'uuid = ?',
+      whereArgs: [uuid],
+    );
+
+    if(map.length > 0){
+      return Document.fromJson(map.first);
+    }
+    return null;
+  }
+
+  addPrefDoc(Document item){
+    db.insert('Documents', item.toMap());
+  }
+  
+  rmPrefDoc(Document item){
+    db.delete(
+      'Documents',
+      where: 'uuid = ?',
+      whereArgs: [item.uuid],
+    );
+  }
 }

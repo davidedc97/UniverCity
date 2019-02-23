@@ -2,6 +2,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:univer_city_app_0_4/elements/document.dart';
 import 'package:univer_city_app_0_4/elements/user.dart';
+import 'package:univer_city_app_0_4/elements/server_exception.dart';
 
 class HttpHandler {
 
@@ -20,7 +21,7 @@ class HttpHandler {
       return json.decode(response.body);  // TODO da vedere cosa mi tornano
     }
     else{
-      throw Exception("Error: "+ response.statusCode.toString());
+      throw ServerException.withCode(response.statusCode);
     }
   }
 
@@ -34,7 +35,7 @@ class HttpHandler {
       return json.decode(response.body);  //TODO check: dovrebbero tornare un booleano
     }
     else{
-      throw Exception("Error: "+ response.statusCode.toString());
+      throw ServerException.withCode(response.statusCode);
     }
   }
 
@@ -45,7 +46,7 @@ class HttpHandler {
       return User.fromJson(json.decode(response.body));
     }
     else{
-      throw Exception("Error: " + response.statusCode.toString());
+      throw ServerException.withCode(response.statusCode);
     }
   }
 
@@ -62,7 +63,7 @@ class HttpHandler {
       return json.decode(response.body);  //TODO da vedere cosa mi tornano
     }
     else{
-      throw Exception("Error: " + response.statusCode.toString());
+      throw ServerException.withCode(response.statusCode);
     }
   }
 
@@ -75,7 +76,7 @@ class HttpHandler {
       return Document.fromJson(json.decode(response.body));
     }
     else{
-      throw Exception("Error: " + response.statusCode.toString());
+      throw ServerException.withCode(response.statusCode);
     }
   }
 
@@ -90,7 +91,7 @@ class HttpHandler {
       return json.decode(response.body); //TODO da vedere cosa mi ritornano
     }
     else{
-      throw Exception("Error: " + response.statusCode.toString());
+      throw ServerException.withCode(response.statusCode);
     }
   }
 
@@ -108,7 +109,7 @@ class HttpHandler {
       return json.decode(response.body);
     }
     else{
-      throw Exception("Error: " + response.statusCode.toString());
+      throw ServerException.withCode(response.statusCode);
     }
   }
 
@@ -121,7 +122,7 @@ class HttpHandler {
       return json.decode(response.body);
     }
     else{
-      throw Exception("Error :" + response.statusCode.toString());
+      throw ServerException.withCode(response.statusCode);
     }
   }
 }

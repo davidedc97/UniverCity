@@ -26,11 +26,11 @@ class HttpHandler {
   }
 
 
-  static Future validateLogin(user, pw, flag) async {
+  static Future validateLogin(user, pw) async {
     final response =
       await http.post(
         _URL + "/userData",
-        body: {"user": user, "pass": pw, "flag": flag});
+        body: {"user": user, "pass": pw});
     if(response.statusCode == 200) {
       return json.decode(response.body);  //TODO check: dovrebbero tornare un booleano
     }

@@ -1,0 +1,1 @@
+creare un sistema per mettere in relazione la gente che nel semestre deve studiare per uno stesso esame. Ad esempio magari questo mese devo studiare analisi 1, metterò una spunta o qualcosa su analisi 1 e verrò inserito in un gruppo o un forum o qualcosa del genere che mi metterà in contatto con altri studenti che devono dare questo esame in questo periodo.

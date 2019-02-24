@@ -68,7 +68,7 @@ class HttpHandler {
   }
 
 
-  static Future downloadDocument(docId) async {
+  static Future<Document> downloadDocument(docId) async {
     final response =
         await http.get(_URL + "/doc" + "/" + docId);
 

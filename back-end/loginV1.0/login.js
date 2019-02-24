@@ -1,3 +1,13 @@
+/*
+** MANCA GESTIONE MESSAGGI DI RITORNO. OBIETTIVO DI IMPLEMENTAZIONE: LUNEDì 25/ MARTEDì 26
+** CODICE 200 {
+**      LOGIN E REGISTRAZIONE = OK
+** }
+**     
+** CODICE 400 {
+**      LOGIN E REGISTRAZIONE = USER NOT FOUND
+** }
+*/
 
 const express = require("express");
 const app = express();
@@ -21,28 +31,31 @@ connection.connect(function(err){
 })
 
 function DbManager_addUser(ur, pr){
+    var control = 1;
     var username = ur;
     var pass = pr;
     console.log("dati letti" + " " + username + " " + pass);
-    var control = 0; 
-    connection.query("INSERT INTO user (username,pass) VALUES (username, pass)", function(err, result){
-        if(err) throw err;
-        console.log(err);
-        control = 1;
-        console.log(result);
+    var query = "INSERT INTO user (username,pass) VALUES ?";
+    var values = [
+        [username, pass]
+    ];
+    connection.query(query, [values], function(err, res){
+        if (err) throw err;
     })
-    return control;
 }
 
 function DbManager_searchUser(ul, pl){
+    var control;
     var username = ul;
     var pass = pl;
-    connection.query("SELECT username FROM user", function(err, result){
-        if(err) throw err;
-        console.log(err);
-        control = 1;
+    console.log("dati letti" + " " + username + " " + pass);
+    var query = "SELECT * FROM user WHERE username = ?";
+    var user = [
+        [username]
+    ];
+    connection.query(query, [user], function(err, res){
+        if (err) throw err;
     })
-    return control;
 }
 
 app.get("/", function(req,res){
@@ -52,9 +65,9 @@ app.get("/", function(req,res){
 
 app.post("/", function(req, res){
         var control;
-        console.log("##################");
-        console.log("Richiesta ricevuta");
-        console.log("##################");
+        console.log("######################");
+        console.log("# Richiesta ricevuta #");
+        console.log("######################");
     
         if (req.body.ur){   
             var ur = req.body.ur;
@@ -64,7 +77,7 @@ app.post("/", function(req, res){
             console.log("User:" + ur);
             console.log("Pass: " + pr);
             control = DbManager_addUser(ur,pr);
-            console.log("control = " + control);
+            console.log("control on registration = " + control);
         }
 
         if (req.body.ul){
@@ -75,9 +88,7 @@ app.post("/", function(req, res){
             console.log("User:" + ul);
             console.log("Pass: " + pl);
             control = DbManager_searchUser(ul,pl);
-            if (control == 1) res.sendStatus(400);
-            else res.sendStatus(200);
-            control = 0;
+            console.log("control on login = " + control);
         }
     })
 

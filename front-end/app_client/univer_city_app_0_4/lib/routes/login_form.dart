@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:univer_city_app_0_4/elements/button_login.dart';
-import 'package:univer_city_app_0_4/bloc/main_bloc_provider.dart';
 
 class LoginFormScaffold extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    final bloc = BlocProvider.of(context);
     String _usem, _pw;
 
-    bloc.getEmail.listen((val){debugPrint(val);});
     return Scaffold(
       backgroundColor: Colors.white,
       body: Stack(children: <Widget>[
@@ -48,10 +45,7 @@ class LoginFormScaffold extends StatelessWidget {
               BtnLogin(
                 color: Colors.redAccent[700],
                 title: 'LOGIN',
-                onPressed: (){
-                  debugPrint('email: $_usem, pass: $_pw ');
-                  Navigator.pushNamedAndRemoveUntil(context, '/', (Route<dynamic> route) => false);
-                },
+                onPressed: (){login(context, _usem??'', _pw??'');},
               ),
               //################################################## LOGIN if already have an account
               Row(
@@ -75,5 +69,28 @@ class LoginFormScaffold extends StatelessWidget {
         ),
       ]),
     );
+  }
+
+}
+///
+/// controllo form
+///
+login(BuildContext context, String id, String pw ){
+  if(id == '' || pw == ''){
+    return showDialog(
+        context: context,
+        builder: (context){
+          return AlertDialog(
+            title: Text('Ops!'),
+            content: Text('something in the form is not valid'),
+            actions: <Widget>[
+              FlatButton(onPressed: (){Navigator.pop(context);}, child: Text('Close'))
+            ],
+          );
+        }
+    );
+  }else{
+    debugPrint('email: $id, pass: $pw ');
+    Navigator.pushNamedAndRemoveUntil(context, '/', (Route<dynamic> route) => false);
   }
 }

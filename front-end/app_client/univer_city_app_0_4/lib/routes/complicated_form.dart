@@ -66,7 +66,7 @@ class CompFormScaffold extends StatelessWidget {
               BtnLogin(
                 color: Colors.redAccent[700],
                 title: 'GET STARTED',
-                onPressed: ()=>debugPrint('user: $_us, nome: $_nm,cognome: $_cg email: $_em, password: $_pw, facolta $_fa'),
+                onPressed: ()=>compForm(context, _us??'', _nm??'', _cg??'', _em??'', _pw??'', _fa??''),
               ),
               //################################################## LOGIN if already have an account
               Row(
@@ -75,9 +75,6 @@ class CompFormScaffold extends StatelessWidget {
                 children: <Widget>[
                   Text('Alredy have an acount?'),
                   FlatButton(
-
-                    ///Login per ora ti rimanda nell'home page
-                    ///Poi ci saranno da gestire piu cose
                       onPressed: () {
                         Navigator.popAndPushNamed(context, '/loginForm');
                       },
@@ -90,5 +87,24 @@ class CompFormScaffold extends StatelessWidget {
         ),
       ]),
     );
+  }
+}
+
+compForm(BuildContext context, String id, String nm, String cg, String em, String pw, String fa){
+  if(id=='' || nm=='' || cg=='' || em=='' || pw=='' || fa==''){
+    return showDialog(
+        context: context,
+        builder: (context){
+          return AlertDialog(
+            title: Text('Ops!'),
+            content: Text('something in the form is not valid'),
+            actions: <Widget>[
+              FlatButton(onPressed: (){Navigator.pop(context);}, child: Text('Close'))
+            ],
+          );
+        }
+    );
+  }else{
+    debugPrint('email: $id, Nome: $nm, Cognome: $cg, Email: $em, Pass: $pw, Facolta $fa ');
   }
 }

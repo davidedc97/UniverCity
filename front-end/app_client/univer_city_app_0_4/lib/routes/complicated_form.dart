@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:univer_city_app_0_4/elements/button_login.dart';
+import 'package:univer_city_app_0_4/http_handling/http_handler.dart';
 
-class CompFormScaffold extends StatelessWidget {
+class CompFormScaffold extends StatefulWidget {
+  @override
+  _CompFormScaffoldState createState() => _CompFormScaffoldState();
+}
 
-  String _nm, _em, _pw, _fa, _cg, _us;
+class _CompFormScaffoldState extends State<CompFormScaffold> {
+
+  String _nm, _em, _pw, _fa, _cg, _us, _un;
 
   @override
   Widget build(BuildContext context) {
@@ -58,15 +64,21 @@ class CompFormScaffold extends StatelessWidget {
                   onChanged: (value){_fa=value;},
                   textAlign: TextAlign.center,
                   decoration: InputDecoration(
-                    border: InputBorder.none,
                     hintText: 'Facoltà',
+                  )),
+              TextField(
+                  onChanged: (value){_un=value;},
+                  textAlign: TextAlign.center,
+                  decoration: InputDecoration(
+                    border: InputBorder.none,
+                    hintText: 'Università',
                   )),
               SizedBox(height: 42,),
               //################################################################ Get Started Button
               BtnLogin(
                 color: Colors.redAccent[700],
                 title: 'GET STARTED',
-                onPressed: ()=>compForm(context, _us??'', _nm??'', _cg??'', _em??'', _pw??'', _fa??''),
+                onPressed: ()=>compForm(context, _us??'', _nm??'', _cg??'', _em??'', _pw??'', _fa??'', _un??''),
               ),
               //################################################## LOGIN if already have an account
               Row(
@@ -90,8 +102,8 @@ class CompFormScaffold extends StatelessWidget {
   }
 }
 
-compForm(BuildContext context, String id, String nm, String cg, String em, String pw, String fa){
-  if(id=='' || nm=='' || cg=='' || em=='' || pw=='' || fa==''){
+compForm(BuildContext context, String id, String nm, String cg, String em, String pw, String fa, String un){
+  if(id=='' || nm=='' || cg=='' || em=='' || pw=='' || fa=='' || un==''){
     return showDialog(
         context: context,
         builder: (context){
@@ -105,6 +117,18 @@ compForm(BuildContext context, String id, String nm, String cg, String em, Strin
         }
     );
   }else{
+    //TODO da testare
     debugPrint('email: $id, Nome: $nm, Cognome: $cg, Email: $em, Pass: $pw, Facolta $fa ');
+    Future res = HttpHandler.sendFormRegistration(id, nm, cg, em, pw, fa, un);
+    FutureBuilder<bool>(
+      future: res,
+      builder: (context, snapshot){
+        if(snapshot.hasError) print(snapshot.data);
+        return snapshot.hasData
+            ? Navigator.pushNamedAndRemoveUntil(context, '/', (Route<dynamic> route) => false)
+            : Center(child: CircularProgressIndicator(),);
+      },
+    );
+
   }
 }

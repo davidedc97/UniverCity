@@ -40,7 +40,7 @@ class BottomSheetInfoFile extends StatelessWidget {
           ListTile(
             leading: Icon(Icons.file_download),
             title: Text('Scarica'),
-            onTap: ()=> debugPrint('downloading'),
+            onTap: ()=> debugPrint('downloading $_uuid'),
           )
         ],
       ),

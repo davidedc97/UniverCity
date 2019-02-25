@@ -11,8 +11,8 @@ class HttpHandler {
 
                                 /*########     USER  HANDLING     ########*/
 
-
-  static Future sendFormRegistration(user, name, surname, email, pw, faculty, university) async {
+  //TODO per favore fai in modo che mi ritorna un bool ;)
+  static Future<bool> sendFormRegistration(user, name, surname, email, pw, faculty, university) async {
     final response =
       await http.post(
         _URL + "/userData",
@@ -25,8 +25,8 @@ class HttpHandler {
     }
   }
 
-
-  static Future validateLogin(user, pw) async {
+  //TODO per favore fai in modo che mi ritorna un bool ;)
+  static Future<bool> validateLogin(user, pw) async {
     final response =
       await http.post(
         _URL + "/userData",

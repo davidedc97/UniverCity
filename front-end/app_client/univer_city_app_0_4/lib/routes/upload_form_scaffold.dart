@@ -4,7 +4,7 @@ import 'package:univer_city_app_0_4/elements/title_div.dart';
 
 class Tags {
   final String _tag;
-  const Tags(@required this._tag);
+  const Tags(this._tag);
 }
 
 const tagsDisp = <Tags>[
@@ -24,7 +24,7 @@ const tagsDisp = <Tags>[
 
 class UploadFormScaffold extends StatelessWidget {
   final String _pathFile;
-  UploadFormScaffold(@required this._pathFile);
+  UploadFormScaffold(this._pathFile);
 
   @override
   Widget build(BuildContext context) {
@@ -38,12 +38,18 @@ class UploadFormScaffold extends StatelessWidget {
           ),
         ),
       ),
-      body: UploadFormBody(),
+      body: UploadFormBody(_pathFile),
     );
   }
 }
 
+
+
 class UploadFormBody extends StatelessWidget {
+
+  final String path;
+  UploadFormBody(this.path);
+
   @override
   Widget build(BuildContext context) {
     return Container(

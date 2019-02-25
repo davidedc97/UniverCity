@@ -1,7 +1,7 @@
 class ServerException implements Exception {
   //TODO sto andando a bere quindi mi devo sbrigare, sta classe la faccio domani
-  String _message = "Error: ";
-  int _statusCode = 66;
+  String _message = " Error";
+  int _statusCode = 666;
 
   ServerException(this._message, this._statusCode);
 
@@ -13,7 +13,7 @@ class ServerException implements Exception {
   int get statusCode => _statusCode;
 
   String toString(){
-    return this.message + this.statusCode.toString();
+    return this.statusCode.toString() + this.message;
   }
 
 }

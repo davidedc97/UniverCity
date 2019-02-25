@@ -3,6 +3,7 @@ class Document{
   String _title;
   String _owner;
   String _uuid;
+  String _type; // it can be "M" (mashup) or "O" (original)
 
 
   Document(this._title, this._owner, this._uuid );
@@ -10,19 +11,21 @@ class Document{
   String get title => _title;
   String get owner => _owner;
   String get uuid => _uuid;
+  String get type => _type;
 
   Document.fromJson(Map<String, dynamic> json) {
     //funzione-costruttore da usare in http_handler dentro la search_document/get_document
     this._title = json["title"];
     this._owner = json["owner"];
-    this._uuid = json["uuid"];
+    this._uuid = json["id"];
+    this._type = json["type"];
   }
 
   Map<String, dynamic> toMap(){
-    return <String, dynamic>{
-    'title': _title,
-    'owner': _owner,
-    'uuid': _uuid,
+    return <String, dynamic> {
+      'title': _title,
+      'owner': _owner,
+      'uuid': _uuid,
     };
   }
 

@@ -7,6 +7,11 @@ import 'package:univer_city_app_0_4/elements/server_exception.dart';
 class HttpHandler {
 
   static const _URL = "http://www.porcaccioiltuodio.mam";
+  static const _DOCUMENT_SERVER = "/document";
+  static const _SEARCH_SERVER = "/search";
+  static const _USER_SERVER = "/user";
+  static const _LIKE_SERVER = "/like";
+  static const _MASHUP_SERVER = "/mashup";
 
 
                                 /*########     USER  HANDLING     ########*/
@@ -15,7 +20,7 @@ class HttpHandler {
   static Future<bool> sendFormRegistration(user, name, surname, email, pw, faculty, university) async {
     final response =
       await http.post(
-        _URL + "/userData",
+        _URL + _USER_SERVER,
         body: {"user": user, "name": name, "surname": surname, "email": email, "pass": pw, "faculty": faculty, "university":university});
     if(response.statusCode == 200) {
       return json.decode(response.body);  // TODO da vedere cosa mi tornano
@@ -29,7 +34,7 @@ class HttpHandler {
   static Future<bool> validateLogin(user, pw) async {
     final response =
       await http.post(
-        _URL + "/userData",
+        _URL + _USER_SERVER,
         body: {"user": user, "pass": pw});
     if(response.statusCode == 200) {
       return json.decode(response.body);  //TODO check: dovrebbero tornare un booleano
@@ -41,7 +46,7 @@ class HttpHandler {
 
   static Future<User> getUserById(userId) async {
     final response =
-        await http.get(_URL + "/userData" + "/" + userId);
+        await http.get(_URL + _USER_SERVER + "/" + userId);
     if(response.statusCode == 200){
       return User.fromJson(json.decode(response.body));
     }
@@ -53,26 +58,13 @@ class HttpHandler {
                                 /*########     DOCUMENT  HANDLING     ########*/
 
 
-  static Future uploadDocument(user, type, pages, tags) async {
+  static Future<dynamic> uploadDocument(user, type, pages, tags) async {
     final response =
         await http.post(
-          _URL + "/doc",
+          _URL + _DOCUMENT_SERVER,
           body: {"user": user, "type": type, "pages": pages, "tags": tags});
 
-    if(response.statusCode == 200) {
-      return json.decode(response.body);  //TODO da vedere cosa mi tornano
-    }
-    else{
-      throw ServerException.withCode(response.statusCode);
-    }
-  }
-
-
-  static Future<Document> downloadDocument(docId) async {
-    final response =
-        await http.get(_URL + "/doc" + "/" + docId);
-
-    if(response.statusCode == 200){
+    if(response.statusCode == 201) {
       return Document.fromJson(json.decode(response.body));
     }
     else{
@@ -81,14 +73,53 @@ class HttpHandler {
   }
 
 
-  static Future searchDocument(title) async {
+  static Future<Document> getDocumentById(docId) async{
     final response =
-        await http.post(
-          _URL + "/doc",
-          body: {"title": title});
+      await http.get(_URL + _DOCUMENT_SERVER + "/" + docId);
 
     if(response.statusCode == 200){
-      return json.decode(response.body); //TODO da vedere cosa mi ritornano
+      return Document.fromJson(json.decode(response.body)); // TODO: me sa che tornano uno stream di byte, quindi così non va bene
+    }
+    else{
+      throw ServerException.withCode(response.statusCode);
+    }
+  }
+
+
+  static Future searchDocument(query) async {
+    final response =
+        await http.get(_URL + _SEARCH_SERVER + "/" + "query");
+
+    if(response.statusCode == 200){
+      return json.decode(response.body); //TODO: tornano un set di documenti, chiedere spiegazioni che nelle api non si capisce un cazzo
+    }
+    else{
+      throw ServerException.withCode(response.statusCode);
+    }
+  }
+
+  /* TODO: devo capire come cazzo si fa
+  static Future<Document> downloadDocument(docId) async {
+    final response =
+        await http.get(_URL + _DOCUMENT_SERVER + "/" + docId);
+
+    if(response.statusCode == 200){
+      return Document.fromJson(json.decode(response.body));
+    }
+    else{
+      throw ServerException.withCode(response.statusCode);
+    }
+  }
+  */
+
+  static Future<dynamic> mashup(List<String> pageIds) async {
+    final response =
+        await http.post(
+          _URL + _MASHUP_SERVER,
+          body:{"pages": json.encode(pageIds)});
+
+    if(response.statusCode == 201){
+      return;
     }
     else{
       throw ServerException.withCode(response.statusCode);
@@ -102,7 +133,7 @@ class HttpHandler {
   static Future addLike(user, docId) async{
     final response =
         await http.post(
-          _URL + "/like",
+          _URL + _LIKE_SERVER,
           body: {"user": user, "doc_id": docId});
 
     if(response.statusCode == 200) {
@@ -116,7 +147,7 @@ class HttpHandler {
 
   static Future retrieveLikes() async{
     final response =
-        await http.get( _URL + "/like");
+        await http.get( _URL + _LIKE_SERVER);
 
     if(response.statusCode == 200){
       return json.decode(response.body);

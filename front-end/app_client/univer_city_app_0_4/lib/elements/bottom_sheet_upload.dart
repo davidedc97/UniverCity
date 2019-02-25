@@ -109,7 +109,6 @@ _fromDevice(context) async{
       MaterialPageRoute(builder: (context) {
         return UploadFormScaffold(path);
   }));
-  //TODO Navigator per gestione tag upload
 
 }
 //############################################################################## From Camera

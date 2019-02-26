@@ -2,6 +2,8 @@
 
 var Express = require("express");
 var AWS = require('aws-sdk');
+var AWS = require('aws-sdk/global'); // gestione aws
+var S3 = require('aws-sdk/clients/s3'); // gestione aws
 var BodyParser = require("body-parser");
 var multer = require('multer'); 
 var upload = multer();

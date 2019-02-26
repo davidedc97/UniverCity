@@ -17,7 +17,7 @@ class DocumentProvider{
       version: 1,
       onCreate: (Database newDB, int version){
         newDB.execute('''
-        CREATE TABLE Documents(
+        CREATE TABLE Favorite(
           title TEXT NOT NULL,
           owner TEXT NOT NULL,
           uuid TEXT PRIMARY KEY,
@@ -39,13 +39,13 @@ class DocumentProvider{
     );
   }
 
-  fetchAllPrefDocs() async{
-    return db.query('Documents');
+  Future<List<Map<String, dynamic>>> fetchAllPrefDocs() async{
+    return db.query('Favorite');
   }
 
-  fetchPrefDoc(String uuid) async{
+  Future<Document> fetchPrefDoc(String uuid) async{
     final map = await db.query(
-      'Documents',
+      'Favorite',
       columns: null,
       where: 'uuid = ?',
       whereArgs: [uuid],
@@ -57,15 +57,19 @@ class DocumentProvider{
     return null;
   }
 
-  addPrefDoc(Document item){
-    db.insert('Documents', item.toMap());
+  Future<int> addPrefDoc(Document item){
+    return db.insert('Favorite', item.toMap());
   }
   
-  rmPrefDoc(Document item){
-    db.delete(
-      'Documents',
+  Future<int> rmPrefDoc(Document item){
+    return db.delete(
+      'Favorite',
       where: 'uuid = ?',
       whereArgs: [item.uuid],
     );
   }
+
+  //TODO add docs to history
+
 }
+

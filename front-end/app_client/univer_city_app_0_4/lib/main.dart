@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:univer_city_app_0_4/routes/login_scaffold.dart';
 import 'package:univer_city_app_0_4/routes/main_scaffold.dart';
-import 'package:univer_city_app_0_4/routes/search_scaffold.dart';
 import 'package:univer_city_app_0_4/routes/page_404_not_found.dart';
 import 'package:univer_city_app_0_4/bloc/main_bloc_provider.dart';
 import 'package:univer_city_app_0_4/routes/complicated_form.dart';
@@ -12,7 +12,15 @@ import 'package:univer_city_app_0_4/routes/login_form.dart';
 // TODO feedback sistemare
 // TODO BUG in app
 
-void main() => runApp(UniverCity());
+
+
+void main(){
+  // rende possibile solo l'orientamento verticale
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
+  .then((_){
+    runApp(UniverCity());
+  });
+}
 
 class UniverCity extends StatelessWidget {
   Widget build(BuildContext context) {
@@ -65,10 +73,6 @@ class UniverCity extends StatelessWidget {
           return MainScaffold();
         });
       // #######################################################################Schermata di Ricerca (SearchScaffold)
-      case '/search':
-        return MaterialPageRoute(builder: (context) {
-          return SearchScaffold();
-        });
 
       /// in caso di errore non so se mostrare una pagina 404 con vari link
       /// di reindirizzamento oppure reindirizzare nella pagina home

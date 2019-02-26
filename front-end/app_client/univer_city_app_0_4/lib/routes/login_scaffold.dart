@@ -56,7 +56,7 @@ class LoginScaffold extends StatelessWidget {
                         BtnLogin(
                           title: 'JOIN US WITH GOOGLE',
                           color: Colors.lightGreenAccent[700],
-                          onPressed: () => debugPrint('google join'),
+                          onPressed: () => Navigator.pushNamedAndRemoveUntil(context, '/', (Route<dynamic> route) => false),
                         ),
                         //################################################## ------------ OR -----------
                         DividerTextOr(),

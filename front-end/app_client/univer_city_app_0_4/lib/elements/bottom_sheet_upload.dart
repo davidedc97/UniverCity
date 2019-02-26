@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:univer_city_app_0_4/routes/upload_form_scaffold.dart';
 import 'package:document_chooser/document_chooser.dart';
-import 'package:univer_city_app_0_4/routes/login_form.dart';
 
 //############################################################################## Classe stora i dati di un bottone
 class ButtonSheet {
@@ -110,7 +109,6 @@ _fromDevice(context) async{
       MaterialPageRoute(builder: (context) {
         return UploadFormScaffold(path);
   }));
-  //TODO Navigator per gestione tag upload
 
 }
 //############################################################################## From Camera

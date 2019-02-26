@@ -84,7 +84,7 @@ class HttpHandler {
     }
   }
 
-
+  
   static Future searchDocument(query) async {
     final response =
         await http.get(_URL + _SEARCH_SERVER + "/" + "query");

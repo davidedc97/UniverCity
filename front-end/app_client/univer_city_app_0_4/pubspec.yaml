@@ -23,6 +23,7 @@ dependencies:
   flutter_pdf_viewer: ^0.0.7
   url_launcher: ^5.0.1
   document_chooser: ^0.0.2
+  material_search: ^0.2.8
   flutter_chips_input: ^1.1.0
   sqflite: ^1.1.0
   path: ^1.6.2

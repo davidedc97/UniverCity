@@ -74,7 +74,6 @@ class HttpHandler {
     }
   }
 
-  //commento a caso per pushare
   static Future getDocumentById(docId) async{
     final response =
       await http.get(_URL + _DOCUMENT_SERVER + "/" + docId);

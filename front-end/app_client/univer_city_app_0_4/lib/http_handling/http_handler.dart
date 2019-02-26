@@ -99,6 +99,7 @@ class HttpHandler {
 
 
   static Future<dynamic> uploadDocument(title, dynamic file, type) async {
+    //TODO: devo gestire lo stream dei byte del file in input(MultipartRequest)
     final response =
         await http.post(
           _URL + _DOCUMENT_SERVER,

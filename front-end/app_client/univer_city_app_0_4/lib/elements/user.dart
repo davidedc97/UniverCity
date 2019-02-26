@@ -19,7 +19,7 @@ class User{
   String get uuid => _uuid;
 
   User.fromJson(Map<String, dynamic> json) {
-    //this function is made for display my own profile (with privacy information)
+    //this function is made to retrieve my own profile (with privacy information)
     this._user = json["user"];
     this._name = json["name"];
     this._surname = json["surname"];
@@ -30,7 +30,7 @@ class User{
   }
 
   User.secureFromJson(Map<String, dynamic> json) {
-    // this function is made for display other users' profiles, without privacy information like the email
+    // this function is made to retrieve other users' profiles, without privacy information like the email
     this._user = json["user"];
     this._name = json["name"];
     this._surname = json["surname"];

@@ -6,7 +6,7 @@ import 'package:univer_city_app_0_4/elements/server_exception.dart';
 
 class HttpHandler {
 
-  static const _URL = "http://www.porcaccioiltuodio.mam"; // sto coglione di michele ha scelto l'url non finale a cazzo (da tucci)
+  static const _URL = "http://www.porcaccioiltuodio.mam";
   static const _DOCUMENT_SERVER = "/document";
   static const _SEARCH_SERVER = "/search";
   static const _USER_SERVER = "/user";
@@ -29,6 +29,8 @@ class HttpHandler {
       throw ServerException.withCode(response.statusCode);
     }
   }
+
+
   //TODO per favore fai in modo che mi ritorna un bool ;)
   static Future<bool> validateLogin(user, pw) async {
     final response =
@@ -42,6 +44,7 @@ class HttpHandler {
       throw ServerException.withCode(response.statusCode);
     }
   }
+
 
   static Future<User> getUserById(userId) async {
     final response =
@@ -72,25 +75,24 @@ class HttpHandler {
   }
 
 
-  static Future<Document> getDocumentById(docId) async{
+  static Future getDocumentById(docId) async{
     final response =
       await http.get(_URL + _DOCUMENT_SERVER + "/" + docId);
 
-    if(response.statusCode == 200){
-      return Document.fromJson(json.decode(response.body)); // TODO: me sa che tornano uno stream di byte, quindi così non va bene
+    if(response.statusCode == 200) {
+      //return response.bodyBytes;
     }
     else{
       throw ServerException.withCode(response.statusCode);
     }
   }
 
-  
-  static Future searchDocument(query) async {
+  static Future<List<Document>> searchDocuments(query) async {
     final response =
         await http.get(_URL + _SEARCH_SERVER + "/" + "query");
 
     if(response.statusCode == 200){
-      return json.decode(response.body); //TODO: tornano un set di documenti, chiedere spiegazioni che nelle api non si capisce un cazzo
+      return Document.parseJsonList(json.decode(response.body));
     }
     else{
       throw ServerException.withCode(response.statusCode);
@@ -144,10 +146,9 @@ class HttpHandler {
   }
 
 
-  //TODO mi sa che qua di devono prendere almeno l`uuid del documento
-  static Future retrieveLikes() async{
+  static Future retrieveLikes(docId) async{
     final response =
-        await http.get( _URL + _LIKE_SERVER);
+        await http.get( _URL + _LIKE_SERVER + "/" + docId);
 
     if(response.statusCode == 200){
       return json.decode(response.body);

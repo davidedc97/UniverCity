@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:univer_city_app_0_4/elements/document.dart';
 import 'package:univer_city_app_0_4/elements/user.dart';
 import 'package:univer_city_app_0_4/elements/server_exception.dart';
+import 'dart:typed_data';
 
 class HttpHandler {
 
@@ -74,12 +75,12 @@ class HttpHandler {
     }
   }
 
-  static Future getDocumentById(docId) async{
+  static Future<Uint8List> getDocumentById(docId) async{
     final response =
       await http.get(_URL + _DOCUMENT_SERVER + "/" + docId);
 
     if(response.statusCode == 200) {
-      //return response.bodyBytes;
+      return response.bodyBytes;
     }
     else{
       throw ServerException.withCode(response.statusCode);

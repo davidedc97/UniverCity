@@ -17,14 +17,66 @@ class HttpHandler {
 
                                 /*########     USER  HANDLING     ########*/
 
-  //TODO per favore fai in modo che mi ritorna un bool ;)
-  static Future<bool> sendFormRegistration(user, name, surname, email, pw, faculty, university) async {
+  /*
+    TODO** This function returns:
+    TODO**   1 if the user is correctly added to the Db
+    TODO**  -1 if the user is already in the Db
+    TODO**  -2 if there's an internal error
+    TODO**  throws an exception otherwise
+  */
+  static Future<int> sendFormRegistration(user, name, surname, email, pw, faculty, university) async {
     final response =
       await http.post(
         _URL + _USER_SERVER,
-        body: {"user": user, "name": name, "surname": surname, "email": email, "pass": pw, "faculty": faculty, "university":university});
+        body: {"username": user, "name": name, "surname": surname, "email": email, "pass": pw, "faculty": faculty, "university":university});
+
     if(response.statusCode == 200) {
-      return json.decode(response.body);  // TODO da vedere cosa mi tornano
+      return 1;
+    }
+    else if(response.statusCode == 400) {
+      return -1;
+    }
+    else if(response.statusCode == 500) {
+      return -2;
+    }
+    else {
+      throw ServerException.withCode(response.statusCode);
+    }
+  }
+
+
+  /*
+    TODO** This function returns:
+    TODO**   1 if the user is in the Db and the password is correct
+    TODO**  -1 if no user is found or the password is invalid
+    TODO**  -2 if there's an internal error
+    TODO**  throws an exception otherwise
+  */
+  static Future<int> validateLogin(user, pw) async {
+    final response =
+      await http.post(
+        _URL + _USER_SERVER,
+        body: {"username": user, "pass": pw});
+
+    if(response.statusCode == 200) {
+      return 1;
+    }
+    else if(response.statusCode == 400) {
+      return -1;
+    }
+    else if(response.statusCode == 500) {
+      return -2;
+    }
+    else {
+      throw ServerException.withCode(response.statusCode);
+    }
+  }
+
+  static Future<User> getMyUserById(userId) async {
+    final response =
+    await http.get(_URL + _USER_SERVER + "/" + userId);
+    if(response.statusCode == 200){
+      return User.fromJson(json.decode(response.body));
     }
     else{
       throw ServerException.withCode(response.statusCode);
@@ -32,26 +84,11 @@ class HttpHandler {
   }
 
 
-  //TODO per favore fai in modo che mi ritorna un bool ;)
-  static Future<bool> validateLogin(user, pw) async {
-    final response =
-      await http.post(
-        _URL + _USER_SERVER,
-        body: {"user": user, "pass": pw});
-    if(response.statusCode == 200) {
-      return json.decode(response.body);  //TODO check: dovrebbero tornare un booleano
-    }
-    else{
-      throw ServerException.withCode(response.statusCode);
-    }
-  }
-
-
-  static Future<User> getUserById(userId) async {
+  static Future<User> getOtherUserById(userId) async {
     final response =
         await http.get(_URL + _USER_SERVER + "/" + userId);
     if(response.statusCode == 200){
-      return User.fromJson(json.decode(response.body));
+      return User.secureFromJson(json.decode(response.body));
     }
     else{
       throw ServerException.withCode(response.statusCode);
@@ -74,6 +111,7 @@ class HttpHandler {
       throw ServerException.withCode(response.statusCode);
     }
   }
+
 
   static Future<Uint8List> getDocumentById(docId) async{
     final response =

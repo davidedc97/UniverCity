@@ -29,7 +29,7 @@ class HttpHandler {
       throw ServerException.withCode(response.statusCode);
     }
   }
-
+  //TODO michele frocio di merda
   //TODO per favore fai in modo che mi ritorna un bool ;)
   static Future<bool> validateLogin(user, pw) async {
     final response =
@@ -58,12 +58,12 @@ class HttpHandler {
                                 /*########     DOCUMENT  HANDLING     ########*/
 
 
-  static Future<dynamic> uploadDocument(title, dynamic file) async {
+  static Future<dynamic> uploadDocument(title, dynamic file, type) async {
     print("Michele merda (da Tucci)");
     final response =
         await http.post(
           _URL + _DOCUMENT_SERVER,
-          body: {"title": user, "type": type, "pages": pages, "tags": tags});
+          body: {"title": title, "type": type, "file": file});
 
     if(response.statusCode == 201) {
       return Document.fromJson(json.decode(response.body));

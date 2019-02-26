@@ -20,8 +20,8 @@ class BottomSheetInfoFile extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  IconButton(icon: Icon(Icons.thumb_up), onPressed: ()=>debugPrint('like')),
-                  IconButton(icon: Icon(Icons.favorite_border), onPressed: ()=>debugPrint('love'))
+                  IconButton(icon: Icon(Icons.thumb_up), onPressed: ()=>debugPrint('like')),//TODO ADD LIKE
+                  IconButton(icon: Icon(Icons.favorite_border), onPressed: ()=>debugPrint('love'))//TODO ADD AND REMOVE TO DB Favorite
                 ],
               ),
             ),
@@ -34,13 +34,13 @@ class BottomSheetInfoFile extends StatelessWidget {
           ListTile(
             leading: Icon(Icons.content_copy),
             title: Text('Copia Link'),
-            onTap: () => debugPrint('url'),
+            onTap: () => debugPrint('url'),//TODO copia link
           ),
 
           ListTile(
             leading: Icon(Icons.file_download),
             title: Text('Scarica'),
-            onTap: ()=> debugPrint('downloading $_uuid'),
+            onTap: ()=> debugPrint('downloading $_uuid'),//TODO DOWNLOAD UUID
           )
         ],
       ),

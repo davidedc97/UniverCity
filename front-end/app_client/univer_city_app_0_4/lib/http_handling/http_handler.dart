@@ -29,7 +29,6 @@ class HttpHandler {
       throw ServerException.withCode(response.statusCode);
     }
   }
-  //TODO michele frocio di merda
   //TODO per favore fai in modo che mi ritorna un bool ;)
   static Future<bool> validateLogin(user, pw) async {
     final response =
@@ -59,7 +58,6 @@ class HttpHandler {
 
 
   static Future<dynamic> uploadDocument(title, dynamic file, type) async {
-    print("Michele merda (da Tucci)");
     final response =
         await http.post(
           _URL + _DOCUMENT_SERVER,
@@ -146,6 +144,7 @@ class HttpHandler {
   }
 
 
+  //TODO mi sa che qua di devono prendere almeno l`uuid del documento
   static Future retrieveLikes() async{
     final response =
         await http.get( _URL + _LIKE_SERVER);

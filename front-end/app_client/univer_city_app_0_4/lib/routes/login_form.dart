@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:univer_city_app_0_4/elements/button_login.dart';
+import 'package:univer_city_app_0_4/http_handling/http_handler.dart';
 
 class LoginFormScaffold extends StatelessWidget {
   @override
@@ -90,7 +91,19 @@ login(BuildContext context, String id, String pw ){
         }
     );
   }else{
+    //TODO da testare
     debugPrint('email: $id, pass: $pw ');
-    Navigator.pushNamedAndRemoveUntil(context, '/', (Route<dynamic> route) => false);
+    Future res = HttpHandler.validateLogin(id, pw);
+    FutureBuilder<bool>(
+      future: res,
+      builder: (context, snapshot){
+        if(snapshot.hasError) print(snapshot.data);
+        return snapshot.hasData
+            ? Navigator.pushNamedAndRemoveUntil(context, '/', (Route<dynamic> route) => false)
+            : Center(child: CircularProgressIndicator(),);
+      },
+    );
+
+
   }
 }

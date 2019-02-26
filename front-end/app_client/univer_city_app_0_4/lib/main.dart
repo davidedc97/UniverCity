@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:univer_city_app_0_4/routes/login_scaffold.dart';
 import 'package:univer_city_app_0_4/routes/main_scaffold.dart';
 import 'package:univer_city_app_0_4/routes/search_scaffold.dart';
@@ -12,7 +13,15 @@ import 'package:univer_city_app_0_4/routes/login_form.dart';
 // TODO feedback sistemare
 // TODO BUG in app
 
-void main() => runApp(UniverCity());
+
+
+void main(){
+  // rende possibile solo l'orientamento verticale
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
+  .then((_){
+    runApp(UniverCity());
+  });
+}
 
 class UniverCity extends StatelessWidget {
   Widget build(BuildContext context) {

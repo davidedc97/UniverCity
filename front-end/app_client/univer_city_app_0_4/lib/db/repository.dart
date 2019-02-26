@@ -2,7 +2,6 @@ import 'package:sqflite/sqflite.dart';
 import 'package:univer_city_app_0_4/elements/document.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart';
-import 'dart:async';
 import 'dart:io';
 
 
@@ -58,11 +57,11 @@ class DocumentProvider{
   }
 
   addPrefDoc(Document item){
-    db.insert('Documents', item.toMap());
+    return db.insert('Documents', item.toMap());
   }
   
   rmPrefDoc(Document item){
-    db.delete(
+    return db.delete(
       'Documents',
       where: 'uuid = ?',
       whereArgs: [item.uuid],

@@ -76,12 +76,11 @@ class HttpHandler {
 
 
   static Future getDocumentById(docId) async{
-    var ret = new http.MultipartFile.
     final response =
       await http.get(_URL + _DOCUMENT_SERVER + "/" + docId);
 
     if(response.statusCode == 200) {
-      return response.body; // TODO: me sa che tornano uno stream di byte, quindi così non va bene
+      //return response.bodyBytes;
     }
     else{
       throw ServerException.withCode(response.statusCode);

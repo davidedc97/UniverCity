@@ -1,10 +1,19 @@
+
 import 'package:flutter/material.dart';
-import 'package:flutter_full_pdf_viewer/flutter_full_pdf_viewer.dart';
+
 
 String assetPath = 'assets/doc/Dispense_Reti_Benelli_Giambene.pdf';
 
 viewerPdfByUuid(BuildContext context,String title, String uuid){
 
+  String u = 'https://laeman87.files.wordpress.com/2013/06/telecomunicazioni.pdf';
+  Uri ur = Uri(
+    port: 80,
+    scheme: 'https',
+    host: 'laeman87.files.wordpress.com',
+    path: '/2013/06/telecomunicazioni.pdf',
+    queryParameters: {}
+  );
 
   return MaterialPageRoute(
     settings: new RouteSettings(
@@ -12,8 +21,7 @@ viewerPdfByUuid(BuildContext context,String title, String uuid){
       isInitialRoute: false,
     ),
     builder: (BuildContext context) {
-     return PDFViewerScaffoldAssets(
-       assetsPath: assetPath,
+     return Scaffold(
        appBar: AppBar(
          title: Text(title),
          actions: <Widget>[
@@ -21,8 +29,8 @@ viewerPdfByUuid(BuildContext context,String title, String uuid){
            IconButton(icon: Icon(Icons.favorite_border), onPressed: (){}),
          ],
        ),
+       body: Container(),
      );
-
-    }
-  );
+    });
 }
+

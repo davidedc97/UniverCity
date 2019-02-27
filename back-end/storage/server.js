@@ -41,13 +41,13 @@ const {DYNAMO_ENDPOINT} = process.env;
 */
 
 AWS.config.update({
-    accesKeyId: "AKIAJY5LRLNDA3O3Z7IA",
-    secretAccesKey: "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"
+    accesKeyId: "<S3_Acces_Key>",
+    secretAccesKey: "<S3_Secret_Key>"
 });
 var s3 = new AWS.S3();
 
 var params = {
-    Bucket: "univercitybuck"
+    Bucket: "<Bucket_Name>"
     //Body: fs.createReadStream(filePath),
     //key: "folder/"+Date.now()+"_"+Path2D.basename(filePath)
 };

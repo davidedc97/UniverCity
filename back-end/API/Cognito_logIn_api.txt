@@ -1,0 +1,14 @@
+AdminCreateUser: 
+https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_AdminCreateUser.html
+
+AdminGetUser:
+https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_AdminGetUser.html
+
+ChangePassword:
+https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_ChangePassword.html
+
+GetUser: {Get user and metadata for an user}
+https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_GetUser.html
+
+SignUp:
+https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_SignUp.html

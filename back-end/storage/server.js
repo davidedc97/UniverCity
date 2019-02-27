@@ -26,6 +26,14 @@ const {DYNAMO_ENDPOINT} = process.env;
     endpoint: DYNAMO_ENDPOINT
 });*/
 
+/*var s3  = new AWS.S3({
+    accessKeyId: 'Q3AM3UQ867SPQQA43P2F' ,
+    secretAccessKey: 'zuf+tfteSlswRu7BJ86wekitnifILbZam1KYY3TG' ,
+    endpoint: 'http://storage:9000' ,
+    s3ForcePathStyle: true, // needed with minio?
+    signatureVersion: 'v4'
+});*/
+
 /*
 ** #############################
 ** # Gestione bucket amazon S3 #
@@ -50,14 +58,6 @@ var dynamodb = new AWS.DynamoDB();
 //https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html
 //PDF
 //https://github.com/jjwilly16/node-pdftk
-
-var s3  = new AWS.S3({
-    accessKeyId: 'Q3AM3UQ867SPQQA43P2F' ,
-    secretAccessKey: 'zuf+tfteSlswRu7BJ86wekitnifILbZam1KYY3TG' ,
-    endpoint: 'http://storage:9000' ,
-    s3ForcePathStyle: true, // needed with minio?
-    signatureVersion: 'v4'
-});
 
 app.get("/", function(request, response) {
     response.send("The server works properly!");

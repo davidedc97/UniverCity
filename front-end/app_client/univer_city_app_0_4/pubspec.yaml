@@ -24,6 +24,9 @@ dependencies:
   document_chooser: ^0.0.2
   material_search: ^0.2.8
   flutter_chips_input: ^1.1.0
+  flutter_pdf_viewer: ^0.2.0
+  flutter_pdf_renderer: ^1.2.1
+  sliver_fab: ^1.0.0
   sqflite: ^1.1.0
   path: ^1.6.2
   path_provider: ^0.5.0+1

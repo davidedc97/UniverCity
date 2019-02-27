@@ -98,19 +98,28 @@ class HttpHandler {
                                 /*########     DOCUMENT  HANDLING     ########*/
 
 
-  static Future<dynamic> uploadDocument(title, dynamic file, type) async {
-    //TODO: devo gestire lo stream dei byte del file in input(MultipartRequest)
-    final response =
-        await http.post(
-          _URL + _DOCUMENT_SERVER,
-          body: {"title": title, "type": type, "file": file});
+  static Future<dynamic> uploadDocument(title, dynamic file, String type, String path) async {
+    var uri = Uri.parse(_URL + _DOCUMENT_SERVER);
+    var request = new http.MultipartRequest("POST", uri);
+    request.fields["title"] = title;
+    request.fields["type"] = type;
+    var file = await http.MultipartFile.fromPath('package', path);
+    request.files.add(file);
 
-    if(response.statusCode == 201) {
-      return Document.fromJson(json.decode(response.body));
-    }
-    else{
-      throw ServerException.withCode(response.statusCode);
-    }
+    request.send().then( (response) {
+      if (response.statusCode == 200) {
+        return 1;
+      }
+      else if (response.statusCode == 400){
+        throw ServerException.withCode(response.statusCode); //TODO gestire le risposte a seconda del codice del response
+      }
+      else if (response.statusCode == 500){
+        throw ServerException.withCode(response.statusCode);
+      }
+      else{
+        throw ServerException.withCode(response.statusCode);
+      }
+    });
   }
 
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:material_search/material_search.dart';
+import 'package:univer_city_app_0_4/routes/viewer.dart';
 
 //############################################################################## MainAppBar
 
@@ -30,12 +31,6 @@ class _MainAppBarState extends State<MainAppBar> {
   'Linguaggi e tecnologie web':'c31afb76-39ea-11e9-b210-d663bd873d93',
   };
 
-
-  ///
-  /// contiene il documento selezionato <titolo, uuid>
-  ///
-  String _name = 'No one';
-
   _buildMaterialSearchPage(BuildContext context) {
     return new MaterialPageRoute<String>(
         settings: new RouteSettings(
@@ -55,7 +50,7 @@ class _MainAppBarState extends State<MainAppBar> {
                 return value.toLowerCase().trim()
                     .contains(new RegExp(r'' + criteria.toLowerCase().trim() + ''));
               },
-              onSelect: (dynamic value) => Navigator.of(context).pop(value),
+              onSelect: (dynamic value) => Navigator.of(context).push(viewerPdfByUuid(context, value, _docs[value])),
               onSubmit: (String value) => Navigator.of(context).pop(value),
             ),
           );
@@ -65,10 +60,7 @@ class _MainAppBarState extends State<MainAppBar> {
 
   _showMaterialSearch(BuildContext context) {
     Navigator.of(context)
-        .push(_buildMaterialSearchPage(context))
-        .then((dynamic value) {
-      setState(() => _name = value as String);
-    });
+        .push(_buildMaterialSearchPage(context));
   }
 
 

@@ -72,8 +72,6 @@ class UniverCity extends StatelessWidget {
         return MaterialPageRoute(builder: (context) {
           return MainScaffold();
         });
-      // #######################################################################Schermata di Ricerca (SearchScaffold)
-
       /// in caso di errore non so se mostrare una pagina 404 con vari link
       /// di reindirizzamento oppure reindirizzare nella pagina home
       default:

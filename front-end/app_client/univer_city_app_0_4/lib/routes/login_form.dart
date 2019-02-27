@@ -107,12 +107,17 @@ login(BuildContext context, String id, String pw) {
     //TODO da testare
     debugPrint('email: $id, pass: $pw ');
     Future res = HttpHandler.validateLogin(id, pw);
-    FutureBuilder<bool>(
+    FutureBuilder<int>(
+      ///
+      ///   1 if the user is in the Db and the password is correct
+      ///  -1 if no user is found or the password is invalid
+      ///  -2 if there's an internal error
+      ///
       future: res,
       builder: (context, snapshot) {
         if (snapshot.hasError) print(snapshot.data);
         return snapshot.hasData
-            ? (snapshot.data)
+            ? (snapshot.data == 1)
                 ? Navigator.pushNamedAndRemoveUntil(
                     context, '/', (Route<dynamic> route) => false)
                 : showDialog(
@@ -120,7 +125,9 @@ login(BuildContext context, String id, String pw) {
                     builder: (context) {
                       return AlertDialog(
                         title: Text('Ops!'),
-                        content: Text('incorrect user or password'),
+                        content: (snapshot.data == -1)
+                            ? Text('incorrect user or password')
+                            : Text('server error'),
                         actions: <Widget>[
                           FlatButton(
                               onPressed: () {

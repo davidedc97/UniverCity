@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:univer_city_app_0_4/elements/document.dart';
 import 'package:univer_city_app_0_4/elements/bottom_sheet_info_file.dart';
-import 'package:flutter_pdf_viewer/flutter_pdf_viewer.dart';
+import 'package:univer_city_app_0_4/routes/viewer.dart';
 
 class DocList extends StatelessWidget {
 
@@ -15,7 +15,9 @@ class DocList extends StatelessWidget {
       color: Colors.white,
       child: ListTile(
         title:Text(_info.title),
-        subtitle: _info.owner ?? Text(''),
+        subtitle: (_info.owner != null)
+            ? Text(_info.owner)
+            : Text(''),
         leading: Icon(Icons.description),
         trailing: IconButton(
             icon: Icon(Icons.more_vert),
@@ -29,7 +31,7 @@ class DocList extends StatelessWidget {
             }
         ),
         onTap: (){
-          PdfViewer.loadAsset(_info.uuid);
+          Navigator.of(context).push(viewerPdfByUuid(context,_info.title, _info.uuid));
         },
       ),
     );

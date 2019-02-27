@@ -152,12 +152,17 @@ compForm(BuildContext context, String id, String nm, String cg, String em,
     debugPrint(
         'email: $id, Nome: $nm, Cognome: $cg, Email: $em, Pass: $pw, Facolta $fa ');
     Future res = HttpHandler.sendFormRegistration(id, nm, cg, em, pw, fa, un);
-    FutureBuilder<bool>(
+    FutureBuilder<int>(
+      ///
+      ///  1 if the user is correctly added to the Db
+      /// -1 if the user is already in the Db
+      /// -2 if there's an internal error
+      ///
       future: res,
       builder: (context, snapshot) {
         if (snapshot.hasError) print(snapshot.data);
         return snapshot.hasData
-            ? (snapshot.data)
+            ? (snapshot.data == 1)
                 ? Navigator.pushNamedAndRemoveUntil(
                     context, '/', (Route<dynamic> route) => false)
                 : showDialog(
@@ -165,7 +170,9 @@ compForm(BuildContext context, String id, String nm, String cg, String em,
                     builder: (context) {
                       return AlertDialog(
                         title: Text('Ops!'),
-                        content: Text('something went wrong'),
+                        content: (snapshot.data == -1)
+                            ? Text('user is already in the Db')
+                            : Text('server error'),
                         actions: <Widget>[
                           FlatButton(
                               onPressed: () {

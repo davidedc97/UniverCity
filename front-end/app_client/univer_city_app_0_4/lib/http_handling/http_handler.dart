@@ -18,11 +18,11 @@ class HttpHandler {
                                 /*########     USER  HANDLING     ########*/
 
   /*
-    TODO** This function returns:
-    TODO**   1 if the user is correctly added to the Db
-    TODO**  -1 if the user is already in the Db
-    TODO**  -2 if there's an internal error
-    TODO**  throws an exception otherwise
+    ** This function returns:
+    **   1 if the user is correctly added to the Db
+    **  -1 if the user is already in the Db
+    **  -2 if there's an internal error
+    **  throws an exception otherwise
   */
   static Future<int> sendFormRegistration(user, name, surname, email, pw, faculty, university) async {
     final response =
@@ -46,11 +46,11 @@ class HttpHandler {
 
 
   /*
-    TODO** This function returns:
-    TODO**   1 if the user is in the Db and the password is correct
-    TODO**  -1 if no user is found or the password is invalid
-    TODO**  -2 if there's an internal error
-    TODO**  throws an exception otherwise
+    ** This function returns:
+    **   1 if the user is in the Db and the password is correct
+    **  -1 if no user is found or the password is invalid
+    **  -2 if there's an internal error
+    **  throws an exception otherwise
   */
   static Future<int> validateLogin(user, pw) async {
     final response =

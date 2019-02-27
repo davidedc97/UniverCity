@@ -21,5 +21,17 @@
     "memory-streams": "^0.1.3",
     "minio": "^7.0.5",
     "multer": "^1.4.1"
-  }
+  }, 
+  "_comment": "gestione aws",
+  "dependencies": {},
+  "name": "aws-nodejs-sample",
+  "description": "A simple Node.js application illustrating usage of the AWS SDK for Node.js.",
+  "version": "1.0.1",
+  "main": "sample.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "NAME",
+  "license": "ISC"
 }

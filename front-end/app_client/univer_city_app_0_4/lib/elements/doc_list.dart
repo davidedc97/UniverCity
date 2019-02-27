@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:univer_city_app_0_4/elements/document.dart';
 import 'package:univer_city_app_0_4/elements/bottom_sheet_info_file.dart';
 import 'package:flutter_pdf_viewer/flutter_pdf_viewer.dart';
-import 'package:univer_city_app_0_4/routes/pre_viewer.dart';
+import 'package:univer_city_app_0_4/elements/pre_viewer.dart';
 
 class DocList extends StatelessWidget {
 

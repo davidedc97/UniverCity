@@ -15,6 +15,10 @@ List<ButtonSheet> _buttons = [
   ButtonSheet('Scans', Icons.camera_alt)
 ];
 
+///
+/// Classe che mostra il BottomSheet per caricare un nuovo file
+/// da device o da camera
+///
 
 class BottomSheetUpload extends StatelessWidget {
 

@@ -1,4 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:univer_city_app_0_4/elements/info_row.dart';
+
+
+///
+/// Classe che costruisce il BottomSheet con le informazioni del documento
+/// selezionato, il costruttore prende come valori:
+/// title -> il titolo del documento
+/// proprietario -> il proprietario del documento
+/// uuid -> l'indentificatore univoco del documento
+///         per eventuali interrogazioni al database dei metadati
+///         riguardo il documento in questione
+///
 
 class BottomSheetInfoFile extends StatelessWidget {
   final String title, proprietario, _uuid;
@@ -42,28 +54,6 @@ class BottomSheetInfoFile extends StatelessWidget {
             title: Text('Scarica'),
             onTap: ()=> debugPrint('downloading $_uuid'),//TODO DOWNLOAD UUID
           )
-        ],
-      ),
-    );
-  }
-}
-
-
-class InfoRow extends StatelessWidget {
-  final String _title, _data;
-  InfoRow(this._title, this._data);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
-      child: Row(
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          Text(_title),
-          Text(_data),
         ],
       ),
     );

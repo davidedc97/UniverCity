@@ -1,8 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:sliver_fab/sliver_fab.dart';
 import 'package:flutter_pdf_viewer/flutter_pdf_viewer.dart';
+import 'package:univer_city_app_0_4/elements/info_row.dart';
 
 String assetPath = 'assets/doc/Dispense_Reti_Benelli_Giambene.pdf';
+
+///
+/// buildDocDialog(BuildContext context, String title, String uuid);
+/// è una funzione che a partire dal contesti il titolo e l'uuid
+/// di un documento restituisce un dialog con le info di un file
+/// prima di passare al reader dalla ricerca offrendo la possibilità
+/// di salvare tra i preferiti, mettere like scaricare etc ed avere (forse)
+/// un anteprima del documento (da testare per la velocità nel rendering)
+///
+/// forse potrebbe sostituire il BottomSheetInfoFile ma da vedere
+///
 
 Widget buildDocDialog(BuildContext context, String title, String uuid) {
   return Dialog(
@@ -24,6 +36,7 @@ Widget buildDocDialog(BuildContext context, String title, String uuid) {
             flexibleSpace: new FlexibleSpaceBar(
 
                 ///
+                /// spazio SilverAppBar
                 /// da mettere o anteprima pdf o immagine bella
                 ///
                 ),
@@ -81,25 +94,4 @@ Widget buildDocDialog(BuildContext context, String title, String uuid) {
       ),
     ),
   );
-}
-
-class InfoRow extends StatelessWidget {
-  final String _title, _data;
-  InfoRow(this._title, this._data);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
-      child: Row(
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          Text(_title),
-          Text(_data),
-        ],
-      ),
-    );
-  }
 }

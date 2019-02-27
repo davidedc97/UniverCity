@@ -4,6 +4,8 @@ var Express = require("express");
 var AWS = require('aws-sdk');
 var AWS = require('aws-sdk/global'); // gestione aws
 var S3 = require('aws-sdk/clients/s3'); // gestione aws
+var path = require('path'); // gestione aws
+var fs = require('fs'); // gestione aws 
 var BodyParser = require("body-parser");
 var multer = require('multer'); 
 var upload = multer();
@@ -19,10 +21,36 @@ app.use(Express.static(__dirname));
 
 const {DYNAMO_ENDPOINT} = process.env;
 
-AWS.config.update({
+/*AWS.config.update({
     region: "us-west-2",
     endpoint: DYNAMO_ENDPOINT
+});*/
+
+/*var s3  = new AWS.S3({
+    accessKeyId: 'Q3AM3UQ867SPQQA43P2F' ,
+    secretAccessKey: 'zuf+tfteSlswRu7BJ86wekitnifILbZam1KYY3TG' ,
+    endpoint: 'http://storage:9000' ,
+    s3ForcePathStyle: true, // needed with minio?
+    signatureVersion: 'v4'
+});*/
+
+/*
+** #############################
+** # Gestione bucket amazon S3 #
+** #############################
+*/
+
+AWS.config.update({
+    accesKeyId: "AKIAJY5LRLNDA3O3Z7IA",
+    secretAccesKey: "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"
 });
+var s3 = new AWS.S3();
+
+var params = {
+    Bucket: "univercitybuck"
+    //Body: fs.createReadStream(filePath),
+    //key: "folder/"+Date.now()+"_"+Path2D.basename(filePath)
+};
   
 var dynamodb = new AWS.DynamoDB();
 
@@ -30,14 +58,6 @@ var dynamodb = new AWS.DynamoDB();
 //https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html
 //PDF
 //https://github.com/jjwilly16/node-pdftk
-
-var s3  = new AWS.S3({
-    accessKeyId: 'Q3AM3UQ867SPQQA43P2F' ,
-    secretAccessKey: 'zuf+tfteSlswRu7BJ86wekitnifILbZam1KYY3TG' ,
-    endpoint: 'http://storage:9000' ,
-    s3ForcePathStyle: true, // needed with minio?
-    signatureVersion: 'v4'
-});
 
 app.get("/", function(request, response) {
     response.send("The server works properly!");

@@ -98,7 +98,14 @@ class HttpHandler {
                                 /*########     DOCUMENT  HANDLING     ########*/
 
 
-  static Future<dynamic> uploadDocument(title, dynamic file, String type, String path) async {
+  /*
+    ** This function returns:
+    **   1 if the document is succesfully uploaded
+    **  -1 if there's a bad input parameter
+    **  -2 if there's an internal error
+    **  throws an exception otherwise
+  */
+  static Future<int> uploadDocument(String title, String type, String path) async {
     var uri = Uri.parse(_URL + _DOCUMENT_SERVER);
     var request = new http.MultipartRequest("POST", uri);
     request.fields["title"] = title;
@@ -107,14 +114,14 @@ class HttpHandler {
     request.files.add(file);
 
     request.send().then( (response) {
-      if (response.statusCode == 200) {
+      if (response.statusCode == 201) {
         return 1;
       }
       else if (response.statusCode == 400){
-        throw ServerException.withCode(response.statusCode); //TODO gestire le risposte a seconda del codice del response
+        return -1; //TODO gestire le risposte a seconda del codice del response
       }
       else if (response.statusCode == 500){
-        throw ServerException.withCode(response.statusCode);
+        return -2;
       }
       else{
         throw ServerException.withCode(response.statusCode);

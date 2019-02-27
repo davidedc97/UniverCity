@@ -61,16 +61,19 @@ APP's API:
 
 ================================================================== DOCUMENT FUNCTIONS =================================================
 
-  static Future upload_document(user, type, pages, tags) async
+  static Future<int> uploadDocument(String title, String type, String path) async
 	
 	USAGE:
-		TODO
+		upload a document selected from a path with a given title. The type must be "M" (mashup) or "O" (original)
 	
   	METHOD:
-  		TODO
+  		POST /document
   	
   	RETURN:
-  		TODO
+    	1 if the document is succesfully uploaded
+    	-1 if there's a bad input parameter
+    	-2 if there's an internal error
+    	throws an exception otherwise
 	
 ##################################################################
 

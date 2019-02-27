@@ -37,7 +37,8 @@ class LoginScaffold extends StatelessWidget {
             child: Container(
                 padding: EdgeInsets.only(top: 25),
                 decoration: boxBgeOmbra, // Applico sfondo bianco e ombra
-                child: ListView(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Column(
                       ///

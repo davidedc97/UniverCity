@@ -50,7 +50,7 @@ class _MainAppBarState extends State<MainAppBar> {
                 return value.toLowerCase().trim()
                     .contains(new RegExp(r'' + criteria.toLowerCase().trim() + ''));
               },
-              onSelect: (dynamic value) => Navigator.of(context).push(viewerPdfByUuid(context, value, _docs[value])),
+              onSelect: (dynamic value) => showDialog(context: context, builder: (context)=>buildDocDialog(context, value, _docs[value])),
               onSubmit: (String value) => Navigator.of(context).pop(value),
             ),
           );

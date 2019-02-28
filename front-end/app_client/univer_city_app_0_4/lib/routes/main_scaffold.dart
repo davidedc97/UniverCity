@@ -44,7 +44,8 @@ class _MainScaffoldState extends State<MainScaffold> {
       case 3:
         return SendFeedback();
       case 4:
-        launch('https://github.com/davidedc97/UniverCity/issues/new/', forceSafariVC: false);
+        launch('https://github.com/davidedc97/UniverCity/issues/new/',
+            forceSafariVC: false);
         return ReportBug();
       default:
         return Text('Errore switch Drawer outOfIndex ;) ');
@@ -52,16 +53,16 @@ class _MainScaffoldState extends State<MainScaffold> {
   }
 
   _onSelectItem(int index) {
-    if(index != 5) {
+    if (index != 5) {
       setState(() => _selectedDrawerIndex = index);
       Navigator.of(context).pop();
-    }else {
+    } else {
       //TODO funzione di logout e poi v questo qua sotto per riportare alla schermata do login
-      Navigator.pushNamedAndRemoveUntil(context, '/login', (Route<dynamic> route) => false);
+      Navigator.pushNamedAndRemoveUntil(
+          context, '/login', (Route<dynamic> route) => false);
       //Navigator.popAndPushNamed(context, '/login');
-    }//chiude il drawer
+    } //chiude il drawer
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -71,42 +72,60 @@ class _MainScaffoldState extends State<MainScaffold> {
     var drawerOptions = <Widget>[];
     for (var i = 0; i < widget.drawerEntry.length; i++) {
       var d = widget.drawerEntry[i];
-      drawerOptions.add(
-          Container(
-            decoration: BoxDecoration(
-              color: (i == _selectedDrawerIndex)
-                  ?Colors.brown[200]
-                  :null,
-            ),
-            child: ListTile(
-              leading: Icon(d.icon),
-              title: Text(d.title),
-              selected: i == _selectedDrawerIndex,
-              onTap: () => _onSelectItem(i),
-            ),
-          )
-      );
+      drawerOptions.add(Container(
+        decoration: BoxDecoration(
+          color: (i == _selectedDrawerIndex)
+
+              ///
+              /// Sfondo drawer quando selezionato
+              ///
+              ? null //Theme.of(context).accentColor
+              : null,
+        ),
+        child: ListTile(
+          leading: (i == _selectedDrawerIndex)
+              ? Icon(
+                  d.icon,
+                  size: 40,
+                  color: Theme.of(context).accentColor,
+                )
+              : Icon(d.icon),
+          title: (i == _selectedDrawerIndex)
+              ? Text(
+                  d.title,
+                  style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Theme.of(context).accentColor),
+                )
+              : Text(d.title),
+          selected: i == _selectedDrawerIndex,
+          onTap: () => _onSelectItem(i),
+        ),
+      ));
     }
 
     //########################################################################## FAB Button
     return Scaffold(
       //######################################################################## AppBar HOME
-        appBar: MainAppBar(),
-        drawer: Drawer(
-          child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: drawerOptions),
-        ),
-        body: _getDrawerItemWidget(_selectedDrawerIndex),
-        floatingActionButton:(_selectedDrawerIndex == 0)
+      appBar: MainAppBar(),
+      drawer: Drawer(
+        child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: drawerOptions),
+      ),
+      body: _getDrawerItemWidget(_selectedDrawerIndex),
+      floatingActionButton: (_selectedDrawerIndex == 0)
           // Controllo se sto in home oppure no in modo tale da mostrare o non mostrare il fab
-              ? Builder(builder: (BuildContext contextSc){return MainFab(contextSc);})
-                ///
-                /// Qui mi serve un Builder per referenziare poi ai figli del fab
-                /// questo scaffold qui
-                ///
-              : null,
+          ? Builder(builder: (BuildContext contextSc) {
+              return MainFab(contextSc);
+            })
 
+          ///
+          /// Qui mi serve un Builder per referenziare poi ai figli del fab
+          /// questo scaffold qui
+          ///
+          : null,
     );
   }
 }

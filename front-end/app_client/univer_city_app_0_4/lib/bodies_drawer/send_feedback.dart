@@ -25,6 +25,8 @@ class _SendFeedbackState extends State<SendFeedback> {
                     Padding(
                       padding: EdgeInsets.only(top: 32),
                       child: Slider(
+                        inactiveColor: Theme.of(context).accentColor,
+                          activeColor: Theme.of(context).accentColor,
                           value: _slider1,
                           min: 1.0,
                           max: 5.0,
@@ -48,7 +50,7 @@ class _SendFeedbackState extends State<SendFeedback> {
                     Column(
                       children: <Widget>[
                         RaisedButton.icon(
-                            color: Colors.amber[200],
+                            color: Theme.of(context).accentColor,
                             icon: Icon(Icons.file_upload),
                             label: Text('SEND'),
                             onPressed: () => debugPrint('send')),

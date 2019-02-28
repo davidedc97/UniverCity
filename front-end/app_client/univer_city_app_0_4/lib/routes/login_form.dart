@@ -52,7 +52,7 @@ class LoginFormScaffold extends StatelessWidget {
               ),
               //################################################################ LOGIN BUTTON
               BtnLogin(
-                color: Colors.redAccent[700],
+                color: Theme.of(context).accentColor,
                 title: 'LOGIN',
                 onPressed: () {
                   login(context, _usem ?? '', _pw ?? '');
@@ -72,7 +72,7 @@ class LoginFormScaffold extends StatelessWidget {
                         debugPrint('Recover');
                       },
                       child: Text('RECOVER',
-                          style: TextStyle(color: Colors.redAccent[700])))
+                          style: TextStyle(color: Theme.of(context).accentColor)))
                 ],
               )
             ],

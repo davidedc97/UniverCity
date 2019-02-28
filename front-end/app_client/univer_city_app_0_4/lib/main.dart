@@ -12,7 +12,102 @@ import 'package:univer_city_app_0_4/routes/login_form.dart';
 // TODO feedback sistemare
 // TODO BUG in app
 
+///
+/// ThemeData({
+//Brightness brightness,
+//MaterialColor primarySwatch,
+//Color primaryColor,
+//Brightness primaryColorBrightness,
+//Color primaryColorLight,
+//Color primaryColorDark,
+//Color accentColor,
+//Brightness accentColorBrightness,
+//Color canvasColor,
+//Color scaffoldBackgroundColor,
+//Color bottomAppBarColor,
+//Color cardColor,
+//Color dividerColor,
+//Color highlightColor,
+//Color splashColor,
+//InteractiveInkFeatureFactory splashFactory,
+//Color selectedRowColor,
+//Color unselectedWidgetColor,
+//Color disabledColor,
+//Color buttonColor,
+//ButtonThemeData buttonTheme,
+//Color secondaryHeaderColor,
+//Color textSelectionColor,
+//Color cursorColor,
+//Color textSelectionHandleColor,
+//Color backgroundColor,
+//Color dialogBackgroundColor,
+//Color indicatorColor,
+//Color hintColor,
+//Color errorColor,
+//Color toggleableActiveColor,
+//String fontFamily,
+//TextTheme textTheme,
+//TextTheme primaryTextTheme,
+//TextTheme accentTextTheme,
+//InputDecorationTheme inputDecorationTheme,
+//IconThemeData iconTheme,
+//IconThemeData primaryIconTheme,
+//IconThemeData accentIconTheme,
+//SliderThemeData sliderTheme,
+//TabBarTheme tabBarTheme,
+//CardTheme cardTheme,
+//ChipThemeData chipTheme,
+//TargetPlatform platform,
+//MaterialTapTargetSize materialTapTargetSize,
+//PageTransitionsTheme pageTransitionsTheme,
+//AppBarTheme appBarTheme,
+//BottomAppBarTheme bottomAppBarTheme,
+//ColorScheme colorScheme,
+//DialogTheme dialogTheme,
+//Typography typography,
+//CupertinoThemeData cupertinoOverrideTheme
+//})
+///
 
+List<ThemeData> tData = [
+  ThemeData(
+    scaffoldBackgroundColor: Colors.grey[100],//Colors.brown[100],
+    primaryColor: Colors.white,//Colors.cyan[900],
+    primaryColorDark: Colors.grey[400],
+    accentColor: Colors.redAccent,//Colors.brown[800],
+    fontFamily: 'Bahnschrift',
+  ),
+  ThemeData(
+    scaffoldBackgroundColor: Colors.grey[100],//Colors.brown[100],
+    primaryColorDark: Colors.grey[400],
+    primaryColor: Colors.white,//Colors.cyan[900],
+    accentColor: Colors.orangeAccent,//Colors.brown[800],
+    fontFamily: 'Bahnschrift',
+  ),
+  ThemeData(
+    primarySwatch: Colors.orange,
+    scaffoldBackgroundColor: Colors.grey[50],
+    bottomAppBarColor: Colors.white,
+    fontFamily: 'Bahnschrift',
+  ),
+  ThemeData(
+    scaffoldBackgroundColor: Colors.grey[300],
+    primaryColor: Colors.cyan[600],
+    primaryColorDark: Colors.cyan[700],
+    primaryColorLight: Colors.cyan[500],
+    accentColor: Colors.grey[700],
+    fontFamily: 'Bahnschrift',
+  ),
+  ThemeData(
+    scaffoldBackgroundColor: Colors.grey[100],
+    primaryColor: Colors.red[500],
+    primaryColorDark: Colors.red[600],
+    primaryColorLight: Colors.red[400],
+    accentColor: Colors.cyan[600],
+    cardColor: Colors.grey[400],
+    fontFamily: 'Bahnschrift',
+  ),
+];
 
 void main(){
   // rende possibile solo l'orientamento verticale
@@ -27,12 +122,7 @@ class UniverCity extends StatelessWidget {
     return BlocProvider(
       child: MaterialApp(
         title: 'UniverCity PREALPHA',
-        theme: ThemeData(
-          scaffoldBackgroundColor: Colors.brown[100],
-          primaryColor: Colors.cyan[900],
-          accentColor: Colors.brown[800],
-          fontFamily: 'Bahnschrift',
-        ),
+        theme: tData[4],
         initialRoute: '/login',
         onGenerateRoute: _myRoutes,
       ),

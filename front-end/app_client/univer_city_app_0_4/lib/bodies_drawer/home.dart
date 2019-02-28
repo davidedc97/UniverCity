@@ -64,13 +64,13 @@ class _MyHomeState extends State<MyHome> {
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontSize: 30.0,
-                            color: Colors.brown[200],
+                            color: Theme.of(context).cardColor,
                           )),
                       Padding(
                           padding: EdgeInsets.symmetric(vertical: 32.0),
                           child: Icon(
                             Icons.favorite_border,
-                            color: Colors.brown[200],
+                            color: Theme.of(context).cardColor,
                             size: 150,
                           ))
                     ]))

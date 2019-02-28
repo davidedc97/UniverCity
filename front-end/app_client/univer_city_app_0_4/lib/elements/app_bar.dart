@@ -97,6 +97,7 @@ class _MainAppBarState extends State<MainAppBar> {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+        elevation: 2,
         title: Padding(
           padding: EdgeInsets.symmetric(vertical: 14.0),
           child: Text(
@@ -109,7 +110,7 @@ class _MainAppBarState extends State<MainAppBar> {
         ),
         actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.search),
+            icon: Icon(Icons.search,),
             onPressed: () {
               //debugPrint('is Searching true');
               _showMaterialSearch(context);

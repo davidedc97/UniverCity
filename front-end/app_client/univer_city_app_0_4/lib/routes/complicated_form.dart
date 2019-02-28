@@ -96,7 +96,7 @@ class _CompFormScaffoldState extends State<CompFormScaffold> {
               ),
               //################################################################ Get Started Button
               BtnLogin(
-                color: Colors.redAccent[700],
+                color: Theme.of(context).accentColor,
                 title: 'GET STARTED',
                 onPressed: () => compForm(context, _us ?? '', _nm ?? '',
                     _cg ?? '', _em ?? '', _pw ?? '', _fa ?? '', _un ?? ''),
@@ -112,7 +112,7 @@ class _CompFormScaffoldState extends State<CompFormScaffold> {
                         Navigator.popAndPushNamed(context, '/loginForm');
                       },
                       child: Text('LOGIN',
-                          style: TextStyle(color: Colors.redAccent[700])))
+                          style: TextStyle(color: Theme.of(context).accentColor)))
                 ],
               )
             ],

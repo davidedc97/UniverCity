@@ -17,11 +17,11 @@ class Mashups extends StatelessWidget {
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 30.0,
-                  color: Colors.brown[200],
+                  color: Theme.of(context).cardColor,
                 )),
             Icon(
               Icons.insert_drive_file,
-              color: Colors.brown[200],
+              color: Theme.of(context).cardColor,
               size: 150,
             )
           ],

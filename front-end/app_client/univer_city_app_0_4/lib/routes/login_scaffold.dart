@@ -24,7 +24,7 @@ class LoginScaffold extends StatelessWidget {
         Expanded(
             flex: 2,
             child: Container(
-              color: Colors.brown[100],
+              color: Theme.of(context).scaffoldBackgroundColor,
             )),
 
         ///
@@ -56,7 +56,7 @@ class LoginScaffold extends StatelessWidget {
                         //##################################################inizio bottone google
                         BtnLogin(
                           title: 'JOIN US WITH GOOGLE',
-                          color: Colors.lightGreenAccent[700],
+                          color: Colors.greenAccent,
                           onPressed: () => Navigator.pushNamedAndRemoveUntil(context, '/', (Route<dynamic> route) => false),
                         ),
                         //################################################## ------------ OR -----------
@@ -64,7 +64,7 @@ class LoginScaffold extends StatelessWidget {
                         //################################################## bottone form complicata
                         BtnLogin(
                           title: 'JOIN US WITH A COMPLICATED FORM',
-                          color: Colors.redAccent[700],
+                          color: Theme.of(context).accentColor,
                           onPressed: () =>
                               Navigator.pushNamed(context, '/complicatedForm'),
                         ),
@@ -82,7 +82,7 @@ class LoginScaffold extends StatelessWidget {
                                   Navigator.pushNamed(context, '/loginForm');
                                 },
                                 child: Text('LOGIN',
-                                    style: TextStyle(color: Colors.redAccent[700])))
+                                    style: TextStyle(color: Theme.of(context).accentColor)))
                           ],
                         )
                       ],

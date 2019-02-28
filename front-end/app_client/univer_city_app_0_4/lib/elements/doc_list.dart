@@ -23,12 +23,15 @@ class DocList extends StatelessWidget {
         trailing: IconButton(
             icon: Icon(Icons.more_vert),
             onPressed: (){
-              showModalBottomSheet(
+              showDialog(
                   context: context,
-                  builder: (BuildContext context)=>
-                      BottomSheetInfoFile(_info.title, _info.owner, _info.uuid)
-
-              );
+                  builder: (context) =>
+                      buildDocDialog(context, _info.title, _info.uuid));
+              ///showModalBottomSheet(
+              /// context: context,
+              ///builder: (BuildContext context)=>
+              ///     BottomSheetInfoFile(_info.title, _info.owner, _info.uuid)
+              ///);
             }
         ),
         onTap: (){

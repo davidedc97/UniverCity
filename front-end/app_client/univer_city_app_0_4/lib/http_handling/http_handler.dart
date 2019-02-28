@@ -4,6 +4,7 @@ import 'package:univer_city_app_0_4/elements/document.dart';
 import 'package:univer_city_app_0_4/elements/user.dart';
 import 'package:univer_city_app_0_4/elements/server_exception.dart';
 import 'dart:typed_data';
+//import 'package:amazon_cognito_identity_dart/cognito.dart';
 
 class HttpHandler {
 
@@ -13,6 +14,7 @@ class HttpHandler {
   static const _USER_SERVER = "/user";
   static const _LIKE_SERVER = "/like";
   static const _MASHUP_SERVER = "/mashup";
+  static const _poolId = "awsUserPoolId";
 
 
                                 /*########     USER  HANDLING     ########*/
@@ -24,7 +26,7 @@ class HttpHandler {
     **  -2 if there's an internal error
     **  throws an exception otherwise
   */
-  static Future<int> sendFormRegistration(user, name, surname, email, pw, faculty, university) async {
+  static Future<int> userFormRegistration(user, name, surname, email, pw, faculty, university) async {
     final response =
       await http.post(
         _URL + _USER_SERVER,
@@ -44,6 +46,50 @@ class HttpHandler {
     }
   }
 
+  /*
+    ** This function returns:
+    **   1 if the user is correctly added to the Db
+    **  -1 if there's bad input parameter, invalid user or password, user isn't authorized and many other problems
+    **  -2 if there's an internal error
+    **  throws an exception otherwise
+  */
+  static Future<int> userFormRegistrationCognito(user, name, surname, email, pw, faculty, university) async {
+    final response =
+      await http.post(
+        _URL + _USER_SERVER,
+        body:{
+          "DesiredDeliveryMediums": "EMAIL",
+          "ForceAliasCreation": false,
+          "MessageAction": "SUPPRESS",
+          "UserAttributes": [
+            {"Name": "name", "Value": name},
+            {"Name": "surname", "Value": surname},
+            {"Name": "email", "Value": email},
+            {"Name": "faculty", "Value": faculty},
+            {"Name": "university", "Value": university}
+          ],
+          "Username": user,
+          "UserPoolId": _poolId,
+        });
+
+    if(response.statusCode == 200) {
+      return 1;
+    }
+    else if(response.statusCode == 400) {
+      return -1;
+    }
+    else if(response.statusCode == 500) {
+      return -2;
+    }
+    else {
+      throw ServerException.withCode(response.statusCode);
+    }
+  }
+
+  static Future funzioneDiProva(user, pw, name, surname) async {
+
+
+  }
 
   /*
     ** This function returns:

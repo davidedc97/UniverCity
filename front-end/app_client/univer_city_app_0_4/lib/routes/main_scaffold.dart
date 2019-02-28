@@ -59,7 +59,7 @@ class _MainScaffoldState extends State<MainScaffold> {
     } else {
       //TODO funzione di logout e poi v questo qua sotto per riportare alla schermata do login
       Navigator.pushNamedAndRemoveUntil(
-          context, '/login', (Route<dynamic> route) => false);
+          context, '/', (Route<dynamic> route) => false);
       //Navigator.popAndPushNamed(context, '/login');
     } //chiude il drawer
   }
@@ -75,7 +75,6 @@ class _MainScaffoldState extends State<MainScaffold> {
       drawerOptions.add(Container(
         decoration: BoxDecoration(
           color: (i == _selectedDrawerIndex)
-
               ///
               /// Sfondo drawer quando selezionato
               ///
@@ -110,9 +109,13 @@ class _MainScaffoldState extends State<MainScaffold> {
       //######################################################################## AppBar HOME
       appBar: MainAppBar(),
       drawer: Drawer(
-        child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: drawerOptions),
+
+        child: Container(
+          color: Theme.of(context).scaffoldBackgroundColor,
+          child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: drawerOptions),
+        ),
       ),
       body: _getDrawerItemWidget(_selectedDrawerIndex),
       floatingActionButton: (_selectedDrawerIndex == 0)

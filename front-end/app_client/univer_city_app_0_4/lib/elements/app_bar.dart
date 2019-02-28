@@ -103,6 +103,7 @@ class _MainAppBarState extends State<MainAppBar> {
           child: Text(
             'UniverCity',
             style: TextStyle(
+              color: Color(0xFF262526),
               fontFamily: 'Collegiate',
               fontSize: 32.0,
             ),

@@ -6,6 +6,7 @@ import 'package:univer_city_app_0_4/routes/page_404_not_found.dart';
 import 'package:univer_city_app_0_4/bloc/main_bloc_provider.dart';
 import 'package:univer_city_app_0_4/routes/complicated_form.dart';
 import 'package:univer_city_app_0_4/routes/login_form.dart';
+import 'package:univer_city_app_0_4/elements/color.dart';
 
 
 // TODO test pdf online
@@ -74,37 +75,32 @@ List<ThemeData> tData = [
     scaffoldBackgroundColor: Colors.grey[100],//Colors.brown[100],
     primaryColor: Colors.white,//Colors.cyan[900],
     primaryColorDark: Colors.grey[400],
-    accentColor: Colors.redAccent,//Colors.brown[800],
+    cardColor: Colors.grey[500],
+    accentColor: Color(0xFFE74844),//Colors.brown[800],
     fontFamily: 'Bahnschrift',
   ),
   ThemeData(
     scaffoldBackgroundColor: Colors.grey[100],//Colors.brown[100],
-    primaryColorDark: Colors.grey[400],
     primaryColor: Colors.white,//Colors.cyan[900],
-    accentColor: Colors.orangeAccent,//Colors.brown[800],
+    primaryColorDark: Colors.grey[400],
+    cardColor: Colors.grey[500],
+    accentColor: Colors.orangeAccent,
     fontFamily: 'Bahnschrift',
   ),
   ThemeData(
-    primarySwatch: Colors.orange,
-    scaffoldBackgroundColor: Colors.grey[50],
-    bottomAppBarColor: Colors.white,
+    scaffoldBackgroundColor: Colors.grey[100],//Colors.brown[100],
+    primaryColor: Colors.white,//Colors.cyan[900],
+    primaryColorDark: Colors.grey[400],
+    cardColor: Colors.grey[500],
+    accentColor: Color(0xFF00ADB5),
     fontFamily: 'Bahnschrift',
   ),
   ThemeData(
-    scaffoldBackgroundColor: Colors.grey[300],
-    primaryColor: Colors.cyan[600],
-    primaryColorDark: Colors.cyan[700],
-    primaryColorLight: Colors.cyan[500],
-    accentColor: Colors.grey[700],
-    fontFamily: 'Bahnschrift',
-  ),
-  ThemeData(
-    scaffoldBackgroundColor: Colors.grey[100],
-    primaryColor: Colors.red[500],
-    primaryColorDark: Colors.red[600],
-    primaryColorLight: Colors.red[400],
-    accentColor: Colors.cyan[600],
-    cardColor: Colors.grey[400],
+    scaffoldBackgroundColor: Colors.grey[100],//Colors.brown[100],
+    primaryColor: Colors.white,//Colors.cyan[900],
+    primaryColorDark: Colors.grey[400],
+    cardColor: Colors.grey[500],
+    accentColor: Color(0xFF822433),//Colors.brown[800],
     fontFamily: 'Bahnschrift',
   ),
 ];
@@ -119,11 +115,12 @@ void main(){
 
 class UniverCity extends StatelessWidget {
   Widget build(BuildContext context) {
+    int i ;
     return BlocProvider(
       child: MaterialApp(
         title: 'UniverCity PREALPHA',
-        theme: tData[4],
-        initialRoute: '/login',
+        theme: tData[0],
+        initialRoute: '/',
         onGenerateRoute: _myRoutes,
       ),
     );
@@ -141,7 +138,7 @@ class UniverCity extends StatelessWidget {
   Route _myRoutes(RouteSettings settings) {
     switch (settings.name) {
       // #######################################################################Schermata di login principale
-      case '/login':
+      case '/':
         return MaterialPageRoute(builder: (context) {
           return LoginScaffold();
         });
@@ -155,10 +152,8 @@ class UniverCity extends StatelessWidget {
         return MaterialPageRoute(builder: (context) {
           return CompFormScaffold();
         });
-      // #######################################################################Upload Form
-
       // #######################################################################Schermata Home (MainScaffold)
-      case '/':
+      case '/home':
         return MaterialPageRoute(builder: (context) {
           return MainScaffold();
         });

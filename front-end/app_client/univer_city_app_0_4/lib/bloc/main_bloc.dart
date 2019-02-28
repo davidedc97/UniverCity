@@ -18,6 +18,13 @@ class MainBloc{
   Observable<Document> get recenti => _recenti.stream;
   Sink<Document> get recentiSink => _recenti.sink;
 
+  final _tema = BehaviorSubject<int>();
+  Observable<int> get temaIndex => _tema.stream;
+  Sink<int> get temaIndexSink => _tema.sink;
+
+
+
+
   testFetch(){
     for(int i = 0 ; i<1; i++){
     preferitiSink.add(info);
@@ -30,5 +37,6 @@ class MainBloc{
   dispose(){
     _preferiti.close();
     _recenti.close();
+    _tema.close();
   }
 }

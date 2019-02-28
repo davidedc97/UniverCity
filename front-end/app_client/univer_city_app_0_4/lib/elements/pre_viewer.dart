@@ -24,7 +24,7 @@ Widget buildDocDialog(BuildContext context, String title, String uuid) {
         floatingWidget: FloatingActionButton.extended(
           //BRUTTINO FORSE
           //shape: BeveledRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(24))),
-          onPressed: () => PdfViewer.loadAsset(assetPath),
+          onPressed: () => PdfViewer.loadAsset(assetPath),//PDF VIEWER ##############
           label: Text('Read'),
           icon: Icon(Icons.play_circle_outline),
         ),

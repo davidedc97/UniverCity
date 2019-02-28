@@ -18,8 +18,9 @@ class BtnLogin extends StatelessWidget {
         width: 300,
         height: 45,
         child: RaisedButton(
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24.0)) ,
             color: color,
-            child: Text(title),
+            child: Text(title, style: TextStyle(color: Colors.white),),
             onPressed: onPressed));
   }
 }

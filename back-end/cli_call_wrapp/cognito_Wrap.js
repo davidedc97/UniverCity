@@ -1,12 +1,16 @@
-var express = require('express');
+const express = require('express');
+const app = express();
+
 const bodyP = require("body-parser");
-var AmazonCognitoIdentity = require('amazon-cognito-identity-js');
-var CognitoUserPool = AmazonCognitoIdentity.CognitoUserPool;
-var AWS = require('aws-sdk');
-var request = require('request');
-var jwkToPem = require('jwk-to-pem');
-var jwt = require('jsonwebtoken');
-var crypto = require('crypto');
+app.use(bodyP.urlencoded());
+
+const AmazonCognitoIdentity = require('amazon-cognito-identity-js');
+const CognitoUserPool = AmazonCognitoIdentity.CognitoUserPool;
+const AWS = require('aws-sdk');
+const request = require('request');
+const jwkToPem = require('jwk-to-pem');
+const jwt = require('jsonwebtoken');
+const crypto = require('crypto');
 global.fetch = require('node-fetch');
 
 var username = null;
@@ -25,22 +29,14 @@ var error = null;
 ** ########################
 */
 
-var app = express();
-
-app.use(bodyP.urlencoded());
-
 const poolData = {
     UserPoolId: "eu-west-2_TBU678aQA",
-    ClientId: "<ClientAppId>"
+    ClientId: "5scvltpq1nt3jdae3jf1o66jtm"
 };
 
 const pool_region= "eu-west-2";
 
 const userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
-
-var server = app.listen(8080, "127.0.0.1", function(){
-    console.log("Server started");
-})
 
 /*
 ** ###################
@@ -58,7 +54,7 @@ app.post("/user", function(req, res){
     faculty = req.body.faculty;
     university = req.body.university;
     
-    var control = signUp();
+    var control = SignUp();
 
     if (control == null) res.sendStatus(400).statusMessage("User already exist");
     else {
@@ -88,6 +84,7 @@ app.post("/user", function(req, res){
 
 function SignUp(){
 
+    var control;
     var pwd = username + Date();
     var id = crypto.createHash('sha256').update().digest;
 
@@ -100,14 +97,16 @@ function SignUp(){
     attList.push(new AmazonCognitoIdentity.CognitoUserAttribute({Name: "university", Value: university}));
     attList.push(new AmazonCognitoIdentity.CognitoUserAttribute({Name: "preferrred_username", Value: username}));
 
-    userPool.signUp("<username>", "<pass>", attList, null, function(err, res){
+    userPool.signUp(username, pass, attList, null, function(err, res){
         if(err){
             return err.name;
         }
         var cognitoUser = res.user;
-        return cognitoUser.getUsername();
+        control = cognitoUser.getUsername();
     })
+    return control;
 }
+
 /*
 ** #################
 ** # LOGIN PROCESS #
@@ -122,7 +121,7 @@ function SignIn(){
 
     var userData = {
         Username: username,
-        Pool: userPool
+        Pool: "user"
     }
 
     var cognitoUser = new AmazonCognitoIdentity.CognitoUser(userData);
@@ -138,3 +137,5 @@ function SignIn(){
     if (token != null && error == null) return 0;
     else if (token == null && error != null) return 1;
 }
+
+

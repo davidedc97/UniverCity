@@ -53,6 +53,7 @@ class HttpHandler {
     **  -2 if there's an internal error
     **  throws an exception otherwise
   */
+  /*
   static Future<int> userFormRegistrationCognito(user, name, surname, email, pw, faculty, university) async {
     final response =
       await http.post(
@@ -72,6 +73,7 @@ class HttpHandler {
           "UserPoolId": _poolId,
         });
 
+
     if(response.statusCode == 200) {
       return 1;
     }
@@ -85,9 +87,14 @@ class HttpHandler {
       throw ServerException.withCode(response.statusCode);
     }
   }
+  */
 
-  static Future funzioneDiProva(user, pw, name, surname) async {
+  static Future testUser(user, pw, name, surname) async {
 
+
+  }
+
+  static Future testDocument(){
 
   }
 

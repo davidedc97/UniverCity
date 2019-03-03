@@ -145,7 +145,7 @@ class HttpHandler {
 
 
   /*
-    ** This function returns:
+    ** This function returns: TODO sistema alertdialog form login o registrazione (xTiziano)
     **   1 if the document is succesfully uploaded
     **  -1 if there's a bad input parameter
     **  -2 if there's an internal error
@@ -164,7 +164,7 @@ class HttpHandler {
         return 1;
       }
       else if (response.statusCode == 400){
-        return -1; //TODO gestire le risposte a seconda del codice del response
+        return -1;
       }
       else if (response.statusCode == 500){
         return -2;

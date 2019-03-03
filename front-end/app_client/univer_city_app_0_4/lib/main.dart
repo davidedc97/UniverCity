@@ -6,69 +6,11 @@ import 'package:univer_city_app_0_4/routes/page_404_not_found.dart';
 import 'package:univer_city_app_0_4/bloc/main_bloc_provider.dart';
 import 'package:univer_city_app_0_4/routes/complicated_form.dart';
 import 'package:univer_city_app_0_4/routes/login_form.dart';
-import 'package:univer_city_app_0_4/elements/color.dart';
 
 
 // TODO test pdf online
 // TODO feedback sistemare
-// TODO BUG in app
 
-///
-/// ThemeData({
-//Brightness brightness,
-//MaterialColor primarySwatch,
-//Color primaryColor,
-//Brightness primaryColorBrightness,
-//Color primaryColorLight,
-//Color primaryColorDark,
-//Color accentColor,
-//Brightness accentColorBrightness,
-//Color canvasColor,
-//Color scaffoldBackgroundColor,
-//Color bottomAppBarColor,
-//Color cardColor,
-//Color dividerColor,
-//Color highlightColor,
-//Color splashColor,
-//InteractiveInkFeatureFactory splashFactory,
-//Color selectedRowColor,
-//Color unselectedWidgetColor,
-//Color disabledColor,
-//Color buttonColor,
-//ButtonThemeData buttonTheme,
-//Color secondaryHeaderColor,
-//Color textSelectionColor,
-//Color cursorColor,
-//Color textSelectionHandleColor,
-//Color backgroundColor,
-//Color dialogBackgroundColor,
-//Color indicatorColor,
-//Color hintColor,
-//Color errorColor,
-//Color toggleableActiveColor,
-//String fontFamily,
-//TextTheme textTheme,
-//TextTheme primaryTextTheme,
-//TextTheme accentTextTheme,
-//InputDecorationTheme inputDecorationTheme,
-//IconThemeData iconTheme,
-//IconThemeData primaryIconTheme,
-//IconThemeData accentIconTheme,
-//SliderThemeData sliderTheme,
-//TabBarTheme tabBarTheme,
-//CardTheme cardTheme,
-//ChipThemeData chipTheme,
-//TargetPlatform platform,
-//MaterialTapTargetSize materialTapTargetSize,
-//PageTransitionsTheme pageTransitionsTheme,
-//AppBarTheme appBarTheme,
-//BottomAppBarTheme bottomAppBarTheme,
-//ColorScheme colorScheme,
-//DialogTheme dialogTheme,
-//Typography typography,
-//CupertinoThemeData cupertinoOverrideTheme
-//})
-///
 
 List<ThemeData> tData = [
   ThemeData(
@@ -115,9 +57,9 @@ void main(){
 
 class UniverCity extends StatelessWidget {
   Widget build(BuildContext context) {
-    int i ;
     return BlocProvider(
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: 'UniverCity PREALPHA',
         theme: tData[0],
         initialRoute: '/',

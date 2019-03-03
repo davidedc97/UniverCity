@@ -8,7 +8,6 @@ class Page404NotFound extends StatelessWidget {
         title: Text('404 not Found ;)'),
 
       ),
-      //TODO reindirizzamenti
       body: Column(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.center,

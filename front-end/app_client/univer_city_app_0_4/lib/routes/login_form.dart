@@ -10,75 +10,75 @@ class LoginFormScaffold extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Stack(children: <Widget>[
-        Positioned(
-            left: 8,
-            top: 32,
-            child: IconButton(
-                icon: Icon(Icons.arrow_back),
-                onPressed: () => Navigator.pop(context))),
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 64),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: <Widget>[
-              Text(
-                'LOGIN',
-                style: TextStyle(fontSize: 18),
-              ),
-              SizedBox(
-                height: 24,
-              ),
-              TextField(
-                  onChanged: (value) {
-                    //bloc.email.add(value);
-                    _usem = value;
-                  },
-                  textAlign: TextAlign.center,
-                  decoration: InputDecoration(
-                    hintText: 'User o Email',
-                  )),
-              TextField(
-                  obscureText: true,
-                  onChanged: (value) {
-                    _pw = value;
-                  },
-                  textAlign: TextAlign.center,
-                  decoration: InputDecoration(
-                    border: InputBorder.none,
-                    hintText: 'Password',
-                  )),
-              SizedBox(
-                height: 42,
-              ),
-              //################################################################ LOGIN BUTTON
-              BtnLogin(
-                color: Theme.of(context).accentColor,
-                title: 'LOGIN',
-                onPressed: () {
-                  login(context, _usem ?? '', _pw ?? '');
-                },
-              ),
-              //################################################## LOGIN if already have an account
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
+            Positioned(
+                left: 8,
+                top: 32,
+                child: IconButton(
+                    icon: Icon(Icons.arrow_back),
+                    onPressed: () => Navigator.pop(context))),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 64),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
-                  Text('Forgot password?'),
-                  FlatButton(
-
-                      ///Login per ora ti rimanda nell'home page
-                      ///Poi ci saranno da gestire piu cose
-                      onPressed: () {
-                        debugPrint('Recover');
+                  Text(
+                    'LOGIN',
+                    style: TextStyle(fontSize: 18),
+                  ),
+                  SizedBox(
+                    height: 24,
+                  ),
+                  TextField(
+                      onChanged: (value) {
+                        //bloc.email.add(value);
+                        _usem = value;
                       },
-                      child: Text('RECOVER',
-                          style: TextStyle(color: Theme.of(context).accentColor)))
+                      textAlign: TextAlign.center,
+                      decoration: InputDecoration(
+                        hintText: 'User o Email',
+                      )),
+                  TextField(
+                      obscureText: true,
+                      onChanged: (value) {
+                        _pw = value;
+                      },
+                      textAlign: TextAlign.center,
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintText: 'Password',
+                      )),
+                  SizedBox(
+                    height: 42,
+                  ),
+                  //################################################################ LOGIN BUTTON
+                  BtnLogin(
+                    color: Theme.of(context).accentColor,
+                    title: 'LOGIN',
+                    onPressed: () {
+                      login(context, _usem ?? '', _pw ?? '');
+                    },
+                  ),
+                  //################################################## LOGIN if already have an account
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Text('Forgot password?'),
+                      FlatButton(
+
+                        ///Login per ora ti rimanda nell'home page
+                        ///Poi ci saranno da gestire piu cose
+                          onPressed: () {
+                            debugPrint('Recover');
+                          },
+                          child: Text('RECOVER',
+                              style: TextStyle(color: Theme.of(context).accentColor)))
+                    ],
+                  )
                 ],
-              )
-            ],
-          ),
-        ),
-      ]),
+              ),
+            ),
+          ]),
     );
   }
 }

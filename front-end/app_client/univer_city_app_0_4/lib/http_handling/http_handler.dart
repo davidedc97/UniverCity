@@ -1,4 +1,5 @@
 import 'package:http/http.dart' as http;
+import 'package:flutter/material.dart';
 import 'package:univer_city_app_0_4/elements/document.dart';
 import 'package:univer_city_app_0_4/elements/user.dart';
 import 'package:univer_city_app_0_4/elements/server_exception.dart';
@@ -157,29 +158,48 @@ class HttpHandler {
     **  -1 if there's a bad input parameter
     **  -2 if there's an internal error
     **  throws an exception otherwise
+    **
+    ** Questa è quella che ho usato per testarla
+    ** static Future<int> testF() async{
+    ** return Future.delayed(Duration(seconds: 5), ()=>1);
+  }
   */
+
+
+
   static Future<int> uploadDocument(String title, String type, String path) async {
+    var res;
     var uri = Uri.parse(_URL + _DOCUMENT_SERVER);
     var request = new http.MultipartRequest("POST", uri);
     request.fields["title"] = title;
     request.fields["type"] = type;
     var file = await http.MultipartFile.fromPath('package', path);
     request.files.add(file);
-
-    request.send().then( (response) {
-      if (response.statusCode == 201) {
-        return 1;
-      }
-      else if (response.statusCode == 400){
-        return -1;
-      }
-      else if (response.statusCode == 500){
-        return -2;
-      }
-      else{
-        throw ServerException.withCode(response.statusCode);
-      }
+    await request.send().then( (response) {
+      ///
+      /// Ho solo tirato fuori response
+      ///
+      res = response;
     });
+    ///
+    /// E fatto i controlli qui
+    ///
+    if (res.statusCode == 201) {
+      //debugPrint('up1');
+      return 1;
+    }
+    else if (res.statusCode == 400){
+      //debugPrint('up2');
+      return -1;
+    }
+    else if (res.statusCode == 500){
+      //debugPrint('up3');
+      return -2;
+    }
+    else{
+      //debugPrint('up4');
+      return -3;//throw ServerException.withCode(response.statusCode);
+    }
   }
 
 

@@ -20,7 +20,6 @@ const tagsDisp = <Tags>[
   Tags('resa'),
   Tags('tesa'),
   Tags('test1'),
-
 ];
 
 class UploadFormScaffold extends StatelessWidget {
@@ -44,23 +43,23 @@ class UploadFormScaffold extends StatelessWidget {
   }
 }
 
-
-
 class UploadFormBody extends StatelessWidget {
-
   final String path;
   UploadFormBody(this.path);
-  String title, type = 'O';
+  String title, type = 'o';
+  Future<int> res ;
   @override
   Widget build(BuildContext context) {
     return Container(
       color: Colors.white,
       child: ListView(
         children: <Widget>[
-          Padding(padding: EdgeInsets.symmetric(vertical: 8),
-              child: TitleDivider('File upload'),
+          Padding(
+            padding: EdgeInsets.symmetric(vertical: 8),
+            child: TitleDivider('File upload'),
           ),
-          Padding(padding: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+          Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
               child: ChipsInput(
                   decoration: InputDecoration(
                     labelText: "Tag",
@@ -72,13 +71,15 @@ class UploadFormBody extends StatelessWidget {
                     if (query.length != 0) {
                       var lowercaseQuery = query.toLowerCase();
                       return tagsDisp.where((tag) {
-                        return tag._tag.toLowerCase().contains(query.toLowerCase());
+                        return tag._tag
+                            .toLowerCase()
+                            .contains(query.toLowerCase());
                       }).toList(growable: false)
                         ..sort((a, b) => a._tag
                             .toLowerCase()
                             .indexOf(lowercaseQuery)
                             .compareTo(
-                            b._tag.toLowerCase().indexOf(lowercaseQuery)));
+                                b._tag.toLowerCase().indexOf(lowercaseQuery)));
                     } else {
                       return const <Tags>[];
                     }
@@ -98,85 +99,108 @@ class UploadFormBody extends StatelessWidget {
                       onTap: () => state.selectSuggestion(tag),
                     );
                   },
-                  onChanged: (tags){
+                  onChanged: (tags) {
                     return debugPrint('cambio tag');
                   })),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-            child: TextField(
-                onChanged: (value){
-                  title = value;
-                },
-                textAlign: TextAlign.center,
-                decoration: InputDecoration(labelText: 'Title'))),
-          Padding(padding: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-            child: TextField(
-                textAlign: TextAlign.center,
-                decoration: InputDecoration(labelText: 'Course'))),
-          Padding(padding: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-            child: TextField(
-                textAlign: TextAlign.center,
-                decoration: InputDecoration(labelText: 'Professor'))),
-          Padding(padding: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-            child: TextField(
-                maxLines: 4,
-                textAlign: TextAlign.center,
-                decoration: InputDecoration(labelText: 'Description'))),
-          Padding(padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+              child: TextField(
+                  onChanged: (value) {
+                    title = value;
+                  },
+                  textAlign: TextAlign.center,
+                  decoration: InputDecoration(labelText: 'Title'))),
+          Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+              child: TextField(
+                  textAlign: TextAlign.center,
+                  decoration: InputDecoration(labelText: 'Course'))),
+          Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+              child: TextField(
+                  textAlign: TextAlign.center,
+                  decoration: InputDecoration(labelText: 'Professor'))),
+          Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+              child: TextField(
+                  maxLines: 4,
+                  textAlign: TextAlign.center,
+                  decoration: InputDecoration(labelText: 'Description'))),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             child: RaisedButton.icon(
-                icon: Icon(Icons.add_circle_outline),
-                label: Text('UPLOAD'),
-                onPressed: (){
-                  FutureBuilder<int>(
-                    future: HttpHandler.uploadDocument(title, type, path),
-                    builder: (context, snapshot){
-                      if (snapshot.hasError) print(snapshot.data);
-                      snapshot.hasData
-                          ? (snapshot.data == 1)
-                          ? Navigator.pushNamedAndRemoveUntil(
-                          context, '/', (Route<dynamic> route) => false)
-                          : showDialog(
-                          context: context,
-                          builder: (context) {
-                            return AlertDialog(
-                              title: Text('Ops!'),
-                              content: (snapshot.data == -1)
-                                  ? Text('user is already in the Db')
-                                  : Text('server error'),
-                              actions: <Widget>[
-                                FlatButton(
-                                    onPressed: () {
-                                      Navigator.pop(context);
-                                    },
-                                    child: Text('Close'))
-                              ],
-                            );
-                          })
-                          : Center(
-                        child: CircularProgressIndicator(),
-                      );
+              icon: Icon(Icons.add_circle_outline),
+              label: Text('UPLOAD'),
+              onPressed: () {
+                Navigator.of(context).pop();
+                showDialog(
+                    context: context,
+                    builder:(context){
+                      return DialogUpload(path);
+                    }
+                );
 
-                    },
-                  );
-                  //Navigator.pop(context);
-                  //showDialog(
-                      //context: context,
-                      //builder: (context){
-                        //return AlertDialog(
-                          //title: Text('Tank you!'),
-                          //content: Text('Sharing your notes will help all the community'),
-                          //actions: <Widget>[
-                          //  FlatButton(onPressed: (){Navigator.pop(context);}, child: Text('Close'))
-                        //  ],
-                      //  );
-                    //  }
-                  //);
-                },
+                //Navigator.pop(context);
+                //showDialog(
+                //context: context,
+                //builder: (context){
+                //return AlertDialog(
+                //title: Text('Tank you!'),
+                //content: Text('Sharing your notes will help all the community'),
+                //actions: <Widget>[
+                //  FlatButton(onPressed: (){Navigator.pop(context);}, child: Text('Close'))
+                //  ],
+                //  );
+                //  }
+                //);
+              },
             ),
           ),
-
         ],
       ),
+    );
+  }
+}
+
+
+class DialogUpload extends StatefulWidget {
+  String path;
+  DialogUpload(this.path);
+  @override
+  _DialogUploadState createState() => _DialogUploadState();
+}
+
+class _DialogUploadState extends State<DialogUpload> {
+
+  int st=0;
+
+  @override
+  Widget build(BuildContext context) {
+
+    return AlertDialog(
+      title: Text('Hey !'),
+      content: FutureBuilder(
+          future: HttpHandler.uploadDocument('afhgfhgfhgf', 'o', widget.path),
+          builder: (context, snapshot){
+            if(snapshot.hasError)return Container();
+            if(snapshot.hasData){
+              return Text(snapshot.data.toString());
+            } else{
+              return Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Text('Prenditi un caffe nel frattempo ;)'),
+                  SizedBox(height: 16,),
+                  Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children:<Widget>[CircularProgressIndicator()])
+                ],
+              );
+            }
+          }),
+      actions: <Widget>[
+        FlatButton(onPressed: (){Navigator.pop(context);}, child: Text('Close'))
+      ],
     );
   }
 }

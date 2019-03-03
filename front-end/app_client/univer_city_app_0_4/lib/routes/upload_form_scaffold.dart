@@ -107,6 +107,7 @@ class UploadFormBody extends StatelessWidget {
               child: TextField(
                   onChanged: (value) {
                     title = value;
+                    debugPrint(title);
                   },
                   textAlign: TextAlign.center,
                   decoration: InputDecoration(labelText: 'Title'))),
@@ -132,27 +133,14 @@ class UploadFormBody extends StatelessWidget {
               icon: Icon(Icons.add_circle_outline),
               label: Text('UPLOAD'),
               onPressed: () {
+                //TODO controllo campi
                 Navigator.of(context).pop();
                 showDialog(
                     context: context,
                     builder:(context){
-                      return DialogUpload(path);
+                      return DialogUpload(title, path);
                     }
                 );
-
-                //Navigator.pop(context);
-                //showDialog(
-                //context: context,
-                //builder: (context){
-                //return AlertDialog(
-                //title: Text('Tank you!'),
-                //content: Text('Sharing your notes will help all the community'),
-                //actions: <Widget>[
-                //  FlatButton(onPressed: (){Navigator.pop(context);}, child: Text('Close'))
-                //  ],
-                //  );
-                //  }
-                //);
               },
             ),
           ),
@@ -162,25 +150,25 @@ class UploadFormBody extends StatelessWidget {
   }
 }
 
+///
+///
+/// Dialog per dopo il download
+///
+///
 
-class DialogUpload extends StatefulWidget {
-  String path;
-  DialogUpload(this.path);
-  @override
-  _DialogUploadState createState() => _DialogUploadState();
-}
-
-class _DialogUploadState extends State<DialogUpload> {
-
-  int st=0;
-
+class DialogUpload extends StatelessWidget {
+  String title, path;
+  DialogUpload(this.title, this.path);
   @override
   Widget build(BuildContext context) {
-
     return AlertDialog(
       title: Text('Hey !'),
       content: FutureBuilder(
-          future: HttpHandler.uploadDocument('afhgfhgfhgf', 'o', widget.path),
+        ///
+        /// ancora non capisco perche devo mettere una stringa to string ma altrimenti
+        /// mi formatta male il dialog devo studiamelo meglio
+        ///
+          future: HttpHandler.uploadDocument(title.toString(), 'o', path),
           builder: (context, snapshot){
             if(snapshot.hasError)return Container();
             if(snapshot.hasData){

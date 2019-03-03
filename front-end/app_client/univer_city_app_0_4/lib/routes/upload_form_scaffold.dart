@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_chips_input/flutter_chips_input.dart';
 import 'package:univer_city_app_0_4/elements/title_div.dart';
+import 'package:univer_city_app_0_4/http_handling/http_handler.dart';
 
 class Tags {
   final String _tag;
@@ -49,7 +50,7 @@ class UploadFormBody extends StatelessWidget {
 
   final String path;
   UploadFormBody(this.path);
-
+  String title, type = 'O';
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -103,6 +104,9 @@ class UploadFormBody extends StatelessWidget {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
             child: TextField(
+                onChanged: (value){
+                  title = value;
+                },
                 textAlign: TextAlign.center,
                 decoration: InputDecoration(labelText: 'Title'))),
           Padding(padding: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
@@ -123,19 +127,50 @@ class UploadFormBody extends StatelessWidget {
                 icon: Icon(Icons.add_circle_outline),
                 label: Text('UPLOAD'),
                 onPressed: (){
-                  Navigator.pop(context);
-                  showDialog(
-                      context: context,
-                      builder: (context){
-                        return AlertDialog(
-                          title: Text('Tank you!'),
-                          content: Text('Sharing your notes will help all the community'),
-                          actions: <Widget>[
-                            FlatButton(onPressed: (){Navigator.pop(context);}, child: Text('Close'))
-                          ],
-                        );
-                      }
+                  FutureBuilder<int>(
+                    future: HttpHandler.uploadDocument(title, type, path),
+                    builder: (context, snapshot){
+                      if (snapshot.hasError) print(snapshot.data);
+                      snapshot.hasData
+                          ? (snapshot.data == 1)
+                          ? Navigator.pushNamedAndRemoveUntil(
+                          context, '/', (Route<dynamic> route) => false)
+                          : showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog(
+                              title: Text('Ops!'),
+                              content: (snapshot.data == -1)
+                                  ? Text('user is already in the Db')
+                                  : Text('server error'),
+                              actions: <Widget>[
+                                FlatButton(
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                    child: Text('Close'))
+                              ],
+                            );
+                          })
+                          : Center(
+                        child: CircularProgressIndicator(),
+                      );
+
+                    },
                   );
+                  //Navigator.pop(context);
+                  //showDialog(
+                      //context: context,
+                      //builder: (context){
+                        //return AlertDialog(
+                          //title: Text('Tank you!'),
+                          //content: Text('Sharing your notes will help all the community'),
+                          //actions: <Widget>[
+                          //  FlatButton(onPressed: (){Navigator.pop(context);}, child: Text('Close'))
+                        //  ],
+                      //  );
+                    //  }
+                  //);
                 },
             ),
           ),

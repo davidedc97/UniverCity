@@ -170,8 +170,8 @@ compForm(BuildContext context, String id, String nm, String cg, String em,
       ///
       future: res,
       builder: (context, snapshot) {
-        if (snapshot.hasError) print(snapshot.data);
-        return snapshot.hasData
+        if (snapshot.hasError) print(snapshot.error);
+          snapshot.hasData
             ? (snapshot.data == 1)
                 ? Navigator.pushNamedAndRemoveUntil(
                     context, '/', (Route<dynamic> route) => false)
@@ -195,6 +195,7 @@ compForm(BuildContext context, String id, String nm, String cg, String em,
             : Center(
                 child: CircularProgressIndicator(),
               );
+
       },
     );
   }

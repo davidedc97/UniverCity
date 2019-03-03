@@ -8,7 +8,7 @@ import 'dart:typed_data';
 
 class HttpHandler {
 
-  static const _URL = "http://www.porcaccioiltuodio.mam";
+  static const _URL = "https://ogv7kvalpf.execute-api.eu-west-1.amazonaws.com/dev";
   static const _DOCUMENT_SERVER = "/document";
   static const _SEARCH_SERVER = "/search";
   static const _USER_SERVER = "/user";

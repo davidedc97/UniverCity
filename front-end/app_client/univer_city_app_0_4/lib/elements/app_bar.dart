@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:material_search/material_search.dart';
 import 'package:univer_city_app_0_4/elements/pre_viewer.dart';
-
+import 'package:univer_city_app_0_4/http_handling/http_handler.dart';
+import 'package:univer_city_app_0_4/elements/document.dart';
+import 'dart:async';
 //############################################################################## MainAppBar
 
 class MainAppBar extends StatefulWidget implements PreferredSizeWidget {
@@ -15,6 +17,17 @@ class MainAppBar extends StatefulWidget implements PreferredSizeWidget {
 }
 
 class _MainAppBarState extends State<MainAppBar> {
+
+  Future<Map<String, String>> _fetchMapSearch(criteria) async{
+    List<Document> l = [Document('','','')];
+    Map<String, String> m = {};
+    l = await HttpHandler.searchDocuments(criteria);
+    for(Document e in l){
+        m.putIfAbsent(e.uuid, ()=>e.title);
+    }
+    return m;
+  }
+
   ///
   /// Contiene titolo e uuid, i risultati della ricerta tramite titolo
   ///
@@ -30,7 +43,12 @@ class _MainAppBarState extends State<MainAppBar> {
     'Linguaggi e tecnologie web': 'c31afb76-39ea-11e9-b210-d663bd873d93',
   };
 
+
+
   _buildMaterialSearchPage(BuildContext context) {
+
+    int i = 0;
+
     return new MaterialPageRoute<String>(
         settings: new RouteSettings(
           name: '/search',
@@ -45,13 +63,21 @@ class _MainAppBarState extends State<MainAppBar> {
               /// Indica come i risultai devono essere costruiti
               /// sotto in campo search
               ///
-              results: _docs.keys
-                  .map((String val) => new MaterialSearchResult<String>(
-                        icon: Icons.description,
-                        value: val,
-                        text: "$val",
-                      ))
-                  .toList(),
+              getResults: (criteria)async{
+                Map<String, String> m = await _fetchMapSearch(criteria);
+                return m.values.map((String val)=>MaterialSearchResult<String>(
+                  icon: Icons.description,
+                  value: val,
+                  text: '$val',
+                )).toList();
+              },
+              ///results: _docs.keys
+              ///    .map((String val) => new MaterialSearchResult<String>(
+              ///          icon: (val=='')?null:Icons.description,
+              ///          value: val,
+              ///          text: "$val",
+              ///        ))
+              ///    .toList(),
               filter: (dynamic value, String criteria) {
                 ///
                 /// - [criteria] contiene la stringa inserita nel campo search
@@ -59,6 +85,7 @@ class _MainAppBarState extends State<MainAppBar> {
                 ///    quindi probabilmente qui faremo la richiesta dei documenti
                 ///    <title, uuid> da inserire in _docs ( Map<String, String> )
                 ///
+
                 debugPrint(criteria);
                 return value.toLowerCase().trim().contains(
                     new RegExp(r'' + criteria.toLowerCase().trim() + ''));
@@ -120,3 +147,4 @@ class _MainAppBarState extends State<MainAppBar> {
         ]);
   }
 }
+

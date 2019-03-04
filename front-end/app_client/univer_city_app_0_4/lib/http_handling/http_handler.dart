@@ -4,7 +4,7 @@ import 'package:univer_city_app_0_4/elements/user.dart';
 import 'package:univer_city_app_0_4/elements/server_exception.dart';
 import 'dart:convert';
 import 'dart:typed_data';
-
+import 'package:flutter/material.dart';
 
 class HttpHandler {
 
@@ -204,26 +204,49 @@ class HttpHandler {
 
   static Future<Uint8List> getDocumentById(docId) async{
     final response =
-      await http.get(_URL + _DOCUMENT_SERVER + "/" + docId);
+      await http.get(_URL + _DOCUMENT_SERVER + "?id=" + docId);
 
     if(response.statusCode == 200) {
-      return response.bodyBytes;
+      var j =  json.decode(response.body);
+      String s = j['body'];
+      return Uint8List.fromList(s.codeUnits);
+      //return response.bodyBytes;
     }
     else{
       throw ServerException.withCode(response.statusCode);
     }
   }
 
+
+  ///
+  /// ERRORE
+  /// '_InternalLinkedHashMap<String, dynamic>' is not a subtype of type 'List<Map<String, dynamic>>
+  ///
   static Future<List<Document>> searchDocuments(query) async {
     final response =
-        await http.get(_URL + _SEARCH_SERVER + "/" + "query");
+    await http.get(_URL + _SEARCH_SERVER + "?string=" + query);
 
     if(response.statusCode == 200){
+
       return Document.parseJsonList(json.decode(response.body));
     }
     else{
       throw ServerException.withCode(response.statusCode);
     }
+  }
+  ///
+  /// con questa funge dopo aver sistemato robette
+  ///
+  static Future<List<Document>> testSearchDocuments(query) async {
+    debugPrint('query "$query"');
+    await Future.delayed(Duration(milliseconds: 18));
+    List<Document> l = [
+      Document('test1', 'boh', '68c5e7d6-3c19-11e9-b210-d663bd873d93'),
+      Document('test2', 'boh', '68c5e7d6-3c19-11e9-b210-d663bd873d94'),
+      Document('test3', 'boh', '68c5e7d6-3c19-11e9-b210-d663bd873d95')
+    ];
+
+    if(query != '')return l;
   }
 
   /* TODO: devo capire come cazzo si fa

@@ -27,18 +27,12 @@ Widget buildDocDialog(BuildContext context, String title, String uuid) {
         floatingWidget: FloatingActionButton.extended(
           //BRUTTINO FORSE
           //shape: BeveledRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(24))),
-          onPressed: () async {
-            debugPrint('Premuto read');
-            Future<Uint8List> res = HttpHandler.getDocumentById(uuid2);
-            debugPrint('future ritornato');
-            res.then((Uint8List doc){
-              debugPrint('future risolto');
-              d=doc;
-            }).then((Val){
-              debugPrint('load');
-              PdfViewer.loadAsset(assetPath);
-            });
-
+          onPressed: ()async{
+            debugPrint('loadingPdf');
+            Uint8List res = await HttpHandler.getDocumentById(uuid2);
+            //debugPrint(res.toString());
+            debugPrint('fine getDocument');
+            PdfViewer.loadBytes(res);
           },//PDF VIEWER ##############
           label: Text('Read'),
           icon: Icon(Icons.play_circle_outline),

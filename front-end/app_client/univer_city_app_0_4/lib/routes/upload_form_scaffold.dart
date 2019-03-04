@@ -168,11 +168,17 @@ class DialogUpload extends StatelessWidget {
         /// ancora non capisco perche devo mettere una stringa to string ma altrimenti
         /// mi formatta male il dialog devo studiamelo meglio
         ///
-          future: HttpHandler.uploadDocument(title.toString(), 'o', path),
+          future: HttpHandler.uploadDocument(title.toString(), 'O', path),
           builder: (context, snapshot){
             if(snapshot.hasError)return Container();
             if(snapshot.hasData){
-              return Text(snapshot.data.toString());
+              return Text(
+                  (snapshot.data==1)
+                      ?'Caricamento completato'
+                      :(snapshot.data==-1)
+                        ?'qualche paramentro è sbagliato'
+                        :'500 server error'
+              );
             } else{
               return Column(
                 mainAxisSize: MainAxisSize.min,

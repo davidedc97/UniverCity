@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:sliver_fab/sliver_fab.dart';
 import 'package:flutter_pdf_viewer/flutter_pdf_viewer.dart';
 import 'package:univer_city_app_0_4/elements/info_row.dart';
+import 'package:univer_city_app_0_4/http_handling/http_handler.dart';
+import 'dart:typed_data';
 
 String assetPath = 'assets/doc/Dispense_Reti_Benelli_Giambene.pdf';
-
+String uuid2 = "68c5e7d6-3c19-11e9-b210-d663bd873d93";
+Uint8List d;
 ///
 /// buildDocDialog(BuildContext context, String title, String uuid);
 /// è una funzione che a partire dal contesti il titolo e l'uuid
@@ -24,7 +27,19 @@ Widget buildDocDialog(BuildContext context, String title, String uuid) {
         floatingWidget: FloatingActionButton.extended(
           //BRUTTINO FORSE
           //shape: BeveledRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(24))),
-          onPressed: () => PdfViewer.loadAsset(assetPath),//PDF VIEWER ##############
+          onPressed: () async {
+            debugPrint('Premuto read');
+            Future<Uint8List> res = HttpHandler.getDocumentById(uuid2);
+            debugPrint('future ritornato');
+            res.then((Uint8List doc){
+              debugPrint('future risolto');
+              d=doc;
+            }).then((Val){
+              debugPrint('load');
+              PdfViewer.loadAsset(assetPath);
+            });
+
+          },//PDF VIEWER ##############
           label: Text('Read'),
           icon: Icon(Icons.play_circle_outline),
         ),

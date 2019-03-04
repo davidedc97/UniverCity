@@ -16,7 +16,7 @@ class Document{
   Document.fromJson(Map<String, dynamic> json) {
     //funzione-costruttore da usare in http_handler dentro la search_document/get_document
     this._title = json["title"];
-    this._owner = json["owner"];
+    this._owner = json["creator"];
     this._uuid = json["id"];
     this._type = json["type"];
   }
@@ -40,6 +40,18 @@ class Document{
 
 }
 
+class DocumentList{
+  final List<Document> _documents;
 
+  DocumentList(this._documents);
+
+  factory DocumentList.fromJson(List<dynamic> parsedJson){
+    List<Document> _documents = List<Document>();
+    _documents = parsedJson.map((i)=>Document.fromJson(i)).toList();
+    return DocumentList(_documents);
+  }
+  List<Document> get documents => _documents;
+  int get length => _documents.length;
+}
 
 

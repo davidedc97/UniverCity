@@ -235,6 +235,21 @@ class HttpHandler {
     }
   }
   ///
+  /// TEST TIZIO
+  ///
+  static Future<DocumentList> fetchDocuments(query) async {
+    final response =
+    await http.get(_URL + _SEARCH_SERVER + "?string=" + query);
+
+    if(response.statusCode == 200){
+      return DocumentList.fromJson(json.decode(response.body));
+    }
+    else{
+      throw ServerException.withCode(response.statusCode);
+    }
+  }
+
+  ///
   /// con questa funge dopo aver sistemato robette
   ///
   static Future<List<Document>> testSearchDocuments(query) async {

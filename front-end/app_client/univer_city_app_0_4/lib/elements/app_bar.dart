@@ -28,6 +28,16 @@ class _MainAppBarState extends State<MainAppBar> {
     return m;
   }
 
+  Future<Map<String, String>> _fetchListSearch(criteria) async{
+    DocumentList l = DocumentList([Document('','','')]);
+    Map<String, String> m = {};
+    l = await HttpHandler.fetchDocuments(criteria);
+    for(int i=0; i<l.length; i++ ){
+      m.putIfAbsent(l.documents[i].uuid.toString(), ()=>l.documents[i].title.toString());
+    }
+    return m;
+  }
+
   ///
   /// Contiene titolo e uuid, i risultati della ricerta tramite titolo
   ///
@@ -46,8 +56,6 @@ class _MainAppBarState extends State<MainAppBar> {
 
 
   _buildMaterialSearchPage(BuildContext context) {
-
-    int i = 0;
 
     return new MaterialPageRoute<String>(
         settings: new RouteSettings(

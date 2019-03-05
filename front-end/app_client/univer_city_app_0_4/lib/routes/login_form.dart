@@ -106,7 +106,7 @@ login(BuildContext context, String id, String pw) {
   } else {
     //TODO da testare
     debugPrint('email: $id, pass: $pw ');
-    Future res = HttpHandler.validateLogin(id, pw, 0); //TODO controllare se l'id è un username o una mail e settare il flag di conseguenza
+    Future res = HttpHandler.validateLogin(id, pw, "0"); //TODO controllare se l'id è un username o una mail e settare il flag di conseguenza
     FutureBuilder<int>(
       ///
       ///   1 if the user is in the Db and the password is correct

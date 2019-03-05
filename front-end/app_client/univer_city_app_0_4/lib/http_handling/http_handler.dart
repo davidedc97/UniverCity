@@ -106,14 +106,15 @@ class HttpHandler {
     **  -1 if no user is found or the password is invalid
     **  -2 if there's an internal error
     **  throws an exception otherwise
-    ** The value of flag must be 0 (user is login in with username) or 1 (user is login in with email)
+    ** The value of flag must be "0" (user is login in with username) or "1" (user is login in with email)
   */
   static Future<int> validateLogin(user, pw, flag) async {
     final response =
       await http.post(
           _FAKE_LOG_URL + _LOGIN_SERVER,
         body: {"username": user, "pass": pw, "flag": flag});
-
+    print("MANNAGGIA CRISTO:\n");
+    print(response.statusCode);
     if(response.statusCode == 200) {
       return 1;
     }

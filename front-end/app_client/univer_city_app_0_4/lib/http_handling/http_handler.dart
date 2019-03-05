@@ -203,10 +203,7 @@ class HttpHandler {
       await http.get(_URL + _DOCUMENT_SERVER + "?id=" + docId);
 
     if(response.statusCode == 200) {
-      var j =  json.decode(response.body);
-      String s = j['body'];
-      return Uint8List.fromList(s.codeUnits);
-      //return response.bodyBytes;
+      return response.bodyBytes;
     }
     else{
       throw ServerException.withCode(response.statusCode);

@@ -4,6 +4,7 @@ import 'package:flutter_pdf_viewer/flutter_pdf_viewer.dart';
 import 'package:univer_city_app_0_4/elements/info_row.dart';
 import 'package:univer_city_app_0_4/http_handling/http_handler.dart';
 import 'dart:typed_data';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_inappbrowser/flutter_inappbrowser.dart';
 
 String assetPath = 'assets/doc/Dispense_Reti_Benelli_Giambene.pdf';
@@ -36,11 +37,18 @@ Widget buildDocDialog(BuildContext context, String title, String uuid) {
             debugPrint('fine getDocument');
             PdfViewer.loadBytes(res);
           },**///PDF VIEWER ##############
-          onPressed: (){
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) {
-                  return PdfOnlineViewer(uuid2);
-                }));
+          onPressed: ()async{
+            showDialog(
+                context: context,
+                builder: (context){
+                  return AlertDialog(
+                    content: Center(child: CircularProgressIndicator(),),
+                  );
+                }
+            );
+            Uint8List b = await HttpHandler.getDocumentById(uuid2);
+            Navigator.of(context).pop();
+            PdfViewer.loadBytes(b);
           },
           label: Text('Read'),
           icon: Icon(Icons.play_circle_outline),
@@ -111,51 +119,4 @@ Widget buildDocDialog(BuildContext context, String title, String uuid) {
       ),
     ),
   );
-}
-
-
-class PdfOnlineViewer extends StatefulWidget {
-  String uuid;
-  PdfOnlineViewer(this.uuid);
-  @override
-  _PdfOnlineViewerState createState() => _PdfOnlineViewerState();
-}
-
-class _PdfOnlineViewerState extends State<PdfOnlineViewer> {
-
-
-  static const _URL = "https://ogv7kvalpf.execute-api.eu-west-1.amazonaws.com/dev";
-  static const _DOCUMENT_SERVER = "/document";
-
-
-  bool loading = true;
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-          color: Colors.white,
-          child: Stack(
-            children: <Widget>[
-              InAppWebView(
-                initialUrl: _URL+_DOCUMENT_SERVER+'?string='+ widget.uuid,
-                initialHeaders: {},
-                initialOptions: {},
-                onProgressChanged: (InAppWebViewController controller, int p) {
-                  if(p/100 == 1){
-                    setState(() {
-                      loading = true;
-                    });
-                  }
-                },
-              ),
-              (loading)
-                  ? Container()
-                  : Center(
-                child: CircularProgressIndicator(),
-              )
-            ],
-          )),
-    );
-  }
 }

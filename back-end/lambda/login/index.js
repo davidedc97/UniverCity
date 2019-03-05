@@ -32,6 +32,7 @@ function SignIn(username,pass){
     cognitoUser.authenticateUser(autenticationValue, {
         onSuccess: function(res) {
             token = res.getAccessToken().getJwtToken();
+            console.log(token);
         },
         onFailure: function(err) {
             error = err;

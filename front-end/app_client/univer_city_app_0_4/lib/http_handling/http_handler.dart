@@ -57,44 +57,9 @@ class HttpHandler {
     **  -2 if there's an internal error
     **  throws an exception otherwise
   */
-  /*
-  static Future<int> userFormRegistrationCognito(user, name, surname, email, pw, faculty, university) async {
-    final response =
-      await http.post(
-        _URL + _USER_SERVER,
-        body:{
-          "DesiredDeliveryMediums": "EMAIL",
-          "ForceAliasCreation": false,
-          "MessageAction": "SUPPRESS",
-          "UserAttributes": [
-            {"Name": "name", "Value": name},
-            {"Name": "surname", "Value": surname},
-            {"Name": "email", "Value": email},
-            {"Name": "faculty", "Value": faculty},
-            {"Name": "university", "Value": university}
-          ],
-          "Username": user,
-          "UserPoolId": _poolId,
-        });
 
-
-    if(response.statusCode == 200) {
-      return 1;
-    }
-    else if(response.statusCode == 400) {
-      return -1;
-    }
-    else if(response.statusCode == 500) {
-      return -2;
-    }
-    else {
-      throw ServerException.withCode(response.statusCode);
-    }
-  }
-  */
 
   static Future testUser(user, pw, name, surname) async {
-
 
   }
 

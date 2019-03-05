@@ -34,6 +34,8 @@ class HttpHandler {
         _FAKE_LOG_URL + _REG_SERVER,
         body: {"username": user, "name": name, "surname": surname, "email": email, "pass": pw, "faculty": faculty, "university":university});
 
+    print(response.statusCode);
+
     if(response.statusCode == 200) {
       return 1;
     }
@@ -116,7 +118,7 @@ class HttpHandler {
     print("MANNAGGIA CRISTO:\n");
     print(response.statusCode);
     return 1;
-    /*if(response.statusCode == 200) {
+    if(response.statusCode == 200) {
 
       return 1;
     }
@@ -128,7 +130,7 @@ class HttpHandler {
     }
     else {
       throw ServerException.withCode(response.statusCode);
-    }*/
+    }
   }
 
   static Future<User> getMyUserById(userId) async {
@@ -228,11 +230,7 @@ class HttpHandler {
     if(response.statusCode == 200){
       var num = json.decode(response.body)["body"]["num"];
       List<dynamic> docs = json.decode(response.body)["body"]["docs"];
-      List<Document> res = [];
-      for(int i=0; i< num; i++){
-        res.add(Document.fromJson(docs[i]));
-      }
-
+      List<Document> res = Document.parseJsonList(num, docs);
       return res;
     }
     else{

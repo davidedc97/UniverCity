@@ -44,23 +44,5 @@ class Document{
 
 }
 
-///
-///
-/// DOCUMENT LIST
-///
-///
-class DocumentList{
-  final List<Document> _documents;
-
-  DocumentList(this._documents);
-
-  factory DocumentList.fromJson(List<dynamic> parsedJson){
-    List<Document> _documents = List<Document>();
-    _documents = parsedJson.map((i)=>Document.fromJson(i)).toList();
-    return DocumentList(_documents);
-  }
-  List<Document> get documents => _documents;
-  int get length => _documents.length;
-}
 
 

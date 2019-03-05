@@ -1,4 +1,4 @@
-const express = require('express');
+const express = require("express");
 const app = express();
 
 const bodyP = require("body-parser");
@@ -46,7 +46,6 @@ const userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
 ** ###################
 ** # CLIENT WRAPPING #
 ** ###################
-**
 */
 
 // debugging req
@@ -135,7 +134,7 @@ function SignIn(){
     var cognitoUser = new AmazonCognitoIdentity.CognitoUser(userData);
     cognitoUser.authenticateUser(autenticationValue, {
         onSuccess: function(res) {
-            token = res.getAccessToken();
+            token = res.getAccessToken().getJwtToken();
         },
         onFailure: function(err) {
             error = err;
@@ -145,5 +144,3 @@ function SignIn(){
     if (token != null && error == null) return 0;
     else if (token == null && error != null) return 1;
 }
-
-

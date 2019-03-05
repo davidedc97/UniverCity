@@ -1,7 +1,11 @@
+
 const AmazonCognitoIdentity = require('amazon-cognito-identity-js');
 const CognitoUserPool = AmazonCognitoIdentity.CognitoUserPool;
 const AWS = require('aws-sdk');
 global.fetch = require('node-fetch');
+
+var token = null;
+var error = null;
 
 const poolData = {
     UserPoolId: "eu-west-2_TBU678aQA",
@@ -27,12 +31,10 @@ function SignIn(username,pass){
     var cognitoUser = new AmazonCognitoIdentity.CognitoUser(userData);
     cognitoUser.authenticateUser(autenticationValue, {
         onSuccess: function(res) {
-            var token = res.getAccessToken().getJwtToken();
-            return token;
+            token = res.getAccessToken().getJwtToken();
         },
         onFailure: function(err) {
-            var error = err;
-            return error;
+            error = err;
         },
     });
 
@@ -45,7 +47,7 @@ exports.handler = async (event, context, callback) => {
     var  username = "giovanni";
     var pass = "Giovanni1-";
     
-    var token = SignIn(username,pass);
+    SignIn(username,pass);
     var response = {
         "statusCode": 200,
         "headers": {

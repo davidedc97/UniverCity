@@ -125,7 +125,7 @@ class _CompFormScaffoldState extends State<CompFormScaffold> {
                 top: 32,
                 child: IconButton(
                     icon: Icon(Icons.arrow_back),
-                    onPressed: () => Navigator.popUntil(context, ModalRoute.withName('/')))),
+                    onPressed: () => Navigator.of(context).pushNamedAndRemoveUntil('/', (Route<dynamic> route) => false))),
           ]),
 
 

@@ -243,7 +243,7 @@ class HttpHandler {
     await http.get(_URL + _SEARCH_SERVER + "?string=" + query);
 
     if(response.statusCode == 200){
-      return DocumentList.fromJson(json.decode(response.body));
+      return DocumentList.fromJson(json.decode(response.body)["docs"]);
     }
     else{
       throw ServerException.withCode(response.statusCode);

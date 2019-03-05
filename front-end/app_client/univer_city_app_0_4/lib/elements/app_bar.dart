@@ -72,7 +72,7 @@ class _MainAppBarState extends State<MainAppBar> {
               /// sotto in campo search
               ///
               ///
-              /**
+
               getResults: (criteria)async{
                 Map<String, String> m = await _fetchMapSearch(criteria);
                 return m.values.map((String val)=>MaterialSearchResult<String>(
@@ -80,14 +80,14 @@ class _MainAppBarState extends State<MainAppBar> {
                   value: val,
                   text: '$val',
                 )).toList();
-              },**/
+              },/**
               results: _docs.keys
                   .map((String val) => new MaterialSearchResult<String>(
                         icon: (val=='')?null:Icons.description,
                         value: val,
                         text: "$val",
                       ))
-                  .toList(),
+                  .toList(),**/
               filter: (dynamic value, String criteria) {
                 ///
                 /// - [criteria] contiene la stringa inserita nel campo search

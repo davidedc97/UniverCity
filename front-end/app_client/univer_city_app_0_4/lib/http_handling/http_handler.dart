@@ -217,11 +217,17 @@ class HttpHandler {
   ///
   static Future<List<Document>> searchDocuments(query) async {
     final response =
-    await http.get(_URL + _SEARCH_SERVER + "?string=" + query);
+      await http.get(_URL + _SEARCH_SERVER + "?string=" + query);
 
     if(response.statusCode == 200){
+      var num = json.decode(response.body)["body"]["num"];
+      List<dynamic> docs = json.decode(response.body)["body"]["docs"];
+      List<Document> res = [];
+      for(int i=0; i< num; i++){
+        res.add(Document.fromJson(docs[i]));
+      }
 
-      return Document.parseJsonList(json.decode(response.body)["docs"]);
+      return res;
     }
     else{
       throw ServerException.withCode(response.statusCode);

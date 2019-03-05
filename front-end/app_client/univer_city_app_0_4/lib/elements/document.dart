@@ -33,11 +33,10 @@ class Document{
     };
   }
 
-  static List<Document> parseJsonList(List<Map<String, dynamic>> input){
+  static List<Document> parseJsonList(int length, List<dynamic> docs){
     List<Document> result = [];
-    var elem;
-    for(elem in input){
-      result.add(Document.fromJson(elem));
+    for(int i=0; i<length; i++){
+      result.add(Document.fromJson(docs[i]));
     }
     return result;
   }

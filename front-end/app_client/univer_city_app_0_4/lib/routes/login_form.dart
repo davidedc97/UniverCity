@@ -88,6 +88,7 @@ class LoginFormScaffold extends StatelessWidget {
 ///
 login(BuildContext context, String id, String pw)async{
   if (id == '' || pw == '') {
+    Navigator.pushNamed(context, '/loginForm');
     return showDialog(
         context: context,
         builder: (context) {
@@ -112,6 +113,7 @@ login(BuildContext context, String id, String pw)async{
       debugPrint('dentro if');
       Navigator.pushNamedAndRemoveUntil(context, '/home', (Route<dynamic> route) => false);
     }else{
+      Navigator.pushNamed(context, '/loginForm');
       showDialog(
           context: context,
           builder: (context){

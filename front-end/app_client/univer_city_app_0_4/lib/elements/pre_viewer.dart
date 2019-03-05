@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:sliver_fab/sliver_fab.dart';
-import 'package:flutter_pdf_viewer/flutter_pdf_viewer.dart';
 import 'package:univer_city_app_0_4/elements/info_row.dart';
-import 'package:univer_city_app_0_4/http_handling/http_handler.dart';
+import 'package:univer_city_app_0_4/elements/pdf_viewer_func.dart';
 import 'dart:typed_data';
-import 'package:url_launcher/url_launcher.dart';
-import 'package:flutter_inappbrowser/flutter_inappbrowser.dart';
 
 String assetPath = 'assets/doc/Dispense_Reti_Benelli_Giambene.pdf';
 String uuid2 = "68c5e7d6-3c19-11e9-b210-d663bd873d93";
@@ -38,17 +35,7 @@ Widget buildDocDialog(BuildContext context, String title, String uuid) {
             PdfViewer.loadBytes(res);
           },**///PDF VIEWER ##############
           onPressed: ()async{
-            showDialog(
-                context: context,
-                builder: (context){
-                  return AlertDialog(
-                    content: Center(child: CircularProgressIndicator(),),
-                  );
-                }
-            );
-            Uint8List b = await HttpHandler.getDocumentById(uuid2);
-            Navigator.of(context).pop();
-            PdfViewer.loadBytes(b);
+            pdfFuncView(context, uuid2);
           },
           label: Text('Read'),
           icon: Icon(Icons.play_circle_outline),

@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:univer_city_app_0_4/elements/document.dart';
-import 'package:flutter_pdf_viewer/flutter_pdf_viewer.dart';
 import 'package:univer_city_app_0_4/elements/pre_viewer.dart';
-import 'dart:typed_data';
-import 'package:univer_city_app_0_4/http_handling/http_handler.dart';
+import 'package:univer_city_app_0_4/elements/pdf_viewer_func.dart';
 
 class DocList extends StatelessWidget {
 
@@ -36,17 +34,7 @@ class DocList extends StatelessWidget {
             }
         ),
         onTap: ()async{
-          showDialog(
-              context: context,
-              builder: (context){
-                return AlertDialog(
-                  content: Center(child: CircularProgressIndicator(),),
-                );
-              }
-          );
-          Uint8List b = await HttpHandler.getDocumentById(uuid2);
-          Navigator.of(context).pop();
-          PdfViewer.loadBytes(b);
+          pdfFuncView(context, uuid2);
         },
       ),
     );

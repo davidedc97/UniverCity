@@ -115,10 +115,11 @@ class HttpHandler {
         body: {"username": user, "pass": pw, "flag": flag});
     print("MANNAGGIA CRISTO:\n");
     print(response.statusCode);
-    //if(response.statusCode == 200) {
-    debugPrint('ritorno 1');
+    return 1;
+    /*if(response.statusCode == 200) {
+
       return 1;
-    /*}
+    }
     else if(response.statusCode == 400) {
       return -1;
     }

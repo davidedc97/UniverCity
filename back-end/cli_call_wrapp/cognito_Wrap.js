@@ -4,13 +4,13 @@ const app = express();
 const bodyP = require("body-parser");
 app.use(bodyP.urlencoded());
 
-const AmazonCognitoIdentity = require('amazon-cognito-identity-js');
-const CognitoUserPool = AmazonCognitoIdentity.CognitoUserPool;
-const AWS = require('aws-sdk');
-const request = require('request');
-const jwkToPem = require('jwk-to-pem');
-const jwt = require('jsonwebtoken');
-const crypto = require('crypto');
+var AmazonCognitoIdentity = require('amazon-cognito-identity-js');
+var CognitoUserPool = AmazonCognitoIdentity.CognitoUserPool;
+var AWS = require('aws-sdk');
+var request = require('request');
+var jwkToPem = require('jwk-to-pem');
+var jwt = require('jsonwebtoken');
+var crypto = require('crypto');
 global.fetch = require('node-fetch');
 
 var username = null;
@@ -29,9 +29,13 @@ var error = null;
 ** ########################
 */
 
+var server = app.listen(8080, "127.0.0.1", function(){
+    console.log("Server started");
+})
+
 const poolData = {
     UserPoolId: "eu-west-2_TBU678aQA",
-    ClientId: "5scvltpq1nt3jdae3jf1o66jtm"
+    ClientId: "<ClientAppId>"
 };
 
 const pool_region= "eu-west-2";
@@ -45,7 +49,13 @@ const userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
 **
 */
 
-app.post("/user", function(req, res){
+// debugging req
+
+/*app.get("/", function(req,res){
+    res.sendStatus(200);
+})*/
+
+app.post("/", function(req, res){
     username = req.body.username;
     name = req.body.name;
     surname = req.body.surname;
@@ -84,7 +94,6 @@ app.post("/user", function(req, res){
 
 function SignUp(){
 
-    var control;
     var pwd = username + Date();
     var id = crypto.createHash('sha256').update().digest;
 
@@ -102,9 +111,8 @@ function SignUp(){
             return err.name;
         }
         var cognitoUser = res.user;
-        control = cognitoUser.getUsername();
+        return cognitoUser.getUsername();
     })
-    return control;
 }
 
 /*

@@ -23,7 +23,7 @@ class LoginScaffold extends StatelessWidget {
           flex: 2,
           child: Container(
             decoration: BoxDecoration(
-              image: DecorationImage(image: AssetImage('assets/img/sfondo_login.png'), fit: BoxFit.fitWidth)
+              image: DecorationImage(image: AssetImage('assets/img/sfondo_login2.png'), fit: BoxFit.fitWidth)
             ),
             //color: Theme.of(context).scaffoldBackgroundColor,
           )),

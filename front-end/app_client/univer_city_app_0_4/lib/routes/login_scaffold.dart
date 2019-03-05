@@ -22,7 +22,10 @@ class LoginScaffold extends StatelessWidget {
       Expanded(
           flex: 2,
           child: Container(
-            color: Theme.of(context).scaffoldBackgroundColor,
+            decoration: BoxDecoration(
+              image: DecorationImage(image: AssetImage('assets/img/sfondo_login.png'), fit: BoxFit.fitWidth)
+            ),
+            //color: Theme.of(context).scaffoldBackgroundColor,
           )),
 
       ///

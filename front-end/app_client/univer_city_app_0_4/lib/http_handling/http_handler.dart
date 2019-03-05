@@ -174,15 +174,11 @@ class HttpHandler {
     request.fields["type"] = type;
     var file = await http.MultipartFile.fromPath('package', path);
     request.files.add(file);
+
     await request.send().then( (response) {
-      ///
-      /// Ho solo tirato fuori response
-      ///
       res = response;
     });
-    ///
-    /// E fatto i controlli qui
-    ///
+
     if (res.statusCode == 201) {
       //debugPrint('up1');
       return 1;
@@ -228,7 +224,7 @@ class HttpHandler {
 
     if(response.statusCode == 200){
 
-      return Document.parseJsonList(json.decode(response.body));
+      return Document.parseJsonList(json.decode(response.body)["body"]);
     }
     else{
       throw ServerException.withCode(response.statusCode);

@@ -115,9 +115,9 @@ class HttpHandler {
         body: {"username": user, "pass": pw, "flag": flag});
     print("MANNAGGIA CRISTO:\n");
     print(response.statusCode);
-    if(response.statusCode == 200) {
+    //if(response.statusCode == 200) {
       return 1;
-    }
+    /*}
     else if(response.statusCode == 400) {
       return -1;
     }
@@ -126,7 +126,7 @@ class HttpHandler {
     }
     else {
       throw ServerException.withCode(response.statusCode);
-    }
+    }*/
   }
 
   static Future<User> getMyUserById(userId) async {

@@ -8,7 +8,7 @@ APP's API:
 		create a new user with username, name, surname, email, password, faculty and university
 		
 	METHOD:
-		POST /user 
+		POST /userReg
 	
 	RETURN: 
     	1 if the user is correctly added to the Db
@@ -18,13 +18,14 @@ APP's API:
 
 ##################################################################
 	
-  static Future<int> validateLogin(user, pw) async
+  static Future<int> validateLogin(user, pw, flag) async
 	
 	USAGE:
-		verify the existence of an account with username and password
+		verify the existence of an account with username and password.
+		The value of flag must be "0" (user is login in with username) or "1" (user is login in with email) 
 	
 	METHOD:
-		POST /user
+		POST /userLog
 	
 	RETURN:
     	1 if the user is in the Db and the password is correct
@@ -147,3 +148,4 @@ APP's API:
 =====================================================================================================================================
 
 Il codice delle funzioni si trova nella cartella front-end/app_clinet/univer_city_app_0_4/lib/http_handling/http_handler.dart
+

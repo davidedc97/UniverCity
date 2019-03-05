@@ -233,47 +233,7 @@ class HttpHandler {
       throw ServerException.withCode(response.statusCode);
     }
   }
-  ///
-  /// TEST TIZIO
-  ///
-  /// Funzione che usa la classe DocumentList che mi salva soltanto una
-  /// List<Document> che viene costruita dai metodi di Document
-  /// usando un for sulla lista
-  /// vedi documents.dart per il codice
 
-  static Future<DocumentList> fetchDocuments(query) async {
-    final response =
-    await http.get(_URL + _SEARCH_SERVER + "?string=" + query);
-
-    if(response.statusCode == 200){
-      return DocumentList.fromJson(json.decode(response.body)["docs"]);
-    }
-    else{
-      throw ServerException.withCode(response.statusCode);
-    }
-  }
-
-  ///
-  /// con questa funge dopo aver sistemato robette
-  /**
-  static Future<List<Document>> testSearchDocuments(query) async {
-    debugPrint('query "$query"');
-    await Future.delayed(Duration(milliseconds: 18));
-    List<Document> l = [
-      Document('test1', 'boh', '68c5e7d6-3c19-11e9-b210-d663bd873d93'),
-      Document('Controlli automatici', 'boh','c31aec30-39ea-11e9-b210-d663bd873d94'),
-      Document('Architetture dei calcolatori', 'boh','c31aeee2-39ea-11e9-b210-d663bd873d95'),
-      Document('Algoritmi e strutture dati', 'boh','c31af04a-39ea-11e9-b210-d663bd873d96'),
-      Document('Sistemi di calcolo', 'boh','c31af4f0-39ea-11e9-b210-d663bd873d97'),
-      Document('Fisica', 'boh','c31af66c-39ea-11e9-b210-d663bd873d98'),
-      Document('Analisi I', 'boh','c31af7b6-39ea-11e9-b210-d663bd873d99'),
-      Document('Reti dei calcolatori', 'boh','c31af8f6-39ea-11e9-b210-d663bd873d83'),
-      Document('Telecomunicazioni', 'boh','c31afa36-39ea-11e9-b210-d663bd873d84'),
-      Document('Linguaggi e tecnologie web', 'boh','c31afb76-39ea-11e9-b210-d663bd873d85'),
-    ];
-
-    if(query != '')return l;
-  }**/
 
   /* TODO: devo capire come cazzo si fa
   static Future<Document> downloadDocument(docId) async {

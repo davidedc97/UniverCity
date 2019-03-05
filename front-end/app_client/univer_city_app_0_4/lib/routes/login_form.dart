@@ -15,7 +15,7 @@ class LoginFormScaffold extends StatelessWidget {
                 top: 32,
                 child: IconButton(
                     icon: Icon(Icons.arrow_back),
-                    onPressed: () => Navigator.pop(context))),
+                    onPressed: () => Navigator.popUntil(context, ModalRoute.withName('/')))),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 64),
               child: Column(

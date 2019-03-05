@@ -19,21 +19,22 @@ class MainAppBar extends StatefulWidget implements PreferredSizeWidget {
 class _MainAppBarState extends State<MainAppBar> {
 
   Future<Map<String, String>> _fetchMapSearch(criteria) async{
-    List<Document> l = [Document('','','')];
+    List<Document> l = [Document('','','','')];
     Map<String, String> m = {};
-    var docs = await HttpHandler.fetchDocuments(criteria);
-    l = docs.documents;
+    l = await HttpHandler.searchDocuments(criteria);
+    print("LA PORCODDIO DI LISTA E': \n\n");
+    print(l);
     for(Document e in l){
         m.putIfAbsent(e.uuid, ()=>e.title);
     }
-    print("/\n/\n/\n");
+
     print(m);
-    print("/\n/\n/\n");
+
     return m;
   }
 
   Future<Map<String, String>> _fetchListSearch(criteria) async{
-    DocumentList l = DocumentList([Document('','','')]);
+    DocumentList l = DocumentList([Document('','','','')]);
     Map<String, String> m = {};
     l = await HttpHandler.fetchDocuments(criteria);
     for(int i=0; i<l.length; i++ ){

@@ -21,6 +21,10 @@ class Document{
     this._type = json["type"];
   }
 
+  @override String toString(){
+    return "titolo: " + this.title + "; creatore: " + this.owner + "; id: " + this.uuid + ", tipo: " + this.type + "\n";
+  }
+
   Map<String, dynamic> toMap(){
     return <String, dynamic> {
       'title': _title,

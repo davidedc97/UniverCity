@@ -223,14 +223,13 @@ class HttpHandler {
       await http.get(_URL + _SEARCH_SERVER + "?string=" + query);
 
     if(response.statusCode == 200){
-      var num = json.decode(response.body)["num"];
-      List<Map<String, dynamic>> docs = json.decode(response.body)["docs"];
+      var num = json.decode(response.body)["body"]["num"];
+      List<dynamic> docs = json.decode(response.body)["body"]["docs"];
       List<Document> res = [];
       for(int i=0; i< num; i++){
         res.add(Document.fromJson(docs[i]));
       }
-      print("MANNAGGIA\nIL PORCACCIO\nDI DIO\n");
-      print(res);
+
       return res;
     }
     else{

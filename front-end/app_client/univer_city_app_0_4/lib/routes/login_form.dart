@@ -86,7 +86,7 @@ class LoginFormScaffold extends StatelessWidget {
 ///
 /// controllo form
 ///
-login(BuildContext context, String id, String pw) {
+login(BuildContext context, String id, String pw)async{
   if (id == '' || pw == '') {
     return showDialog(
         context: context,
@@ -106,41 +106,30 @@ login(BuildContext context, String id, String pw) {
   } else {
     //TODO da testare
     debugPrint('email: $id, pass: $pw ');
-    Future res = HttpHandler.validateLogin(id, pw, "0"); //TODO controllare se l'id è un username o una mail e settare il flag di conseguenza
-    FutureBuilder<int>(
-      ///
-      ///   1 if the user is in the Db and the password is correct
-      ///  -1 if no user is found or the password is invalid
-      ///  -2 if there's an internal error
-      ///
-      future: res,
-      builder: (context, snapshot) {
-        if (snapshot.hasError) print(snapshot.data);
-        return snapshot.hasData
-            ? (snapshot.data == 1)
-                ? Navigator.pushNamedAndRemoveUntil(
-                    context, '/', (Route<dynamic> route) => false)
-                : showDialog(
-                    context: context,
-                    builder: (context) {
-                      return AlertDialog(
-                        title: Text('Ops!'),
-                        content: (snapshot.data == -1)
-                            ? Text('incorrect user or password')
-                            : Text('server error'),
-                        actions: <Widget>[
-                          FlatButton(
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                              child: Text('Close'))
-                        ],
-                      );
-                    })
-            : Center(
-                child: CircularProgressIndicator(),
-              );
-      },
-    );
+    int res = await HttpHandler.validateLogin(id, pw, "0"); //TODO controllare se l'id è un username o una mail e settare il flag di conseguenza
+    debugPrint(res.toString());
+    if(res==1){
+      debugPrint('dentro if');
+      Navigator.pushNamedAndRemoveUntil(context, '/home', (Route<dynamic> route) => false);
+    }else{
+      showDialog(
+          context: context,
+          builder: (context){
+            return AlertDialog(
+              title: Text('Ops !'),
+              content: (res == -1)
+                  ? Text('incorrect user or password')
+                  : Text('server error'),
+              actions: <Widget>[
+                FlatButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Text('Close'))
+              ],
+            );
+          }
+      );
+    }
   }
 }

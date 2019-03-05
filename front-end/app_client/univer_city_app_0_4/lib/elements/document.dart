@@ -6,7 +6,7 @@ class Document{
   String _type; // it can be "M" (mashup) or "O" (original)
 
 
-  Document(this._title, this._owner, this._uuid );
+  Document(this._title, this._owner, this._uuid, this._type);
 
   String get title => _title;
   String get owner => _owner;

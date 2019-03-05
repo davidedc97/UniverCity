@@ -21,10 +21,14 @@ class _MainAppBarState extends State<MainAppBar> {
   Future<Map<String, String>> _fetchMapSearch(criteria) async{
     List<Document> l = [Document('','','')];
     Map<String, String> m = {};
-    l = await HttpHandler.searchDocuments(criteria);
+    var docs = await HttpHandler.fetchDocuments(criteria);
+    l = docs.documents;
     for(Document e in l){
         m.putIfAbsent(e.uuid, ()=>e.title);
     }
+    print("/\n/\n/\n");
+    print(m);
+    print("/\n/\n/\n");
     return m;
   }
 

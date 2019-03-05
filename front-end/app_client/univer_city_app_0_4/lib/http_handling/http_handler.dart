@@ -224,7 +224,7 @@ class HttpHandler {
 
     if(response.statusCode == 200){
 
-      return Document.parseJsonList(json.decode(response.body)["body"]);
+      return Document.parseJsonList(json.decode(response.body)["docs"]);
     }
     else{
       throw ServerException.withCode(response.statusCode);

@@ -6,8 +6,10 @@ import 'dart:convert';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 
-class HttpHandler {
 
+
+class HttpHandler {
+  static String _sessionToken;
   static const _URL = "https://ogv7kvalpf.execute-api.eu-west-1.amazonaws.com/dev";
   static const _FAKE_LOG_URL = "https://v1uu1cu9ld.execute-api.eu-west-1.amazonaws.com/alpha";
   static const _DOCUMENT_SERVER = "/document";
@@ -28,7 +30,7 @@ class HttpHandler {
     **  -2 if there's an internal error
     **  throws an exception otherwise
   */
-  static Future<int> userFormRegistration(user, name, surname, email, pw, faculty, university) async {
+  static Future<int> userFormRegistration(String user,String name,String surname,String email,String pw,String faculty,String university) async {
     final response =
       await http.post(
         _FAKE_LOG_URL + _REG_SERVER,
@@ -59,7 +61,7 @@ class HttpHandler {
   */
 
 
-  static Future testUser(user, pw, name, surname) async {
+  static Future testUser(String user,String pw,String name,String surname) async {
 
   }
 
@@ -75,18 +77,23 @@ class HttpHandler {
     **  throws an exception otherwise
     ** The value of flag must be "0" (user is login in with username) or "1" (user is login in with email)
   */
-  static Future<int> validateLogin(user, pw, flag) async {
+  static Future<int> validateLogin(String user, String pw,String flag) async {
     final response =
       await http.post(
-          _FAKE_LOG_URL + _LOGIN_SERVER,
-        body: {"username": user, "pass": pw, "flag": flag});
-    print("MANNAGGIA CRISTO:\n");
+          _FAKE_LOG_URL+_LOGIN_SERVER,
+        headers:{
+          'Content-type' : 'application/json',
+          'Accept': 'application/json',
+        },
+        body:json.encode({"username":user,"pass": pw})
+            ); //"flag": flag
     print(response.statusCode);
     print(response.headers);
-    print(response.body);
-    return 1;
+    print('body '+response.body);
+    //return 1;
     if(response.statusCode == 200) {
-
+      print(response.headers['token']);
+      _sessionToken = response.headers['token'];
       return 1;
     }
     else if(response.statusCode == 400) {
@@ -96,11 +103,12 @@ class HttpHandler {
       return -2;
     }
     else {
-      throw ServerException.withCode(response.statusCode);
+      print(response.statusCode);
+      //throw ServerException.withCode(response.statusCode);
     }
   }
 
-  static Future<User> getMyUserById(userId) async {
+  static Future<User> getMyUserById(String userId) async {
     final response =
     await http.get(_URL + _LOGIN_SERVER + "/" + userId);
     if(response.statusCode == 200){
@@ -112,7 +120,7 @@ class HttpHandler {
   }
 
 
-  static Future<User> getOtherUserById(userId) async {
+  static Future<User> getOtherUserById(String userId) async {
     final response =
         await http.get(_URL + _LOGIN_SERVER + "/" + userId);
     if(response.statusCode == 200){
@@ -144,7 +152,8 @@ class HttpHandler {
   static Future<int> uploadDocument(String title, String type, String path) async {
     var res;
     var uri = Uri.parse(_URL + _DOCUMENT_SERVER);
-    var request = new http.MultipartRequest("POST", uri);
+    var request = new http.MultipartRequest('POST', uri);
+    request.headers.addAll({'Authorization':_sessionToken});
     request.fields["title"] = title;
     request.fields["type"] = type;
     var file = await http.MultipartFile.fromPath('package', path);
@@ -173,9 +182,9 @@ class HttpHandler {
   }
 
 
-  static Future<Uint8List> getDocumentById(docId) async{
+  static Future<Uint8List> getDocumentById( String docId) async{
     final response =
-      await http.get(_URL + _DOCUMENT_SERVER + "?id=" + docId);
+      await http.get(_URL + _DOCUMENT_SERVER + "?id=" + docId, headers: {'Authorization':_sessionToken});
 
     if(response.statusCode == 200) {
       return response.bodyBytes;
@@ -190,9 +199,9 @@ class HttpHandler {
   /// ERRORE
   /// '_InternalLinkedHashMap<String, dynamic>' is not a subtype of type 'List<Map<String, dynamic>>
   ///
-  static Future<List<Document>> searchDocuments(query) async {
+  static Future<List<Document>> searchDocuments(String query) async {
     final response =
-      await http.get(_URL + _SEARCH_SERVER + "?string=" + query);
+      await http.get(_URL + _SEARCH_SERVER + "?string=" + query, headers: {'Authorization':_sessionToken});
 
     if(response.statusCode == 200){
       var num = json.decode(response.body)["body"]["num"];
@@ -238,7 +247,7 @@ class HttpHandler {
                                 /*########     LIKES  HANDLING     ########*/
 
 
-  static Future addLike(user, docId) async{
+  static Future addLike(String user, String docId) async{
     final response =
         await http.post(
           _URL + _LIKE_SERVER,
@@ -253,7 +262,7 @@ class HttpHandler {
   }
 
 
-  static Future retrieveLikes(docId) async{
+  static Future retrieveLikes(String docId) async{
     final response =
         await http.get( _URL + _LIKE_SERVER + "/" + docId);
 

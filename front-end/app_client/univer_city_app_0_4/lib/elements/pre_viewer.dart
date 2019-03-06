@@ -37,6 +37,7 @@ Widget buildDocDialog(BuildContext context, String title, String uuid) {
           onPressed: ()async{
             pdfFuncView(context, uuid2);
           },
+          backgroundColor: Color(0xFF393E46),
           label: Text('Read'),
           icon: Icon(Icons.play_circle_outline),
         ),
@@ -46,7 +47,7 @@ Widget buildDocDialog(BuildContext context, String title, String uuid) {
             expandedHeight: 182.0,
             pinned: false,
             flexibleSpace: new FlexibleSpaceBar(
-
+              background: Image(image: AssetImage('assets/img/sfondo_login2.png'),fit: BoxFit.fitWidth,)
                 ///
                 /// spazio SilverAppBar
                 /// da mettere o anteprima pdf o immagine bella

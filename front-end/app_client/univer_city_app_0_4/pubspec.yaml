@@ -23,7 +23,7 @@ dependencies:
   url_launcher: ^5.0.1
   document_chooser: ^0.0.2
   material_search: ^0.2.8
-  flutter_chips_input: ^1.1.0
+  #flutter_chips_input: ^1.1.0
   flutter_pdf_viewer: ^0.2.0
   flutter_pdf_renderer: ^1.2.1
   sliver_fab: ^1.0.0

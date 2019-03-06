@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_chips_input/flutter_chips_input.dart';
+//import 'package:flutter_chips_input/flutter_chips_input.dart';
 import 'package:univer_city_app_0_4/elements/title_div.dart';
 import 'package:univer_city_app_0_4/http_handling/http_handler.dart';
 
@@ -58,6 +58,7 @@ class UploadFormBody extends StatelessWidget {
             padding: EdgeInsets.symmetric(vertical: 8),
             child: TitleDivider('File upload'),
           ),
+          /**
           Padding(
               padding: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
               child: ChipsInput(
@@ -101,7 +102,7 @@ class UploadFormBody extends StatelessWidget {
                   },
                   onChanged: (tags) {
                     return debugPrint('cambio tag');
-                  })),
+                  })),**/
           Padding(
               padding: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
               child: TextField(

@@ -19,24 +19,21 @@ class MainAppBar extends StatefulWidget implements PreferredSizeWidget {
 class _MainAppBarState extends State<MainAppBar> {
 
   Future<Map<String, String>> _fetchMapSearch(criteria) async{
-    List<Document> l = [Document('','','')];
+    List<Document> l = [Document('','','','')];
     Map<String, String> m = {};
     l = await HttpHandler.searchDocuments(criteria);
+    print("LA PORCODDIO DI LISTA E': \n\n");
+    print(l);
     for(Document e in l){
         m.putIfAbsent(e.uuid, ()=>e.title);
     }
+
+    print(m);
+
     return m;
   }
 
-  Future<Map<String, String>> _fetchListSearch(criteria) async{
-    DocumentList l = DocumentList([Document('','','')]);
-    Map<String, String> m = {};
-    l = await HttpHandler.fetchDocuments(criteria);
-    for(int i=0; i<l.length; i++ ){
-      m.putIfAbsent(l.documents[i].uuid.toString(), ()=>l.documents[i].title.toString());
-    }
-    return m;
-  }
+
 
   ///
   /// Contiene titolo e uuid, i risultati della ricerta tramite titolo
@@ -71,6 +68,8 @@ class _MainAppBarState extends State<MainAppBar> {
               /// Indica come i risultai devono essere costruiti
               /// sotto in campo search
               ///
+              ///
+
               getResults: (criteria)async{
                 Map<String, String> m = await _fetchMapSearch(criteria);
                 return m.values.map((String val)=>MaterialSearchResult<String>(
@@ -78,14 +77,14 @@ class _MainAppBarState extends State<MainAppBar> {
                   value: val,
                   text: '$val',
                 )).toList();
-              },
-              ///results: _docs.keys
-              ///    .map((String val) => new MaterialSearchResult<String>(
-              ///          icon: (val=='')?null:Icons.description,
-              ///          value: val,
-              ///          text: "$val",
-              ///        ))
-              ///    .toList(),
+              },/**
+              results: _docs.keys
+                  .map((String val) => new MaterialSearchResult<String>(
+                        icon: (val=='')?null:Icons.description,
+                        value: val,
+                        text: "$val",
+                      ))
+                  .toList(),**/
               filter: (dynamic value, String criteria) {
                 ///
                 /// - [criteria] contiene la stringa inserita nel campo search

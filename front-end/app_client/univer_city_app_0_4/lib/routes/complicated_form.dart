@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:univer_city_app_0_4/elements/button_login.dart';
+import 'package:univer_city_app_0_4/http_handling/http_handler.dart';
 
 class CompFormScaffold extends StatefulWidget {
   @override
@@ -124,7 +125,7 @@ class _CompFormScaffoldState extends State<CompFormScaffold> {
                 top: 32,
                 child: IconButton(
                     icon: Icon(Icons.arrow_back),
-                    onPressed: () => Navigator.pop(context))),
+                    onPressed: () => Navigator.of(context).pushNamedAndRemoveUntil('/', (Route<dynamic> route) => false))),
           ]),
 
 
@@ -133,7 +134,7 @@ class _CompFormScaffoldState extends State<CompFormScaffold> {
 }
 
 compForm(BuildContext context, String id, String nm, String cg, String em,
-    String pw, String fa, String un) {
+    String pw, String fa, String un) async{
   if (id == '' ||
       nm == '' ||
       cg == '' ||
@@ -141,6 +142,7 @@ compForm(BuildContext context, String id, String nm, String cg, String em,
       pw == '' ||
       fa == '' ||
       un == '') {
+    Navigator.pushNamed(context, '/complicatedForm');
     return showDialog(
         context: context,
         builder: (context) {
@@ -158,7 +160,32 @@ compForm(BuildContext context, String id, String nm, String cg, String em,
         });
   } else {
     //TODO da testare
-    debugPrint(
-        'email: $id, Nome: $nm, Cognome: $cg, Email: $em, Pass: $pw, Facolta $fa ');
+    debugPrint('email: $id, Nome: $nm, Cognome: $cg, Email: $em, Pass: $pw, Facolta $fa, Universita: $un ');
+    int res = await HttpHandler.userFormRegistration(id, nm, cg, em, pw, fa, un);
+    debugPrint(res.toString());
+    if(res==1){
+      debugPrint('dentro if');
+      Navigator.pushNamedAndRemoveUntil(context, '/home', (Route<dynamic> route) => false);
+    }else{
+      Navigator.pushNamed(context, '/complicatedForm');
+      showDialog(
+          context: context,
+          builder: (context){
+            return AlertDialog(
+              title: Text('Ops !'),
+              content: (res == -1)
+                  ? Text('bad input')
+                  : Text('server error'),
+              actions: <Widget>[
+                FlatButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Text('Close'))
+              ],
+            );
+          }
+      );
+    }
   }
 }

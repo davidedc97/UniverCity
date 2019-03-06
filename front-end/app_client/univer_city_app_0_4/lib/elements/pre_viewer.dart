@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sliver_fab/sliver_fab.dart';
-import 'package:flutter_pdf_viewer/flutter_pdf_viewer.dart';
 import 'package:univer_city_app_0_4/elements/info_row.dart';
-import 'package:univer_city_app_0_4/http_handling/http_handler.dart';
+import 'package:univer_city_app_0_4/elements/pdf_viewer_func.dart';
 import 'dart:typed_data';
 
 String assetPath = 'assets/doc/Dispense_Reti_Benelli_Giambene.pdf';
@@ -27,13 +26,17 @@ Widget buildDocDialog(BuildContext context, String title, String uuid) {
         floatingWidget: FloatingActionButton.extended(
           //BRUTTINO FORSE
           //shape: BeveledRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(24))),
+          /**
           onPressed: ()async{
             debugPrint('loadingPdf');
             Uint8List res = await HttpHandler.getDocumentById(uuid2);
             //debugPrint(res.toString());
             debugPrint('fine getDocument');
             PdfViewer.loadBytes(res);
-          },//PDF VIEWER ##############
+          },**///PDF VIEWER ##############
+          onPressed: ()async{
+            pdfFuncView(context, uuid2);
+          },
           label: Text('Read'),
           icon: Icon(Icons.play_circle_outline),
         ),

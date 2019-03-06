@@ -6,7 +6,7 @@ class Document{
   String _type; // it can be "M" (mashup) or "O" (original)
 
 
-  Document(this._title, this._owner, this._uuid );
+  Document(this._title, this._owner, this._uuid, this._type);
 
   String get title => _title;
   String get owner => _owner;
@@ -21,6 +21,10 @@ class Document{
     this._type = json["type"];
   }
 
+  @override String toString(){
+    return "titolo: " + this.title + "; creatore: " + this.owner + "; id: " + this.uuid + ", tipo: " + this.type + "\n";
+  }
+
   Map<String, dynamic> toMap(){
     return <String, dynamic> {
       'title': _title,
@@ -29,34 +33,15 @@ class Document{
     };
   }
 
-  static List<Document> parseJsonList(List<Map<String, dynamic>> input){
+  static List<Document> parseJsonList(int length, List<dynamic> docs){
     List<Document> result = [];
-    var elem;
-    for(elem in input){
-      result.add(Document.fromJson(elem));
+    for(int i=0; i<length; i++){
+      result.add(Document.fromJson(docs[i]));
     }
     return result;
   }
 
 }
 
-///
-///
-/// DOCUMENT LIST
-///
-///
-class DocumentList{
-  final List<Document> _documents;
-
-  DocumentList(this._documents);
-
-  factory DocumentList.fromJson(List<dynamic> parsedJson){
-    List<Document> _documents = List<Document>();
-    _documents = parsedJson.map((i)=>Document.fromJson(i)).toList();
-    return DocumentList(_documents);
-  }
-  List<Document> get documents => _documents;
-  int get length => _documents.length;
-}
 
 

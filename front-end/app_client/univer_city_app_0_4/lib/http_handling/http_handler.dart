@@ -9,9 +9,11 @@ import 'package:flutter/material.dart';
 class HttpHandler {
 
   static const _URL = "https://ogv7kvalpf.execute-api.eu-west-1.amazonaws.com/dev";
+  static const _FAKE_LOG_URL = "https://v1uu1cu9ld.execute-api.eu-west-1.amazonaws.com/alpha";
   static const _DOCUMENT_SERVER = "/document";
   static const _SEARCH_SERVER = "/search";
-  static const _USER_SERVER = "/user";
+  static const _LOGIN_SERVER = "/userLog";
+  static const _REG_SERVER = "/userReg";
   static const _LIKE_SERVER = "/like";
   static const _MASHUP_SERVER = "/mashup";
   static const _poolId = "awsUserPoolId";
@@ -29,8 +31,10 @@ class HttpHandler {
   static Future<int> userFormRegistration(user, name, surname, email, pw, faculty, university) async {
     final response =
       await http.post(
-        _URL + _USER_SERVER,
+        _FAKE_LOG_URL + _REG_SERVER,
         body: {"username": user, "name": name, "surname": surname, "email": email, "pass": pw, "faculty": faculty, "university":university});
+
+    print(response.statusCode);
 
     if(response.statusCode == 200) {
       return 1;
@@ -53,44 +57,9 @@ class HttpHandler {
     **  -2 if there's an internal error
     **  throws an exception otherwise
   */
-  /*
-  static Future<int> userFormRegistrationCognito(user, name, surname, email, pw, faculty, university) async {
-    final response =
-      await http.post(
-        _URL + _USER_SERVER,
-        body:{
-          "DesiredDeliveryMediums": "EMAIL",
-          "ForceAliasCreation": false,
-          "MessageAction": "SUPPRESS",
-          "UserAttributes": [
-            {"Name": "name", "Value": name},
-            {"Name": "surname", "Value": surname},
-            {"Name": "email", "Value": email},
-            {"Name": "faculty", "Value": faculty},
-            {"Name": "university", "Value": university}
-          ],
-          "Username": user,
-          "UserPoolId": _poolId,
-        });
 
-
-    if(response.statusCode == 200) {
-      return 1;
-    }
-    else if(response.statusCode == 400) {
-      return -1;
-    }
-    else if(response.statusCode == 500) {
-      return -2;
-    }
-    else {
-      throw ServerException.withCode(response.statusCode);
-    }
-  }
-  */
 
   static Future testUser(user, pw, name, surname) async {
-
 
   }
 
@@ -104,14 +73,18 @@ class HttpHandler {
     **  -1 if no user is found or the password is invalid
     **  -2 if there's an internal error
     **  throws an exception otherwise
+    ** The value of flag must be "0" (user is login in with username) or "1" (user is login in with email)
   */
-  static Future<int> validateLogin(user, pw) async {
+  static Future<int> validateLogin(user, pw, flag) async {
     final response =
       await http.post(
-        _URL + _USER_SERVER,
-        body: {"username": user, "pass": pw});
-
+          _FAKE_LOG_URL + _LOGIN_SERVER,
+        body: {"username": user, "pass": pw, "flag": flag});
+    print("MANNAGGIA CRISTO:\n");
+    print(response.statusCode);
+    return 1;
     if(response.statusCode == 200) {
+
       return 1;
     }
     else if(response.statusCode == 400) {
@@ -127,7 +100,7 @@ class HttpHandler {
 
   static Future<User> getMyUserById(userId) async {
     final response =
-    await http.get(_URL + _USER_SERVER + "/" + userId);
+    await http.get(_URL + _LOGIN_SERVER + "/" + userId);
     if(response.statusCode == 200){
       return User.fromJson(json.decode(response.body));
     }
@@ -139,7 +112,7 @@ class HttpHandler {
 
   static Future<User> getOtherUserById(userId) async {
     final response =
-        await http.get(_URL + _USER_SERVER + "/" + userId);
+        await http.get(_URL + _LOGIN_SERVER + "/" + userId);
     if(response.statusCode == 200){
       return User.secureFromJson(json.decode(response.body));
     }
@@ -174,15 +147,11 @@ class HttpHandler {
     request.fields["type"] = type;
     var file = await http.MultipartFile.fromPath('package', path);
     request.files.add(file);
+
     await request.send().then( (response) {
-      ///
-      /// Ho solo tirato fuori response
-      ///
       res = response;
     });
-    ///
-    /// E fatto i controlli qui
-    ///
+
     if (res.statusCode == 201) {
       //debugPrint('up1');
       return 1;
@@ -207,10 +176,7 @@ class HttpHandler {
       await http.get(_URL + _DOCUMENT_SERVER + "?id=" + docId);
 
     if(response.statusCode == 200) {
-      var j =  json.decode(response.body);
-      String s = j['body'];
-      return Uint8List.fromList(s.codeUnits);
-      //return response.bodyBytes;
+      return response.bodyBytes;
     }
     else{
       throw ServerException.withCode(response.statusCode);
@@ -224,57 +190,19 @@ class HttpHandler {
   ///
   static Future<List<Document>> searchDocuments(query) async {
     final response =
-    await http.get(_URL + _SEARCH_SERVER + "?string=" + query);
+      await http.get(_URL + _SEARCH_SERVER + "?string=" + query);
 
     if(response.statusCode == 200){
-
-      return Document.parseJsonList(json.decode(response.body));
-    }
-    else{
-      throw ServerException.withCode(response.statusCode);
-    }
-  }
-  ///
-  /// TEST TIZIO
-  ///
-  /// Funzione che usa la classe DocumentList che mi salva soltanto una
-  /// List<Document> che viene costruita dai metodi di Document
-  /// usando un for sulla lista
-  /// vedi documents.dart per il codice
-
-  static Future<DocumentList> fetchDocuments(query) async {
-    final response =
-    await http.get(_URL + _SEARCH_SERVER + "?string=" + query);
-
-    if(response.statusCode == 200){
-      return DocumentList.fromJson(json.decode(response.body));
+      var num = json.decode(response.body)["body"]["num"];
+      List<dynamic> docs = json.decode(response.body)["body"]["docs"];
+      List<Document> res = Document.parseJsonList(num, docs);
+      return res;
     }
     else{
       throw ServerException.withCode(response.statusCode);
     }
   }
 
-  ///
-  /// con questa funge dopo aver sistemato robette
-  /**
-  static Future<List<Document>> testSearchDocuments(query) async {
-    debugPrint('query "$query"');
-    await Future.delayed(Duration(milliseconds: 18));
-    List<Document> l = [
-      Document('test1', 'boh', '68c5e7d6-3c19-11e9-b210-d663bd873d93'),
-      Document('Controlli automatici', 'boh','c31aec30-39ea-11e9-b210-d663bd873d94'),
-      Document('Architetture dei calcolatori', 'boh','c31aeee2-39ea-11e9-b210-d663bd873d95'),
-      Document('Algoritmi e strutture dati', 'boh','c31af04a-39ea-11e9-b210-d663bd873d96'),
-      Document('Sistemi di calcolo', 'boh','c31af4f0-39ea-11e9-b210-d663bd873d97'),
-      Document('Fisica', 'boh','c31af66c-39ea-11e9-b210-d663bd873d98'),
-      Document('Analisi I', 'boh','c31af7b6-39ea-11e9-b210-d663bd873d99'),
-      Document('Reti dei calcolatori', 'boh','c31af8f6-39ea-11e9-b210-d663bd873d83'),
-      Document('Telecomunicazioni', 'boh','c31afa36-39ea-11e9-b210-d663bd873d84'),
-      Document('Linguaggi e tecnologie web', 'boh','c31afb76-39ea-11e9-b210-d663bd873d85'),
-    ];
-
-    if(query != '')return l;
-  }**/
 
   /* TODO: devo capire come cazzo si fa
   static Future<Document> downloadDocument(docId) async {

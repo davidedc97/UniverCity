@@ -3,7 +3,7 @@ import 'package:univer_city_app_0_4/elements/document.dart';
 import 'package:univer_city_app_0_4/elements/doc_list.dart';
 import 'package:univer_city_app_0_4/elements/title_div.dart';
 
-Document info = Document('Telecomunicazioni', 'ing. Giovanni Gianbene','c31aec30-39ea-11e9-b210-d663bd873d93');
+Document info = Document('Telecomunicazioni', 'ing. Giovanni Gianbene','c31aec30-39ea-11e9-b210-d663bd873d93', 'M');
 
 class MyHistory extends StatelessWidget {
   @override

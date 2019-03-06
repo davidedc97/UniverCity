@@ -23,3 +23,7 @@ UniverCity will be a platform where everyone, students and teacher, can share an
 - [Presentation](https://docs.google.com/presentation/d/13HP_5mVvMxjHJI0JxrQ7UOg4eFrssTTWkLIBHwEaEN8/edit?usp=sharing)
 - [Demo mobile app](https://xd.adobe.com/view/3ec5069c-435a-4774-6cc7-0c27541f4905-48f4/?hints=off)
 - [Demo web client](https://xd.adobe.com/view/50f46b61-bc7a-4047-540e-dab969d36767-26c5/?hints=off)
+
+# 2nd Milestone
+- [Presentation](https://docs.google.com/presentation/d/1O5NojuoxNorrpDU4g-oW5aVZjzzBfDbk9NBEjSOfy6Y/edit#slide=id.p)
+- [Complete API on Swagger]

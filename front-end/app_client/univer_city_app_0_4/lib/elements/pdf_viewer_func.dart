@@ -7,8 +7,23 @@ pdfFuncView(BuildContext context, String uuid) async{
   showDialog(
       context: context,
       builder: (context){
-        return AlertDialog(
-          content: Center(child: CircularProgressIndicator(),),
+        return Theme(
+          data: Theme.of(context).copyWith(dialogBackgroundColor: Color(0xFF393E46)),
+          child: AlertDialog(
+            title: Text('Hey, un attimo non siamo la NASA!', style: TextStyle(color: Colors.white),),
+            content: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.max,
+              children: <Widget>[
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Colors.white),),
+                  ],
+                ),
+              ],
+            ),
+          ),
         );
       }
   );

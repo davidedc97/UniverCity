@@ -82,6 +82,8 @@ class HttpHandler {
         body: {"username": user, "pass": pw, "flag": flag});
     print("MANNAGGIA CRISTO:\n");
     print(response.statusCode);
+    print(response.headers);
+    print(response.body);
     return 1;
     if(response.statusCode == 200) {
 

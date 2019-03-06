@@ -1,0 +1,107 @@
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin:0;
+  padding:0;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  
+}.bg
+{
+  position: absolute;
+  background-attachment: fixed;
+  background: #8dcfcb url("../immagini/bb.png");
+  height: 100%;
+  width: 100%;
+  background-size: cover;
+  background-position: 0 0;
+  bottom:0%;
+}.car
+{
+  background-attachment: fixed;
+  position: absolute;
+  bottom:-10%;
+  right: 70%;
+  width:350px;
+  max-width: 27%;
+  min-width: 27%;
+  height: auto;
+
+}.aereo{
+  background-attachment: fixed;
+  width: 150px;
+  max-width: 13%;
+  min-width: 13%;
+  height: auto;
+  position: absolute;
+  bottom: 80%;
+  right: 0%;
+  animation: vola 4s linear infinite;
+}.cc{
+background-attachment: fixed;
+position:absolute;
+bottom: 80%;
+max-width: 70%;
+min-width: 70%;
+right:0%;
+animation: volad 4s linear infinite;  
+}
+@keyframes vola 
+{
+  from{
+    right: -150px;
+  }
+  to{
+    right: 160%;
+  }
+}
+@keyframes volad 
+{
+  from{
+    right: -1190px;
+  }
+  to{
+    right:100%;
+  }
+}
+@keyframes animate
+{
+  from{
+    
+    background-position: 0 0;
+  }
+  to {
+    background-position: 49.5% 0;
+  }
+}.form-signin {
+  width: 100%;
+  max-width: 330px;
+  padding: 15px;
+  margin: auto;
+}
+.form-signin .checkbox {
+  font-weight: 400;
+}
+.form-signin .form-control {
+  position: relative;
+  box-sizing: border-box;
+  height: auto;
+  padding: 10px;
+  font-size: 16px;
+}
+.form-signin .form-control:focus {
+  z-index: 2;
+}
+.form-signin input[type="email"] {
+  margin-bottom: 0px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.form-signin input[type="password"] {
+  margin-bottom: 0px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}

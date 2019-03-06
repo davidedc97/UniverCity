@@ -3,7 +3,7 @@
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  
+  <link rel="icon" href="../ico/ico1.png">
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="../css/bootstrap.min.css" >
   <link rel="stylesheet" href="../css/dashboard.css">
@@ -47,8 +47,8 @@
 
   <ul class="navbar-nav px-3" >
     <li class="nav-item text-nowrap">
-      <a class="nav-link" href="#"><img class="ico" src="../ico/profilo.svg" ></a>
-    </li>
+        <a class="nav-link" href="../paginaLogin/login.html"><img class="ico" src="../ico/profilo.svg" ></a>
+      </li>
   </ul>
 
 
@@ -80,12 +80,7 @@
                   Mashup
                 </a>
               </li>
-            <li class="nav-item">
-              <a class="nav-link" href="bug.html">
-                <span data-feather="bug"></span><img src="../ico/bug.svg">
-                Report a bug
-              </a>
-            </li>
+      
             <li class="sel nav-item">
               <a class="nav-link" href="feedback.html">
                 <span data-feather="feedback"></span><img src="../ico/feedback.svg">
@@ -96,46 +91,45 @@
           </ul>
   
           <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-            <span>My History</span>
-            <a class="d-flex align-items-center text-muted" href="#">
-              <span data-feather="plus-circle"></span>
-            </a>
-          </h6>
-          <ul class="nav flex-column mb-2">
-            <li class="nav-item">
-              <a class="nav-link" href="#">
-                <span data-feather="file-text"></span><img src="../ico/file.svg">
-                file 1
+              <span>My History</span>
+              <a class="d-flex align-items-center text-muted" href="#">
+                <span data-feather="plus-circle"></span>
               </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">
-                <span data-feather="file-text"></span><img src="../ico/file.svg">
-                file 2
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">
-                <span data-feather="file-text"></span><img src="../ico/file.svg">
-                file 3
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">
-                <span data-feather="file-text"></span><img src="../ico/file.svg">
-                file 4
-              </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">
+            </h6>
+            <ul class="nav flex-column mb-2">
+              <li class="nav-item">
+                <a class="nav-link" href="../../../back-end/storage/data/test/0d5a7b73218ffbcd444e9498e3b6e97901ba4d42">
                   <span data-feather="file-text"></span><img src="../ico/file.svg">
-                  file 5
+                  file 1
                 </a>
               </li>
-          </ul>
-        </div>
-      </nav>
-  
+              <li class="nav-item">
+                <a class="nav-link" href="../../../back-end/storage/data/test/5a0e46cad76db3865a9e18085d711ab88d5be425">
+                  <span data-feather="file-text"></span><img src="../ico/file.svg">
+                  file 2
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="../../../back-end/storage/data/test/76e7f7ef89c87bee451f044dc0868b45da558139">
+                  <span data-feather="file-text"></span><img src="../ico/file.svg">
+                  file 3
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="../../../back-end/storage/data/test/301d7fa77d9d6bfc5a8fca92df6ab386c1b27bf5">
+                  <span data-feather="file-text"></span><img src="../ico/file.svg">
+                  file 4
+                </a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="../../../back-end/storage/data/test/548d27156abd7359b5619665815ed6986cdfd7c7">
+                    <span data-feather="file-text"></span><img src="../ico/file.svg">
+                    file 5
+                  </a>
+                </li>
+            </ul>
+          </div>
+        </nav>
       <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
         <div id="content-area" class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         
@@ -146,11 +140,16 @@
 
         </div>
   
-        <canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas>
-  
-     
+       
+        <form action="action.php" method="post" style="text-align:center;">
+            <h1 id="curr" class="h2">What do you think about UniverCity?</h1><br>
+            <textarea type="text" name="field1" rows="4" cols="50"></textarea><br>
+              
+             <input type="submit"class="btn btn-sm btn-outline-secondary" value="Submit">
+          </form>
       </main>
     </div>
+    
   </div>
   
 </body>

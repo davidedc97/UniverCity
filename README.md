@@ -26,6 +26,4 @@ UniverCity will be a platform where everyone, students and teacher, can share an
 
 # 2nd Milestone
 - [Presentation](https://docs.google.com/presentation/d/1O5NojuoxNorrpDU4g-oW5aVZjzzBfDbk9NBEjSOfy6Y/edit#slide=id.p)
-- Complete API on Swagger
-* [Document](https://app.swaggerhub.com/apis-docs/univerCity9/univerCity/1.0.0-oas3)
-* [Login](https://app.swaggerhub.com/apis/UniverCity19/LoginAPI/1.0.0)
+- [Complete API on Swagger](https://app.swaggerhub.com/apis-docs/univerCity9/univerCity/1.0.0-oas3)

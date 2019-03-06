@@ -5,7 +5,7 @@
 .ah{
    height: 50px;
     background-color:#822433;
-    overflow: hidden;
+    
 }.ico{
     filter:invert(95%);
 }
@@ -32,7 +32,27 @@
         border-width: 200%;
   
 
-}
+}.expandable {
+    background: #fff;
+    overflow: hidden;
+    color: #000;   
+    line-height: 100%;
+  
+    transition: all 1.5s ease-in-out;
+    height: 0;
+   }
+   
+   .expandable:target {
+    height:50%;
+  }
+  .sf{
+      width:90%;
+     
+  }.ta{
+      width: 100%;
+  }.co{
+      width:100%;
+  }
 
 
 

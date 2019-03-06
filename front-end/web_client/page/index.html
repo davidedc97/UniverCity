@@ -3,7 +3,7 @@
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  
+  <link rel="icon" href="../ico/ico1.png">
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="../css/bootstrap.min.css" >
   <link rel="stylesheet" href="../css/dashboard.css">
@@ -12,7 +12,48 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
  <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>
+ <script>
 
+
+    var fileData = null;
+
+  function loadFile() {
+      var preview = document.querySelector('file');
+      var file    = document.querySelector('input[type=file]').files[0];
+      var reader  = new FileReader();
+
+     reader.onloadend = function () {
+         fileData = file;
+     }
+     if (file) {
+          reader.readAsDataURL(file);
+      }
+  }
+
+      function uploadFile() {
+                 data = new FormData();
+                data.append("name",$("#nomefile").val());
+                alert($("#nomefile").val());
+                data.append('file', fileData);
+
+                $.ajax({
+                  url: "/tmp",
+                  type: "POST",
+                  data: data,
+                  processData: false,
+                  contentType: false,
+                  success: function(data) {
+                      document.getElementById("result").innerHTML = 'Result: Upload successful';
+                  },
+                  error: function(e) {
+                      document.getElementById("result").innerHTML = 'Result: Error occurred: ' + e.message;
+                  }
+                });
+            }
+
+   
+
+</script>
 </head>
 <body>
     <script>
@@ -47,7 +88,8 @@
 
   <ul class="navbar-nav px-3" >
     <li class="nav-item text-nowrap">
-      <a class="nav-link" href="#"><img class="ico" src="../ico/profilo.svg" ></a>
+        <a class="nav-link" href="../paginaLogin/login.html"><img class="ico" src="../ico/profilo.svg" ></a>
+     
     </li>
   </ul>
 
@@ -80,12 +122,7 @@
                   Mashup
                 </a>
               </li>
-            <li class="nav-item">
-              <a class="nav-link" href="bug.html">
-                <span data-feather="bug"></span><img src="../ico/bug.svg">
-                Report a bug
-              </a>
-            </li>
+    
             <li class="nav-item">
               <a class="nav-link" href="feedback.html">
                 <span data-feather="feedback"></span><img src="../ico/feedback.svg">
@@ -96,45 +133,45 @@
           </ul>
   
           <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-            <span>My History</span>
-            <a class="d-flex align-items-center text-muted" href="#">
-              <span data-feather="plus-circle"></span>
-            </a>
-          </h6>
-          <ul class="nav flex-column mb-2">
-            <li class="nav-item">
-              <a class="nav-link" href="#">
-                <span data-feather="file-text"></span><img src="../ico/file.svg">
-                file 1
+              <span>My History</span>
+              <a class="d-flex align-items-center text-muted" href="#">
+                <span data-feather="plus-circle"></span>
               </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">
-                <span data-feather="file-text"></span><img src="../ico/file.svg">
-                file 2
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">
-                <span data-feather="file-text"></span><img src="../ico/file.svg">
-                file 3
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">
-                <span data-feather="file-text"></span><img src="../ico/file.svg">
-                file 4
-              </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">
+            </h6>
+            <ul class="nav flex-column mb-2">
+              <li class="nav-item">
+                <a class="nav-link" href="../../../back-end/storage/data/test/0d5a7b73218ffbcd444e9498e3b6e97901ba4d42">
                   <span data-feather="file-text"></span><img src="../ico/file.svg">
-                  file 5
+                  file 1
                 </a>
               </li>
-          </ul>
-        </div>
-      </nav>
+              <li class="nav-item">
+                <a class="nav-link" href="../../../back-end/storage/data/test/5a0e46cad76db3865a9e18085d711ab88d5be425">
+                  <span data-feather="file-text"></span><img src="../ico/file.svg">
+                  file 2
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="../../../back-end/storage/data/test/76e7f7ef89c87bee451f044dc0868b45da558139">
+                  <span data-feather="file-text"></span><img src="../ico/file.svg">
+                  file 3
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="../../../back-end/storage/data/test/301d7fa77d9d6bfc5a8fca92df6ab386c1b27bf5">
+                  <span data-feather="file-text"></span><img src="../ico/file.svg">
+                  file 4
+                </a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="../../../back-end/storage/data/test/548d27156abd7359b5619665815ed6986cdfd7c7">
+                    <span data-feather="file-text"></span><img src="../ico/file.svg">
+                    file 5
+                  </a>
+                </li>
+            </ul>
+          </div>
+        </nav>
   
       <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
         <div id="content-area" class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
@@ -143,18 +180,47 @@
           <h1 id="curr" class="h2">My Place</h1>
           <div class="btn-toolbar mb-2 mb-md-0">
             <div class="btn-group mr-2">
-              <button type="button" class="up btn btn-sm btn-outline-secondary"><img src="../ico/new.svg"></button>
-              
+                <a href="#nav2"> <button type="button" class="up btn btn-sm btn-outline-secondary"><img src="../ico/new.svg"></button>
+                </a>  
             </div>
+            
+
             
           </div>
 
 
         </div>
+        <div id="content" id="nav"> 
+            
+            <div class="expandable" id="nav2" style="text-align:center;">
+              <p><br>
+                <div class="sf custom-file">
+                  <input type="file" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
+                  <label class="co custom-file-label" for="inputGroupFile01" onclick="loadFile()">Choose file</label>
+               
+                  <br><br>
+                  <input  type="text" name="title" id="nomefile" class="co form-control" placeholder="Title" required autofocus/>
+               
+                
+                <br>
+                 <a href="#nav"><table class="ta" style="text-align:center;">
+                    <tr><th><button type="button" class="sf up btn btn-sm btn-outline-secondary"><img src="../ico/annulla.svg">Cancel</button></th> 
+                      
+                      
+                      <th><button type="button" class="sf up btn btn-sm btn-outline-secondary" onclick="uploadFile()"><img src="../ico/upl.svg">Upload</button></th></tr>
+             </table></a></p> </div>
+             
+            </div>
+       
+            
+        </div> 
+<a id="result">oook</a>
+      </div>
   
-        <canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas>
-  
-     
+        
+
+
+          
       </main>
     </div>
   </div>

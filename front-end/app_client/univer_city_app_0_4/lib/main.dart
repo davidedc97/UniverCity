@@ -51,7 +51,7 @@ void main(){
   // rende possibile solo l'orientamento verticale
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
   .then((_){
-    runApp(UniverCity());
+    runApp(new UniverCity());
   });
 }
 

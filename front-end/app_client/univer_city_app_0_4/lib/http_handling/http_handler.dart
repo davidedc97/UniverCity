@@ -186,6 +186,7 @@ class HttpHandler {
       return response.bodyBytes;
     }
     else{
+      print(response.statusCode);
       throw ServerException.withCode(response.statusCode);
     }
   }

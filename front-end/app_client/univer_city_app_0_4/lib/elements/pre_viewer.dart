@@ -35,7 +35,7 @@ Widget buildDocDialog(BuildContext context, String title, String uuid) {
             PdfViewer.loadBytes(res);
           },**///PDF VIEWER ##############
           onPressed: ()async{
-            pdfFuncView(context, uuid2);
+            pdfFuncView(context, uuid);
           },
           backgroundColor: Color(0xFF393E46),
           label: Text('Read'),

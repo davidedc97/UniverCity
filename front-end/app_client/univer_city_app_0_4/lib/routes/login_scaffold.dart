@@ -55,8 +55,24 @@ class LoginScaffold extends StatelessWidget {
                     BtnLogin(
                       title: 'JOIN US WITH GOOGLE',
                       color: Theme.of(context).accentColor,
-                      onPressed: () => Navigator.pushNamedAndRemoveUntil(
-                          context, '/home', (Route<dynamic> route) => false),
+                      onPressed: () => showDialog(
+                          context: context,
+                          builder: (context){
+                            return AlertDialog(
+                              title: Text("OAuth",),
+                              content: Text('Non ancora implementato'),
+                              actions: <Widget>[
+                                FlatButton(
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                    child: Text('Close'))
+                              ],
+                            );
+                          }
+                      ),
+                      //Navigator.pushNamedAndRemoveUntil(
+                      //                          context, '/home', (Route<dynamic> route) => false)
                     ),
                     //################################################## ------------ OR -----------
                     DividerTextOr(),

@@ -34,7 +34,7 @@ class DocList extends StatelessWidget {
             }
         ),
         onTap: ()async{
-          pdfFuncView(context, uuid2);
+          pdfFuncView(context, _info.uuid);
         },
       ),
     );

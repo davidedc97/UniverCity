@@ -60,7 +60,7 @@ class _MyHomeState extends State<MyHome> {
                         child: TitleDivider('Qui compariranno i tuoi preferiti'),
                       ),
                       Text(
-                          'Dai ci sarà qualcosa alla tua altezza, salva qualcosa !',
+                          'Dai ci saranno degli appunti alla tua altezza, salva qualcosa !',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontSize: 30.0,

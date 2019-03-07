@@ -22,8 +22,7 @@ class _MainAppBarState extends State<MainAppBar> {
     List<Document> l = [Document('','','','')];
     Map<String, String> m = {};
     l = await HttpHandler.searchDocuments(criteria);
-    print("LA PORCODDIO DI LISTA E': \n\n");
-    print(l);
+
     for(Document e in l){
         m.putIfAbsent(e.uuid, ()=>e.title);
     }

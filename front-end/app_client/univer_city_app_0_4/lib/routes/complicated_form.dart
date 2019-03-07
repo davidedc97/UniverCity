@@ -40,6 +40,7 @@ class _CompFormScaffoldState extends State<CompFormScaffold> {
                           textAlign: TextAlign.center,
                           decoration: InputDecoration(
                             hintText: 'User',
+                            focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: Theme.of(context).accentColor))
                           )),
                       TextField(
                           onChanged: (value) {
@@ -48,6 +49,7 @@ class _CompFormScaffoldState extends State<CompFormScaffold> {
                           textAlign: TextAlign.center,
                           decoration: InputDecoration(
                             hintText: 'Nome',
+                              focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: Theme.of(context).accentColor))
                           )),
                       TextField(
                           onChanged: (value) {
@@ -56,6 +58,7 @@ class _CompFormScaffoldState extends State<CompFormScaffold> {
                           textAlign: TextAlign.center,
                           decoration: InputDecoration(
                             hintText: 'Cognome',
+                              focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: Theme.of(context).accentColor))
                           )),
                       TextField(
                           onChanged: (value) {
@@ -64,6 +67,7 @@ class _CompFormScaffoldState extends State<CompFormScaffold> {
                           textAlign: TextAlign.center,
                           decoration: InputDecoration(
                             hintText: 'Email',
+                              focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: Theme.of(context).accentColor))
                           )),
                       TextField(
                           obscureText: true,
@@ -73,6 +77,7 @@ class _CompFormScaffoldState extends State<CompFormScaffold> {
                           textAlign: TextAlign.center,
                           decoration: InputDecoration(
                             hintText: 'Password',
+                              focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: Theme.of(context).accentColor))
                           )),
                       TextField(
                           onChanged: (value) {
@@ -81,6 +86,7 @@ class _CompFormScaffoldState extends State<CompFormScaffold> {
                           textAlign: TextAlign.center,
                           decoration: InputDecoration(
                             hintText: 'Facoltà',
+                              focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: Theme.of(context).accentColor))
                           )),
                       TextField(
                           onChanged: (value) {
@@ -90,6 +96,7 @@ class _CompFormScaffoldState extends State<CompFormScaffold> {
                           decoration: InputDecoration(
                             border: InputBorder.none,
                             hintText: 'Università',
+                              focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: Theme.of(context).accentColor))
                           )),
                       SizedBox(
                         height: 42,
@@ -193,7 +200,8 @@ compForm(BuildContext context, String id, String nm, String cg, String em,
 
     if(res==1){
       debugPrint('dentro if');
-      Navigator.of(context).pop();
+      Navigator.pushNamedAndRemoveUntil(context, '/', (Route<dynamic> route) => false);
+      Navigator.of(context).pushNamed('/loginForm');
       showDialog(
           context: context,
           builder: (context){

@@ -18,7 +18,7 @@ APP's API:
 
 ##################################################################
 	
-  static Future<int> validateLogin(user, pw, flag) async
+  static Future<int> validateLogin(String user, String pw, String flag) async
 	
 	USAGE:
 		verify the existence of an account with username and password.
@@ -62,10 +62,10 @@ APP's API:
 
 ================================================================== DOCUMENT FUNCTIONS =================================================
 
-  static Future<int> uploadDocument(String title, String type, String path) async
+  static Future<int> uploadDocument(String title, String path) async
 	
 	USAGE:
-		upload a document selected from a path with a given title. The type must be "M" (mashup) or "O" (original)
+		upload a document selected from a path with a given title
 	
   	METHOD:
   		POST /document

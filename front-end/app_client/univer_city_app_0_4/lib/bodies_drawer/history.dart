@@ -14,7 +14,7 @@ class MyHistory extends StatelessWidget {
       children: <Widget>[
         Padding(
           padding: EdgeInsets.symmetric(vertical: 16.0),
-          child: TitleDivider('This week'),
+          child: TitleDivider('Questa settimana'),
         ),
         Container(
           color: Colors.white,
@@ -27,7 +27,7 @@ class MyHistory extends StatelessWidget {
         ),
         Padding(
           padding: EdgeInsets.symmetric(vertical: 16.0),
-          child: TitleDivider('Erlier this month'),
+          child: TitleDivider('Questo mese'),
         ),
         Container(
           color: Colors.white,
@@ -42,7 +42,7 @@ class MyHistory extends StatelessWidget {
         ),
         Padding(
           padding: EdgeInsets.symmetric(vertical: 16.0),
-          child: TitleDivider('Less recent'),
+          child: TitleDivider('Meno recenti'),
         ),
         Container(
           color: Colors.white,

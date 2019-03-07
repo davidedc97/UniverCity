@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 function checkPassword() { 
 
  //  var decimal =  /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8+}$/;
@@ -12,6 +13,18 @@ function checkPassword() {
     if( !document.registra.pass.value.match(decimal)) { 
         //alert('Correct, try another...');
         alert("Password must contain at least a special character, a number, a capital letter and must be longer than 8 characters");
+=======
+function CheckPassword() { 
+    pw=document.getElementById("psw").value;
+    var decimal =  /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,15}$/;
+
+    if(pw.match(decimal)) { 
+        alert('Correct, try another...')
+        return true;
+    }
+    else{ 
+        alert('Wrong...!')
+>>>>>>> c2cbe9d7f4c766d958697145b95deabeda2b6d4c
         return false;
     }
     return true;

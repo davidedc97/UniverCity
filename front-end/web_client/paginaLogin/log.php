@@ -25,16 +25,12 @@
   $server_output = curl_exec ($ch);
   $hs=curl_getinfo($ch, CURLINFO_HEADER_SIZE);
   $header=substr($server_output,0,$hs);
-  $body=substr($server_output,$hs);
   header("Content-Type:text/plain; charset=UTF-8");
   curl_close ($ch);  
-  echo 'header:';
+  $token=substr($header,219,1271);
+  echo 'token:';
   echo "\n";
-  echo $header;
-  echo "\n";
-  echo 'body:';
-  echo "\n";
-  echo $body;
+  echo $token;
 
 
 ?>

@@ -143,21 +143,23 @@ class HttpHandler {
 
 
 
-  static Future<int> uploadDocument(String title, String type, String path) async {
+  static Future<int> uploadDocument(String title, String path) async {
     var res;
     var uri = Uri.parse(_URL + _DOCUMENT_SERVER);
     var request = new http.MultipartRequest('POST', uri);
+    var file = await http.MultipartFile.fromPath('package', path);
+
     request.headers.addAll({'Authorization':_sessionToken});
     request.fields["title"] = title;
-    request.fields["type"] = type;
-    var file = await http.MultipartFile.fromPath('package', path);
     request.files.add(file);
 
     await request.send().then( (response) {
       res = response;
     });
 
-    if (res.statusCode == 201) {
+    print(res.statusCode);
+
+    if (res.statusCode == 200) {
       //debugPrint('up1');
       return 1;
     }

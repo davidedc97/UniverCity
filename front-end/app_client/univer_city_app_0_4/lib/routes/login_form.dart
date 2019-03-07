@@ -36,6 +36,7 @@ class LoginFormScaffold extends StatelessWidget {
                       textAlign: TextAlign.center,
                       decoration: InputDecoration(
                         hintText: 'User o Email',
+                          focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: Theme.of(context).accentColor))
                       )),
                   TextField(
                       obscureText: true,
@@ -46,6 +47,7 @@ class LoginFormScaffold extends StatelessWidget {
                       decoration: InputDecoration(
                         border: InputBorder.none,
                         hintText: 'Password',
+                          focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: Theme.of(context).accentColor))
                       )),
                   SizedBox(
                     height: 42,
@@ -107,12 +109,41 @@ login(BuildContext context, String id, String pw)async{
   } else {
     //TODO da testare
     debugPrint('email: $id, pass: $pw ');
+    showDialog(
+        context: context,
+        builder: (context){
+          return AlertDialog(
+            title: Text("Un attimo che controlliamo!",),
+            content: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    CircularProgressIndicator(),
+                  ],
+                ),
+              ],
+            ),
+            actions: <Widget>[
+              FlatButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: Text('Close'))
+            ],
+          );
+        }
+    );
     int res = await HttpHandler.validateLogin(id, pw, "0"); //TODO controllare se l'id è un username o una mail e settare il flag di conseguenza
     debugPrint(res.toString());
+
     if(res==1){
       debugPrint('dentro if');
       Navigator.pushNamedAndRemoveUntil(context, '/home', (Route<dynamic> route) => false);
     }else{
+      Navigator.of(context).pop();
       Navigator.pushNamed(context, '/loginForm');
       showDialog(
           context: context,

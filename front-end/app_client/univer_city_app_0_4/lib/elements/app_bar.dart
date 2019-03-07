@@ -22,8 +22,7 @@ class _MainAppBarState extends State<MainAppBar> {
     List<Document> l = [Document('','','','')];
     Map<String, String> m = {};
     l = await HttpHandler.searchDocuments(criteria);
-    print("LA PORCODDIO DI LISTA E': \n\n");
-    print(l);
+
     for(Document e in l){
         m.putIfAbsent(e.uuid, ()=>e.title);
     }
@@ -49,7 +48,7 @@ class _MainAppBarState extends State<MainAppBar> {
     'Telecomunicazioni': 'c31afa36-39ea-11e9-b210-d663bd873d93',
     'Linguaggi e tecnologie web': 'c31afb76-39ea-11e9-b210-d663bd873d93',
   };
-
+  Map<String, String> m = {'':''};
 
 
   _buildMaterialSearchPage(BuildContext context) {
@@ -71,12 +70,20 @@ class _MainAppBarState extends State<MainAppBar> {
               ///
 
               getResults: (criteria)async{
-                Map<String, String> m = await _fetchMapSearch(criteria);
-                return m.values.map((String val)=>MaterialSearchResult<String>(
-                  icon: Icons.description,
-                  value: val,
-                  text: '$val',
-                )).toList();
+                if(criteria != ''){
+                  m = await _fetchMapSearch(criteria);
+                  return m.values.map((String val)=>MaterialSearchResult<String>(
+                    icon: Icons.description,
+                    value: val,
+                    text: '$val',
+                  )).toList();
+                }else{
+                  return m.values.map((String val)=>MaterialSearchResult<String>(
+                    //icon: Icons.description,
+                    value: val,
+                    text: '$val',
+                  )).toList();
+                }
               },/**
               results: _docs.keys
                   .map((String val) => new MaterialSearchResult<String>(

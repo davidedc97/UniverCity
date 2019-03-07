@@ -40,6 +40,7 @@ class _CompFormScaffoldState extends State<CompFormScaffold> {
                           textAlign: TextAlign.center,
                           decoration: InputDecoration(
                             hintText: 'User',
+                            focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: Theme.of(context).accentColor))
                           )),
                       TextField(
                           onChanged: (value) {
@@ -48,6 +49,7 @@ class _CompFormScaffoldState extends State<CompFormScaffold> {
                           textAlign: TextAlign.center,
                           decoration: InputDecoration(
                             hintText: 'Nome',
+                              focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: Theme.of(context).accentColor))
                           )),
                       TextField(
                           onChanged: (value) {
@@ -56,6 +58,7 @@ class _CompFormScaffoldState extends State<CompFormScaffold> {
                           textAlign: TextAlign.center,
                           decoration: InputDecoration(
                             hintText: 'Cognome',
+                              focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: Theme.of(context).accentColor))
                           )),
                       TextField(
                           onChanged: (value) {
@@ -64,6 +67,7 @@ class _CompFormScaffoldState extends State<CompFormScaffold> {
                           textAlign: TextAlign.center,
                           decoration: InputDecoration(
                             hintText: 'Email',
+                              focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: Theme.of(context).accentColor))
                           )),
                       TextField(
                           obscureText: true,
@@ -73,6 +77,7 @@ class _CompFormScaffoldState extends State<CompFormScaffold> {
                           textAlign: TextAlign.center,
                           decoration: InputDecoration(
                             hintText: 'Password',
+                              focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: Theme.of(context).accentColor))
                           )),
                       TextField(
                           onChanged: (value) {
@@ -81,6 +86,7 @@ class _CompFormScaffoldState extends State<CompFormScaffold> {
                           textAlign: TextAlign.center,
                           decoration: InputDecoration(
                             hintText: 'Facoltà',
+                              focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: Theme.of(context).accentColor))
                           )),
                       TextField(
                           onChanged: (value) {
@@ -90,6 +96,7 @@ class _CompFormScaffoldState extends State<CompFormScaffold> {
                           decoration: InputDecoration(
                             border: InputBorder.none,
                             hintText: 'Università',
+                              focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: Theme.of(context).accentColor))
                           )),
                       SizedBox(
                         height: 42,
@@ -142,13 +149,13 @@ compForm(BuildContext context, String id, String nm, String cg, String em,
       pw == '' ||
       fa == '' ||
       un == '') {
-    Navigator.pushNamed(context, '/complicatedForm');
+    //Navigator.pushNamed(context, '/complicatedForm');
     return showDialog(
         context: context,
         builder: (context) {
           return AlertDialog(
             title: Text('Ops!'),
-            content: Text('something in the form is not valid'),
+            content: Text('Qualcosa nella form non va :/'),
             actions: <Widget>[
               FlatButton(
                   onPressed: () {
@@ -160,12 +167,59 @@ compForm(BuildContext context, String id, String nm, String cg, String em,
         });
   } else {
     //TODO da testare
-    debugPrint('email: $id, Nome: $nm, Cognome: $cg, Email: $em, Pass: $pw, Facolta $fa, Universita: $un ');
+    debugPrint('User: $id, Nome: $nm, Cognome: $cg, Email: $em, Pass: $pw, Facolta $fa, Universita: $un ');
+    showDialog(
+        context: context,
+        builder: (context){
+          return AlertDialog(
+            title: Text("Un attimo!",),
+            content: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    CircularProgressIndicator(),
+                  ],
+                ),
+              ],
+            ),
+            actions: <Widget>[
+              FlatButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: Text('Close'))
+            ],
+          );
+        }
+    );
     int res = await HttpHandler.userFormRegistration(id, nm, cg, em, pw, fa, un);
     debugPrint(res.toString());
+
     if(res==1){
       debugPrint('dentro if');
+      Navigator.pushNamedAndRemoveUntil(context, '/', (Route<dynamic> route) => false);
+      Navigator.of(context).pushNamed('/loginForm');
+      showDialog(
+          context: context,
+          builder: (context){
+            return AlertDialog(
+              title: Text('Yay !'),
+              content: Text('Registrazione avvenuta con sccesso conferma il tuo account tramite email'),
+              actions: <Widget>[
+                FlatButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Text('Close'))
+              ],
+            );
+          }
+      );
     }else{
+      Navigator.of(context).pop();
       Navigator.pushNamed(context, '/complicatedForm');
       showDialog(
           context: context,
@@ -173,8 +227,8 @@ compForm(BuildContext context, String id, String nm, String cg, String em,
             return AlertDialog(
               title: Text('Ops !'),
               content: (res == -1)
-                  ? Text('bad input')
-                  : Text('server error'),
+                  ? Text('Input non valido')
+                  : Text('Errore del server'),
               actions: <Widget>[
                 FlatButton(
                     onPressed: () {

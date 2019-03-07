@@ -142,7 +142,7 @@ compForm(BuildContext context, String id, String nm, String cg, String em,
       pw == '' ||
       fa == '' ||
       un == '') {
-    Navigator.pushNamed(context, '/complicatedForm');
+    //Navigator.pushNamed(context, '/complicatedForm');
     return showDialog(
         context: context,
         builder: (context) {
@@ -161,12 +161,41 @@ compForm(BuildContext context, String id, String nm, String cg, String em,
   } else {
     //TODO da testare
     debugPrint('email: $id, Nome: $nm, Cognome: $cg, Email: $em, Pass: $pw, Facolta $fa, Universita: $un ');
+    showDialog(
+        context: context,
+        builder: (context){
+          return AlertDialog(
+            title: Text("Un' attimo!",),
+            content: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    CircularProgressIndicator(),
+                  ],
+                ),
+              ],
+            ),
+            actions: <Widget>[
+              FlatButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: Text('Close'))
+            ],
+          );
+        }
+    );
     int res = await HttpHandler.userFormRegistration(id, nm, cg, em, pw, fa, un);
     debugPrint(res.toString());
+
     if(res==1){
       debugPrint('dentro if');
       Navigator.pushNamedAndRemoveUntil(context, '/home', (Route<dynamic> route) => false);
     }else{
+      Navigator.of(context).pop();
       Navigator.pushNamed(context, '/complicatedForm');
       showDialog(
           context: context,

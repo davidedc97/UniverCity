@@ -111,23 +111,23 @@ class UploadFormBody extends StatelessWidget {
                     debugPrint(title);
                   },
                   textAlign: TextAlign.center,
-                  decoration: InputDecoration(labelText: 'Title'))),
+                  decoration: InputDecoration(labelText: 'Titolo'))),
           Padding(
               padding: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
               child: TextField(
                   textAlign: TextAlign.center,
-                  decoration: InputDecoration(labelText: 'Course'))),
+                  decoration: InputDecoration(labelText: 'Corso'))),
           Padding(
               padding: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
               child: TextField(
                   textAlign: TextAlign.center,
-                  decoration: InputDecoration(labelText: 'Professor'))),
+                  decoration: InputDecoration(labelText: 'Professore'))),
           Padding(
               padding: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
               child: TextField(
                   maxLines: 4,
                   textAlign: TextAlign.center,
-                  decoration: InputDecoration(labelText: 'Description'))),
+                  decoration: InputDecoration(labelText: 'Descrizione'))),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             child: RaisedButton.icon(
@@ -169,22 +169,22 @@ class DialogUpload extends StatelessWidget {
         /// ancora non capisco perche devo mettere una stringa to string ma altrimenti
         /// mi formatta male il dialog devo studiamelo meglio
         ///
-          future: HttpHandler.uploadDocument(title.toString(), 'O', path),
+          future: HttpHandler.uploadDocument(title.toString(), path),
           builder: (context, snapshot){
             if(snapshot.hasError)return Container();
             if(snapshot.hasData){
               return Text(
                   (snapshot.data==1)
-                      ?'Caricamento completato'
+                      ?'Upload completato'
                       :(snapshot.data==-1)
-                        ?'qualche paramentro è sbagliato'
+                        ?'Qualche paramentro è sbagliato'
                         :'500 server error'
               );
             } else{
               return Column(
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
-                  Text('Prenditi un caffe nel frattempo ;)'),
+                  Text('Upload in corso ;)'),
                   SizedBox(height: 16,),
                   Row(
                       mainAxisAlignment: MainAxisAlignment.center,

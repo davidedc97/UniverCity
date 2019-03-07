@@ -63,7 +63,7 @@ class _MyHomeState extends State<MyHome> {
                           'Dai ci saranno degli appunti alla tua altezza, salva qualcosa !',
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                            fontSize: 30.0,
+                            fontSize: 24.0,
                             color: Theme.of(context).cardColor,
                           )),
                       Padding(

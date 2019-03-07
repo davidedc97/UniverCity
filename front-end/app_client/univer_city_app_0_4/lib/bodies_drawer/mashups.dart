@@ -16,7 +16,7 @@ class Mashups extends StatelessWidget {
             Text('Coming soon',
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  fontSize: 30.0,
+                  fontSize: 24.0,
                   color: Theme.of(context).cardColor,
                 )),
             Icon(

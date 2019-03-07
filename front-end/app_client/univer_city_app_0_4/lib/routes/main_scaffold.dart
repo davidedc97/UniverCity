@@ -17,11 +17,11 @@ class DrawerEntry {
 class MainScaffold extends StatefulWidget {
 //############################################################################## drawer entry
   final drawerEntry = [
-    DrawerEntry('My Place', Icons.home),
-    DrawerEntry('My History', Icons.history),
+    DrawerEntry('Homepage', Icons.home),
+    DrawerEntry('Cronologia', Icons.history),
     DrawerEntry('Mashups', Icons.insert_drive_file),
-    DrawerEntry('Send feedback', Icons.feedback),
-    DrawerEntry('Report bug', Icons.bug_report),
+    DrawerEntry('Feedback', Icons.feedback),
+    DrawerEntry('Segnala bug', Icons.bug_report),
     DrawerEntry('Logout', Icons.exit_to_app)
   ];
 

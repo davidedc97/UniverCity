@@ -148,7 +148,7 @@ compForm(BuildContext context, String id, String nm, String cg, String em,
         builder: (context) {
           return AlertDialog(
             title: Text('Ops!'),
-            content: Text('something in the form is not valid'),
+            content: Text('Qualcosa nella form non va :/'),
             actions: <Widget>[
               FlatButton(
                   onPressed: () {
@@ -160,12 +160,12 @@ compForm(BuildContext context, String id, String nm, String cg, String em,
         });
   } else {
     //TODO da testare
-    debugPrint('email: $id, Nome: $nm, Cognome: $cg, Email: $em, Pass: $pw, Facolta $fa, Universita: $un ');
+    debugPrint('User: $id, Nome: $nm, Cognome: $cg, Email: $em, Pass: $pw, Facolta $fa, Universita: $un ');
     showDialog(
         context: context,
         builder: (context){
           return AlertDialog(
-            title: Text("Un' attimo!",),
+            title: Text("Un attimo!",),
             content: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               mainAxisSize: MainAxisSize.min,
@@ -219,8 +219,8 @@ compForm(BuildContext context, String id, String nm, String cg, String em,
             return AlertDialog(
               title: Text('Ops !'),
               content: (res == -1)
-                  ? Text('bad input')
-                  : Text('server error'),
+                  ? Text('Input non valido')
+                  : Text('Errore del server'),
               actions: <Widget>[
                 FlatButton(
                     onPressed: () {

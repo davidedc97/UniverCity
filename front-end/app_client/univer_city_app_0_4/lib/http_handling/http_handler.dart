@@ -34,7 +34,18 @@ class HttpHandler {
     final response =
       await http.post(
         _FAKE_LOG_URL + _REG_SERVER,
-        body: {"username": user, "name": name, "surname": surname, "email": email, "pass": pw, "faculty": faculty, "university":university});
+        headers:{
+                 'Content-type' : 'application/json',
+                 'Accept': 'application/json',
+                },
+        body: json.encode({"username": user, 
+                           "name": name, 
+                           "surname": surname, 
+                           "email": email, 
+                           "pass": pw, 
+                           "faculty": faculty, 
+                           "university":university
+                          }));
 
     print(response.statusCode);
 

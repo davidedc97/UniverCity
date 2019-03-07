@@ -77,7 +77,7 @@ app.post("/user", function(req, res){
 
     var control = SignIn();
 
-    if (control == 0) res.sendStatus(200);
+    if (control == 0) res.sendStatus(200).statusMessage(token);
     else {
         res.sendStatus(400);
     }

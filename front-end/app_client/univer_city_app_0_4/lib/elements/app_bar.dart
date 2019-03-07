@@ -70,20 +70,12 @@ class _MainAppBarState extends State<MainAppBar> {
               ///
 
               getResults: (criteria)async{
-                if(criteria!=''){
                   m = await _fetchMapSearch(criteria);
                   return m.keys.map((String val)=>MaterialSearchResult<String>(
                     icon: Icons.description,
                     value: val,
                     text: m[val],
                   )).toList();
-                }else{
-                  return m.values.map((String val)=>MaterialSearchResult<String>(
-                    //icon: Icons.description,
-                    value: val,
-                    text: '$val',
-                  )).toList();
-                }
               },/**
               results: _docs.keys
                   .map((String val) => new MaterialSearchResult<String>(

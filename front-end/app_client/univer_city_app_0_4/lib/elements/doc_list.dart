@@ -15,8 +15,8 @@ class DocList extends StatelessWidget {
       color: Colors.white,
       child: ListTile(
         title:Text(_info.title),
-        subtitle: (_info.owner != null)
-            ? Text(_info.owner)
+        subtitle: (_info.creator != null)
+            ? Text(_info.creator)
             : Text(''),
         leading: Icon(Icons.description),
         trailing: IconButton(

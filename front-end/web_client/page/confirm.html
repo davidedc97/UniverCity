@@ -9,10 +9,10 @@
         <script type="text/javascript" lang="javascript" src="../js/bootstrap.min.js">
 		</script>
     </head>
-    <body class="text-center">
+    <body class="text-center" onload="start_counter();">
         <div class="bg">
           
-            <form class="form-signin"  method="POST" name="login" onload="start_counter();">
+            <form class="form-signin"  method="POST" name="login">
                     <br><br><br><br>
                     <img src="../img/UniverCity.svg">
                 <br><br>
@@ -24,11 +24,12 @@
                
             </form>
 
-            <script language="JavaScript">
+            <script type="text/javascript">
                 function redirect() {
-                    location = "../paginaLogin/login.html";
+                    location = "";
                 }
                 function start_counter() {
+                    console.log("e");
                     self.setTimeout('redirect()', 1000);
                 }
             </script>

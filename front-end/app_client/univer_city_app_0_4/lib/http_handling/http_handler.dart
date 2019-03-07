@@ -4,6 +4,7 @@ import 'package:univer_city_app_0_4/elements/user.dart';
 import 'package:univer_city_app_0_4/elements/server_exception.dart';
 import 'dart:convert';
 import 'dart:typed_data';
+import 'dart:io';
 import 'package:flutter/material.dart';
 
 
@@ -206,10 +207,6 @@ class HttpHandler {
   }
 
 
-  ///
-  /// ERRORE
-  /// '_InternalLinkedHashMap<String, dynamic>' is not a subtype of type 'List<Map<String, dynamic>>
-  ///
   static Future<List<Document>> searchDocuments(String query) async {
     final response =
       await http.get(_URL + _SEARCH_SERVER + "?string=" + query, headers: {'Authorization':_sessionToken});
@@ -226,19 +223,20 @@ class HttpHandler {
   }
 
 
-  /* TODO: devo capire come cazzo si fa
-  static Future<Document> downloadDocument(docId) async {
+   //TODO: devo capire come cazzo si fa
+  static Future<int> downloadDocument(String docId, String path) async {
     final response =
         await http.get(_URL + _DOCUMENT_SERVER + "/" + docId);
 
     if(response.statusCode == 200){
-      return Document.fromJson(json.decode(response.body));
+      Future file = new File(path).writeAsBytes(response.bodyBytes);
+      return 1;
     }
     else{
       throw ServerException.withCode(response.statusCode);
     }
   }
-  */
+
 
   static Future<dynamic> mashup(List<String> pageIds) async {
     final response =

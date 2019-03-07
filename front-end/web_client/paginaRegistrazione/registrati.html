@@ -7,13 +7,14 @@
         <link href="../css/lr.css" rel="stylesheet"/>
         <link rel="icon" href="../ico/ico1.png">
         <script type="text/javascript" lang="javascript" src="../js/bootstrap.min.js"></script>
+        <script type="text/javascript" lang="javascript" src="checkPassword.js"></script>
 
     </head>
     
     <body class="text-center">
         <div class="bg"> 
 
-            <form action="reg.php" class="form-signin" method="POST" name="registra" >
+            <form action="reg.php" class="form-signin" method="POST" name="registra" onsubmit="checkPassword();">
                    <br> <img src="../img/UniverCity.svg">
                 <br><br>    
                 <h1 class="h3 mb-3 font-weight-normal" style="color:#f8f9fa">Please sign up</h1>
@@ -40,7 +41,7 @@
         <table>
                 <tr>
            <th>
-                <input type="password" name="pass" class="form-control" placeholder="Password" required/>
+                <input type="password" name="pass" class="form-control" placeholder="Password" id="psw"  required/>
            </th></tr>
         </table><br>
                 <button class="btn btn-lg btn-danger btn-block" type="submit" name = "registrationButton" >Sign up</button> 

@@ -6,7 +6,7 @@ class Validators {
     if (email.contains('@')) {
       sink.add(email);
     } else {
-      sink.addError('Enter valid email');
+      sink.addError("Inserire un'email valida");
     }
   });
   final validatePassword = StreamTransformer<String, String>.fromHandlers(
@@ -14,7 +14,7 @@ class Validators {
     if (password.length > 7) {
       sink.add(password);
     } else {
-      sink.addError('Password must be at least 8 caracters');
+      sink.addError('La password deve contenere almeno 8 caratteri');
     }
   });
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-/// Classe che visualizza a schermo il divider ----------OR---------
+/// Classe che visualizza a schermo il divider ----------OPPURE---------
 /// usato nella schermata di login
 
 class DividerTextOr extends StatelessWidget {
@@ -19,7 +19,7 @@ class DividerTextOr extends StatelessWidget {
             color: Colors.grey,
             margin: EdgeInsets.only(right: 12),
           ),
-          Text('OR'),
+          Text('OPPURE'),
           Container(
             height: 1.5,
             width: 120,

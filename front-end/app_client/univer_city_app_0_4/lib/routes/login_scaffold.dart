@@ -53,7 +53,7 @@ class LoginScaffold extends StatelessWidget {
                     /// modificarli modofico la classe e sono apposto
                     //##################################################inizio bottone google
                     BtnLogin(
-                      title: 'JOIN US WITH GOOGLE',
+                      title: 'REGISTRATI CON GOOGLE',
                       color: Theme.of(context).accentColor,
                       onPressed: () => showDialog(
                           context: context,
@@ -78,7 +78,7 @@ class LoginScaffold extends StatelessWidget {
                     DividerTextOr(),
                     //################################################## bottone form complicata
                     BtnLogin(
-                      title: 'JOIN US WITH A COMPLICATED FORM',
+                      title: 'COMPILA LA NOSTRA FORM',
                       color: Theme.of(context).accentColor,
                       onPressed: () =>
                           Navigator.pushNamed(context, '/complicatedForm'),
@@ -88,7 +88,7 @@ class LoginScaffold extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        Text('Already have an account?'),
+                        Text('Hai già un account ?'),
                         FlatButton(
 
                             ///Login per ora ti rimanda nell'home page

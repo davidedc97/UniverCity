@@ -118,7 +118,7 @@ _fromDevice(context) async{
 //############################################################################## From Camera
 _fromCamera(context) async{
   Navigator.pop(context);
-  final _snk = SnackBar(content: Text('ci stiamo ancora lavorando! ;) '));
+  final _snk = SnackBar(content: Text('Ci stiamo ancora lavorando! ;) '));
   Scaffold.of(context).showSnackBar(_snk);
   debugPrint('from camera');
 }

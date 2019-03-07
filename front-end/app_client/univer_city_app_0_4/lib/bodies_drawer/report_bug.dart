@@ -13,7 +13,7 @@ class ReportBug extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisSize: MainAxisSize.max,
           children: <Widget>[
-            Text('Grazie per il report',
+            Text('Grazie per la segnalazione :)',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 30.0,

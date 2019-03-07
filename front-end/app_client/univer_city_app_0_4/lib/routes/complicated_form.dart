@@ -193,6 +193,23 @@ compForm(BuildContext context, String id, String nm, String cg, String em,
 
     if(res==1){
       debugPrint('dentro if');
+      Navigator.of(context).pop();
+      showDialog(
+          context: context,
+          builder: (context){
+            return AlertDialog(
+              title: Text('Yay !'),
+              content: Text('Registrazione avvenuta con sccesso conferma il tuo account tramite email'),
+              actions: <Widget>[
+                FlatButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Text('Close'))
+              ],
+            );
+          }
+      );
     }else{
       Navigator.of(context).pop();
       Navigator.pushNamed(context, '/complicatedForm');

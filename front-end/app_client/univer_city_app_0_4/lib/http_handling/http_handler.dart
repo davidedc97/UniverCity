@@ -144,13 +144,15 @@ class HttpHandler {
 
 
   static Future<int> uploadDocument(String title, String path) async {
+    print(title);
     var res;
+    String _t = title;
     var uri = Uri.parse(_URL + _DOCUMENT_SERVER);
     var request = new http.MultipartRequest('POST', uri);
     var file = await http.MultipartFile.fromPath('package', path);
 
-    request.headers.addAll({'Authorization':_sessionToken});
-    request.fields["title"] = title;
+    request.headers.addAll({'Authorization':_sessionToken,});
+    request.fields.addAll({'title':_t.toString()});
     request.files.add(file);
 
     await request.send().then( (response) {
@@ -180,21 +182,23 @@ class HttpHandler {
 
   static Future<Uint8List> getDocumentById( String docId) async{
     final response =
-      await http.get(_URL + _DOCUMENT_SERVER + "?id=" + docId, headers: {'Authorization':_sessionToken});
+      await http.get(_URL + _DOCUMENT_SERVER + "?id=" + docId, headers: {'Authorization':_sessionToken ,'Content-type' : 'application/json',
+        'Accept': 'application/json'});
 
     if(response.statusCode == 200) {
       return response.bodyBytes;
     }
     else{
       print(response.statusCode);
-      throw ServerException.withCode(response.statusCode);
+      //throw ServerException.withCode(response.statusCode);
     }
   }
 
 
   static Future<List<Document>> searchDocuments(String query) async {
+    print(query);
     final response =
-      await http.get(_URL + _SEARCH_SERVER + "?string=" + query, headers: {'Authorization':_sessionToken});
+      await http.get(_URL + _SEARCH_SERVER + "?searchString=" + query.toString(), headers: {'Authorization':_sessionToken});
 
     if(response.statusCode == 200){
       var num = json.decode(response.body)["body"]["num"];

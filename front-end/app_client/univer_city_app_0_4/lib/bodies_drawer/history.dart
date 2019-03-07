@@ -3,9 +3,9 @@ import 'package:univer_city_app_0_4/elements/document.dart';
 import 'package:univer_city_app_0_4/elements/doc_list.dart';
 import 'package:univer_city_app_0_4/elements/title_div.dart';
 
-Document info1 = Document('Test 1', 'Un tizio','c31aec30-39ea-11e9-b210-d663bd873d93', 'O');
-Document info2 = Document('Test 2', 'Un altro tizio','c31aec30-39ea-11e9-b210-d663bd873d93', 'O');
-Document info3 = Document('Test 3', 'Un altro ancora','c31aec30-39ea-11e9-b210-d663bd873d93', 'O');
+Document info1 = Document('Test 1', 'Un tizio','94111cc0-40f7-11e9-ac4e-c3ab6e6ee73e', 'O');
+Document info2 = Document('Test 2', 'Un altro tizio','94111cc0-40f7-11e9-ac4e-c3ab6e6ee73e', 'O');
+Document info3 = Document('Test 3', 'Un altro ancora','94111cc0-40f7-11e9-ac4e-c3ab6e6ee73e', 'O');
 
 class MyHistory extends StatelessWidget {
   @override

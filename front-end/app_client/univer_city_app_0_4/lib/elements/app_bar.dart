@@ -70,12 +70,12 @@ class _MainAppBarState extends State<MainAppBar> {
               ///
 
               getResults: (criteria)async{
-                if(criteria != ''){
+                if(criteria!=''){
                   m = await _fetchMapSearch(criteria);
-                  return m.values.map((String val)=>MaterialSearchResult<String>(
+                  return m.keys.map((String val)=>MaterialSearchResult<String>(
                     icon: Icons.description,
                     value: val,
-                    text: '$val',
+                    text: m[val],
                   )).toList();
                 }else{
                   return m.values.map((String val)=>MaterialSearchResult<String>(
@@ -91,7 +91,7 @@ class _MainAppBarState extends State<MainAppBar> {
                         value: val,
                         text: "$val",
                       ))
-                  .toList(),**/
+                  .toList(),
               filter: (dynamic value, String criteria) {
                 ///
                 /// - [criteria] contiene la stringa inserita nel campo search
@@ -103,16 +103,20 @@ class _MainAppBarState extends State<MainAppBar> {
                 debugPrint(criteria);
                 return value.toLowerCase().trim().contains(
                     new RegExp(r'' + criteria.toLowerCase().trim() + ''));
-              },
+              },**/
 
               ///
               /// La funzione passata in onSelect viene richiamata quando viene
               /// selezionata una entry tra i risultati
               ///
-              onSelect: (dynamic value) => showDialog(
-                  context: context,
-                  builder: (context) =>
-                      buildDocDialog(context, value, _docs[value])),
+              onSelect: (dynamic value){
+                print(value);
+                print(m[value]);
+                showDialog(
+                    context: context,
+                    builder: (context) =>
+                        buildDocDialog(context, m[value], value));
+              }
 
               ///
               /// onSubmit: (String value) => debugPrint('value'),

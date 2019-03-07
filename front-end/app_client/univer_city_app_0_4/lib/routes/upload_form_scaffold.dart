@@ -8,6 +8,8 @@ class Tags {
   const Tags(this._tag);
 }
 
+String titolo;
+
 const tagsDisp = <Tags>[
   Tags('Tag di prova'),
   Tags('automatica'),
@@ -46,7 +48,8 @@ class UploadFormScaffold extends StatelessWidget {
 class UploadFormBody extends StatelessWidget {
   final String path;
   UploadFormBody(this.path);
-  String title, type = 'o';
+  String title='';
+  String type = 'o';
   Future<int> res ;
   @override
   Widget build(BuildContext context) {
@@ -107,8 +110,8 @@ class UploadFormBody extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
               child: TextField(
                   onChanged: (value) {
-                    title = value;
-                    debugPrint(title);
+                    titolo = value;
+                    //debugPrint(title);
                   },
                   textAlign: TextAlign.center,
                   decoration: InputDecoration(labelText: 'Titolo'))),
@@ -162,6 +165,7 @@ class DialogUpload extends StatelessWidget {
   DialogUpload(this.title, this.path);
   @override
   Widget build(BuildContext context) {
+    print('dialog $titolo');
     return AlertDialog(
       title: Text('Hey !'),
       content: FutureBuilder(
@@ -169,7 +173,7 @@ class DialogUpload extends StatelessWidget {
         /// ancora non capisco perche devo mettere una stringa to string ma altrimenti
         /// mi formatta male il dialog devo studiamelo meglio
         ///
-          future: HttpHandler.uploadDocument(title.toString(), path),
+          future: HttpHandler.uploadDocument(titolo, path),
           builder: (context, snapshot){
             if(snapshot.hasError)return Container();
             if(snapshot.hasData){

@@ -111,7 +111,7 @@ login(BuildContext context, String id, String pw)async{
         context: context,
         builder: (context){
           return AlertDialog(
-            title: Text("Un' attimo che controlliamo!",),
+            title: Text("Un attimo che controlliamo!",),
             content: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               mainAxisSize: MainAxisSize.min,

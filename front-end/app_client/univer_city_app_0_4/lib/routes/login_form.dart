@@ -36,6 +36,7 @@ class LoginFormScaffold extends StatelessWidget {
                       textAlign: TextAlign.center,
                       decoration: InputDecoration(
                         hintText: 'User o Email',
+                          focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: Theme.of(context).accentColor))
                       )),
                   TextField(
                       obscureText: true,
@@ -46,6 +47,7 @@ class LoginFormScaffold extends StatelessWidget {
                       decoration: InputDecoration(
                         border: InputBorder.none,
                         hintText: 'Password',
+                          focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: Theme.of(context).accentColor))
                       )),
                   SizedBox(
                     height: 42,

@@ -29,7 +29,7 @@ APP's API:
 	
 	RETURN:
     	1 if the user is in the Db and the password is correct
-    	-1 if no user is found or the password is invalid
+    	-1 invalid login
     	-2 if there's an internal error
     	throws an exception otherwise
 	

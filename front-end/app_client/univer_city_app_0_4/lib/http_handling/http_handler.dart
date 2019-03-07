@@ -27,7 +27,7 @@ class HttpHandler {
   /*
     ** This function returns:
     **   1 if the user is correctly added to the Db
-    **  -1 if the user is already in the Db
+    **  -1 if the user is already in the Db or invalid form
     **  -2 if there's an internal error
     **  throws an exception otherwise
   */
@@ -53,7 +53,7 @@ class HttpHandler {
     if(response.statusCode == 200) {
       return 1;
     }
-    else if(response.statusCode == 400) {
+    else if(response.statusCode == 400 || response.statusCode == 409) {
       return -1;
     }
     else if(response.statusCode == 500) {
@@ -64,27 +64,11 @@ class HttpHandler {
     }
   }
 
-  /*
-    ** This function returns:
-    **   1 if the user is correctly added to the Db
-    **  -1 if there's bad input parameter, invalid user or password, user isn't authorized and many other problems
-    **  -2 if there's an internal error
-    **  throws an exception otherwise
-  */
-
-
-  static Future testUser(String user,String pw,String name,String surname) async {
-
-  }
-
-  static Future testDocument(){
-
-  }
 
   /*
     ** This function returns:
     **   1 if the user is in the Db and the password is correct
-    **  -1 if no user is found or the password is invalid
+    **  -1 invalid login
     **  -2 if there's an internal error
     **  throws an exception otherwise
     ** The value of flag must be "0" (user is login in with username) or "1" (user is login in with email)
@@ -100,15 +84,13 @@ class HttpHandler {
         body:json.encode({"username":user,"pass": pw})
             ); //"flag": flag
     print(response.statusCode);
-    print(response.headers);
-    print('body '+response.body);
+    print('BODY :' + response.body);
     //return 1;
     if(response.statusCode == 200) {
-      print(response.headers['token']);
       _sessionToken = response.headers['token'];
       return 1;
     }
-    else if(response.statusCode == 400) {
+    else if(response.statusCode == 400 || response.statusCode == 403) {
       return -1;
     }
     else if(response.statusCode == 500) {

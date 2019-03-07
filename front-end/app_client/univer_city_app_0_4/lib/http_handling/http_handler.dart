@@ -4,6 +4,7 @@ import 'package:univer_city_app_0_4/elements/user.dart';
 import 'package:univer_city_app_0_4/elements/server_exception.dart';
 import 'dart:convert';
 import 'dart:typed_data';
+import 'dart:io';
 import 'package:flutter/material.dart';
 
 
@@ -26,7 +27,7 @@ class HttpHandler {
   /*
     ** This function returns:
     **   1 if the user is correctly added to the Db
-    **  -1 if the user is already in the Db
+    **  -1 if the user is already in the Db or invalid form
     **  -2 if there's an internal error
     **  throws an exception otherwise
   */
@@ -52,7 +53,7 @@ class HttpHandler {
     if(response.statusCode == 200) {
       return 1;
     }
-    else if(response.statusCode == 400) {
+    else if(response.statusCode == 400 || response.statusCode == 409) {
       return -1;
     }
     else if(response.statusCode == 500) {
@@ -63,27 +64,11 @@ class HttpHandler {
     }
   }
 
-  /*
-    ** This function returns:
-    **   1 if the user is correctly added to the Db
-    **  -1 if there's bad input parameter, invalid user or password, user isn't authorized and many other problems
-    **  -2 if there's an internal error
-    **  throws an exception otherwise
-  */
-
-
-  static Future testUser(String user,String pw,String name,String surname) async {
-
-  }
-
-  static Future testDocument(){
-
-  }
 
   /*
     ** This function returns:
     **   1 if the user is in the Db and the password is correct
-    **  -1 if no user is found or the password is invalid
+    **  -1 invalid login
     **  -2 if there's an internal error
     **  throws an exception otherwise
     ** The value of flag must be "0" (user is login in with username) or "1" (user is login in with email)
@@ -99,15 +84,13 @@ class HttpHandler {
         body:json.encode({"username":user,"pass": pw})
             ); //"flag": flag
     print(response.statusCode);
-    print(response.headers);
-    print('body '+response.body);
+    print('BODY :' + response.body);
     //return 1;
     if(response.statusCode == 200) {
-      print(response.headers['token']);
       _sessionToken = response.headers['token'];
       return 1;
     }
-    else if(response.statusCode == 400) {
+    else if(response.statusCode == 400 || response.statusCode == 403) {
       return -1;
     }
     else if(response.statusCode == 500) {
@@ -206,10 +189,6 @@ class HttpHandler {
   }
 
 
-  ///
-  /// ERRORE
-  /// '_InternalLinkedHashMap<String, dynamic>' is not a subtype of type 'List<Map<String, dynamic>>
-  ///
   static Future<List<Document>> searchDocuments(String query) async {
     final response =
       await http.get(_URL + _SEARCH_SERVER + "?string=" + query, headers: {'Authorization':_sessionToken});
@@ -226,19 +205,20 @@ class HttpHandler {
   }
 
 
-  /* TODO: devo capire come cazzo si fa
-  static Future<Document> downloadDocument(docId) async {
+   //TODO: devo capire come cazzo si fa
+  static Future<int> downloadDocument(String docId, String path) async {
     final response =
         await http.get(_URL + _DOCUMENT_SERVER + "/" + docId);
 
     if(response.statusCode == 200){
-      return Document.fromJson(json.decode(response.body));
+      Future file = new File(path).writeAsBytes(response.bodyBytes);
+      return 1;
     }
     else{
       throw ServerException.withCode(response.statusCode);
     }
   }
-  */
+
 
   static Future<dynamic> mashup(List<String> pageIds) async {
     final response =

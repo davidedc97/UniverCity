@@ -1,9 +1,19 @@
 <?php
+ header ('Location: feedback.html');
  $path = 'data.txt';
  if (isset($_POST['field1']) ) {
-    $fh = fopen($path,"a+");
+    $fh = fopen($path,"a");
     $string = $_POST['field1'];
-    fwrite($fh,$string);
+    $conc=fread($path);
+    $conc.="\n\n\n";
+    $conc.=$string;
+    fwrite($fh,$conc);
     fclose($fh); 
  }
+
+function alert($msg) {
+    echo "<script type='text/javascript'>alert('$msg');</script>";
+}
+ alert("Feedback sent, Thank you!");
+
 ?>

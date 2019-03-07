@@ -193,7 +193,6 @@ compForm(BuildContext context, String id, String nm, String cg, String em,
 
     if(res==1){
       debugPrint('dentro if');
-      Navigator.pushNamedAndRemoveUntil(context, '/home', (Route<dynamic> route) => false);
     }else{
       Navigator.of(context).pop();
       Navigator.pushNamed(context, '/complicatedForm');

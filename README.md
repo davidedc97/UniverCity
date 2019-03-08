@@ -2,7 +2,7 @@
 Project for the Google Workshop 2018/19
 [__WIKI OF UNIVERCITY__](https://github.com/davidedc97/UniverCity/wiki "Wiki of UniverCity")
 
-## Who we are ?
+## Who are we?
 We are six students that attend the third year of computer science at " La Sapienza" University of Rome.
 - Davide Di Campi
 - Riccardo Pagliuca
@@ -25,5 +25,7 @@ UniverCity will be a platform where everyone, students and teacher, can share an
 - [Demo web client](https://xd.adobe.com/view/50f46b61-bc7a-4047-540e-dab969d36767-26c5/?hints=off)
 
 # 2nd Milestone
-- [Presentation]()
+- [Presentation](https://docs.google.com/presentation/d/1O5NojuoxNorrpDU4g-oW5aVZjzzBfDbk9NBEjSOfy6Y/edit#slide=id.p)
 - [Complete API on Swagger](https://app.swaggerhub.com/apis-docs/univerCity9/univerCity/1.0.0-oas3)
+- [Our Website](https://univercityalpha.herokuapp.com/)
+- [Alpha Release](https://github.com/davidedc97/UniverCity/blob/master/front-end/app_client/prealpha_UniverCity.apk)

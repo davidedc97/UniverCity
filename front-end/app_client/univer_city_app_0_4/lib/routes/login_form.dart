@@ -65,7 +65,7 @@ class LoginFormScaffold extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      Text('Forgot password?'),
+                      Text('Password dimenticata ?'),
                       FlatButton(
 
                         ///Login per ora ti rimanda nell'home page
@@ -73,7 +73,7 @@ class LoginFormScaffold extends StatelessWidget {
                           onPressed: () {
                             debugPrint('Recover');
                           },
-                          child: Text('RECOVER',
+                          child: Text('RECUPERA',
                               style: TextStyle(color: Theme.of(context).accentColor)))
                     ],
                   )

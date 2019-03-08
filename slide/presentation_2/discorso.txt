@@ -3,13 +3,13 @@ we are UniverCity, a group of students that has decided to improve students life
 Often, when we have to study for an exam, it is not so easy to find good notes. The internet crawls with notes and exercises from different students, but you have to spend so many time browsing sites before you can get something helpful and that you like. Plus, not every site is free, or maybe you are not authorized to read that good-looking note.
 Here it comes UniverCity, our solution. One tool, available both in mobile and browser version, where every student can freely sign up and then upload the notes they are proud of or find the right material to pass their exam from the notes that somebody else has posted.
 To give our product a unique value proposition, we are developing our main feature:
-let's suppose I have to study Physics, so I open UniverCity and find some notes about many arguments involved in the Physics exam, all from different users. I would really like to have all those notes in one file with one click. This is our feature, the mashup. It will create a single pdf from different pages referring different documents and notes from all the database.
-It will be even possible to request automatic mashups regarding a matter, plus download files from the client and rate others' notes. Our only expenses will be for the maintenance of the network architecture, but we thought that insertions and ads could allow us to keep our product free.
+let's suppose I have to study Physics, so I open UniverCity and find some notes about many arguments involved in the Physics exam, all from different users. I would really like to have the best parts from all of them in a single file with one click. This is our feature, the mashup. It will create istantly a single pdf from different pages referring different documents and notes from all the database.
+It will be even possible to request automatic mashups regarding a matter, plus download files from the client and rate others' notes. Our only expenses will be for the maintenance of the network architecture, but we thought that insertions and ads could allow us to keep our product completely free.
 
 Now, the technologies we are using. To host our servers and databases, we have choosen Amazon Web Services: the processing units of servers are managed by Lambda, the autentication system and user database are on Cognito, while documents management and database are on S3.
 Our browser version is hosted on Heroku and powered by Bootstrap, and the development of the app client was made with Flutter in Dart language. 
 
-For this milestone, we implemented some basic features. We have a registration system with a form and a login validation, a basic user interface where it is possile to make a simple search for a document or to upload or download one. The implementation of mashup, some social and design features and the adding of more metadata are still in progress and are in program for the next milestone.
+For this milestone, we implemented some basic features. We have a registration system with a form and a login validation, a basic user interface where it is possible to make a simple search for a document or to upload or download one. The implementation of mashup, some social and design features and the adding of more metadata are still in progress and are in program for the next milestone.
 So, let's finally see our demo.
 #
 #chiacchiere sulla demo, descrizione di roba
@@ -17,6 +17,15 @@ So, let's finally see our demo.
 #tutto figo, finita la demo
 #
 
+To have a confirmation about what we thought, we made a simple google form and distributed it among university students, our main target. More than half of the people who answered us study the same subject on notes from different students, and for the 70% of them it is difficult to find something acceptable immediatly. The proposal of giving a tool that makes it easy to obtain the best parts of notes in one document was accepted almost by all of them. Finally, about 75% of them thinks it is acceptable to introduce adds to keep the service free.
+
+During this milestone, we have found many difficulties :
+-choose the right technologies for every task we had to attend to;
+-Learn all new technologies that each group had to use, depending on the task;
+-Coordinate with each other during the entire development;
+-It could seem trivial, but also choose a design and colors that everyone likes was not so easy
+
+For our next milestone, we  are going to develop a manual version of the mashup, filters for the research, users' profile, a rate system for documents and a night mode. 
 
 
  

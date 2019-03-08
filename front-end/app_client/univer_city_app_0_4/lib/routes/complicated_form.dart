@@ -104,7 +104,7 @@ class _CompFormScaffoldState extends State<CompFormScaffold> {
                       //################################################################ Get Started Button
                       BtnLogin(
                         color: Theme.of(context).accentColor,
-                        title: 'GET STARTED',
+                        title: 'REGISTRATI',
                         onPressed: () => compForm(context, _us ?? '', _nm ?? '',
                             _cg ?? '', _em ?? '', _pw ?? '', _fa ?? '', _un ?? ''),
                       ),
@@ -113,7 +113,7 @@ class _CompFormScaffoldState extends State<CompFormScaffold> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
-                          Text('Alredy have an acount?'),
+                          Text('Hai già un account ?'),
                           FlatButton(
                               onPressed: () {
                                 Navigator.popAndPushNamed(context, '/loginForm');

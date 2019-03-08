@@ -3,6 +3,10 @@ import 'package:sliver_fab/sliver_fab.dart';
 import 'package:univer_city_app_0_4/elements/info_row.dart';
 import 'package:univer_city_app_0_4/elements/pdf_viewer_func.dart';
 import 'dart:typed_data';
+import 'package:univer_city_app_0_4/http_handling/http_handler.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:path/path.dart';
+import 'dart:io';
 
 String assetPath = 'assets/doc/Dispense_Reti_Benelli_Giambene.pdf';
 String uuid2 = "68c5e7d6-3c19-11e9-b210-d663bd873d93";
@@ -78,8 +82,13 @@ Widget buildDocDialog(BuildContext context, String title, String uuid) {
                           ListTile(
                             leading: Icon(Icons.file_download),
                             title: Text('Scarica'),
-                            onTap: () => debugPrint(
-                                'downloading $uuid'), //TODO DOWNLOAD UUID
+                            onTap: () async{
+                              Directory dowDir = await getApplicationDocumentsDirectory();
+                              String file = title+'.pdf';
+                              final path = join(dowDir.path, file);
+                              int i = await HttpHandler.downloadDocument(uuid, path);
+                              print(i);
+                            }, //TODO DOWNLOAD UUID
                           ),
                           SizedBox(
                             height: 24,

@@ -213,11 +213,14 @@ class HttpHandler {
 
    //TODO: devo capire come cazzo si fa
   static Future<int> downloadDocument(String docId, String path) async {
-    final response =
-        await http.get(_URL + _DOCUMENT_SERVER + "/" + docId);
+    print('scarico');
+    var response =
+        await http.get(_URL + _DOCUMENT_SERVER + "?id=" + docId, headers: {'Authorization':_sessionToken});
 
     if(response.statusCode == 200){
-      Future file = new File(path).writeAsBytes(response.bodyBytes);
+      File f = new File(path);
+      f.writeAsBytes(response.bodyBytes);
+      print('ok');
       return 1;
     }
     else{

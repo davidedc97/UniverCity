@@ -1,0 +1,42 @@
+name: univer_city_app_0_4
+description: GW201819 client app UniverCity
+
+
+version: 1.5.0+1
+
+environment:
+  sdk: ">=2.0.0-dev.68.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^0.1.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+
+
+flutter:
+
+
+  uses-material-design: true
+
+
+  assets:
+    -  assets/img/bgLogin.png
+
+
+  fonts:
+      - family: Bahnschrift
+        fonts:
+          - asset: assets/font/bahnschrift.ttf
+      - family: Collegiate
+        fonts:
+          - asset: assets/font/collegiateHeavyOutline.ttf
+      - family: Title
+        fonts:
+          - asset: assets/font/college.ttf
+

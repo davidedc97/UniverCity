@@ -28,4 +28,5 @@ UniverCity will be a platform where everyone, students and teacher, can share an
 - [Presentation](https://docs.google.com/presentation/d/1O5NojuoxNorrpDU4g-oW5aVZjzzBfDbk9NBEjSOfy6Y/edit#slide=id.p)
 - [Complete API on Swagger](https://app.swaggerhub.com/apis-docs/univerCity9/univerCity/1.0.0-oas3)
 - [Our Website](https://univercityalpha.herokuapp.com/)
-- [Alpha Release](https://github.com/davidedc97/UniverCity/blob/master/front-end/app_client/prealpha_UniverCity.apk)
+- [Alpha Release ](https://github.com/davidedc97/UniverCity/blob/master/front-end/app_client/prealpha_UniverCity.apk)
+Note: the apk works on android versions < 8.0

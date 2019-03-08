@@ -27,5 +27,10 @@ During this milestone, we have found many difficulties :
 
 For our next milestone, we  are going to develop a manual version of the mashup, filters for the research, users' profile, a rate system for documents and a night mode. 
 
+Finally, here are some contacts and links to our website and to download our first apk.
+
+Thanks everybody for the attention.
+
+
 
  

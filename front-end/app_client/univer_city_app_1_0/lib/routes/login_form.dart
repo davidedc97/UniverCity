@@ -30,6 +30,7 @@ class LoginForm extends StatelessWidget {
               ),
               TextField(
                 textAlign: TextAlign.center,
+                onChanged: (String value){_usem=value;},
                 decoration: InputDecoration(
                     hintText: 'User o Email',
                     focusedBorder: UnderlineInputBorder(
@@ -37,15 +38,11 @@ class LoginForm extends StatelessWidget {
                             .of(context)
                             .accentColor))
                 ),
-                onChanged: (String value){
-                  _usem=value;
-                },
+
               ),
               TextField(
                   obscureText: true,
-                  onChanged: (value) {
-                    _pw = value;
-                  },
+                  onChanged: (value) {_pw = value;},
                   textAlign: TextAlign.center,
                   decoration: InputDecoration(
                       border: InputBorder.none,

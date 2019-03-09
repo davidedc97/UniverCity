@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:univer_city_app_0_4/routes/routes.dart';
-
+import 'package:univer_city_app_0_4/bloc/comp_form_bloc_provider.dart';
 
 
 void main(){
@@ -62,7 +62,7 @@ class UniverCity extends StatelessWidget {
     // #######################################################################Schermata Login Form Complicata
       case '/complicatedForm':
         return MaterialPageRoute(builder: (context) {
-          return CompForm();
+          return CompFormBlocProvider(child: CompForm(),) ;
         });
     ///
     /// in caso di errore  mostrare una pagina 404 con vari link

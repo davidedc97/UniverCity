@@ -1,11 +1,9 @@
 import 'package:univer_city_app_0_4/elements/elements.dart';
 import 'package:univer_city_app_0_4/http_handling/http_handler.dart';
+import 'package:univer_city_app_0_4/bloc/comp_form_bloc_provider.dart';
 
 class CompForm extends StatelessWidget {
-  String _nm, _em, _pw, _fa, _cg, _us, _un;
-  final RegExp speEx = RegExp("([0-9a-zA-Z!\-\"#\$%&'()*+,.\/:;<=>?@[\]\^_`{|}~\\]*[!\-\"#\$%&'()*+,.\/:;<=>?@[\]\^_`{|}~\\]+[0-9a-zA-Z!\-\"#\$%&'()*+,.\/:;<=>?@[\]\^_`{|}~\\]*)");
-  final RegExp maEx = RegExp("([0-9a-zA-Z!\-\"#\$%&'()*+,.\/:;<=>?@[\]\^_`{|}~\\]*[A-Z]+[0-9a-zA-Z!\-\"#\$%&'()*+,.\/:;<=>?@[\]\^_`{|}~\\]*)");
-  final RegExp numEx = RegExp("([0-9a-zA-Z!\-\"#\$%&'()*+,.\/:;<=>?@[\]\^_`{|}~\\]*[0-9]+[0-9a-zA-Z!\-\"#\$%&'()*+,.\/:;<=>?@[\]\^_`{|}~\\]*)");
+  String _nm, _fa, _cg, _us, _un;
 
   @override
   Widget build(BuildContext context) {
@@ -16,6 +14,7 @@ class CompForm extends StatelessWidget {
   }
   
   _compFormBody(context){
+    final CompFormBloc _registrationFormBloc = CompFormBlocProvider.of(context);
     return Stack(children: <Widget>[
       ListView(
         children: <Widget>[
@@ -35,9 +34,7 @@ class CompForm extends StatelessWidget {
                   height: 24,
                 ),
                 TextField(
-                    onChanged: (value) {
-                        _us = value;
-                    },
+                    onChanged: (value) {_us = value;},
                     textAlign: TextAlign.center,
                     decoration: InputDecoration(
                         hintText: 'User',
@@ -45,9 +42,7 @@ class CompForm extends StatelessWidget {
                             borderSide: BorderSide(
                                 color: Theme.of(context).accentColor)))),
                 TextField(
-                    onChanged: (value) {
-                      _nm = value;
-                    },
+                    onChanged: (value) {_nm = value;},
                     textAlign: TextAlign.center,
                     decoration: InputDecoration(
                         hintText: 'Nome',
@@ -55,40 +50,46 @@ class CompForm extends StatelessWidget {
                             borderSide: BorderSide(
                                 color: Theme.of(context).accentColor)))),
                 TextField(
-                    onChanged: (value) {
-                      _cg = value;
-                    },
+                    onChanged: (value) {_cg = value;},
                     textAlign: TextAlign.center,
                     decoration: InputDecoration(
                         hintText: 'Cognome',
                         focusedBorder: UnderlineInputBorder(
                             borderSide: BorderSide(
                                 color: Theme.of(context).accentColor)))),
+                StreamBuilder<String>(
+                    stream: _registrationFormBloc.email,
+                    builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+                      return TextField(
+                        textAlign: TextAlign.center,
+                        decoration: InputDecoration(
+                            hintText: 'Email',
+                            errorText: snapshot.error,
+                            focusedBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Theme.of(context).accentColor))),
+                        onChanged: _registrationFormBloc.onEmailChanged,
+                        keyboardType: TextInputType.emailAddress,
+                      );
+                    }),
+                StreamBuilder<String>(
+                    stream: _registrationFormBloc.password,
+                    builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+                      return TextField(
+                        obscureText: true,
+                        textAlign: TextAlign.center,
+                        decoration: InputDecoration(
+                            hintText: 'Password',
+                            errorText: snapshot.error,
+                            focusedBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Theme.of(context).accentColor))),
+                        onChanged: _registrationFormBloc.onPasswordChanged,
+                        keyboardType: TextInputType.emailAddress,
+                      );
+                    }),
                 TextField(
-                    onChanged: (value) {
-                        _em = value;
-                    },
-                    textAlign: TextAlign.center,
-                    decoration: InputDecoration(
-                        hintText: 'Email',
-                        focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(
-                                color: Theme.of(context).accentColor)))),
-                TextField(
-                    obscureText: true,
-                    onChanged: (value) {
-                        _pw = value;
-                    },
-                    textAlign: TextAlign.center,
-                    decoration: InputDecoration(
-                        hintText: 'Password',
-                        focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(
-                                color: Theme.of(context).accentColor)))),
-                TextField(
-                    onChanged: (value) {
-                      _fa = value;
-                    },
+                    onChanged: (value) {_fa = value;},
                     textAlign: TextAlign.center,
                     decoration: InputDecoration(
                         hintText: 'Facoltà',
@@ -96,9 +97,7 @@ class CompForm extends StatelessWidget {
                             borderSide: BorderSide(
                                 color: Theme.of(context).accentColor)))),
                 TextField(
-                    onChanged: (value) {
-                      _un = value;
-                    },
+                    onChanged: (value) {_un = value;},
                     textAlign: TextAlign.center,
                     decoration: InputDecoration(
                         border: InputBorder.none,
@@ -114,7 +113,7 @@ class CompForm extends StatelessWidget {
                   color: Theme.of(context).accentColor,
                   title: 'REGISTRATI',
                   onPressed: () => compForm(context, _us ?? '', _nm ?? '',
-                      _cg ?? '', _em ?? '', _pw ?? '', _fa ?? '', _un ?? ''),
+                      _cg ?? '', _registrationFormBloc.email ?? '', _registrationFormBloc.password ?? '', _fa ?? '', _un ?? ''),
                 ),
                 //################################################## LOGIN if already have an account
                 Row(

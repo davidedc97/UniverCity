@@ -46,11 +46,23 @@ class UniverCity extends StatelessWidget {
   Route _myRoutes(RouteSettings settings) {
     switch (settings.name) {
     ///
-    /// #######################################################################Schermata di login principale
+    /// ####################################################################### Schermata di login principale
     ///
       case '/':
         return MaterialPageRoute(builder: (context) {
           return LoginScaffold();
+        });
+    ///
+    /// ####################################################################### Form per Login
+    ///
+      case '/loginForm':
+        return MaterialPageRoute(builder: (context) {
+          return LoginForm();
+        });
+    // #######################################################################Schermata Login Form Complicata
+      case '/complicatedForm':
+        return MaterialPageRoute(builder: (context) {
+          return CompForm();
         });
     ///
     /// in caso di errore  mostrare una pagina 404 con vari link

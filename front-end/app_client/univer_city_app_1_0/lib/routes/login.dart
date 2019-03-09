@@ -4,12 +4,12 @@ class LoginScaffold extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: loginBody(context),
+      body: _loginBody(context),
     );
   }
 
   /// body per il Login
-  loginBody(context) {
+  _loginBody(context) {
     return Column(children: <Widget>[
       ///
       ///

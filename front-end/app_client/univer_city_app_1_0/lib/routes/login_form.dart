@@ -28,7 +28,7 @@ class LoginForm extends StatelessWidget {
               SizedBox(
                 height: 24,
               ),
-              TextFormField(
+              TextField(
                 textAlign: TextAlign.center,
                 decoration: InputDecoration(
                     hintText: 'User o Email',
@@ -37,16 +37,14 @@ class LoginForm extends StatelessWidget {
                             .of(context)
                             .accentColor))
                 ),
-                validator: (String value){
+                onChanged: (String value){
                   _usem=value;
-                  return null;
                 },
               ),
-              TextFormField(
+              TextField(
                   obscureText: true,
-                  validator: (value) {
+                  onChanged: (value) {
                     _pw = value;
-                    return null;
                   },
                   textAlign: TextAlign.center,
                   decoration: InputDecoration(

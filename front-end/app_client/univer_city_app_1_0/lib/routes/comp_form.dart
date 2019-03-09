@@ -214,7 +214,7 @@ compForm(BuildContext context, String id, String nm, String cg, String em,
             return AlertDialog(
               title: Text('Yay !'),
               content: Text(
-                  'Registrazione avvenuta con sccesso conferma il tuo account tramite email'),
+                  'Registrazione avvenuta con successo conferma il tuo account tramite email'),
               actions: <Widget>[
                 FlatButton(
                     onPressed: () {

@@ -118,7 +118,7 @@ class _CompFormScaffoldState extends State<CompFormScaffold> {
                         color: Theme.of(context).accentColor,
                         title: 'REGISTRATI',
                         onPressed: () => compForm(context, _us ?? '', _nm ?? '',
-                            _cg ?? '', _registrationFormBloc.email ?? '', _registrationFormBloc.password ?? '', _fa ?? '', _un ?? ''),
+                            _cg ?? '', _registrationFormBloc.email.toString() ?? '', _registrationFormBloc.password.toString() ?? '', _fa ?? '', _un ?? ''),
                       ),
                       //################################################## LOGIN if already have an account
                       Row(

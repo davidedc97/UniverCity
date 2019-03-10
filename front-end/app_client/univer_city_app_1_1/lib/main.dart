@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:univer_city_app_1_1/routes/login_scaffold.dart';
-import 'package:univer_city_app_1_1/routes/complicated_form.dart';
-import 'package:univer_city_app_1_1/routes/login_form.dart';
-import 'package:univer_city_app_1_1/routes/home.dart';
+import 'package:univer_city_app_1_1/bloc/comp_form_bloc_provider.dart';
+import 'package:univer_city_app_1_1/routes/route.dart';
 
 
 // TODO test pdf online
@@ -62,7 +60,7 @@ class UniverCity extends StatelessWidget {
       // #######################################################################Schermata Login Form Complicata
       case '/complicatedForm':
         return MaterialPageRoute(builder: (context) {
-          return CompFormScaffold();
+          return CompFormBlocProvider(child:CompFormScaffold());
         });
       // #######################################################################Schermata Home (MainScaffold)
       case '/home':

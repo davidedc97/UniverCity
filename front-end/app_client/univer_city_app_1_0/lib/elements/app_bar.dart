@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:univer_city_app_1_1/elements/elements.dart';
+import 'package:univer_city_app_1_0/elements/elements.dart';
 
 class HomeAppBar extends StatefulWidget implements PreferredSizeWidget {
   ///Serve per specificare di che altezza deve essere l'app bar

@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:univer_city_app_1_1/elements/elements.dart';
 import 'package:univer_city_app_1_1/http_handling/http_handler.dart';
+import 'package:univer_city_app_1_1/bloc/comp_form_bloc_provider.dart';
 
 class CompFormScaffold extends StatefulWidget {
   @override
@@ -8,14 +8,14 @@ class CompFormScaffold extends StatefulWidget {
 }
 
 class _CompFormScaffoldState extends State<CompFormScaffold> {
-  String _nm, _em, _pw, _fa, _cg, _us, _un;
+  String _nm, _fa, _cg, _us, _un;
 
   @override
   Widget build(BuildContext context) {
+    final CompFormBloc _registrationFormBloc = CompFormBlocProvider.of(context);
     return Scaffold(
       backgroundColor: Colors.white,
       body: Stack(children: <Widget>[
-
             ListView(
               children: <Widget>[
                 Padding(
@@ -60,25 +60,37 @@ class _CompFormScaffoldState extends State<CompFormScaffold> {
                             hintText: 'Cognome',
                               focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: Theme.of(context).accentColor))
                           )),
-                      TextField(
-                          onChanged: (value) {
-                            _em = value;
-                          },
-                          textAlign: TextAlign.center,
-                          decoration: InputDecoration(
-                            hintText: 'Email',
-                              focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: Theme.of(context).accentColor))
-                          )),
-                      TextField(
-                          obscureText: true,
-                          onChanged: (value) {
-                            _pw = value;
-                          },
-                          textAlign: TextAlign.center,
-                          decoration: InputDecoration(
-                            hintText: 'Password',
-                              focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: Theme.of(context).accentColor))
-                          )),
+                      StreamBuilder<String>(
+                          stream: _registrationFormBloc.email,
+                          builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+                            return TextField(
+                              textAlign: TextAlign.center,
+                              decoration: InputDecoration(
+                                  hintText: 'Email',
+                                  errorText: snapshot.error,
+                                  focusedBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Theme.of(context).accentColor))),
+                              onChanged: _registrationFormBloc.onEmailChanged,
+                              keyboardType: TextInputType.emailAddress,
+                            );
+                          }),
+                      StreamBuilder<String>(
+                          stream: _registrationFormBloc.password,
+                          builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+                            return TextField(
+                              obscureText: true,
+                              textAlign: TextAlign.center,
+                              decoration: InputDecoration(
+                                  hintText: 'Password',
+                                  errorText: snapshot.error,
+                                  focusedBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Theme.of(context).accentColor))),
+                              onChanged: _registrationFormBloc.onPasswordChanged,
+                              keyboardType: TextInputType.emailAddress,
+                            );
+                          }),
                       TextField(
                           onChanged: (value) {
                             _fa = value;
@@ -106,7 +118,7 @@ class _CompFormScaffoldState extends State<CompFormScaffold> {
                         color: Theme.of(context).accentColor,
                         title: 'REGISTRATI',
                         onPressed: () => compForm(context, _us ?? '', _nm ?? '',
-                            _cg ?? '', _em ?? '', _pw ?? '', _fa ?? '', _un ?? ''),
+                            _cg ?? '', _registrationFormBloc.email ?? '', _registrationFormBloc.password ?? '', _fa ?? '', _un ?? ''),
                       ),
                       //################################################## LOGIN if already have an account
                       Row(

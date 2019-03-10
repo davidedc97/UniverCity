@@ -1,6 +1,6 @@
-import 'package:univer_city_app_0_4/elements/elements.dart';
-import 'package:univer_city_app_0_4/http_handling/http_handler.dart';
-import 'package:univer_city_app_0_4/bloc/comp_form_bloc_provider.dart';
+import 'package:univer_city_app_1_0/elements/elements.dart';
+import 'package:univer_city_app_1_0/http_handling/http_handler.dart';
+import 'package:univer_city_app_1_0/bloc/comp_form_bloc_provider.dart';
 
 class CompForm extends StatelessWidget {
   String _nm, _fa, _cg, _us, _un;

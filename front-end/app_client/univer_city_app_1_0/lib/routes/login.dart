@@ -1,4 +1,4 @@
-import 'package:univer_city_app_0_4/elements/elements.dart';
+import 'package:univer_city_app_1_0/elements/elements.dart';
 
 class LoginScaffold extends StatelessWidget {
   @override

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:univer_city_app_0_4/bloc/comp_form_bloc.dart';
-export 'package:univer_city_app_0_4/bloc/comp_form_bloc.dart';
+import 'package:univer_city_app_1_0/bloc/comp_form_bloc.dart';
+export 'package:univer_city_app_1_0/bloc/comp_form_bloc.dart';
 
 class CompFormBlocProvider extends InheritedWidget {
   final CompFormBloc bloc;

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:univer_city_app_0_4/routes/routes.dart';
-import 'package:univer_city_app_0_4/bloc/comp_form_bloc_provider.dart';
+import 'package:univer_city_app_1_0/routes/routes.dart';
+import 'package:univer_city_app_1_0/bloc/comp_form_bloc_provider.dart';
 
 
 void main(){

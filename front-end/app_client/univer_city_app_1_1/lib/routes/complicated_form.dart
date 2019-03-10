@@ -8,11 +8,13 @@ class CompFormScaffold extends StatefulWidget {
 }
 
 class _CompFormScaffoldState extends State<CompFormScaffold> {
-  String _nm, _fa, _cg, _us, _un;
+  String _nm,_em, _pw, _fa, _cg, _us, _un;
 
   @override
   Widget build(BuildContext context) {
     final CompFormBloc _registrationFormBloc = CompFormBlocProvider.of(context);
+    _registrationFormBloc.email.listen((data){_em = data??'';});
+    _registrationFormBloc.password.listen((data){_pw = data??'';});
     return Scaffold(
       backgroundColor: Colors.white,
       body: Stack(children: <Widget>[
@@ -118,7 +120,7 @@ class _CompFormScaffoldState extends State<CompFormScaffold> {
                         color: Theme.of(context).accentColor,
                         title: 'REGISTRATI',
                         onPressed: () => compForm(context, _us ?? '', _nm ?? '',
-                            _cg ?? '', _registrationFormBloc.email.toString() ?? '', _registrationFormBloc.password.toString() ?? '', _fa ?? '', _un ?? ''),
+                            _cg ?? '', _em ?? '', _pw ?? '', _fa ?? '', _un ?? ''),
                       ),
                       //################################################## LOGIN if already have an account
                       Row(

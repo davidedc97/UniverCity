@@ -59,10 +59,19 @@ class UniverCity extends StatelessWidget {
         return MaterialPageRoute(builder: (context) {
           return LoginForm();
         });
-    // #######################################################################Schermata Login Form Complicata
+    ///
+    /// ####################################################################### Schermata Login Form Complicata
+    ///
       case '/complicatedForm':
         return MaterialPageRoute(builder: (context) {
           return CompFormBlocProvider(child: CompForm(),) ;
+        });
+    ///
+    /// ######################################################################## Schermata Home
+    ///
+      case '/home':
+        return MaterialPageRoute(builder: (context) {
+          return HomeUniverCity();
         });
     ///
     /// in caso di errore  mostrare una pagina 404 con vari link

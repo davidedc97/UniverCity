@@ -37,7 +37,7 @@ android {
     }
 
     defaultConfig {
-        // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
+        // TODO: Specify your own unique Application ID ("labunivercityclientappblock.univercity.univercityapp").
         applicationId "univercityapp.univercity.labunivercityclientappblock.univer_city_app_1_0"
         minSdkVersion 17
         targetSdkVersion 28

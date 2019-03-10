@@ -107,7 +107,8 @@ _oAuth(context){
           actions: <Widget>[
             FlatButton(
                 onPressed: () {
-                  Navigator.pop(context);
+                  Navigator.pushNamedAndRemoveUntil(context, '/home', (Route<dynamic> route) => false);
+                  //Navigator.pop(context);
                 },
                 child: Text('Close'))
           ],

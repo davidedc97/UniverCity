@@ -144,7 +144,7 @@ login(BuildContext context, String id, String pw)async{
           );
         }
     );
-    int res = await HttpHandler.validateLogin(id, pw, "0");
+    int res = await HttpHandler.validateLogin(id, pw);
     debugPrint(res.toString());
 
     if(res==1){

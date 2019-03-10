@@ -1,4 +1,5 @@
 import 'package:univer_city_app_0_4/elements/elements.dart';
+import 'package:univer_city_app_0_4/body_drawer/body_drawer.dart';
 
 class HomeUniverCity extends StatefulWidget {
   final drawerEntry = [
@@ -20,15 +21,15 @@ class _HomeUniverCityState extends State<HomeUniverCity> {
   _getDrawerItemWidget(int index) {
     switch (index) {
       case 0:
-        return Text(index.toString());
+        return Home();
       case 1:
-        return Text(index.toString());
+        return Cronologia();
       case 2:
-        return Text(index.toString());
+        return Mashup();
       case 3:
-        return Text(index.toString());
+        return Feed();
       case 4:
-        return Text(index.toString());
+        return Bug();
       default:
         return Text('Errore switch Drawer outOfIndex ;) ');
     }
@@ -83,17 +84,22 @@ class _HomeUniverCityState extends State<HomeUniverCity> {
     /// Builder home page
     ///
     ///
-    return Scaffold(
-      drawer: Drawer(
-        child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: drawerOptions),
+    return DefaultTabController(
+      length: 3,
+      child: Scaffold(
+        drawer: Drawer(
+          child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: drawerOptions),
+        ),
+        appBar: (_selectedDrawerIndex  == 2)
+            ?MashupAppBar()
+            :HomeAppBar(),
+        body: _getDrawerItemWidget(_selectedDrawerIndex),
+        floatingActionButton: (_selectedDrawerIndex  == 0)
+            ?HomeFab()
+            :null,
       ),
-      appBar: HomeAppBar(),
-      body: _getDrawerItemWidget(_selectedDrawerIndex),
-      floatingActionButton: (_selectedDrawerIndex  == 0)
-          ?HomeFab()
-          :null,
     );
   }
 }

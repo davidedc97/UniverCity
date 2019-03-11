@@ -15,7 +15,16 @@ Nuove cose da fare per questa milestone:
 	- Piccola bio opzionale (?)
 	- Lista dei documenti caricati dall'utente stesso 
 
--
--
--
+- Aumentare i metadati che si forniscono quando si carica un documento:
+	- Titolo di un documento
+	- Corso/facoltà/università al quale appartiene/nel quale si sono presi quegli appunti
+	- Tag degli argomenti presenti (si potrebbe istruire un AI col machine learning chiedendo conferma all'utente tipo google captcha)
+	 
+- Implementare i filtri nella ricerca
+	- Distinzione tra utenti e documenti (?)
+	- Ricerca per argomento
+	- Ricerca per titolo
+	- Ricerca per corso/facoltà/università
+	
+- Implementare una night-mode (?)
 

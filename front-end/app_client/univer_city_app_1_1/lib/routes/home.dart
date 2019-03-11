@@ -92,13 +92,23 @@ class _HomeUniverCityState extends State<HomeUniverCity> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: drawerOptions),
         ),
-        appBar: (_selectedDrawerIndex  == 2)
-            ?MashupAppBar()
-            :HomeAppBar(),
+        appBar: HomeAppBar((_selectedDrawerIndex == 2)
+            ? TabBar(
+                tabs: [
+                  Tab(
+                    text: 'Scegli',
+                  ),
+                  Tab(
+                    text: 'Componi',
+                  ),
+                  Tab(
+                    text: 'Carica',
+                  ),
+                ],
+              )
+            : null),
         body: _getDrawerItemWidget(_selectedDrawerIndex),
-        floatingActionButton: (_selectedDrawerIndex  == 0)
-            ?HomeFab()
-            :null,
+        floatingActionButton: (_selectedDrawerIndex == 0) ? HomeFab() : null,
       ),
     );
   }

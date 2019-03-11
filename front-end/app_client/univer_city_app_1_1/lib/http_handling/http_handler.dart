@@ -3,11 +3,13 @@ import 'package:univer_city_app_1_1/elements/elements.dart';
 import 'dart:convert';
 import 'dart:typed_data';
 import 'dart:io';
+import 'dart:async';
+export 'package:univer_city_app_1_1/elements/document.dart';
 
 
 
 class HttpHandler {
-  static String _sessionToken;
+  static String _sessionToken, _userName;
   static const _URL = "https://ogv7kvalpf.execute-api.eu-west-1.amazonaws.com/dev";
   static const _FAKE_LOG_URL = "https://v1uu1cu9ld.execute-api.eu-west-1.amazonaws.com/alpha";
   static const _DOCUMENT_SERVER = "/document";
@@ -17,6 +19,9 @@ class HttpHandler {
   static const _LIKE_SERVER = "/like";
   static const _MASHUP_SERVER = "/mashup";
   static const _poolId = "awsUserPoolId";
+
+
+  String get user => _userName;
 
 
                                 /*########     USER  HANDLING     ########*/
@@ -85,6 +90,7 @@ class HttpHandler {
     //return 1;
     if(response.statusCode == 200) {
       _sessionToken = response.headers['token'];
+      _userName = user;
       return 1;
     }
     else if(response.statusCode == 400 || response.statusCode == 403) {
@@ -95,7 +101,7 @@ class HttpHandler {
     }
     else {
       print(response.statusCode);
-      //throw ServerException.withCode(response.statusCode);
+      throw ServerException.withCode(response.statusCode);
     }
   }
 
@@ -187,7 +193,7 @@ class HttpHandler {
     }
     else{
       print(response.statusCode);
-      //throw ServerException.withCode(response.statusCode);
+      throw ServerException.withCode(response.statusCode);
     }
   }
 

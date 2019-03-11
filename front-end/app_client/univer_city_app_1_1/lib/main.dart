@@ -67,6 +67,15 @@ class UniverCity extends StatelessWidget {
         return MaterialPageRoute(builder: (context) {
           return HomeUniverCity();
         });
+      case '/search':
+        return MaterialPageRoute(builder: (context) {
+          return Search();
+        });
+      case '/profilo':
+        return MaterialPageRoute(builder: (context) {
+          return Profilo();
+        });
+
       /// in caso di errore non so se mostrare una pagina 404 con vari link
       /// di reindirizzamento oppure reindirizzare nella pagina home
       default:

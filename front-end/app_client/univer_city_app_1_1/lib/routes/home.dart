@@ -85,31 +85,75 @@ class _HomeUniverCityState extends State<HomeUniverCity> {
     ///
     ///
     return DefaultTabController(
-      length: 3,
+      length: 2,
       child: Scaffold(
         drawer: Drawer(
           child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: drawerOptions),
         ),
-        appBar: HomeAppBar((_selectedDrawerIndex == 2)
-            ? TabBar(
-                tabs: [
-                  Tab(
-                    text: 'Scegli',
-                  ),
-                  Tab(
-                    text: 'Componi',
-                  ),
-                  Tab(
-                    text: 'Carica',
-                  ),
-                ],
-              )
-            : null),
+        ///
+        ///
+        /// App bar 
+        ///
+        ///
+        appBar: AppBar(
+            bottom:(_selectedDrawerIndex == 2)? TabBar(
+              tabs: [
+                Tab(
+                  text: 'Scegli',
+                ),
+                Tab(
+                  text: 'Componi',
+                ),
+              ],
+            ):null,
+            elevation: 2,
+
+            title: Padding(
+              padding: EdgeInsets.symmetric(vertical: 14.0),
+              child: Text(
+                'UniverCity',
+                style: TextStyle(
+                  color: Color(0xFF262526),
+                  fontFamily: 'Collegiate',
+                  fontSize: 32.0,
+                ),
+              ),
+            ),
+            actions: <Widget>[
+              IconButton(
+                icon: Icon(
+                  Icons.search,
+                ),
+                onPressed: () {
+                  _showSearch(context);
+                },
+              ),
+              IconButton(
+                icon: Icon(
+                    Icons.account_circle
+                ),
+                onPressed: (){
+                  _showProfilo(context);
+                },
+              ),
+            ]
+        ),
         body: _getDrawerItemWidget(_selectedDrawerIndex),
         floatingActionButton: (_selectedDrawerIndex == 0) ? HomeFab() : null,
       ),
     );
+  }
+///
+///
+/// Funzioni push ricerca e profilo
+///
+///
+  _showSearch(context){
+    Navigator.of(context).pushNamed('/search');
+  }
+  _showProfilo(context){
+    Navigator.of(context).pushNamed('/profilo');
   }
 }

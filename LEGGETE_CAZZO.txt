@@ -11,7 +11,7 @@ Nuove cose da fare per questa milestone:
 	- Immagine del profilo/avatar
 	- Barra dell'esperienza che si guadagna facendo opportune azioni nell'app/sito (per invogliare gli utenti a caricare documenti)
 	- Facoltà e università dell'utente (?)
-	- Link a uno shop(?)
+	- Link a uno shop(?) o ad un editor per l'avatar
 	- Piccola bio opzionale (?)
 	- Lista dei documenti caricati dall'utente stesso 
 
@@ -27,4 +27,5 @@ Nuove cose da fare per questa milestone:
 	- Ricerca per corso/facoltà/università
 	
 - Implementare una night-mode (?)
+
 

@@ -1,13 +1,13 @@
-Nuove cose da fare per questa milestone:
+﻿Nuove cose da fare per questa milestone:
 
-- Implementare il mashup. Per ora l'idea è questa:
+- (principale)Implementare il mashup. Per ora l'idea è questa:
 	- l'utente dalla schermata mashup seleziona i documenti dai suoi preferiti/da una barra di ricerca
 	- nella stessa schermata, cliccando su un documento si apre una finestra a cascata che visualizza le pagine del documento stesso
 	- a questo punto l'utente può spuntare su ogni pagina, pushando su un'altra finestra come su una stack
 	- in questa nuova finestra saranno presenti degli strumenti di base, tra i quali "riordina" e "ritaglia"
 	- una volta editate le pagine si può inviare tutto al server, che restituirà un unico documento pdf costituente il mashup finale.
 
-- Implementare il profilo dell'utente. Esso dovrà contenere:
+- (secondaria) Implementare il profilo dell'utente. Esso dovrà contenere: 
 	- Immagine del profilo/avatar
 	- Barra dell'esperienza che si guadagna facendo opportune azioni nell'app/sito (per invogliare gli utenti a caricare documenti)
 	- Facoltà e università dell'utente (?)
@@ -15,17 +15,17 @@ Nuove cose da fare per questa milestone:
 	- Piccola bio opzionale (?)
 	- Lista dei documenti caricati dall'utente stesso 
 
-- Aumentare i metadati che si forniscono quando si carica un documento:
+- (principale)Aumentare i metadati che si forniscono quando si carica un documento:
 	- Titolo di un documento
 	- Corso/facoltà/università al quale appartiene/nel quale si sono presi quegli appunti
 	- Tag degli argomenti presenti (si potrebbe istruire un AI col machine learning chiedendo conferma all'utente tipo google captcha)
 	 
-- Implementare i filtri nella ricerca
+- (principale)Implementare i filtri nella ricerca
 	- Distinzione tra utenti e documenti (?)
 	- Ricerca per argomento
 	- Ricerca per titolo
 	- Ricerca per corso/facoltà/università
 	
-- Implementare una night-mode (?)
+- (secondaria)Implementare una night-mode (?)
 
 

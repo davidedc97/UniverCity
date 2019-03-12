@@ -65,12 +65,22 @@ class DocSearch extends SearchDelegate<Document> {
   @override
   Widget buildSuggestions(BuildContext context) {
     // show when search for anythings
-    final risultatiList = query.isEmpty?recentDocs:docTest;
+    final risultatiList = query.isEmpty
+        ?recentDocs
+        :docTest.where((p)=>p.title.toLowerCase().startsWith(query.toLowerCase())).toList();
 
     return ListView.builder(
       itemBuilder: (context, index)=>ListTile(
         leading: Icon(Icons.description),
-        title: Text(docTest[index].title),
+        title: RichText(text: TextSpan(
+          text: risultatiList[index].title.substring(0, query.length),
+          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold,),
+            children: [TextSpan(
+                text: risultatiList[index].title.substring(query.length),
+                style: TextStyle(color: Colors.grey, )
+        )],
+        )),
+        onTap: (){debugPrint(docTest[index].title.toString());},
       ),
       itemCount: risultatiList.length,
     );

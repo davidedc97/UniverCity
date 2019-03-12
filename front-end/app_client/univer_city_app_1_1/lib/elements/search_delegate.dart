@@ -1,13 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:univer_city_app_1_1/http_handling/http_handler.dart';
 
-class Search extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container();
-  }
-}
-
 class DocSearch extends SearchDelegate<Document> {
   final docTest = [
     Document('Telecomunicazioni', 'Cuomo', '550e8400-e29b-41d4-a716-446655440000', 'O'),
@@ -44,7 +37,9 @@ class DocSearch extends SearchDelegate<Document> {
     return [
       IconButton(
         icon: Icon(Icons.clear),
-        onPressed: () {},
+        onPressed: () {
+          query = '';
+        },
       )
     ];
   }
@@ -53,7 +48,9 @@ class DocSearch extends SearchDelegate<Document> {
   Widget buildLeading(BuildContext context) {
     //  leading icon
     return IconButton(
-      onPressed: (){},
+      onPressed: (){
+        close(context, null);
+      },
       icon: AnimatedIcon(
           icon: AnimatedIcons.menu_arrow, progress: transitionAnimation),
     );
@@ -71,11 +68,11 @@ class DocSearch extends SearchDelegate<Document> {
     final risultatiList = query.isEmpty?recentDocs:docTest;
 
     return ListView.builder(
-        itemBuilder: (context, index)=>ListTile(
-      leading: Icon(Icons.description),
-      title: Text(docTest[index].title),
-    ),
-    itemCount: risultatiList.length,
+      itemBuilder: (context, index)=>ListTile(
+        leading: Icon(Icons.description),
+        title: Text(docTest[index].title),
+      ),
+      itemCount: risultatiList.length,
     );
   }
 }

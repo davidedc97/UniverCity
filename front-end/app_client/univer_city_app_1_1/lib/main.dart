@@ -67,10 +67,6 @@ class UniverCity extends StatelessWidget {
         return MaterialPageRoute(builder: (context) {
           return HomeUniverCity();
         });
-      case '/search':
-        return MaterialPageRoute(builder: (context) {
-          return Search();
-        });
       case '/profilo':
         return MaterialPageRoute(builder: (context) {
           return Profilo();

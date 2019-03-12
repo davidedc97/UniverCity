@@ -151,7 +151,7 @@ class _HomeUniverCityState extends State<HomeUniverCity> {
 ///
 ///
   _showSearch(context){
-    Navigator.of(context).pushNamed('/search');
+    showSearch(context: context, delegate: DocSearch());
   }
   _showProfilo(context){
     Navigator.of(context).pushNamed('/profilo');

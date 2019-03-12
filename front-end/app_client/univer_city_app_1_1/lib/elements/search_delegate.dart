@@ -71,7 +71,7 @@ class DocSearch extends SearchDelegate<Document> {
 
     return ListView.builder(
       itemBuilder: (context, index)=>ListTile(
-        leading: Icon(Icons.description),
+        leading: query.isEmpty?Icon(Icons.history):Icon(Icons.description),
         title: RichText(text: TextSpan(
           text: risultatiList[index].title.substring(0, query.length),
           style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold,),

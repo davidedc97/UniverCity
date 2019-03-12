@@ -180,19 +180,12 @@ class Profilo extends StatelessWidget {
           padding: EdgeInsets.all(8),
           child: Card(
             color: Colors.white,
-            child: Builder(builder: (context){
-              List<Widget> lista = List();
-              for(var i = 0; i<docTest.length; i++){
-                lista.add(ListTile(
-                  title: Text(docTest[i].title),
-                  leading: Icon(Icons.description),
-                ));
-                return Column(
-                  children: lista
-                );
-              }
-            })
-
+            child: Column(
+              children: <Widget>[TitleDivider('Appunti caricati')]+docTest.map((doc)=>ListTile(
+                leading: Icon(Icons.description),
+                title: Text(doc.title),
+              )).toList(),
+            )
           ),
         )
       ]),

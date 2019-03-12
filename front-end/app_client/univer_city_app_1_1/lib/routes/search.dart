@@ -1,79 +1,81 @@
 import 'package:flutter/material.dart';
 import 'package:univer_city_app_1_1/http_handling/http_handler.dart';
 
-class Search extends StatefulWidget {
-  @override
-  _SearchState createState() => _SearchState();
-}
-
-class _SearchState extends State<Search> {
-  
-  final TextEditingController _filter = new TextEditingController();
-  String _searchText = "";
-  List<Document> docs = List();
-  List<Document> filteredDocs = List();
-
-  _SearchState(){
-    _filter.addListener(() {
-      if (_filter.text.isEmpty) {
-        setState(() {
-          _searchText = "";
-          filteredDocs = docs;
-        });
-      } else {
-        setState(() {
-          _getDocs();
-          _searchText = _filter.text;
-        });
-      }
-    });
-  }
-
+class Search extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: TextField(
-          controller: _filter,
-          decoration: InputDecoration(
-              prefixIcon: Icon(Icons.search),
-              hintText: 'Search...'
-          ),
-        ),
-      ),
-      body: _buildList(),
+    return Container();
+  }
+}
+
+class DocSearch extends SearchDelegate<Document> {
+  final docTest = [
+    Document('Telecomunicazioni', 'Cuomo', '550e8400-e29b-41d4-a716-446655440000', 'O'),
+    Document('Architetture dei calcolatori', 'Ciciani', '550e8400-e29b-41d4-a716-446655440001', 'O'),
+    Document('Reti dei calcolatori', 'Vitaletti', '550e8400-e29b-41d4-a716-446655440002', 'O'),
+    Document('Sistemi di calcolo I', 'Demetrescu', '550e8400-e29b-41d4-a716-446655440003', 'O'),
+    Document('Sistemi di calcolo II', 'Demetrescu', '550e8400-e29b-41d4-a716-446655440004', 'O'),
+    Document('Teoria dei ststemi', 'Catardi', '550e8400-e29b-41d4-a716-446655440005', 'O'),
+    Document('Fondamenti di automatica', 'Marchetti', '550e8400-e29b-41d4-a716-446655440006', 'O'),
+    Document('Economia', 'Nastasi', '550e8400-e29b-41d4-a716-446655440007', 'O'),
+    Document('Controlli automatici', 'Nardi', '550e8400-e29b-41d4-a716-446655440008', 'O'),
+    Document('EoA', 'Nardi', '550e8400-e29b-41d4-a716-446655440009', 'O'),
+    Document('Analisi I', 'Camilli', '550e8400-e29b-41d4-a716-446655440010', 'O'),
+    Document('Analisi II', 'Camilli II', '550e8400-e29b-41d4-a716-446655440011', 'O'),
+    Document('Fisica', 'Sibilia', '550e8400-e29b-41d4-a716-446655440012', 'O'),
+    Document('Probabilità e statistica', 'Toaldo', '550e8400-e29b-41d4-a716-446655440013', 'O'),
+    Document('Sicurezza Informatica', 'Franco', '550e8400-e29b-41d4-a716-446655440014', 'O'),
+    Document('Fodamenti di informatica', 'Shaerf', '550e8400-e29b-41d4-a716-446655440015', 'O'),
+    Document('Algoritmi e strutture dati', 'D\'amore', '550e8400-e29b-41d4-a716-446655440016', 'O'),
+    Document('Proggettazione software', 'de giacomo', '550e8400-e29b-41d4-a716-446655440017', 'O'),
+  ];
+
+  final recentDocs = [
+    Document('Controlli automatici', 'Nardi','550e8400-e29b-41d4-a716-446655440008', 'O'),
+    Document('EoA', 'Nardi', '550e8400-e29b-41d4-a716-446655440009', 'O'),
+    Document('Analisi I', 'Camilli', '550e8400-e29b-41d4-a716-446655440010', 'O'),
+    Document('Analisi II', 'Camilli II', '550e8400-e29b-41d4-a716-446655440011', 'O'),
+    Document('Fisica', 'Sibilia', '550e8400-e29b-41d4-a716-446655440012', 'O'),
+  ];
+
+  @override
+  List<Widget> buildActions(BuildContext context) {
+    //  action for app bar
+    return [
+      IconButton(
+        icon: Icon(Icons.clear),
+        onPressed: () {},
+      )
+    ];
+  }
+
+  @override
+  Widget buildLeading(BuildContext context) {
+    //  leading icon
+    return IconButton(
+      onPressed: (){},
+      icon: AnimatedIcon(
+          icon: AnimatedIcons.menu_arrow, progress: transitionAnimation),
     );
   }
 
+  @override
+  Widget buildResults(BuildContext context) {
+    // show result based from selections
+    return null;
+  }
 
-  Widget _buildList() {
-    if (!(_searchText.isEmpty)) {
-      List tempList = List();
-      for (int i = 0; i < filteredDocs.length; i++) {
-        if (filteredDocs[i].title.toLowerCase().contains(_searchText.toLowerCase())) {
-          tempList.add(filteredDocs[i]);
-        }
-      }
-      filteredDocs = tempList;
-    }
+  @override
+  Widget buildSuggestions(BuildContext context) {
+    // show when search for anythings
+    final risultatiList = query.isEmpty?recentDocs:docTest;
+
     return ListView.builder(
-      itemCount: docs == null ? 0 : filteredDocs.length,
-      itemBuilder: (BuildContext context, int index) {
-        return new ListTile(
-          title: Text(filteredDocs[index].title),
-          onTap: () => print(filteredDocs[index].title),
-        );
-      },
+        itemBuilder: (context, index)=>ListTile(
+      leading: Icon(Icons.description),
+      title: Text(docTest[index].title),
+    ),
+    itemCount: risultatiList.length,
     );
   }
-
-  void _getDocs() async {
-    final List<Document> response = await HttpHandler.searchDocuments(_searchText);
-
-    setState(() {
-      docs = response;
-      filteredDocs = docs;
-    });
-  }
-  
 }

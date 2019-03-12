@@ -1,77 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale = 1.0, maximum-scale = 1.0, user-scalable=no">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-<script src="js/pdf.js"></script>
-<script src="js/pdf.worker.js"></script>
-<style type="text/css">
-
-#upload-button {
-	width: 150px;
-	display: block;
-	margin: 20px auto;
-}
-
-#file-to-upload {
-	display: none;
-}
-
-#pdf-main-container {
-	width: 400px;
-	margin: 20px auto;
-}
-
-#pdf-loader {
-	display: none;
-	text-align: center;
-	color: #999999;
-	font-size: 13px;
-	line-height: 100px;
-	height: 100px;
-}
-
-#pdf-contents {
-	display: none;
-}
-
-#pdf-meta {
-	overflow: hidden;
-	margin: 0 0 20px 0;
-}
-
-#pdf-buttons {
-	float: left;
-}
-
-#page-count-container {
-	float: right;
-}
-
-#pdf-current-page {
-	display: inline;
-}
-
-#pdf-total-pages {
-	display: inline;
-}
-
-#pdf-canvas {
-	border: 1px solid rgba(0,0,0,0.2);
-	box-sizing: border-box;
-}
-
-#page-loader {
-	height: 100px;
-	line-height: 100px;
-	text-align: center;
-	display: none;
-	color: #999999;
-	font-size: 13px;
-}
-
-</style>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale = 1.0, maximum-scale = 1.0, user-scalable=no">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+	<script src="js/pdf.js"></script>
+	<script src="js/pdf.worker.js"></script>
+	<link href="css/pdf-viewer.css" type="text/css" rel="stylesheet"/>
 </head>
 
 <body>
@@ -90,6 +25,7 @@
 			<div id="page-count-container">Page <div id="pdf-current-page"></div> of <div id="pdf-total-pages"></div></div>
 		</div>
 		<canvas id="pdf-canvas" width="400"></canvas>
+		<div id="text-layer"></div>
 		<div id="page-loader">Loading page ...</div>
 	</div>
 </div>
@@ -155,7 +91,7 @@ function showPage(page_no) {
 			canvasContext: __CANVAS_CTX,
 			viewport: viewport
 		};
-		
+		/*
 		// Render the page contents in the canvas
 		page.render(renderContext).then(function() {
 			__PAGE_RENDERING_IN_PROGRESS = 0;
@@ -167,6 +103,44 @@ function showPage(page_no) {
 			$("#pdf-canvas").show();
 			$("#page-loader").hide();
 		});
+		*/
+		
+		page.render(renderContext).then(function() {
+			__PAGE_RENDERING_IN_PROGRESS = 0;
+
+			// Re-enable Prev & Next buttons
+			$("#pdf-next, #pdf-prev").removeAttr('disabled');
+
+			// Show the canvas and hide the page loader
+			$("#pdf-canvas").show();
+			$("#page-loader").hide();
+    		// Returns a promise, on resolving it will return text contents of the page
+    		return page.getTextContent();
+		}).then(function(textContent) {
+    		 // PDF canvas
+    		var pdf_canvas = $("#pdf-canvas"); 
+
+    		// Canvas offset
+    		var canvas_offset = pdf_canvas.offset();
+
+    		// Canvas height
+    		var canvas_height = pdf_canvas.get(0).height;
+
+    		// Canvas width
+    		var canvas_width = pdf_canvas.get(0).width;
+
+    		// Assign CSS to the text-layer element
+    		$("#text-layer").css({ left: canvas_offset.left +'px',top: canvas_offset.top+'px',height:canvas_height+'px', width: canvas_width + 'px' });
+
+    		// Pass the data to the method for rendering of text over the pdf canvas.
+    		PDFJS.renderTextLayer({
+    		    textContent: textContent,
+    		    container: $("#text-layer").get(0),
+    		    viewport: viewport,
+    		    textDivs: []
+    		});
+		});
+		
 	});
 }
 

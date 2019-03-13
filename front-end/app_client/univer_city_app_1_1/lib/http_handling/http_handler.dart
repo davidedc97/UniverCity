@@ -3,13 +3,9 @@ import 'package:univer_city_app_1_1/elements/elements.dart';
 import 'dart:convert';
 import 'dart:typed_data';
 import 'dart:io';
-import 'dart:async';
-export 'package:univer_city_app_1_1/elements/document.dart';
-
-
 
 class HttpHandler {
-  static String _sessionToken, _userName;
+  static String _sessionToken;
   static const _URL = "https://ogv7kvalpf.execute-api.eu-west-1.amazonaws.com/dev";
   static const _FAKE_LOG_URL = "https://v1uu1cu9ld.execute-api.eu-west-1.amazonaws.com/alpha";
   static const _DOCUMENT_SERVER = "/document";
@@ -19,9 +15,6 @@ class HttpHandler {
   static const _LIKE_SERVER = "/like";
   static const _MASHUP_SERVER = "/mashup";
   static const _poolId = "awsUserPoolId";
-
-
-  String get user => _userName;
 
 
                                 /*########     USER  HANDLING     ########*/
@@ -84,13 +77,12 @@ class HttpHandler {
           'Accept': 'application/json',
         },
         body:json.encode({"username":user,"pass": pw})
-            ); //"flag": flag
+            ); //TODO "flag": flag
     print(response.statusCode);
     print('BODY :' + response.body);
     //return 1;
     if(response.statusCode == 200) {
       _sessionToken = response.headers['token'];
-      _userName = user;
       return 1;
     }
     else if(response.statusCode == 400 || response.statusCode == 403) {
@@ -100,8 +92,7 @@ class HttpHandler {
       return -2;
     }
     else {
-      print(response.statusCode);
-      throw ServerException.withCode(response.statusCode);
+      //throw ServerException.withCode(response.statusCode);
     }
   }
 
@@ -138,16 +129,9 @@ class HttpHandler {
     **  -2 if there's an internal error
     **  throws an exception otherwise
     **
-    ** Questa è quella che ho usato per testarla
-    ** static Future<int> testF() async{
-    ** return Future.delayed(Duration(seconds: 5), ()=>1);
-  }
   */
 
-
-
   static Future<int> uploadDocument(String title, String path) async {
-    print(title);
     var res;
     String _t = title;
     var uri = Uri.parse(_URL + _DOCUMENT_SERVER);
@@ -185,29 +169,46 @@ class HttpHandler {
 
   static Future<Uint8List> getDocumentById( String docId) async{
     final response =
-      await http.get(_URL + _DOCUMENT_SERVER + "?id=" + docId, headers: {'Authorization':_sessionToken ,'Content-type' : 'application/json',
-        'Accept': 'application/json'});
+      await http.get(
+          _URL + _DOCUMENT_SERVER + "?id=" + docId,
+          headers: {'Authorization':_sessionToken ,'Content-type' : 'application/json', 'Accept': 'application/json'}
+          );
 
     if(response.statusCode == 200) {
       return response.bodyBytes;
     }
     else{
       print(response.statusCode);
-      throw ServerException.withCode(response.statusCode);
+      //throw ServerException.withCode(response.statusCode);
     }
   }
 
 
-  static Future<List<Document>> searchDocuments(String query) async {
-    print(query);
+  /*
+    ** This function returns a list of documents/users fitting the query
+    ** The value of typeFlag must be "0" (searching for documents) or "1" (searching for users)
+  */
+
+  static Future<List<dynamic>> search(String query, String typeFlag) async {
     final response =
-      await http.get(_URL + _SEARCH_SERVER + "?searchString=" + query.toString(), headers: {'Authorization':_sessionToken});
+      await http.get(
+          _URL + _SEARCH_SERVER + "?searchString=" + query.toString() + "&flag=" + typeFlag.toString(),
+          headers: {'Authorization':_sessionToken}
+          );
 
     if(response.statusCode == 200){
-      var num = json.decode(response.body)["body"]["num"];
-      List<dynamic> docs = json.decode(response.body)["body"]["docs"];
-      List<Document> res = Document.parseJsonList(num, docs);
-      return res;
+      if(typeFlag == "0") {
+        var num = json.decode(response.body)["body"]["num"];
+        List<dynamic> docs = json.decode(response.body)["body"]["docs"];
+        List<Document> res = Document.parseJsonList(num, docs);
+        return res;
+      }
+      else if(typeFlag == "1"){
+        var num = json.decode(response.body)["body"]["num"];
+        List<dynamic> users = json.decode(response.body)["body"]["docs"];
+        List<User> res = User.parseJsonList(num, users);
+        return res;
+      }
     }
     else{
       throw ServerException.withCode(response.statusCode);
@@ -255,7 +256,7 @@ class HttpHandler {
     final response =
         await http.post(
           _URL + _LIKE_SERVER,
-          body: {"user": user, "doc_id": docId});
+          body: {"username": user, "doc_id": docId});
 
     if(response.statusCode == 200) {
       return json.decode(response.body);

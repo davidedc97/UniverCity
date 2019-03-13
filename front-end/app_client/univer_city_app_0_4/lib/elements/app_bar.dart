@@ -21,7 +21,7 @@ class _MainAppBarState extends State<MainAppBar> {
   Future<Map<String, String>> _fetchMapSearch(criteria) async{
     List<Document> l = [Document('','','','')];
     Map<String, String> m = {};
-    l = await HttpHandler.searchDocuments(criteria);
+    l = await HttpHandler.searchDocuments(criteria, "0");  //TODO gestire il flag del tipo di ricerca
 
     for(Document e in l){
         m.putIfAbsent(e.uuid, ()=>e.title);

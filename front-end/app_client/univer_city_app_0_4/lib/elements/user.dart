@@ -20,10 +20,9 @@ class User{
 
   User.fromJson(Map<String, dynamic> json) {
     //this function is made to retrieve my own profile (with privacy information)
-    this._user = json["user"];
+    this._user = json["username"];
     this._name = json["name"];
     this._surname = json["surname"];
-    this._email = json["email"];
     this._faculty = json["faculty"];
     this._university = json["university"];
 
@@ -31,12 +30,20 @@ class User{
 
   User.secureFromJson(Map<String, dynamic> json) {
     // this function is made to retrieve other users' profiles, without privacy information like the email
-    this._user = json["user"];
+    this._user = json["username"];
     this._name = json["name"];
     this._surname = json["surname"];
     this._faculty = json["faculty"];
     this._university = json["university"];
 
+  }
+
+  static List<User> parseJsonList(int length, List<dynamic> users){
+    List<User> result = [];
+    for(int i=0; i<length; i++){
+      result.add(User.fromJson(users[i]));
+    }
+    return result;
   }
 
 }

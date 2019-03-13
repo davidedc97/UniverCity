@@ -12,3 +12,4 @@ export 'package:univer_city_app_1_1/elements/server_exception.dart';
 export 'package:univer_city_app_1_1/elements/title_div.dart';
 export 'package:univer_city_app_1_1/elements/user.dart';
 export 'package:univer_city_app_1_1/elements/search_delegate.dart';
+export 'package:univer_city_app_1_1/elements/search_filtri.dart';

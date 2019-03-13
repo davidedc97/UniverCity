@@ -101,10 +101,10 @@ class _HomeUniverCityState extends State<HomeUniverCity> {
             bottom:(_selectedDrawerIndex == 2)? TabBar(
               tabs: [
                 Tab(
-                  text: 'Scegli',
+                  text: 'Creati da te',
                 ),
                 Tab(
-                  text: 'Componi',
+                  text: 'Esplora',
                 ),
               ],
             ):null,

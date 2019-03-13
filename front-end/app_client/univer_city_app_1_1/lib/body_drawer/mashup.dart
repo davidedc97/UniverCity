@@ -7,8 +7,8 @@ class Mashup extends StatelessWidget {
   Widget build(BuildContext context) {
     return TabBarView(
       children: [
-        Scegli(),
-        Ordina(),
+        ITuoi(),
+        Esplora(),
       ],
     );
   }

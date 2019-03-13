@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:univer_city_app_1_1/elements/elements.dart';
 import 'package:univer_city_app_1_1/http_handling/http_handler.dart';
 
 class DocSearch extends SearchDelegate<Document> {
@@ -24,7 +24,7 @@ class DocSearch extends SearchDelegate<Document> {
   ];
 
   final recentDocs = [
-    Document('Controlli automatici', 'Nardi','550e8400-e29b-41d4-a716-446655440008', 'O'),
+    Document('Controlli automatici', 'Nardi', '550e8400-e29b-41d4-a716-446655440008', 'O'),
     Document('EoA', 'Nardi', '550e8400-e29b-41d4-a716-446655440009', 'O'),
     Document('Analisi I', 'Camilli', '550e8400-e29b-41d4-a716-446655440010', 'O'),
     Document('Analisi II', 'Camilli II', '550e8400-e29b-41d4-a716-446655440011', 'O'),
@@ -48,7 +48,7 @@ class DocSearch extends SearchDelegate<Document> {
   Widget buildLeading(BuildContext context) {
     //  leading icon
     return IconButton(
-      onPressed: (){
+      onPressed: () {
         close(context, null);
       },
       icon: AnimatedIcon(
@@ -66,23 +66,40 @@ class DocSearch extends SearchDelegate<Document> {
   Widget buildSuggestions(BuildContext context) {
     // show when search for anythings
     final risultatiList = query.isEmpty
-        ?recentDocs
-        :docTest.where((p)=>p.title.toLowerCase().startsWith(query.toLowerCase())).toList();
+        ? recentDocs
+        : docTest
+            .where((p) => p.title.toLowerCase().startsWith(query.toLowerCase()))
+            .toList();
 
     return ListView.builder(
-      itemBuilder: (context, index)=>ListTile(
-        leading: query.isEmpty?Icon(Icons.history):Icon(Icons.description),
-        title: RichText(text: TextSpan(
-          text: risultatiList[index].title.substring(0, query.length),
-          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold,),
-            children: [TextSpan(
-                text: risultatiList[index].title.substring(query.length),
-                style: TextStyle(color: Colors.grey, )
-        )],
-        )),
-        onTap: (){debugPrint(docTest[index].title.toString());},
-      ),
-      itemCount: risultatiList.length,
+      itemBuilder: (context, index) => index == 0
+          ? Container(child: Filtri())
+          : ListTile(
+              leading:
+                  query.isEmpty ? Icon(Icons.history) : Icon(Icons.description),
+              title: RichText(
+                  text: TextSpan(
+                text: risultatiList[index - 1].title.substring(0, query.length),
+                style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                ),
+                children: [
+                  TextSpan(
+                      text: risultatiList[index - 1]
+                          .title
+                          .substring(query.length),
+                      style: TextStyle(
+                        color: Colors.grey,
+                      ))
+                ],
+              )),
+              onTap: () {
+                debugPrint(docTest[index - 1].title.toString());
+              },
+            ),
+      itemCount: risultatiList.length + 1,
     );
   }
 }
+

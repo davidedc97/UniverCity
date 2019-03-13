@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class Scegli extends StatelessWidget {
+class Esplora extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container();

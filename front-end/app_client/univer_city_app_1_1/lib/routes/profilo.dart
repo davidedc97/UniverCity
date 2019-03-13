@@ -42,7 +42,7 @@ class Profilo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[200],
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: ListView(children: <Widget>[
         Container(
             decoration: BoxDecoration(
@@ -143,7 +143,6 @@ class Profilo extends StatelessWidget {
         Padding(
           padding: EdgeInsets.all(8),
           child: Card(
-            color: Colors.white,
             child: Column(
               children: <Widget>[
                 ListTile(
@@ -170,7 +169,6 @@ class Profilo extends StatelessWidget {
         Padding(
           padding: EdgeInsets.all(8),
           child: Card(
-            color: Colors.white,
             child: Column(
               children: <Widget>[
                 ListTile(
@@ -187,7 +185,6 @@ class Profilo extends StatelessWidget {
         Padding(
           padding: EdgeInsets.all(8),
           child: Card(
-              color: Colors.white,
               child: Column(
                 children: <Widget>[
                       Container(
@@ -218,7 +215,6 @@ class Profilo extends StatelessWidget {
         Padding(
           padding: EdgeInsets.all(8),
           child: Card(
-              color: Colors.white,
               child: Column(
                 children: <Widget>[
                   Container(

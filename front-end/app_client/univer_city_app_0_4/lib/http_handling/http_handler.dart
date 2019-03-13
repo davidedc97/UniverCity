@@ -81,7 +81,7 @@ class HttpHandler {
           'Accept': 'application/json',
         },
         body:json.encode({"username":user,"pass": pw})
-            ); //"flag": flag
+            ); //TODO "flag": flag
     print(response.statusCode);
     print('BODY :' + response.body);
     //return 1;
@@ -96,7 +96,6 @@ class HttpHandler {
       return -2;
     }
     else {
-      print(response.statusCode);
       //throw ServerException.withCode(response.statusCode);
     }
   }
@@ -134,13 +133,7 @@ class HttpHandler {
     **  -2 if there's an internal error
     **  throws an exception otherwise
     **
-    ** Questa è quella che ho usato per testarla
-    ** static Future<int> testF() async{
-    ** return Future.delayed(Duration(seconds: 5), ()=>1);
-  }
   */
-
-
 
   static Future<int> uploadDocument(String title, String path) async {
     var res;
@@ -196,6 +189,7 @@ class HttpHandler {
 
 
   /*
+    ** This function returns a list of documents/users fitting the query
     ** The value of typeFlag must be "0" (searching for documents) or "1" (searching for users)
   */
 

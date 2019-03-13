@@ -84,11 +84,20 @@ app.post("/userLog", function(req, res){
     }
 })
 
-app.get("/GetOtherUser", function(req, res){
+app.get("/getOtherUser", function(req, res){
     username = req.body.username;
     pass = req.body.pass;
 
     var response = getUser();
+
+    res.send(response);
+})
+
+app.get("/getMyData", function(){
+    username = req.body.username;
+    pass = req.body.pass;
+
+    var response = getMyData();
 
     res.send(response);
 })
@@ -183,7 +192,12 @@ function getOtherUser(){
 
     var cognitoUser = new AmazonCognitoIdentity.CognitoUser(userData);
     cognitoUser.getUserAttribute(function(err, res){
-        if(err) return err.name;
+        if(err) {
+            result = {
+                "statusCode" : 400,
+                "body" : err.name
+            };
+        }
         else {
             result = {
                 "statusCode" : 200,
@@ -199,6 +213,40 @@ function getOtherUser(){
     return result;
 }
 
+function getMyData(){
+
+    var userData = {
+        Username: username,
+        Pool: userPool,
+        Data: userData
+    }
+
+    var cognitoUser = new AmazonCognitoIdentity.CognitoUser(userData);
+    cognitoUser.getUserAttribute(function(err, res){
+        if(err) {
+            result = {
+                "statusCode" : 400,
+                "body" : err.name
+            };
+        }
+        else {
+            result = {
+                "statusCode" : 200,
+                "headers" : {
+                    "faculty" : res.faculty,
+                    "university" : res.university,
+                    "name" : res.name,
+                    "surname" : res.surname,
+                    "username" : res.username
+                },
+                "body" : "ok"
+            };
+        }
+    })
+    return result;
+}
+
+
 /*
 ** ###################
 ** # UPDATE PASSWORD #
@@ -209,8 +257,9 @@ function resetPass(){
 
     var attList = []
     attList.push(new AmazonCognitoIdentity.CognitoUserAttribute({
-        Name: "password",
-        Value: pass
+        AccesToken: "",
+        PreviousPassword: pass,
+        ProposedPassword: ""
     }));
 
     var autenticationValue = new AmazonCognitoIdentity.AuthenticationDetails({
@@ -225,7 +274,7 @@ function resetPass(){
     }
 
     var cognitoUser = new AmazonCognitoIdentity.CognitoUser(userData);
-    cognitoUser.updateAttribute(attList, function(err,res){
+    cognitoUser.changePassword(attList, function(err,res){
         if(err) result = err.name;
         else{
             result = 0;
@@ -235,7 +284,7 @@ function resetPass(){
 }
 
 /*
-**
-**
-**
+** ###############
+** #
+** ###############
 */

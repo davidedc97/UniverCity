@@ -12,39 +12,51 @@ const pool_region= "eu-west-2";
 
 const userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
 
-function SignIn(username,pass){
-    return new Promise((resolve,reject) => {
-        var autenticationValue = new AmazonCognitoIdentity.AuthenticationDetails({
-            Username: username,
-            Password: pass
-        })
+function resetPassword(username, newPass, verificationCode) {
 
-        var userData = {
-            Username: username,
-            Pool: userPool
+    cognitoUser = new AWSCognito.CognitoUser({
+        Username: username,
+        Pool: userPool
+    });
+
+    cognitoUser.forgotPassword({
+        onSuccess: function(result) {
+            console.log("OK zi");
+            resolve(0);
+        },
+        onFailure: function(err) {
+            console.log("eh no porcodio");
+            reject(err);
+        },
+        inputVerificationCode() { 
+            cognitoUser.confirmPassword(verificationCode, newPass, this);
         }
-    
-        var cognitoUser = new AmazonCognitoIdentity.CognitoUser(userData);
-        cognitoUser.authenticateUser(autenticationValue, {
-            onSuccess: function(response) {
-                var token = response.getIdToken().getJwtToken();
-                console.log("[*] Token nuovo: " + token);
-                resolve(token);
+    });
+}
+ 
+function confirmPassword(username, verificationCode, newPassword) {
+    cognitoUser = new AWSCognito.CognitoUser({
+        Username: username,
+        Pool: userPool
+    });
+
+    return new Promise((resolve, reject) => {
+        cognitoUser.confirmPassword(verificationCode, newPassword, {
+            onFailure(err) {
+                reject(err);
             },
-            onFailure: function(err) {
-                console.log("[*] Errore nuovo: " + JSON.stringify(err))
-                resolve("err");
+            onSuccess() {
+                resolve();
             },
         });
     });
 }
 
-
 exports.handler = async (event, context, callback) => {
     var body = JSON.parse(event.body);
     
     var username = body.username;
-    var pass = body.pass;
+    var oldPass = body.oldPass;
 
     var response = {
         "statusCode": 200,
@@ -55,7 +67,7 @@ exports.handler = async (event, context, callback) => {
     //callback(null,response)
     
     try{
-        var token = await SignIn(username,pass).then((token) => {
+        var token = await resetPassword(username,pass).then((token) => {
             return token;
         });
         
@@ -82,10 +94,4 @@ exports.handler = async (event, context, callback) => {
             "statusCode": 501
         });
     }
-    
-    
-    /*var token = SignIn(username,pass);
-    console.log("[*] Altro " + token);
-    callback(null,"ok")*/
-};
-
+}

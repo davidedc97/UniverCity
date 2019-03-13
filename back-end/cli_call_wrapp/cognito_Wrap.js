@@ -102,7 +102,7 @@ app.get("/getMyData", function(){
     res.send(response);
 })
 
-app.post("/updatePass", function(err, res){
+app.post("/resetPass", function(err, res){
     pass = req.body.pass;
 
     var response = resetPass();
@@ -201,12 +201,13 @@ function getOtherUser(){
         else {
             result = {
                 "statusCode" : 200,
-                "headers" : {
+                "headers" : "",
+                "body" : {
                     "name" : res.name,
                     "surname" : res.surname,
-                    "username" : res.username
-                },
-                "body" : "ok"
+                    "username" : res.username,
+                    "message" : "ok"
+                }
             };
         }
     })
@@ -217,8 +218,7 @@ function getMyData(){
 
     var userData = {
         Username: username,
-        Pool: userPool,
-        Data: userData
+        Pool: userPool
     }
 
     var cognitoUser = new AmazonCognitoIdentity.CognitoUser(userData);
@@ -232,14 +232,15 @@ function getMyData(){
         else {
             result = {
                 "statusCode" : 200,
-                "headers" : {
+                "headers" : "",
+                "body" : {
                     "faculty" : res.faculty,
                     "university" : res.university,
                     "name" : res.name,
                     "surname" : res.surname,
-                    "username" : res.username
-                },
-                "body" : "ok"
+                    "username" : res.username,
+                    "message" : "ok"
+                }
             };
         }
     })
@@ -248,9 +249,9 @@ function getMyData(){
 
 
 /*
-** ###################
-** # UPDATE PASSWORD #
-** ###################
+** ##################
+** # RESET PASSWORD #
+** ##################
 */
 
 function resetPass(){
@@ -285,6 +286,6 @@ function resetPass(){
 
 /*
 ** ###############
-** #
+** #             #
 ** ###############
 */

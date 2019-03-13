@@ -1,3 +1,4 @@
+
 const AmazonCognitoIdentity = require('amazon-cognito-identity-js');
 const CognitoUserPool = AmazonCognitoIdentity.CognitoUserPool;
 const AWS = require('aws-sdk');
@@ -12,39 +13,47 @@ const pool_region= "eu-west-2";
 
 const userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
 
-function SignIn(username,pass){
-    return new Promise((resolve,reject) => {
-        var autenticationValue = new AmazonCognitoIdentity.AuthenticationDetails({
-            Username: username,
-            Password: pass
-        })
+function getMyData(username){
+    return new Promise((resolve, reject) => {
 
         var userData = {
             Username: username,
             Pool: userPool
         }
-    
+
         var cognitoUser = new AmazonCognitoIdentity.CognitoUser(userData);
-        cognitoUser.authenticateUser(autenticationValue, {
-            onSuccess: function(response) {
-                var token = response.getIdToken().getJwtToken();
-                console.log("[*] Token nuovo: " + token);
-                resolve(token);
+        cognitoUser.getUserAttribute({
+            onFailure: function(err){
+                result = {
+                    "statusCode" : 400,
+                    "body" : err.name
+                };
+                resolve(result);
             },
-            onFailure: function(err) {
-                console.log("[*] Errore nuovo: " + JSON.stringify(err))
-                resolve("err");
+            onSucces: function(res){
+                result = {
+                    "statusCode" : 200,
+                    "headers" : "",
+                    "body" : {
+                        "faculty" : res.faculty,
+                        "university" : res.university,
+                        "name" : res.name,
+                        "surname" : res.surname,
+                        "username" : res.username,
+                        "message" : "ok"
+                    }
+                };
+                resolve(result);
             },
         });
-    });
+        return result;
+    })
 }
-
 
 exports.handler = async (event, context, callback) => {
     var body = JSON.parse(event.body);
     
     var username = body.username;
-    var pass = body.pass;
 
     var response = {
         "statusCode": 200,
@@ -55,17 +64,17 @@ exports.handler = async (event, context, callback) => {
     //callback(null,response)
     
     try{
-        var token = await SignIn(username,pass).then((token) => {
-            return token;
+        var result = await getMyData(username).then((result) => {
+            return result;
         });
         
         var statusCode = 200;
-        var headers = {token: token}
-        var body = "Authorized"
-        if(token === "err"){
-            statusCode = 403;
+        var headers = {};
+        var body = JSON.parse(result.body);
+        if(JSON.parse(body.statusCode) === 400){
+            statusCode = 400;
             headers = {};
-            body = "Not Authorized"
+            body = "Not Found"
         }
         
         response.statusCode = statusCode;

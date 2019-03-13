@@ -199,7 +199,7 @@ class HttpHandler {
     ** The value of typeFlag must be "0" (searching for documents) or "1" (searching for users)
   */
 
-  static Future<List<dynamic>> searchDocuments(String query, String typeFlag) async {
+  static Future<List<dynamic>> search(String query, String typeFlag) async {
     final response =
       await http.get(
           _URL + _SEARCH_SERVER + "?searchString=" + query.toString() + "&flag=" + typeFlag.toString(),

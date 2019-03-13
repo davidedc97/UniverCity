@@ -186,8 +186,7 @@ function getOtherUser(){
 
     var userData = {
         Username: username,
-        Pool: userPool,
-        Data: userData
+        Pool: userPool
     }
 
     var cognitoUser = new AmazonCognitoIdentity.CognitoUser(userData);

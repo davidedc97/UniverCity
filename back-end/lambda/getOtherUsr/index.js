@@ -1,4 +1,3 @@
-
 const AmazonCognitoIdentity = require('amazon-cognito-identity-js');
 const CognitoUserPool = AmazonCognitoIdentity.CognitoUserPool;
 const AWS = require('aws-sdk');
@@ -13,7 +12,7 @@ const pool_region= "eu-west-2";
 
 const userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
 
-function getMyData(username){
+function getOtherData(username){
     return new Promise((resolve, reject) => {
 
         var userData = {
@@ -35,8 +34,6 @@ function getMyData(username){
                     "statusCode" : 200,
                     "headers" : "",
                     "body" : {
-                        "faculty" : res.faculty,
-                        "university" : res.university,
                         "name" : res.name,
                         "surname" : res.surname,
                         "username" : res.username,
@@ -62,7 +59,7 @@ exports.handler = async (event, context, callback) => {
     }
     
     try{
-        var result = await getMyData(username).then((result) => {
+        var result = await getOtherData(username).then((result) => {
             return result;
         });
         
@@ -89,5 +86,5 @@ exports.handler = async (event, context, callback) => {
             "statusCode": 501
         });
     }
-};
+}
 

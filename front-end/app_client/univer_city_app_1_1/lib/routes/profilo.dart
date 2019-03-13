@@ -92,7 +92,7 @@ class Profilo extends StatelessWidget {
                                 fit: BoxFit.cover,
                               ),
                               borderRadius:
-                                  BorderRadius.all(new Radius.circular(150.0)),
+                              BorderRadius.all(new Radius.circular(150.0)),
                               border: new Border.all(
                                 color: Colors.white,
                                 width: 4.0,
@@ -134,7 +134,6 @@ class Profilo extends StatelessWidget {
                 ),
               ],
             )),
-
         ///
         ///
         /// Fine header
@@ -187,28 +186,28 @@ class Profilo extends StatelessWidget {
           child: Card(
               child: Column(
                 children: <Widget>[
-                      Container(
-                        width: MediaQuery.of(context).size.width,
-                        decoration: BoxDecoration(
-                            gradient: LinearGradient(colors: [
-                              Color(0xffd95a41),
-                              Color(0xffc02641),
-                            ])),
-                        child: Padding(
-                              padding: EdgeInsets.only(top: 8.0, left: 16.0, bottom: 8.0),
-                              child: Text(
-                                'Appunti caricati',
-                                textAlign: TextAlign.left,
-                                style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold, color: Colors.white),
-                              ),
-                            ),
-                      )
-                    ] +
+                  Container(
+                    width: MediaQuery.of(context).size.width,
+                    decoration: BoxDecoration(
+                        gradient: LinearGradient(colors: [
+                          Color(0xffd95a41),
+                          Color(0xffc02641),
+                        ])),
+                    child: Padding(
+                      padding: EdgeInsets.only(top: 8.0, left: 16.0, bottom: 8.0),
+                      child: Text(
+                        'Appunti caricati',
+                        textAlign: TextAlign.left,
+                        style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold, color: Colors.white),
+                      ),
+                    ),
+                  )
+                ] +
                     docTest
                         .map((doc) => ListTile(
-                              leading: Icon(Icons.description, color: Color(0xffc02641),),
-                              title: Text(doc.title),
-                            ))
+                      leading: Icon(Icons.description, color: Color(0xffc02641),),
+                      title: Text(doc.title),
+                    ))
                         .toList(),
               )),
         ),
@@ -242,7 +241,6 @@ class Profilo extends StatelessWidget {
                         .toList(),
               )),
         )
-      ]),
-    );
+      ]));
   }
 }

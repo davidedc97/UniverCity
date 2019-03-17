@@ -23,6 +23,8 @@ var university = null;
 var token = null;
 var error = null;
 var result = null;
+var verCode = null;
+var newPassword = null;
 
 /*
 ** ########################
@@ -106,6 +108,19 @@ app.post("/resetPass", function(err, res){
     pass = req.body.pass;
 
     var response = resetPass();
+
+    if (response == 0) res.sendStatus(200);
+    else{
+        res.sendStatus(400);
+    }
+})
+
+app.post("/resetAux", function(err, res){
+    username = req.body.username;
+    verCode = req.body.verCode;
+    newPassword = req.body.newPassword;
+
+    var response = confirmPassword();
 
     if (response == 0) res.sendStatus(200);
     else{
@@ -253,38 +268,42 @@ function getMyData(){
 ** ##################
 */
 
-function resetPass(){
+// still in development
 
-    var attList = []
-    attList.push(new AmazonCognitoIdentity.CognitoUserAttribute({
-        AccesToken: "",
-        PreviousPassword: pass,
-        ProposedPassword: ""
-    }));
+function resetPassword(username, newPass, verificationCode) {
 
-    var autenticationValue = new AmazonCognitoIdentity.AuthenticationDetails({
+    cognitoUser = new AWSCognito.CognitoUser({
         Username: username,
-        Password: pass
-    })
+        Pool: userPool
+    });
 
-    var userData = {
-        Username: username,
-        Pool: userPool,
-        Data: userData
-    }
-
-    var cognitoUser = new AmazonCognitoIdentity.CognitoUser(userData);
-    cognitoUser.changePassword(attList, function(err,res){
-        if(err) result = err.name;
-        else{
-            result = 0;
+    cognitoUser.forgotPassword({
+        onSuccess: function(result) {
+            console.log("OK zi");
+            resolve(0);
+        },
+        onFailure: function(err) {
+            console.log("eh no porcodio");
+            reject(err);
         }
-    })
-    return result;
-}
+    });
+} 
+ 
+function confirmPassword() {
 
-/*
-** ###############
-** #             #
-** ###############
-*/
+    cognitoUser = new AWSCognito.CognitoUser({
+        Username: username,
+        Pool: userPool
+    });
+
+    return new Promise((resolve, reject) => {
+        cognitoUser.confirmPassword(verCode, newPassword, {
+            onFailure(err) {
+                return(err);
+            },
+            onSuccess() {
+                return(0);
+            },
+        });
+    });
+}

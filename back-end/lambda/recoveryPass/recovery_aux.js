@@ -1,3 +1,4 @@
+
 const AmazonCognitoIdentity = require('amazon-cognito-identity-js');
 const CognitoUserPool = AmazonCognitoIdentity.CognitoUserPool;
 const AWS = require('aws-sdk');
@@ -12,29 +13,31 @@ const pool_region= "eu-west-2";
 
 const userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
 
-function resetPassword(username) {
+function confirmPassword(username, verCode, newPassword) {
 
     cognitoUser = new AWSCognito.CognitoUser({
         Username: username,
         Pool: userPool
     });
 
-    cognitoUser.forgotPassword({
-        onSuccess: function(result) {
-            console.log("OK zi");
-            resolve(0);
-        },
-        onFailure: function(err) {
-            console.log("eh no porcodio");
-            resolve("err");
-        }
+    return new Promise((resolve, reject) => {
+        cognitoUser.confirmPassword(verCode, newPassword, {
+            onFailure(err) {
+                resolve("err");
+            },
+            onSuccess() {
+                resolve(0);
+            },
+        });
     });
-} 
+}
 
 exports.handler = async (event, context, callback) => {
     var body = JSON.parse(event.body);
     
     var username = body.username;
+    var verCode = body.verCode;
+    var newPass = body.newPass;
 
     var response = {
         "statusCode": 200,
@@ -45,7 +48,7 @@ exports.handler = async (event, context, callback) => {
     //callback(null,response)
     
     try{
-        var control = await resetPassword(username).then((control) => {
+        var control = await confirmPassword(username,verCode,newPass).then((control) => {
             return control;
         });
         

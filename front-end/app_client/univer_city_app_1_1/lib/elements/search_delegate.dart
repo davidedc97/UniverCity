@@ -68,7 +68,7 @@ class DocSearch extends SearchDelegate<Document> {
     final risultatiList = query.isEmpty
         ? recentDocs
         : docTest
-            .where((p) => p.title.toLowerCase().startsWith(query.toLowerCase()))
+            .where((p) => p.title.toLowerCase().contains(query.toLowerCase()))
             .toList();
 
     return ListView.builder(
@@ -77,23 +77,7 @@ class DocSearch extends SearchDelegate<Document> {
           : ListTile(
               leading:
                   query.isEmpty ? Icon(Icons.history) : Icon(Icons.description),
-              title: RichText(
-                  text: TextSpan(
-                text: risultatiList[index - 1].title.substring(0, query.length),
-                style: TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
-                ),
-                children: [
-                  TextSpan(
-                      text: risultatiList[index - 1]
-                          .title
-                          .substring(query.length),
-                      style: TextStyle(
-                        color: Colors.grey,
-                      ))
-                ],
-              )),
+              title: Text(risultatiList[index - 1].title),
               onTap: () {
                 debugPrint(docTest[index - 1].title.toString());
               },

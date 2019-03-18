@@ -6,7 +6,7 @@ class Filtri extends StatefulWidget {
 }
 
 class _FiltriState extends State<Filtri> {
-  final List<String> _f = <String>['Utente', 'Appunto', 'Mashup', 'Facoltà'];
+  final List<String> _f = <String>['Utente', 'Appunto', 'Mashup'];
   List<String> _filters = <String>[];
 
   List<String> get filtriAttivi => _filters;

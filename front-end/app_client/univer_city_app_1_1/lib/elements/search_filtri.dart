@@ -21,6 +21,7 @@ class _FiltriState extends State<Filtri> {
           onSelected: (bool value) {
             setState(() {
               if (value) {
+                if(_filters.length==1)_filters.removeLast();
                 _filters.add(filtro);
               } else {
                 _filters.removeWhere((String name) {

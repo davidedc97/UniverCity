@@ -1,5 +1,6 @@
 import 'package:univer_city_app_1_1/elements/elements.dart';
 import 'package:univer_city_app_1_1/body_drawer/body_drawer.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class HomeUniverCity extends StatefulWidget {
   final drawerEntry = [
@@ -27,8 +28,10 @@ class _HomeUniverCityState extends State<HomeUniverCity> {
       case 2:
         return Mashup();
       case 3:
+        launch('https://docs.google.com/forms/d/e/1FAIpQLSd4qR7oz1D4rFhSpGLhL_tduI27CZdOt-tG-4nO6xGRnhGSwA/viewform');
         return Feed();
       case 4:
+        launch('https://github.com/davidedc97/UniverCity/issues/new/');
         return Bug();
       default:
         return Text('Errore switch Drawer outOfIndex ;) ');
@@ -121,7 +124,7 @@ class _HomeUniverCityState extends State<HomeUniverCity> {
                 ),
               ),
             ),
-            actions: <Widget>[
+            actions: (_selectedDrawerIndex == 4 || _selectedDrawerIndex == 3)?null:<Widget>[
               IconButton(
                 icon: Icon(
                   Icons.search,

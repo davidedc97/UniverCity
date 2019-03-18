@@ -2,10 +2,8 @@ import 'package:univer_city_app_1_1/elements/elements.dart';
 
 class Home extends StatelessWidget {
 
-  List<Document> _recenti = <Document>[];
   List<Document> _preferiti = <Document>[];
 
-  List<Widget> _reFo = <Widget>[];
   List<Widget> _prFo = <Widget>[];
 
   @override
@@ -16,7 +14,7 @@ class Home extends StatelessWidget {
           Expanded(
             //Preferiti
               flex: 3,
-              child: (_reFo.isNotEmpty)
+              child: (_prFo.isNotEmpty)
                   ? ListView.builder(
                   itemCount: _prFo.length,
                   itemBuilder: (context, index) {

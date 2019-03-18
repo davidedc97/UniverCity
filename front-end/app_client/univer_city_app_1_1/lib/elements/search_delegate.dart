@@ -79,7 +79,10 @@ class DocSearch extends SearchDelegate<Document> {
                   query.isEmpty ? Icon(Icons.history) : Icon(Icons.description),
               title: Text(risultatiList[index - 1].title),
               onTap: () {
-                debugPrint(docTest[index - 1].title.toString());
+                showDialog(
+                    context: context,
+                    builder: (context)=>buildDocDialog(context,risultatiList[index - 1].title,risultatiList[index - 1].creator , risultatiList[index - 1].uuid)
+                );
               },
             ),
       itemCount: risultatiList.length + 1,

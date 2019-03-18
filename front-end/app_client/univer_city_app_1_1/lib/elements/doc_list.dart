@@ -24,7 +24,7 @@ class DocList extends StatelessWidget {
               //visualizzazione pre viewer
               showDialog(
                 context: context,
-                builder: (context)=>buildDocDialog(context, _info.title??'titolo', _info.uuid??'uuid')
+                builder: (context)=>buildDocDialog(context, _info.title,_info.creator, _info.uuid)
               );}
         ),
         onTap: ()async{

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:univer_city_app_1_1/elements/info_row.dart';
 
-Widget buildDocDialog(BuildContext context, String title, String uuid) =>
+Widget buildDocDialog(BuildContext context, String title,String proprietario, String uuid) =>
     Dialog(
       child: Stack(
         children: <Widget>[
@@ -50,7 +50,7 @@ Widget buildDocDialog(BuildContext context, String title, String uuid) =>
                             ),
                           ]),
                       Divider(),
-                      InfoRow('Proprietario', 'todo'),
+                      InfoRow('Proprietario', proprietario),
                       InfoRow('Rank', 'todo'),
                       InfoRow('Downloads', 'todo'),
                       Divider(),

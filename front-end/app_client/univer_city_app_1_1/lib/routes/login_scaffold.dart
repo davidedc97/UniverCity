@@ -62,11 +62,7 @@ class LoginScaffold extends StatelessWidget {
                               actions: <Widget>[
                                 FlatButton(
                                     onPressed: () {
-                                      showDialog(
-                                          context: context,
-                                          builder: (context)=>buildDocDialog(context, 'titolo', 'uuid')
-                                      );
-                                      //Navigator.pushNamedAndRemoveUntil(context, '/home', (Route<dynamic> route) => false);
+                                      Navigator.pushNamedAndRemoveUntil(context, '/home', (Route<dynamic> route) => false);
                                      //Navigator.pop(context);
                                     },
                                     child: Text('Close'))

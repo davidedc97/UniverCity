@@ -27,29 +27,26 @@ Widget buildDocDialog(BuildContext context, String title, String uuid) =>
                       Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: <Widget>[
-                            OutlineButton.icon(
+                            FlatButton.icon(
                               onPressed: () {},
                               icon: Icon(Icons.thumb_up),
                               label: Text('Like'),
                               textColor: Colors.greenAccent,
                               highlightColor: Colors.greenAccent[100],
-                              highlightedBorderColor: Colors.greenAccent,
                             ),
-                            OutlineButton.icon(
+                            FlatButton.icon(
                               onPressed: () {},
                               icon: Icon(Icons.thumb_down),
                               label: Text('Dislike'),
                               textColor: Colors.redAccent,
                               highlightColor: Colors.redAccent[100],
-                              highlightedBorderColor: Colors.redAccent,
                             ),
-                            OutlineButton.icon(
+                            FlatButton.icon(
                               onPressed: () {},
                               icon: Icon(Icons.favorite_border),
                               label: Text('Save'),
                               textColor: Colors.blueAccent,
                               highlightColor: Colors.blueAccent[100],
-                              highlightedBorderColor: Colors.blueAccent,
                             ),
                           ]),
                       Divider(),

@@ -130,7 +130,7 @@ carica(context, String titolo, String tags, String path){
             ],
           );
         });}
-  Navigator.of(context).pop();
+  Navigator.pushNamedAndRemoveUntil(context, '/home', (Route<dynamic> route) => false);
   showDialog(
       context: context,
       builder:(context){
@@ -151,7 +151,7 @@ class DialogUpload extends StatelessWidget {
   DialogUpload(this.title, this.path);
   @override
   Widget build(BuildContext context) {
-    print('dialog $title');
+    print('dialog $path');
     return AlertDialog(
       title: Text('Hey !'),
       content: FutureBuilder(

@@ -91,16 +91,17 @@ APP's API:
   
 ##################################################################
 
-  static Future<List<Document>> searchDocuments(query) async
+  static Future<List<dynamic>> search(String query, String typeFlag) async
   	
   	USAGE:
-  		retrieve a list of documents fitting the query 
+  		Retrieve a list of documents/users fitting the query.
+  		The value of typeFlag must be "0" (searching for documents) or "1" (searching for users) 
   		
   	METHOD:
   		GET /document
   	
   	RETURN:
-  		a List of Document instances with title, owner and uuid
+  		A List of Document instances with title, owner and uuid
 	
 	
 

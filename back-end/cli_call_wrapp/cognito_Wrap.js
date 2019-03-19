@@ -22,6 +22,7 @@ var faculty = null;
 var university = null;
 var token = null;
 var error = null;
+var result = null;
 
 /*
 ** ########################
@@ -54,7 +55,7 @@ const userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
     res.sendStatus(200);
 })*/
 
-app.post("/", function(req, res){
+app.post("/userReg", function(req, res){
     username = req.body.username;
     name = req.body.name;
     surname = req.body.surname;
@@ -71,7 +72,7 @@ app.post("/", function(req, res){
     }
 })
 
-app.post("/user", function(req, res){
+app.post("/userLog", function(req, res){
     username = req.body.username;
     pass = req.body.pass;
 
@@ -79,6 +80,35 @@ app.post("/user", function(req, res){
 
     if (control == 0) res.sendStatus(200).statusMessage(token);
     else {
+        res.sendStatus(400);
+    }
+})
+
+app.get("/getOtherUser", function(req, res){
+    username = req.body.username;
+    pass = req.body.pass;
+
+    var response = getUser();
+
+    res.send(response);
+})
+
+app.get("/getMyData", function(){
+    username = req.body.username;
+    pass = req.body.pass;
+
+    var response = getMyData();
+
+    res.send(response);
+})
+
+app.post("/resetPass", function(err, res){
+    pass = req.body.pass;
+
+    var response = resetPass();
+
+    if (response == 0) res.sendStatus(200);
+    else{
         res.sendStatus(400);
     }
 })
@@ -128,7 +158,8 @@ function SignIn(){
 
     var userData = {
         Username: username,
-        Pool: "user"
+        Pool: userPool,
+        Data: userData
     }
 
     var cognitoUser = new AmazonCognitoIdentity.CognitoUser(userData);
@@ -144,3 +175,117 @@ function SignIn(){
     if (token != null && error == null) return 0;
     else if (token == null && error != null) return 1;
 }
+
+/*
+** #############
+** # USER DATA #
+** #############
+*/
+
+function getOtherUser(){
+
+    var userData = {
+        Username: username,
+        Pool: userPool,
+        Data: userData
+    }
+
+    var cognitoUser = new AmazonCognitoIdentity.CognitoUser(userData);
+    cognitoUser.getUserAttribute(function(err, res){
+        if(err) {
+            result = {
+                "statusCode" : 400,
+                "body" : err.name
+            };
+        }
+        else {
+            result = {
+                "statusCode" : 200,
+                "headers" : "",
+                "body" : {
+                    "name" : res.name,
+                    "surname" : res.surname,
+                    "username" : res.username,
+                    "message" : "ok"
+                }
+            };
+        }
+    })
+    return result;
+}
+
+function getMyData(){
+
+    var userData = {
+        Username: username,
+        Pool: userPool
+    }
+
+    var cognitoUser = new AmazonCognitoIdentity.CognitoUser(userData);
+    cognitoUser.getUserAttribute(function(err, res){
+        if(err) {
+            result = {
+                "statusCode" : 400,
+                "body" : err.name
+            };
+        }
+        else {
+            result = {
+                "statusCode" : 200,
+                "headers" : "",
+                "body" : {
+                    "faculty" : res.faculty,
+                    "university" : res.university,
+                    "name" : res.name,
+                    "surname" : res.surname,
+                    "username" : res.username,
+                    "message" : "ok"
+                }
+            };
+        }
+    })
+    return result;
+}
+
+
+/*
+** ##################
+** # RESET PASSWORD #
+** ##################
+*/
+
+function resetPass(){
+
+    var attList = []
+    attList.push(new AmazonCognitoIdentity.CognitoUserAttribute({
+        AccesToken: "",
+        PreviousPassword: pass,
+        ProposedPassword: ""
+    }));
+
+    var autenticationValue = new AmazonCognitoIdentity.AuthenticationDetails({
+        Username: username,
+        Password: pass
+    })
+
+    var userData = {
+        Username: username,
+        Pool: userPool,
+        Data: userData
+    }
+
+    var cognitoUser = new AmazonCognitoIdentity.CognitoUser(userData);
+    cognitoUser.changePassword(attList, function(err,res){
+        if(err) result = err.name;
+        else{
+            result = 0;
+        }
+    })
+    return result;
+}
+
+/*
+** ###############
+** #             #
+** ###############
+*/

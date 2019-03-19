@@ -100,7 +100,7 @@ Widget buildDocDialog(BuildContext context, String title,String proprietario, St
                       backgroundColor: Color(0xFF393E46),
                       onPressed: () {},
                       icon: Icon(Icons.play_arrow),
-                      label: Text('PLAY'),
+                      label: Text('LEGGI'),
                     ),
                   ),
                 ],

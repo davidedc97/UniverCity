@@ -22,10 +22,13 @@ class _HomeUniverCityState extends State<HomeUniverCity> {
   _getDrawerItemWidget(int index) {
     switch (index) {
       case 0:
+        /// TODO insert fetch data preferiti
         return Home();
       case 1:
+        /// TODO insert fetch data cronologia
         return Cronologia();
       case 2:
+        /// TODO insert fetch data mashup
         return Mashup();
       case 3:
         launch('https://docs.google.com/forms/d/e/1FAIpQLSd4qR7oz1D4rFhSpGLhL_tduI27CZdOt-tG-4nO6xGRnhGSwA/viewform');

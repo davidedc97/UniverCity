@@ -18,7 +18,6 @@ class HttpHandler {
   static const _REG_SERVER = "/userReg";
   static const _LIKE_SERVER = "/like";
   static const _MASHUP_SERVER = "/mashup";
-  static const _poolId = "awsUserPoolId";
 
 
   String get user => _userName;

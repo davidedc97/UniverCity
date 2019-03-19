@@ -28,8 +28,10 @@ class DocList extends StatelessWidget {
               );}
         ),
         onTap: ()async{
-          // visualizzazione pdf
-          debugPrint('test');
+          showDialog(
+              context: context,
+              builder: (context)=>buildDocDialog(context,_info.title,_info.creator , _info.uuid)
+          );
         },
       ),
     );

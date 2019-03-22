@@ -10,12 +10,11 @@ class Upload extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        actions: <Widget>[
+          FloatingActionButton(child: Text('Carica'),onPressed: (){},)
+        ],
         title: Text(
-          'UniverCity',
-          style: TextStyle(
-            fontFamily: 'Collegiate',
-            fontSize: 32.0,
-          ),
+          'Nuovo appunto',
         ),
       ),
       body: UploadFormBody(path),
@@ -131,7 +130,7 @@ carica(context, String titolo, String tags, String path){
             ],
           );
         });}
-        debugPrint('prima del pop');
+  debugPrint('prima del pop');
   Navigator.of(context).pop();
   debugPrint('dopo del pop');
   debugPrint('show dialog 137');

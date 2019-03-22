@@ -27,7 +27,7 @@ class UploadBloc {
 
 
 final StreamTransformer<String, String> validateTitolo =
-    StreamTransformer<String, String>.fromHandlers(handleData: (titolo, sink) {
+StreamTransformer<String, String>.fromHandlers(handleData: (titolo, sink) {
 
   if (titolo.isEmpty) {
     sink.addError('Inserisci un titolo');
@@ -37,12 +37,12 @@ final StreamTransformer<String, String> validateTitolo =
 });
 
 final StreamTransformer<String, String> validateTags =
-    StreamTransformer<String, String>.fromHandlers(
-        handleData: (tags, sink) {
+StreamTransformer<String, String>.fromHandlers(
+    handleData: (tags, sink) {
 
-  if (tags.isEmpty) {
-    sink.addError('inserisci i tags');
-  } else {
-    sink.add(tags);
-  }
-});
+      if (tags.isEmpty) {
+        sink.addError('inserisci i tags');
+      } else {
+        sink.add(tags);
+      }
+    });

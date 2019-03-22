@@ -5,17 +5,22 @@ import 'package:univer_city_app_1_1/http_handling/http_handler.dart';
 
 class Upload extends StatelessWidget {
   final String path;
-  String _titolo, _tags;
   Upload(this.path);
   @override
   Widget build(BuildContext context) {
-    final UploadBloc _uploadBloc = UploadBlocProvider.of(context);
-    _uploadBloc.titolo.listen((data){_titolo = data??'';});
-    _uploadBloc.tags.listen((data){_tags = data??'';});
+    final UploadBloc _bloc = UploadBlocProvider.of(context);
+    _bloc.onPathChanged(path);
     return Scaffold(
       appBar: AppBar(
         actions: <Widget>[
-          FlatButton(child: Text('Carica', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Theme.of(context).accentColor),),onPressed: ()=>carica(context, _titolo ?? '', _tags ?? '', path),)
+          FlatButton(
+            child: Text(
+              'Carica',
+              style:
+                  TextStyle(fontSize: 18, color: Theme.of(context).accentColor),
+            ),
+            onPressed: () => carica(context),
+          )
         ],
         title: Text(
           'Nuovo appunto',
@@ -28,34 +33,22 @@ class Upload extends StatelessWidget {
 
 class UploadFormBody extends StatelessWidget {
   final String path;
-  String _titolo,_tags;
   UploadFormBody(this.path);
   @override
   Widget build(BuildContext context) {
-    final UploadBloc _uploadBloc = UploadBlocProvider.of(context);
-    _uploadBloc.titolo.listen((data){_titolo = data??'';});
-    _uploadBloc.tags.listen((data){_tags = data??'';});
+    final UploadBloc _bloc = UploadBlocProvider.of(context);
     return ListView(
       children: <Widget>[
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: 64),
+          padding: EdgeInsets.symmetric(horizontal: 52, vertical: 32),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
             children: <Widget>[
-              SizedBox(
-                height: MediaQuery.of(context).size.height-500,
-              ),
-              Text(
-                'UPLOAD FORM',
-                style: TextStyle(fontSize: 18),
-              ),
-              SizedBox(
-                height: 24,
-              ),
-
+              Text('Hey, ${SessionUser().user} cosa vuoi caricare oggi ?   ;)', style: TextStyle(fontSize: 24), textAlign: TextAlign.center,),
+              SizedBox(height: 18),
               StreamBuilder<String>(
-                  stream: _uploadBloc.titolo,
-                  builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+                  stream: _bloc.titolo,
+                  builder:
+                      (BuildContext context, AsyncSnapshot<String> snapshot) {
                     return TextField(
                       textAlign: TextAlign.center,
                       decoration: InputDecoration(
@@ -64,30 +57,27 @@ class UploadFormBody extends StatelessWidget {
                           focusedBorder: UnderlineInputBorder(
                               borderSide: BorderSide(
                                   color: Theme.of(context).accentColor))),
-                      onChanged: _uploadBloc.onTitoloChanged,
+                      onChanged: _bloc.onTitoloChanged,
                       keyboardType: TextInputType.emailAddress,
                     );
                   }),
               StreamBuilder<String>(
-                  stream: _uploadBloc.tags,
-                  builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+                  stream: _bloc.tags,
+                  builder:
+                      (BuildContext context, AsyncSnapshot<String> snapshot) {
                     return TextField(
                       textAlign: TextAlign.center,
                       decoration: InputDecoration(
-                          border: InputBorder.none,
                           hintText: 'Tags',
                           errorText: snapshot.error,
                           focusedBorder: UnderlineInputBorder(
                               borderSide: BorderSide(
                                   color: Theme.of(context).accentColor))),
-                      onChanged: _uploadBloc.onTagsChanged,
+                      onChanged: _bloc.onTagsChanged,
                       keyboardType: TextInputType.emailAddress,
                     );
                   }),
-
-              SizedBox(
-                height: 42,
-              ),
+              SizedBox(height: 18),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -95,10 +85,12 @@ class UploadFormBody extends StatelessWidget {
                   Text('Vuoi annullare ?'),
                   FlatButton(
                       onPressed: () {
-                        Navigator.pushNamedAndRemoveUntil(context, '/home', (Route<dynamic> route) => false);
+                        Navigator.pushNamedAndRemoveUntil(
+                            context, '/home', (Route<dynamic> route) => false);
                       },
                       child: Text('ANNULLA',
-                          style: TextStyle(color: Theme.of(context).accentColor)))
+                          style:
+                              TextStyle(color: Theme.of(context).accentColor)))
                 ],
               )
             ],
@@ -109,9 +101,11 @@ class UploadFormBody extends StatelessWidget {
   }
 }
 
-carica(context, String titolo, String tags, String path){
-  debugPrint('carica $path titolo $titolo tag $tags');
-  if (titolo == '' || tags == '') {
+carica(context) {
+  final UploadBloc _bloc = UploadBlocProvider.of(context);
+
+  debugPrint('carica ${_bloc.pathValue} titolo ${_bloc.titoloValue} tag ${_bloc.tagsValue}');
+  if (_bloc.titoloValue == '' || _bloc.tagsValue == '') {
     return showDialog(
         context: context,
         builder: (context) {
@@ -126,98 +120,53 @@ carica(context, String titolo, String tags, String path){
                   child: Text('Close'))
             ],
           );
-        });}
+        });
+  }
   debugPrint('prima del pop');
   Navigator.of(context).pop();
   debugPrint('dopo del pop');
   debugPrint('show dialog 137');
   showDialog(
       context: context,
-      builder:(context){
+      builder: (context) {
         debugPrint('dentro dialog 141');
         return AlertDialog(
           title: Text('Hey !'),
           content: FutureBuilder(
-              future: HttpHandler.uploadDocument(titolo, path),
-              builder: (context, snapshot){
+              future: HttpHandler.uploadDocument(_bloc.titoloValue, _bloc.pathValue),
+              builder: (context, snapshot) {
                 debugPrint('dentro builder 165');
-                if(snapshot.hasError)return Container();
-                if(snapshot.hasData){
-                  return Text(
-                      (snapshot.data==1)
-                          ?'Upload completato'
-                          :(snapshot.data==-1)
-                          ?'Qualche paramentro è sbagliato'
-                          :'500 server error'
-                  );
-                } else{
+                if (snapshot.hasError) return Container();
+                if (snapshot.hasData) {
+                  return Text((snapshot.data == 1)
+                      ? 'Upload completato'
+                      : (snapshot.data == -1)
+                          ? 'Qualche paramentro è sbagliato'
+                          : '500 server error');
+                } else {
                   debugPrint('dialog 176');
                   return Column(
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
                       Text('Upload in corso ;)'),
-                      SizedBox(height: 16,),
+                      SizedBox(
+                        height: 16,
+                      ),
                       Row(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children:<Widget>[CircularProgressIndicator()])
+                          children: <Widget>[CircularProgressIndicator()])
                     ],
                   );
                 }
               }),
           actions: <Widget>[
-            FlatButton(onPressed: (){Navigator.pushNamedAndRemoveUntil(context, '/home', (Route<dynamic> route) => false);}, child: Text('Close'))
+            FlatButton(
+                onPressed: () {
+                  Navigator.pushNamedAndRemoveUntil(
+                      context, '/home', (Route<dynamic> route) => false);
+                },
+                child: Text('Close'))
           ],
         );
-      }
-  );
-}
-
-
-///
-///
-/// Dialog per dopo il download
-///
-///
-
-class DialogUpload extends StatelessWidget {
-  String title, path;
-  BuildContext sctx;
-  DialogUpload(this.sctx, this.title, this.path);
-  @override
-  Widget build(BuildContext context) {
-    print('dialog $path');
-    return AlertDialog(
-      title: Text('Hey !'),
-      content: FutureBuilder(
-          future: HttpHandler.uploadDocument(title, path),
-          builder: (context, snapshot){
-            debugPrint('dentro builder 165');
-            if(snapshot.hasError)return Container();
-            if(snapshot.hasData){
-              return Text(
-                  (snapshot.data==1)
-                      ?'Upload completato'
-                      :(snapshot.data==-1)
-                      ?'Qualche paramentro è sbagliato'
-                      :'500 server error'
-              );
-            } else{
-              debugPrint('dialog 176');
-              return Column(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Text('Upload in corso ;)'),
-                  SizedBox(height: 16,),
-                  Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children:<Widget>[CircularProgressIndicator()])
-                ],
-              );
-            }
-          }),
-      actions: <Widget>[
-        FlatButton(onPressed: (){Navigator.pushNamedAndRemoveUntil(context, '/home', (Route<dynamic> route) => false);}, child: Text('Close'))
-      ],
-    );
-  }
+      });
 }

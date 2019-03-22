@@ -77,7 +77,7 @@ class UniverCity extends StatelessWidget {
       case '/upload':
         final path = (settings.arguments as Map)['path'];
         return MaterialPageRoute(builder: (context) {
-          return UploadBlocProvider(child: Upload(path),);
+          return UploadBlocProvider(child: Upload(path));
         });
       /// in caso di errore non so se mostrare una pagina 404 con vari link
       /// di reindirizzamento oppure reindirizzare nella pagina home

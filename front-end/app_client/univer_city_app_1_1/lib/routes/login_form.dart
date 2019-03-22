@@ -6,7 +6,6 @@ class LoginFormScaffold extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String _usem, _pw;
-
     return Scaffold(
       backgroundColor: Colors.white,
       body: Stack(children: <Widget>[
@@ -136,10 +135,12 @@ login(BuildContext context, String id, String pw)async{
           );
         }
     );
-    int res = await HttpHandler.validateLogin(id, pw, "0"); //TODO controllare se l'id è un username o una mail e settare il flag di conseguenza
+
+    int res = await HttpHandler.validateLogin(id, pw, "0");
     debugPrint(res.toString());
 
     if(res==1){
+
       debugPrint('dentro if');
       Navigator.pushNamedAndRemoveUntil(context, '/home', (Route<dynamic> route) => false);
     }else{

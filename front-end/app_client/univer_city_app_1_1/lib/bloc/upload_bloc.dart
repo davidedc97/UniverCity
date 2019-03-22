@@ -6,21 +6,28 @@ class UploadBloc {
   //############################################################################preferiti recenti
   final BehaviorSubject<String> _titolo = BehaviorSubject<String>();
   final BehaviorSubject<String> _tags = BehaviorSubject<String>();
+  final BehaviorSubject<String> _path = BehaviorSubject<String>();
 
   //getters allo stream
   Function(String) get onTitoloChanged => _titolo.sink.add;
   Function(String) get onTagsChanged => _tags.sink.add;
+  Function(String) get onPathChanged => _path.sink.add;
 
   // Validators
   Observable<String> get titolo => _titolo.stream.transform(validateTitolo);
-  Observable<String> get tags =>
-      _tags.stream.transform(validateTags);
+  Observable<String> get tags => _tags.stream.transform(validateTags);
+  Observable<String> get path => _path.stream;
+
+  String get titoloValue => _titolo.value;
+  String get tagsValue => _tags.value;
+  String get pathValue => _path.value;
 
   // per eliminare errore di dart perche gli stream
   // dovrebbero essere chiusi prima o poi
   dispose() {
     _titolo.close();
     _tags.close();
+    _path.close();
   }
 }
 

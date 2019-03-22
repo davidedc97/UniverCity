@@ -5,6 +5,7 @@ import 'dart:typed_data';
 import 'dart:io';
 import 'dart:async';
 
+import 'package:univer_city_app_1_1/elements/session_user.dart';
 
 class HttpHandler {
   static String _sessionToken;
@@ -16,8 +17,6 @@ class HttpHandler {
   static const _REG_SERVER = "/userReg";
   static const _LIKE_SERVER = "/like";
   static const _MASHUP_SERVER = "/mashup";
-
-
 
 
                                 /*########     USER  HANDLING     ########*/
@@ -72,6 +71,10 @@ class HttpHandler {
     ** The value of flag must be "0" (user is login in with username) or "1" (user is login in with email)
   */
   static Future<int> validateLogin(String user, String pw,String flag) async {
+
+    SessionUser().setUser = user;
+
+
     final response =
       await http.post(
           _FAKE_LOG_URL+_LOGIN_SERVER,
@@ -86,6 +89,7 @@ class HttpHandler {
     //return 1;
     if(response.statusCode == 200) {
       _sessionToken = response.headers['token'];
+      SessionUser().setToken = _sessionToken;
       return 1;
     }
     else if(response.statusCode == 400 || response.statusCode == 403) {

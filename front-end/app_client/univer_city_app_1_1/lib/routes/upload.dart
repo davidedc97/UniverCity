@@ -5,13 +5,17 @@ import 'package:univer_city_app_1_1/http_handling/http_handler.dart';
 
 class Upload extends StatelessWidget {
   final String path;
+  String _titolo, _tags;
   Upload(this.path);
   @override
   Widget build(BuildContext context) {
+    final UploadBloc _uploadBloc = UploadBlocProvider.of(context);
+    _uploadBloc.titolo.listen((data){_titolo = data??'';});
+    _uploadBloc.tags.listen((data){_tags = data??'';});
     return Scaffold(
       appBar: AppBar(
         actions: <Widget>[
-          FloatingActionButton(child: Text('Carica'),onPressed: (){},)
+          FlatButton(child: Text('Carica', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Theme.of(context).accentColor),),onPressed: ()=>carica(context, _titolo ?? '', _tags ?? '', path),)
         ],
         title: Text(
           'Nuovo appunto',
@@ -84,13 +88,6 @@ class UploadFormBody extends StatelessWidget {
               SizedBox(
                 height: 42,
               ),
-              //################################################################ Get Started Button
-              BtnLogin(
-                color: Theme.of(context).accentColor,
-                title: 'CARICA',
-                onPressed: () => carica(context, _titolo ?? '', _tags ?? '', path),
-              ),
-              //################################################## LOGIN if already have an account
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -113,7 +110,7 @@ class UploadFormBody extends StatelessWidget {
 }
 
 carica(context, String titolo, String tags, String path){
-  debugPrint('carica $path');
+  debugPrint('carica $path titolo $titolo tag $tags');
   if (titolo == '' || tags == '') {
     return showDialog(
         context: context,
@@ -138,7 +135,39 @@ carica(context, String titolo, String tags, String path){
       context: context,
       builder:(context){
         debugPrint('dentro dialog 141');
-        return DialogUpload(titolo, path);
+        return AlertDialog(
+          title: Text('Hey !'),
+          content: FutureBuilder(
+              future: HttpHandler.uploadDocument(titolo, path),
+              builder: (context, snapshot){
+                debugPrint('dentro builder 165');
+                if(snapshot.hasError)return Container();
+                if(snapshot.hasData){
+                  return Text(
+                      (snapshot.data==1)
+                          ?'Upload completato'
+                          :(snapshot.data==-1)
+                          ?'Qualche paramentro è sbagliato'
+                          :'500 server error'
+                  );
+                } else{
+                  debugPrint('dialog 176');
+                  return Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      Text('Upload in corso ;)'),
+                      SizedBox(height: 16,),
+                      Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children:<Widget>[CircularProgressIndicator()])
+                    ],
+                  );
+                }
+              }),
+          actions: <Widget>[
+            FlatButton(onPressed: (){Navigator.pushNamedAndRemoveUntil(context, '/home', (Route<dynamic> route) => false);}, child: Text('Close'))
+          ],
+        );
       }
   );
 }
@@ -152,7 +181,8 @@ carica(context, String titolo, String tags, String path){
 
 class DialogUpload extends StatelessWidget {
   String title, path;
-  DialogUpload(this.title, this.path);
+  BuildContext sctx;
+  DialogUpload(this.sctx, this.title, this.path);
   @override
   Widget build(BuildContext context) {
     print('dialog $path');
@@ -186,7 +216,7 @@ class DialogUpload extends StatelessWidget {
             }
           }),
       actions: <Widget>[
-        FlatButton(onPressed: (){Navigator.pop(context);}, child: Text('Close'))
+        FlatButton(onPressed: (){Navigator.pushNamedAndRemoveUntil(context, '/home', (Route<dynamic> route) => false);}, child: Text('Close'))
       ],
     );
   }

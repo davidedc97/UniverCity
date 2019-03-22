@@ -90,9 +90,7 @@ class _HomeUniverCityState extends State<HomeUniverCity> {
     /// Builder home page
     ///
     ///
-    return DefaultTabController(
-      length: 2,
-      child: Scaffold(
+    return Scaffold(
         drawer: Drawer(
           child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -104,16 +102,6 @@ class _HomeUniverCityState extends State<HomeUniverCity> {
         ///
         ///
         appBar: AppBar(
-            bottom:(_selectedDrawerIndex == 2)? TabBar(
-              tabs: [
-                Tab(
-                  text: 'Creati da te',
-                ),
-                Tab(
-                  text: 'Esplora',
-                ),
-              ],
-            ):null,
             elevation: 2,
 
             title: Padding(
@@ -148,8 +136,7 @@ class _HomeUniverCityState extends State<HomeUniverCity> {
         ),
         body: _getDrawerItemWidget(_selectedDrawerIndex),
         floatingActionButton: (_selectedDrawerIndex == 0) ? HomeFab() : null,
-      ),
-    );
+      );
   }
 ///
 ///

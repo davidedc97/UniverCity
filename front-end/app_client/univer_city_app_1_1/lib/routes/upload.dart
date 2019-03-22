@@ -114,6 +114,7 @@ class UploadFormBody extends StatelessWidget {
 }
 
 carica(context, String titolo, String tags, String path){
+  debugPrint('carica $path');
   if (titolo == '' || tags == '') {
     return showDialog(
         context: context,
@@ -130,10 +131,14 @@ carica(context, String titolo, String tags, String path){
             ],
           );
         });}
-  Navigator.pushNamedAndRemoveUntil(context, '/home', (Route<dynamic> route) => false);
+        debugPrint('prima del pop');
+  Navigator.of(context).pop();
+  debugPrint('dopo del pop');
+  debugPrint('show dialog 137');
   showDialog(
       context: context,
       builder:(context){
+        debugPrint('dentro dialog 141');
         return DialogUpload(titolo, path);
       }
   );
@@ -155,12 +160,9 @@ class DialogUpload extends StatelessWidget {
     return AlertDialog(
       title: Text('Hey !'),
       content: FutureBuilder(
-        ///
-        /// ancora non capisco perche devo mettere una stringa to string ma altrimenti
-        /// mi formatta male il dialog devo studiamelo meglio
-        ///
           future: HttpHandler.uploadDocument(title, path),
           builder: (context, snapshot){
+            debugPrint('dentro builder 165');
             if(snapshot.hasError)return Container();
             if(snapshot.hasData){
               return Text(
@@ -171,6 +173,7 @@ class DialogUpload extends StatelessWidget {
                       :'500 server error'
               );
             } else{
+              debugPrint('dialog 176');
               return Column(
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[

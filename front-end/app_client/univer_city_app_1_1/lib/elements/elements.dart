@@ -16,3 +16,4 @@ export 'package:univer_city_app_1_1/elements/search_filtri.dart';
 export 'package:univer_city_app_1_1/elements/pre_viewer.dart';
 export 'package:univer_city_app_1_1/elements/info_row.dart';
 export 'package:univer_city_app_1_1/elements/session_user.dart';
+export 'package:univer_city_app_1_1/elements/cronologia_entry.dart';

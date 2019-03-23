@@ -4,6 +4,7 @@ import 'package:univer_city_app_1_1/bloc/comp_form_bloc_provider.dart';
 import 'package:univer_city_app_1_1/bloc/preferiti_bloc_provider.dart';
 import 'package:univer_city_app_1_1/bloc/profilo_bloc_provider.dart';
 import 'package:univer_city_app_1_1/bloc/upload_bloc_provider.dart';
+import 'package:univer_city_app_1_1/bloc/cronologia_bloc_provider.dart';
 import 'package:univer_city_app_1_1/routes/route.dart';
 
 
@@ -16,7 +17,7 @@ void main(){
   // rende possibile solo l'orientamento verticale
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
   .then((_){
-    runApp(new UniverCity());
+    runApp(CronologiaBlocProvider(child: new UniverCity()));
   });
 }
 

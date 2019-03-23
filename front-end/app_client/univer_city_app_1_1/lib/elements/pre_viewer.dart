@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:univer_city_app_1_1/elements/elements.dart';
 import 'package:univer_city_app_1_1/bloc/cronologia_bloc_provider.dart';
-
+import 'package:share/share.dart';
 
 Widget buildDocDialog(BuildContext context, String titolo,String proprietario, String uuid) {
   CronologiaBloc cBloc = CronologiaBlocProvider.of(context);
@@ -54,7 +54,9 @@ Widget buildDocDialog(BuildContext context, String titolo,String proprietario, S
                     ListTile(
                       leading: Icon(Icons.share),
                       title: Text('Condividi link'),
-                      onTap: () {},
+                      onTap: () {
+                        Share.share('Dai un occhiata a ${titolo}, lo trovi qui: URLDELFILERAGGIUNGIBILE DA INTERNET');
+                      },
                       dense: true,
                     ),
                   ],

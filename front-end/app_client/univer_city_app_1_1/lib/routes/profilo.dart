@@ -50,7 +50,6 @@ class Profilo extends StatelessWidget {
         SliverAppBar(
           floating: true,
           pinned: false,
-          actions: <Widget>[IconButton(icon:Icon(Icons.edit),onPressed: (){}, )],
           flexibleSpace: FlexibleSpaceBar(
             centerTitle: true,
             title: Text(userName,
@@ -65,8 +64,8 @@ class Profilo extends StatelessWidget {
               return Column(
                 children: <Widget>[
                   Padding(
-                    padding:
-                        EdgeInsets.only(top: 24, left: 16, bottom: 8, right: 16),
+                    padding: EdgeInsets.only(
+                        top: 24, left: 16, bottom: 8, right: 16),
                     child: Row(
                       children: <Widget>[
                         Container(
@@ -92,7 +91,7 @@ class Profilo extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Text(
-                                'Nome Cognome',
+                                SessionUser().user ?? 'UserName',
                                 style: TextStyle(fontSize: 20),
                               ),
                               Text('Ignegneria delle merendine')
@@ -139,7 +138,21 @@ class Profilo extends StatelessWidget {
                       child: Column(
                         children: <Widget>[
                           ListTile(
-                            title: Text('Biografia'),
+                            title: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                Text('Descrizione'),
+                                FlatButton(
+                                    onPressed: () {
+                                      editBio(context);
+                                    },
+                                    child: Text(
+                                      'modifica',
+                                      style: TextStyle(
+                                          color: Theme.of(context).accentColor),
+                                    ))
+                              ],
+                            ),
                             leading: Icon(
                               Icons.book,
                               color: Color(0xffc02641),
@@ -235,4 +248,31 @@ class Profilo extends StatelessWidget {
       ],
     ));
   }
+}
+
+editBio(context) {
+  showDialog(
+      context: context,
+      builder: (context) => Dialog(
+              child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 18, vertical: 24),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Text('Modifica la tua descrizione'),
+                SizedBox(height: 18,),
+                TextField(
+                  cursorColor: Theme.of(context).accentColor,
+                  maxLines: 5,
+                  decoration: InputDecoration(
+                    hintText: 'Inserisci la tua descrizione...',
+                    border: OutlineInputBorder(),
+                    focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: Theme.of(context).accentColor))
+                  ),
+                ),
+                SizedBox(height: 18,),
+                FlatButton.icon(onPressed: (){}, icon: Icon(Icons.edit), label: Text('SALVA'))
+              ],
+            ),
+          )));
 }

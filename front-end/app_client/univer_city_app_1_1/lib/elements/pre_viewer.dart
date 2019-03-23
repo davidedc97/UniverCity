@@ -55,7 +55,7 @@ Widget buildDocDialog(BuildContext context, String titolo,String proprietario, S
                       leading: Icon(Icons.share),
                       title: Text('Condividi link'),
                       onTap: () {
-                        Share.share('Dai un occhiata a ${titolo}, lo trovi qui: URLDELFILERAGGIUNGIBILE DA INTERNET');
+                        Share.share('Dai un occhiata a $titolo, lo trovi qui: URLDELFILERAGGIUNGIBILE DA INTERNET');
                       },
                       dense: true,
                     ),

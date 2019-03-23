@@ -5,10 +5,10 @@ import 'package:univer_city_app_1_1/bloc/cronologia_bloc_provider.dart';
 class Cronologia extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    List<Document> _cronologiaRecente = [];
-    List<Document> _cronologiaSettinamaFa = [];
-    List<Document> _cronologiaMesefa = [];
-    List<Widget> _cronologiaView = [];
+    List<Widget> _cronologiaRecente = [];
+    List<Widget> _cronologiaSettinamaFa = [];
+    List<Widget> _cronologiaMesefa = [];
+    List<Widget> _cronologiaView = <Widget>[];
     CronologiaBloc cBloc = CronologiaBlocProvider.of(context);
 
     List<CronologiaEntry> entries = cBloc.cronologia;
@@ -18,27 +18,26 @@ class Cronologia extends StatelessWidget {
 
     for (int i = 0; i < entries.length; i++) {
       if (entries[i].stamp.isBefore(unaSettimanaFa)) {
-        _cronologiaSettinamaFa.add(Document(
-            entries[i].titolo, entries[i].proprietario, entries[i].uuid, 'C'));
+        _cronologiaSettinamaFa.add(DocList(Document(
+            entries[i].titolo, entries[i].proprietario, entries[i].uuid, 'C')));
         break;
       } else if (entries[i].stamp.isBefore(unMeseFa)) {
-        _cronologiaMesefa.add(Document(
-            entries[i].titolo, entries[i].proprietario, entries[i].uuid, 'C'));
+        _cronologiaMesefa.add(DocList(Document(
+            entries[i].titolo, entries[i].proprietario, entries[i].uuid, 'C')));
         break;
       } else {
-        _cronologiaRecente.add(Document(
-            entries[i].titolo, entries[i].proprietario, entries[i].uuid, 'C'));
+        _cronologiaRecente.add(DocList(Document(
+            entries[i].titolo, entries[i].proprietario, entries[i].uuid, 'C')));
         break;
       }
     }
-
-    _cronologiaView = [] +
-        [TitleDivider('Questa settimana')] +
-        _cronologiaRecente +
-        [TitleDivider('Questo mese')] +
-        _cronologiaSettinamaFa +
-        [TitleDivider('Meno recenti')] +
-        _cronologiaMesefa;
+    List<Widget> s = _cronologiaRecente.isEmpty?[]:[TitleDivider('Questa settimana')];
+    List<Widget> m = _cronologiaSettinamaFa.isEmpty?[]:[TitleDivider('Questo mese')];
+    List<Widget> v = _cronologiaMesefa.isEmpty?[]:[TitleDivider('Meno recenti')];
+    _cronologiaView = <Widget>[] +
+         s+_cronologiaRecente +
+         m+_cronologiaSettinamaFa +
+         v+_cronologiaMesefa;
 
     return _cronologiaView.isEmpty
         ? Column(children: <Widget>[

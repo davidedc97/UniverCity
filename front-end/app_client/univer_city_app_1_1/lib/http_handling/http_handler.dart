@@ -99,7 +99,7 @@ class HttpHandler {
       return -2;
     }
     else {
-      //throw ServerException.withCode(response.statusCode);
+      throw ServerException.withCode(response.statusCode);
     }
   }
 
@@ -186,7 +186,7 @@ class HttpHandler {
     }
     else{
       print(response.statusCode);
-      //throw ServerException.withCode(response.statusCode);
+      throw ServerException.withCode(response.statusCode);
     }
   }
 

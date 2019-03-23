@@ -1,5 +1,4 @@
 import 'package:univer_city_app_1_1/elements/elements.dart';
-import 'package:univer_city_app_1_1/http_handling/http_handler.dart';
 
 class DocSearch extends SearchDelegate<Document> {
   final docTest = [

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:univer_city_app_1_1/elements/document.dart';
+import 'package:univer_city_app_1_1/elements/pre_viewer.dart';
 
 class DocList extends StatelessWidget {
 
@@ -20,10 +21,17 @@ class DocList extends StatelessWidget {
         trailing: IconButton(
             icon: Icon(Icons.more_vert),
             onPressed: (){
-              debugPrint('test');}
+              //visualizzazione pre viewer
+              showDialog(
+                context: context,
+                builder: (context)=>buildDocDialog(context, _info.title,_info.creator, _info.uuid)
+              );}
         ),
         onTap: ()async{
-          debugPrint('test');
+          showDialog(
+              context: context,
+              builder: (context)=>buildDocDialog(context,_info.title,_info.creator , _info.uuid)
+          );
         },
       ),
     );

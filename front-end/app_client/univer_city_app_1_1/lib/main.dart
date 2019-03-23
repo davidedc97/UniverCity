@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:univer_city_app_1_1/bloc/comp_form_bloc_provider.dart';
+import 'package:univer_city_app_1_1/bloc/preferiti_bloc_provider.dart';
+import 'package:univer_city_app_1_1/bloc/profilo_bloc_provider.dart';
+import 'package:univer_city_app_1_1/bloc/upload_bloc_provider.dart';
+import 'package:univer_city_app_1_1/bloc/cronologia_bloc_provider.dart';
 import 'package:univer_city_app_1_1/routes/route.dart';
 
 
@@ -13,7 +17,7 @@ void main(){
   // rende possibile solo l'orientamento verticale
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
   .then((_){
-    runApp(new UniverCity());
+    runApp(CronologiaBlocProvider(child: new UniverCity()));
   });
 }
 
@@ -65,13 +69,17 @@ class UniverCity extends StatelessWidget {
       // #######################################################################Schermata Home (MainScaffold)
       case '/home':
         return MaterialPageRoute(builder: (context) {
-          return HomeUniverCity();
+          return PreferitiBlocProvider(child: HomeUniverCity(),);
         });
       case '/profilo':
         return MaterialPageRoute(builder: (context) {
-          return Profilo();
+          return ProfiloBlocProvider(child: Profilo(),);
         });
-
+      case '/upload':
+        final path = (settings.arguments as Map)['path'];
+        return MaterialPageRoute(builder: (context) {
+          return UploadBlocProvider(child: Upload(path));
+        });
       /// in caso di errore non so se mostrare una pagina 404 con vari link
       /// di reindirizzamento oppure reindirizzare nella pagina home
       default:

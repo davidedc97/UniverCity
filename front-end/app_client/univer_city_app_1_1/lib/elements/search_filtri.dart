@@ -6,7 +6,7 @@ class Filtri extends StatefulWidget {
 }
 
 class _FiltriState extends State<Filtri> {
-  final List<String> _f = <String>['Utente', 'Appunto', 'Mashup', 'Facoltà'];
+  final List<String> _f = <String>['Utente', 'Appunto', 'Mashup'];
   List<String> _filters = <String>[];
 
   List<String> get filtriAttivi => _filters;
@@ -21,6 +21,7 @@ class _FiltriState extends State<Filtri> {
           onSelected: (bool value) {
             setState(() {
               if (value) {
+                if(_filters.length==1)_filters.removeLast();
                 _filters.add(filtro);
               } else {
                 _filters.removeWhere((String name) {

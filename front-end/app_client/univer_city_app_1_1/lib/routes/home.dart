@@ -1,5 +1,6 @@
 import 'package:univer_city_app_1_1/elements/elements.dart';
 import 'package:univer_city_app_1_1/body_drawer/body_drawer.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class HomeUniverCity extends StatefulWidget {
   final drawerEntry = [
@@ -21,14 +22,19 @@ class _HomeUniverCityState extends State<HomeUniverCity> {
   _getDrawerItemWidget(int index) {
     switch (index) {
       case 0:
+        /// TODO insert fetch data preferiti
         return Home();
       case 1:
+        /// TODO insert fetch data cronologia
         return Cronologia();
       case 2:
+        /// TODO insert fetch data mashup
         return Mashup();
       case 3:
+        launch('https://docs.google.com/forms/d/e/1FAIpQLSd4qR7oz1D4rFhSpGLhL_tduI27CZdOt-tG-4nO6xGRnhGSwA/viewform');
         return Feed();
       case 4:
+        launch('https://github.com/davidedc97/UniverCity/issues/new/');
         return Bug();
       default:
         return Text('Errore switch Drawer outOfIndex ;) ');
@@ -84,9 +90,7 @@ class _HomeUniverCityState extends State<HomeUniverCity> {
     /// Builder home page
     ///
     ///
-    return DefaultTabController(
-      length: 2,
-      child: Scaffold(
+    return Scaffold(
         drawer: Drawer(
           child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -98,16 +102,6 @@ class _HomeUniverCityState extends State<HomeUniverCity> {
         ///
         ///
         appBar: AppBar(
-            bottom:(_selectedDrawerIndex == 2)? TabBar(
-              tabs: [
-                Tab(
-                  text: 'Creati da te',
-                ),
-                Tab(
-                  text: 'Esplora',
-                ),
-              ],
-            ):null,
             elevation: 2,
 
             title: Padding(
@@ -121,7 +115,7 @@ class _HomeUniverCityState extends State<HomeUniverCity> {
                 ),
               ),
             ),
-            actions: <Widget>[
+            actions: (_selectedDrawerIndex == 4 || _selectedDrawerIndex == 3)?null:<Widget>[
               IconButton(
                 icon: Icon(
                   Icons.search,
@@ -142,8 +136,7 @@ class _HomeUniverCityState extends State<HomeUniverCity> {
         ),
         body: _getDrawerItemWidget(_selectedDrawerIndex),
         floatingActionButton: (_selectedDrawerIndex == 0) ? HomeFab() : null,
-      ),
-    );
+      );
   }
 ///
 ///

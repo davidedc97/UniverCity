@@ -8,13 +8,10 @@ class CompFormScaffold extends StatefulWidget {
 }
 
 class _CompFormScaffoldState extends State<CompFormScaffold> {
-  String _nm,_em, _pw, _fa, _cg, _us, _un;
 
   @override
   Widget build(BuildContext context) {
-    final CompFormBloc _registrationFormBloc = CompFormBlocProvider.of(context);
-    _registrationFormBloc.email.listen((data){_em = data??'';});
-    _registrationFormBloc.password.listen((data){_pw = data??'';});
+    final CompFormBloc bloc = CompFormBlocProvider.of(context);
     return Scaffold(
       backgroundColor: Colors.white,
       body: Stack(children: <Widget>[
@@ -35,35 +32,50 @@ class _CompFormScaffoldState extends State<CompFormScaffold> {
                       SizedBox(
                         height: 24,
                       ),
-                      TextField(
-                          onChanged: (value) {
-                            _us = value;
-                          },
-                          textAlign: TextAlign.center,
-                          decoration: InputDecoration(
-                            hintText: 'User',
-                            focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: Theme.of(context).accentColor))
-                          )),
-                      TextField(
-                          onChanged: (value) {
-                            _nm = value;
-                          },
-                          textAlign: TextAlign.center,
-                          decoration: InputDecoration(
-                            hintText: 'Nome',
-                              focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: Theme.of(context).accentColor))
-                          )),
-                      TextField(
-                          onChanged: (value) {
-                            _cg = value;
-                          },
-                          textAlign: TextAlign.center,
-                          decoration: InputDecoration(
-                            hintText: 'Cognome',
-                              focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: Theme.of(context).accentColor))
-                          )),
                       StreamBuilder<String>(
-                          stream: _registrationFormBloc.email,
+                          stream: bloc.userName,
+                          builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+                            return TextField(
+                              textAlign: TextAlign.center,
+                              decoration: InputDecoration(
+                                  hintText: 'User',
+                                  errorText: snapshot.error,
+                                  focusedBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Theme.of(context).accentColor))),
+                              onChanged: bloc.onUserNameChanged,
+                            );
+                          }),
+                      StreamBuilder<String>(
+                          stream: bloc.nome,
+                          builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+                            return TextField(
+                              textAlign: TextAlign.center,
+                              decoration: InputDecoration(
+                                  hintText: 'Nome',
+                                  errorText: snapshot.error,
+                                  focusedBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Theme.of(context).accentColor))),
+                              onChanged: bloc.onNomeChanged,
+                            );
+                          }),
+                      StreamBuilder<String>(
+                          stream: bloc.cognome,
+                          builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+                            return TextField(
+                              textAlign: TextAlign.center,
+                              decoration: InputDecoration(
+                                  hintText: 'Cognome',
+                                  errorText: snapshot.error,
+                                  focusedBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Theme.of(context).accentColor))),
+                              onChanged: bloc.onCognomeChanged,
+                            );
+                          }),
+                      StreamBuilder<String>(
+                          stream: bloc.email,
                           builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
                             return TextField(
                               textAlign: TextAlign.center,
@@ -73,12 +85,12 @@ class _CompFormScaffoldState extends State<CompFormScaffold> {
                                   focusedBorder: UnderlineInputBorder(
                                       borderSide: BorderSide(
                                           color: Theme.of(context).accentColor))),
-                              onChanged: _registrationFormBloc.onEmailChanged,
+                              onChanged: bloc.onEmailChanged,
                               keyboardType: TextInputType.emailAddress,
                             );
                           }),
                       StreamBuilder<String>(
-                          stream: _registrationFormBloc.password,
+                          stream: bloc.password,
                           builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
                             return TextField(
                               obscureText: true,
@@ -89,29 +101,38 @@ class _CompFormScaffoldState extends State<CompFormScaffold> {
                                   focusedBorder: UnderlineInputBorder(
                                       borderSide: BorderSide(
                                           color: Theme.of(context).accentColor))),
-                              onChanged: _registrationFormBloc.onPasswordChanged,
+                              onChanged: bloc.onPasswordChanged,
                               keyboardType: TextInputType.emailAddress,
                             );
                           }),
-                      TextField(
-                          onChanged: (value) {
-                            _fa = value;
-                          },
-                          textAlign: TextAlign.center,
-                          decoration: InputDecoration(
-                            hintText: 'Facoltà',
-                              focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: Theme.of(context).accentColor))
-                          )),
-                      TextField(
-                          onChanged: (value) {
-                            _un = value;
-                          },
-                          textAlign: TextAlign.center,
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            hintText: 'Università',
-                              focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: Theme.of(context).accentColor))
-                          )),
+                      StreamBuilder<String>(
+                          stream: bloc.facolta,
+                          builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+                            return TextField(
+                              textAlign: TextAlign.center,
+                              decoration: InputDecoration(
+                                  hintText: 'Facoltà',
+                                  errorText: snapshot.error,
+                                  focusedBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Theme.of(context).accentColor))),
+                              onChanged: bloc.onFacoltaChanged,
+                            );
+                          }),
+                      StreamBuilder<String>(
+                          stream: bloc.universita,
+                          builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+                            return TextField(
+                              textAlign: TextAlign.center,
+                              decoration: InputDecoration(
+                                  hintText: 'Università',
+                                  errorText: snapshot.error,
+                                  focusedBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Theme.of(context).accentColor))),
+                              onChanged: bloc.onUniversitaChanged,
+                            );
+                          }),
                       SizedBox(
                         height: 42,
                       ),
@@ -119,8 +140,7 @@ class _CompFormScaffoldState extends State<CompFormScaffold> {
                       BtnLogin(
                         color: Theme.of(context).accentColor,
                         title: 'REGISTRATI',
-                        onPressed: () => compForm(context, _us ?? '', _nm ?? '',
-                            _cg ?? '', _em ?? '', _pw ?? '', _fa ?? '', _un ?? ''),
+                        onPressed: () => compForm(context),
                       ),
                       //################################################## LOGIN if already have an account
                       Row(
@@ -154,15 +174,15 @@ class _CompFormScaffoldState extends State<CompFormScaffold> {
   }
 }
 
-compForm(BuildContext context, String id, String nm, String cg, String em,
-    String pw, String fa, String un) async{
-  if (id == '' ||
-      nm == '' ||
-      cg == '' ||
-      em == '' ||
-      pw == '' ||
-      fa == '' ||
-      un == '') {
+compForm(BuildContext context) async{
+  final CompFormBloc bloc = CompFormBlocProvider.of(context);
+  if (bloc.userNameValue == '' ||
+      bloc.nomeValue == '' ||
+      bloc.cognomeValue == '' ||
+      bloc.emailValue == '' ||
+      bloc.passwordValue == '' ||
+      bloc.facoltaValue == '' ||
+      bloc.universitaValue == '') {
     //Navigator.pushNamed(context, '/complicatedForm');
     return showDialog(
         context: context,
@@ -181,7 +201,7 @@ compForm(BuildContext context, String id, String nm, String cg, String em,
         });
   } else {
     //TODO da testare
-    debugPrint('User: $id, Nome: $nm, Cognome: $cg, Email: $em, Pass: $pw, Facolta $fa, Universita: $un ');
+    debugPrint('User: ${bloc.userNameValue}, Nome: ${bloc.nomeValue}, Cognome: ${bloc.cognomeValue}, Email: ${bloc.emailValue}, Pass: ${bloc.passwordValue}, Facolta ${bloc.facoltaValue}, Universita: ${bloc.universitaValue} ');
     showDialog(
         context: context,
         builder: (context){
@@ -209,7 +229,7 @@ compForm(BuildContext context, String id, String nm, String cg, String em,
           );
         }
     );
-    int res = await HttpHandler.userFormRegistration(id, nm, cg, em, pw, fa, un);
+    int res = await HttpHandler.userFormRegistration(bloc.userNameValue, bloc.nomeValue, bloc.cognomeValue, bloc.emailValue, bloc.passwordValue, bloc.facoltaValue, bloc.universitaValue);
     debugPrint(res.toString());
 
     if(res==1){

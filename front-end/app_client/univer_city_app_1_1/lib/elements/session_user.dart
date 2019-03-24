@@ -4,10 +4,10 @@ class SessionUser{
   static String _token;
 
 
-  void set setUser(value){
+  set setUser(value){
     _user = value;
   }
-  void set setToken(value){
+  set setToken(value){
     _token = value;
   }
 

@@ -9,7 +9,7 @@ class HomeUniverCity extends StatefulWidget {
     DrawerEntry('Mashups', Icons.insert_drive_file),
     DrawerEntry('Feedback', Icons.feedback),
     DrawerEntry('Segnala bug', Icons.bug_report),
-    DrawerEntry('Logout', Icons.exit_to_app)
+    DrawerEntry('Logout', Icons.exit_to_app),
   ];
 
   @override
@@ -17,9 +17,11 @@ class HomeUniverCity extends StatefulWidget {
 }
 
 class _HomeUniverCityState extends State<HomeUniverCity> {
+
   int _selectedDrawerIndex = 0;
 
   _getDrawerItemWidget(int index) {
+
     switch (index) {
       case 0:
         /// TODO insert fetch data preferiti

@@ -5,6 +5,7 @@ import 'package:univer_city_app_1_1/bloc/preferiti_bloc_provider.dart';
 import 'package:univer_city_app_1_1/bloc/profilo_bloc_provider.dart';
 import 'package:univer_city_app_1_1/bloc/upload_bloc_provider.dart';
 import 'package:univer_city_app_1_1/bloc/cronologia_bloc_provider.dart';
+import 'package:univer_city_app_1_1/bloc/theme_bloc_provider.dart';
 import 'package:univer_city_app_1_1/routes/route.dart';
 
 
@@ -17,26 +18,53 @@ void main(){
   // rende possibile solo l'orientamento verticale
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
   .then((_){
-    runApp(CronologiaBlocProvider(child: new UniverCity()));
+    runApp(ThemeBlocProvider(child:CronologiaBlocProvider(child: new UniverCity())));
   });
 }
 
-class UniverCity extends StatelessWidget {
+class UniverCity extends StatefulWidget {
+  @override
+  _UniverCityState createState() => _UniverCityState();
+}
+
+class _UniverCityState extends State<UniverCity> {
+
+
+//class UniverCity extends StatelessWidget {
   Widget build(BuildContext context) {
-    return  MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'UniverCity PREALPHA',
-        theme: ThemeData(
-          scaffoldBackgroundColor: Colors.grey[100],//Colors.brown[100],
-          primaryColor: Colors.white,//Colors.cyan[900],
-          primaryColorDark: Colors.grey[400],
-          //cardColor: Colors.grey[500],
-          accentColor: Color(0xffc02641),//Color(0xFFE74844),//Colors.brown[800],
-          fontFamily: 'Bahnschrift',
-        ),
-        initialRoute: '/',
-        onGenerateRoute: _myRoutes,
-      );
+    List<ThemeData> td = <ThemeData>[
+      ThemeData(
+        scaffoldBackgroundColor: Colors.grey[100],//Colors.brown[100],
+        primaryColor: Colors.white,//Colors.cyan[900],
+        primaryColorDark: Colors.grey[400],
+        //cardColor: Colors.grey[500],
+        accentColor: Color(0xffc02641),//Color(0xFFE74844),//Colors.brown[800],
+        fontFamily: 'Bahnschrift',
+      ),
+      ThemeData(
+        scaffoldBackgroundColor: Colors.grey[100],//Colors.brown[100],
+        primaryColor: Colors.white,//Colors.cyan[900],
+        primaryColorDark: Colors.grey[400],
+        //cardColor: Colors.grey[500],
+        accentColor: Color(0xff290797),//Color(0xFFE74844),//Colors.brown[800],
+        fontFamily: 'Bahnschrift',
+      ),
+    ];
+    final ThemeBloc tBlock = ThemeBlocProvider.of(context);
+    return  StreamBuilder(
+      stream: tBlock.themeIndex,
+      builder: (BuildContext context, AsyncSnapshot<int> snapshot){
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'UniverCity PREALPHA',
+          theme: td[snapshot.data??0],
+          initialRoute: '/',
+          onGenerateRoute: _myRoutes,
+        );
+
+      },
+
+    );
 
   }
 

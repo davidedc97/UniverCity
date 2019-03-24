@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:univer_city_app_1_1/elements/elements.dart';
+import 'package:univer_city_app_1_1/bloc/theme_bloc_provider.dart';
 
 final docTest = [
   Document('Telecomunicazioni', 'Cuomo', '550e8400-e29b-41d4-a716-446655440000',
@@ -44,6 +45,7 @@ class Profilo extends StatelessWidget {
       userName = 'userName';
   @override
   Widget build(BuildContext context) {
+    final ThemeBloc tBloc = ThemeBlocProvider.of(context);
     return Scaffold(
         body: CustomScrollView(
       slivers: <Widget>[
@@ -80,7 +82,7 @@ class Profilo extends StatelessWidget {
                             borderRadius:
                                 BorderRadius.all(new Radius.circular(100.0)),
                             border: new Border.all(
-                              color: Color(0xffd95a41),
+                              color: Theme.of(context).accentColor,
                               width: 4.0,
                             ),
                           ),
@@ -119,9 +121,9 @@ class Profilo extends StatelessWidget {
                             ),
                           ),
                           LinearProgressIndicator(
-                            value: 0.1,
-                            backgroundColor: Color(0x77d95a41),
-                          )
+                              value: 0.1,
+                              backgroundColor:
+                                  Theme.of(context).accentColor.withAlpha(77))
                         ],
                       ),
                     ),
@@ -155,7 +157,7 @@ class Profilo extends StatelessWidget {
                             ),
                             leading: Icon(
                               Icons.book,
-                              color: Color(0xffc02641),
+                              color: Theme.of(context).accentColor,
                             ),
                             subtitle: Text(
                                 '''\nLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum
@@ -174,8 +176,8 @@ class Profilo extends StatelessWidget {
                               width: MediaQuery.of(context).size.width,
                               decoration: BoxDecoration(
                                   gradient: LinearGradient(colors: [
-                                Color(0xffd95a41),
-                                Color(0xffc02641),
+                                tBloc.firstColorGradient,
+                                Theme.of(context).accentColor,
                               ])),
                               child: Padding(
                                 padding: EdgeInsets.only(
@@ -195,7 +197,7 @@ class Profilo extends StatelessWidget {
                               .map((doc) => ListTile(
                                     leading: Icon(
                                       Icons.description,
-                                      color: Color(0xffc02641),
+                                      color: Theme.of(context).accentColor,
                                     ),
                                     title: Text(doc.title),
                                   ))
@@ -211,8 +213,8 @@ class Profilo extends StatelessWidget {
                               width: MediaQuery.of(context).size.width,
                               decoration: BoxDecoration(
                                   gradient: LinearGradient(colors: [
-                                Color(0xffd95a41),
-                                Color(0xffc02641),
+                                tBloc.firstColorGradient,
+                                Theme.of(context).accentColor,
                               ])),
                               child: Padding(
                                 padding: EdgeInsets.only(
@@ -232,7 +234,7 @@ class Profilo extends StatelessWidget {
                               .map((doc) => ListTile(
                                     leading: Icon(
                                       Icons.art_track,
-                                      color: Color(0xffc02641),
+                                      color: Theme.of(context).accentColor,
                                     ),
                                     title: Text(doc.title),
                                   ))
@@ -260,18 +262,26 @@ editBio(context) {
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
                 Text('Modifica la tua descrizione'),
-                SizedBox(height: 18,),
+                SizedBox(
+                  height: 18,
+                ),
                 TextField(
                   cursorColor: Theme.of(context).accentColor,
                   maxLines: 5,
                   decoration: InputDecoration(
-                    hintText: 'Inserisci la tua descrizione...',
-                    border: OutlineInputBorder(),
-                    focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: Theme.of(context).accentColor))
-                  ),
+                      hintText: 'Inserisci la tua descrizione...',
+                      border: OutlineInputBorder(),
+                      focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                              color: Theme.of(context).accentColor))),
                 ),
-                SizedBox(height: 18,),
-                FlatButton.icon(onPressed: (){}, icon: Icon(Icons.edit), label: Text('SALVA'))
+                SizedBox(
+                  height: 18,
+                ),
+                FlatButton.icon(
+                    onPressed: () {},
+                    icon: Icon(Icons.edit),
+                    label: Text('SALVA'))
               ],
             ),
           )));

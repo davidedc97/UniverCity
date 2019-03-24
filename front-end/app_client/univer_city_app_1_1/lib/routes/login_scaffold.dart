@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:univer_city_app_1_1/elements/elements.dart';
+import 'package:univer_city_app_1_1/bloc/theme_bloc_provider.dart';
 
 class LoginScaffold extends StatelessWidget {
   @override
@@ -11,6 +12,7 @@ class LoginScaffold extends StatelessWidget {
 
   /// body per il Login
   loginBody(context) {
+    ThemeBloc tBloc = ThemeBlocProvider.of(context);
     return Column(children: <Widget>[
       ///
       ///
@@ -21,7 +23,7 @@ class LoginScaffold extends StatelessWidget {
           flex: 2,
           child: Container(
             decoration: BoxDecoration(
-              image: DecorationImage(image: AssetImage('assets/img/sfondo_login3.png'), fit: BoxFit.fitWidth)
+              image: DecorationImage(image: AssetImage((tBloc.state)?'assets/img/sfondo_login.png':'assets/img/sfondo_login_dark.png'), fit: BoxFit.fitWidth)
             ),
             //color: Theme.of(context).scaffoldBackgroundColor,
           )),
@@ -35,7 +37,7 @@ class LoginScaffold extends StatelessWidget {
         child: SizedBox.expand(
             child: Container(
                 padding: EdgeInsets.only(top: 25),
-                decoration: boxBgeOmbra, // Applico sfondo bianco e ombra
+                decoration: boxBgeOmbra(Theme.of(context).backgroundColor), // Applico sfondo bianco e ombra
                 child: Column(
                   ///
                   ///Centro la colonna

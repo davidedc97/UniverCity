@@ -13,7 +13,7 @@ class _CompFormScaffoldState extends State<CompFormScaffold> {
   Widget build(BuildContext context) {
     final CompFormBloc bloc = CompFormBlocProvider.of(context);
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Stack(children: <Widget>[
             ListView(
               children: <Widget>[

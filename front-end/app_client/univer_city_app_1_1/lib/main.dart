@@ -41,14 +41,7 @@ class _UniverCityState extends State<UniverCity> {
         accentColor: Color(0xffc02641),//Color(0xFFE74844),//Colors.brown[800],
         fontFamily: 'Bahnschrift',
       ),
-      ThemeData(
-        scaffoldBackgroundColor: Colors.grey[100],//Colors.brown[100],
-        primaryColor: Colors.white,//Colors.cyan[900],
-        primaryColorDark: Colors.grey[400],
-        //cardColor: Colors.grey[500],
-        accentColor: Color(0xff290797),//Color(0xFFE74844),//Colors.brown[800],
-        fontFamily: 'Bahnschrift',
-      ),
+      ThemeData.dark(),
     ];
     final ThemeBloc tBlock = ThemeBlocProvider.of(context);
     return  StreamBuilder(

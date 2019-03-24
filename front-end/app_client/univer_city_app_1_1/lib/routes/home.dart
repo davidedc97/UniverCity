@@ -1,6 +1,7 @@
 import 'package:univer_city_app_1_1/elements/elements.dart';
 import 'package:univer_city_app_1_1/body_drawer/body_drawer.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:univer_city_app_1_1/bloc/theme_bloc_provider.dart';
 
 class HomeUniverCity extends StatefulWidget {
   final drawerEntry = [
@@ -57,6 +58,7 @@ class _HomeUniverCityState extends State<HomeUniverCity> {
 
   @override
   Widget build(BuildContext context) {
+    ThemeBloc tBloc = ThemeBlocProvider.of(context);
     ///
     ///Assemblo le entry nel drawer prendendo i valori in drawerEntry
     ///
@@ -111,13 +113,14 @@ class _HomeUniverCityState extends State<HomeUniverCity> {
               child: Text(
                 'UniverCity',
                 style: TextStyle(
-                  color: Color(0xFF262526),
+                  color: tBloc.state?Color(0xFF262526):Colors.white,
                   fontFamily: 'Collegiate',
                   fontSize: 32.0,
                 ),
               ),
             ),
             actions: (_selectedDrawerIndex == 4 || _selectedDrawerIndex == 3)?null:<Widget>[
+              Switch(value: tBloc.state, onChanged: (_){tBloc.change();}),
               IconButton(
                 icon: Icon(
                   Icons.search,

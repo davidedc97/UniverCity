@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 ///  avere un ombra e uno sfondo bianco
 ///
 ///
-BoxDecoration boxBgeOmbra = BoxDecoration(color: Colors.white, boxShadow: [
-  BoxShadow(blurRadius: 4.0, color: Colors.black, offset: Offset(0.0, 0.0))
-]);
+BoxDecoration boxBgeOmbra(Color c){
+  return BoxDecoration(color: c, boxShadow: [
+    BoxShadow(blurRadius: 4.0, color: Colors.black, offset: Offset(0.0, 0.0))
+  ]);
+}

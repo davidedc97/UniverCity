@@ -105,7 +105,7 @@ carica(context) {
   final UploadBloc _bloc = UploadBlocProvider.of(context);
 
   debugPrint('carica ${_bloc.pathValue} titolo ${_bloc.titoloValue} tag ${_bloc.tagsValue}');
-  if (_bloc.titoloValue == '' || _bloc.tagsValue == '') {
+  if (_bloc.titoloValue == null || _bloc.tagsValue == null || _bloc.titoloValue == '' || _bloc.tagsValue == '') {
     return showDialog(
         context: context,
         builder: (context) {

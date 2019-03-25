@@ -37,7 +37,7 @@ class LoginScaffold extends StatelessWidget {
         child: SizedBox.expand(
             child: Container(
                 padding: EdgeInsets.only(top: 25),
-                decoration: boxBgeOmbra(Theme.of(context).backgroundColor), // Applico sfondo bianco e ombra
+                decoration: boxBgeOmbra(Theme.of(context).scaffoldBackgroundColor), // Applico sfondo bianco e ombra
                 child: Column(
                   ///
                   ///Centro la colonna

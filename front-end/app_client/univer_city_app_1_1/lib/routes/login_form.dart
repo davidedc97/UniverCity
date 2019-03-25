@@ -7,7 +7,7 @@ class LoginFormScaffold extends StatelessWidget {
   Widget build(BuildContext context) {
     String _usem, _pw;
     return Scaffold(
-      backgroundColor: Theme.of(context).backgroundColor,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Stack(children: <Widget>[
             Positioned(
                 left: 8,

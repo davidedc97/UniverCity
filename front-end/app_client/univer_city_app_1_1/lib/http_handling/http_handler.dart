@@ -139,6 +139,8 @@ class HttpHandler {
   */
 
   static Future<int> uploadDocument(String title, String path) async {
+    print('####################################################################$title ,$path');
+    print(_sessionToken);
     var res;
     String _t = title;
     var uri = Uri.parse(_URL + _DOCUMENT_SERVER);

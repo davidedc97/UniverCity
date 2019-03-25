@@ -126,6 +126,7 @@ carica(context) {
   Navigator.of(context).pop();
   debugPrint('dopo del pop');
   debugPrint('show dialog 137');
+  Future<int> futureHttp = HttpHandler.uploadDocument(_bloc.titoloValue, _bloc.pathValue);
   showDialog(
       context: context,
       builder: (context) {
@@ -133,7 +134,7 @@ carica(context) {
         return AlertDialog(
           title: Text('Hey !'),
           content: FutureBuilder(
-              future: HttpHandler.uploadDocument(_bloc.titoloValue, _bloc.pathValue),
+              future: futureHttp,
               builder: (context, snapshot) {
                 debugPrint('dentro builder 165');
                 if (snapshot.hasError) return Container();

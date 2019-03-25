@@ -4,21 +4,20 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 
 class ThemeBloc {
- static int storedValue;
-
+ final BehaviorSubject<int> _themeIndex = BehaviorSubject<int>();
   ThemeBloc(){
     SharedPreferences.getInstance().then((SharedPreferences tm){
       if(tm.getInt('themeIndex')==null){
         print('init to 0');
-        storedValue = 0;
+        _themeIndex.sink.add(0);
+
       }else{
-        storedValue = tm.getInt('themeIndex');
+        int storedValue = tm.getInt('themeIndex');
+        _themeIndex.sink.add(storedValue);
         print('read to stored value ${tm.getInt('themeIndex')} storedbloc $storedValue');
       }
     });
   }
-
-  final BehaviorSubject<int> _themeIndex = BehaviorSubject<int>(seedValue: (storedValue==0)?0:1);
 
   Observable<int> get themeIndex => _themeIndex.stream;
   int get themeIndexValue => _themeIndex.value;

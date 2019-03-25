@@ -147,7 +147,7 @@ class HttpHandler {
     var request = new http.MultipartRequest('POST', uri);
     var file = await http.MultipartFile.fromPath('package', path);
 
-    request.headers.addAll({'Authorization':_sessionToken,});
+    request.headers.addAll({'Authorization':_sessionToken});
     request.fields.addAll({'title':_t.toString()});
     request.files.add(file);
 

@@ -4,6 +4,7 @@ import 'package:univer_city_app_1_1/elements/elements.dart';
 import 'package:univer_city_app_1_1/http_handling/http_handler.dart';
 
 class Upload extends StatelessWidget {
+  BuildContext scaffoldContext;
   final String path;
   Upload(this.path);
   @override
@@ -19,7 +20,9 @@ class Upload extends StatelessWidget {
               style:
                   TextStyle(fontSize: 18, color: Theme.of(context).accentColor),
             ),
-            onPressed: () => carica(context),
+            onPressed: (){
+              carica(context);
+            },
           )
         ],
         title: Text(
@@ -123,7 +126,7 @@ carica(context) {
         });
   }
   debugPrint('prima del pop');
-  Navigator.of(context).pop();
+  //Navigator.of(context).pop();
   debugPrint('dopo del pop');
   debugPrint('show dialog 137');
   Future<int> futureHttp = HttpHandler.uploadDocument(_bloc.titoloValue, _bloc.pathValue);

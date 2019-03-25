@@ -52,7 +52,7 @@ class LoginScaffold extends StatelessWidget {
                     /// personalizzati da me e per comodita nel caso voglia
                     /// modificarli modofico la classe e sono apposto
                     //##################################################inizio bottone google
-                    BtnLogin(
+                    BtnLogin(context,
                       title: 'REGISTRATI CON GOOGLE',
                       color: Theme.of(context).accentColor,
                       onPressed: () => showDialog(
@@ -78,7 +78,7 @@ class LoginScaffold extends StatelessWidget {
                     //################################################## ------------ OR -----------
                     DividerTextOr(),
                     //################################################## bottone form complicata
-                    BtnLogin(
+                    BtnLogin(context,
                       title: 'COMPILA LA NOSTRA FORM',
                       color: Theme.of(context).accentColor,
                       onPressed: () =>

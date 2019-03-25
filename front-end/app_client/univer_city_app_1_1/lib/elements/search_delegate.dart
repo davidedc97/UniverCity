@@ -48,7 +48,16 @@ class DocSearch extends SearchDelegate<Document> {
         'O'),
     Document('Fisica', 'Sibilia', '550e8400-e29b-41d4-a716-446655440012', 'O'),
   ];
-
+  @override
+  ThemeData appBarTheme(BuildContext context) {
+    final ThemeData theme = Theme.of(context);
+    return theme.copyWith(
+      primaryColor: theme.primaryColor,
+      primaryIconTheme: theme.primaryIconTheme,
+      primaryColorBrightness: theme.primaryColorBrightness,
+      primaryTextTheme: theme.primaryTextTheme,
+    );
+  }
   @override
   List<Widget> buildActions(BuildContext context) {
     //  action for app bar

@@ -25,7 +25,7 @@ class ThemeBloc {
 
   bool get state => themeIndexValue==0;
 
-  get firstColorGradient => state?Color(0xffd95a41):Color(0xff5ba8a0);
+  get firstColorGradient => state?Color(0xffd95a41):Color(0xfff2d16d);
 
   change(){
     if(themeIndexValue==0){

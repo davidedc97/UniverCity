@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:univer_city_app_1_1/elements/elements.dart';
 import 'package:univer_city_app_1_1/bloc/cronologia_bloc_provider.dart';
+import 'package:univer_city_app_1_1/bloc/theme_bloc_provider.dart';
 import 'package:share/share.dart';
 
 Widget buildDocDialog(BuildContext context, String titolo,String proprietario, String uuid) {
   CronologiaBloc cBloc = CronologiaBlocProvider.of(context);
+  ThemeBloc tBloc = ThemeBlocProvider.of(context);
   return Dialog(
     child: Stack(
       children: <Widget>[
@@ -14,7 +16,7 @@ Widget buildDocDialog(BuildContext context, String titolo,String proprietario, S
               height: 150,
               width: MediaQuery.of(context).size.width,
               child: Image(
-                image: AssetImage('assets/img/sfondo_login3.png'),
+                image: AssetImage((tBloc.state)?'assets/img/sfondo_login.png':'assets/img/sfondo_login_dark.png'),
                 fit: BoxFit.fitWidth,
               ),
             ),

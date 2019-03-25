@@ -137,7 +137,7 @@ class _CompFormScaffoldState extends State<CompFormScaffold> {
                         height: 42,
                       ),
                       //################################################################ Get Started Button
-                      BtnLogin(
+                      BtnLogin(context,
                         color: Theme.of(context).accentColor,
                         title: 'REGISTRATI',
                         onPressed: () => compForm(context),

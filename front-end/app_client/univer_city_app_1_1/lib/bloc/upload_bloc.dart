@@ -1,5 +1,6 @@
 import 'package:rxdart/rxdart.dart';
 import 'dart:async';
+import 'package:flutter/material.dart';
 
 class UploadBloc {
   //############################################################################gestione home
@@ -21,6 +22,7 @@ class UploadBloc {
   String get titoloValue => _titolo.value;
   String get tagsValue => _tags.value;
   String get pathValue => _path.value;
+
 
   // per eliminare errore di dart perche gli stream
   // dovrebbero essere chiusi prima o poi

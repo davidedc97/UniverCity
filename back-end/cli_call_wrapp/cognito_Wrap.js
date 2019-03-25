@@ -4,6 +4,8 @@ const app = express();
 const bodyP = require("body-parser");
 app.use(bodyP.urlencoded());
 
+var Pool = require('pg').Pool;
+
 var AmazonCognitoIdentity = require('amazon-cognito-identity-js');
 var CognitoUserPool = AmazonCognitoIdentity.CognitoUserPool;
 var AWS = require('aws-sdk');
@@ -23,14 +25,30 @@ var university = null;
 var token = null;
 var error = null;
 var result = null;
+<<<<<<< HEAD
+var xp = null;
+var bio = null;
+var docUp = null;
+var mashup = null;
+var img = null;
+=======
 var verCode = null;
 var newPassword = null;
+>>>>>>> 4d12008b7da8b739b79793fe0d9421d91adcc8f6
 
 /*
 ** ########################
 ** # SERVER CONFIGURATION #
 ** ########################
 */
+
+const psql = new Pool ({
+    host: 'metadata.czzhwg1jheui.eu-west-1.rds.amazonaws.com',
+    user: 'univercity',
+    password: '',
+    database: 'metadata',
+    port: 5432
+})
 
 var server = app.listen(8080, "127.0.0.1", function(){
     console.log("Server started");
@@ -86,24 +104,6 @@ app.post("/userLog", function(req, res){
     }
 })
 
-app.get("/getOtherUser", function(req, res){
-    username = req.body.username;
-    pass = req.body.pass;
-
-    var response = getUser();
-
-    res.send(response);
-})
-
-app.get("/getMyData", function(){
-    username = req.body.username;
-    pass = req.body.pass;
-
-    var response = getMyData();
-
-    res.send(response);
-})
-
 app.post("/resetPass", function(err, res){
     pass = req.body.pass;
 
@@ -113,6 +113,64 @@ app.post("/resetPass", function(err, res){
     else{
         res.sendStatus(400);
     }
+})
+
+app.get("/userData", function(req,res){
+    username = req.body.username;
+
+    psql.query("SELECT * from utilitator where username = $1", [username], function(err, result){
+        if(err) throw err;
+        else {
+            res.sendStatus(200).json(result.rows);
+        }
+    })
+})
+
+app.get("/userImg", function(req,res){
+    username = req.body.username;
+
+    psql.query("SELECT image from utilitator where username = $1", [username], function(err, result){
+        if(err) throw err;
+        else {
+            res.sendStatus(200).json(result.rows);
+        }
+    })
+})
+
+app.put("/userImg", function(req,res){
+    username = req.body.username;
+    img = req.body.file;
+
+    psql.query("update image value ($1) from utilitator where username = $2", [img,username], function(err, result){
+        if(err) throw err;
+        else {
+            res.sendStatus(200).json(result.rows);
+        }
+    })
+})
+
+app.put("/userExperience", function(req,res){
+    username = req.body.username;
+    xp = req.body.experience;
+
+    psql.query("update xp value ($1) from utilitator where username = $2", [xp,username], function(err, result){
+        if(err) throw err;
+        else {
+            res.sendStatus(200).json(result.rows);
+        }
+    })
+})
+
+app.put("/userBio", function(req,res){
+    username = req.body.username;
+    bio = req.body.bio;
+
+    psql.query("update bio value ($1) from utilitator where username = $2", [bio,username], function(err, result){
+        if(err) throw err;
+        else {
+            res.sendStatus(200).json(result.rows);
+        }
+    })
 })
 
 app.post("/resetAux", function(err, res){
@@ -157,6 +215,10 @@ function SignUp(){
         var cognitoUser = res.user;
         return cognitoUser.getUsername();
     })
+
+    pool.query("INSERT INTO utilitator (username,favourite,bio,xp,uploaded,image) VALUES ($1, $2, $3, $4, $5, $6)",[username, null, null, 0, null, null], function(err, res){
+        if (err) throw err;
+    })
 }
 
 /*
@@ -190,77 +252,6 @@ function SignIn(){
     if (token != null && error == null) return 0;
     else if (token == null && error != null) return 1;
 }
-
-/*
-** #############
-** # USER DATA #
-** #############
-*/
-
-function getOtherUser(){
-
-    var userData = {
-        Username: username,
-        Pool: userPool
-    }
-
-    var cognitoUser = new AmazonCognitoIdentity.CognitoUser(userData);
-    cognitoUser.getUserAttribute(function(err, res){
-        if(err) {
-            result = {
-                "statusCode" : 400,
-                "body" : err.name
-            };
-        }
-        else {
-            result = {
-                "statusCode" : 200,
-                "headers" : "",
-                "body" : {
-                    "name" : res.name,
-                    "surname" : res.surname,
-                    "username" : res.username,
-                    "message" : "ok"
-                }
-            };
-        }
-    })
-    return result;
-}
-
-function getMyData(){
-
-    var userData = {
-        Username: username,
-        Pool: userPool
-    }
-
-    var cognitoUser = new AmazonCognitoIdentity.CognitoUser(userData);
-    cognitoUser.getUserAttribute(function(err, res){
-        if(err) {
-            result = {
-                "statusCode" : 400,
-                "body" : err.name
-            };
-        }
-        else {
-            result = {
-                "statusCode" : 200,
-                "headers" : "",
-                "body" : {
-                    "faculty" : res.faculty,
-                    "university" : res.university,
-                    "name" : res.name,
-                    "surname" : res.surname,
-                    "username" : res.username,
-                    "message" : "ok"
-                }
-            };
-        }
-    })
-    return result;
-}
-
 
 /*
 ** ##################

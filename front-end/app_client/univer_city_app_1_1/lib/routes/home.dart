@@ -115,7 +115,6 @@ class _HomeUniverCityState extends State<HomeUniverCity> {
                 style: TextStyle(
                   color: tBloc.state?Color(0xFF262526):Colors.white,
                   fontFamily: 'Collegiate',
-                  fontSize: 32.0,
                 ),
               ),
             ),

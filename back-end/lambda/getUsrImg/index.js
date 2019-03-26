@@ -1,5 +1,4 @@
-
-const AWS = require('aws-sdk');
+gconst AWS = require('aws-sdk');
 global.fetch = require('node-fetch');
 
 var Pool = require('pg').Pool;
@@ -14,7 +13,7 @@ const psql = new Pool ({
 
 function getMetadata(username){
     return new Promise((resolve, reject) => {
-        psql.query("SELECT * from utilitator where username = $1", [username], {
+        psql.query("SELECT image from utilitator where username = $1", [username], {
             onSucces: function(res){
                 resolve(res.rows);
             },

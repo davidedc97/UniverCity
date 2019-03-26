@@ -25,16 +25,13 @@ var university = null;
 var token = null;
 var error = null;
 var result = null;
-<<<<<<< HEAD
 var xp = null;
 var bio = null;
 var docUp = null;
 var mashup = null;
 var img = null;
-=======
 var verCode = null;
 var newPassword = null;
->>>>>>> 4d12008b7da8b739b79793fe0d9421d91adcc8f6
 
 /*
 ** ########################

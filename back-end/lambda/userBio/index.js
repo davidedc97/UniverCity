@@ -11,9 +11,9 @@ const psql = new Pool ({
     port: 5432
 })
 
-function getUsrImg(username){
+function getUsrImg(bio,username){
     return new Promise((resolve, reject) => {
-        psql.query("SELECT image from utilitator where username = $1", [username], {
+        psql.query("UPDATE bio VALUE ($1) from utilitator where username = $2", [bio,username], {
             onSucces: function(res){
                 resolve(res.rows);
             },
@@ -28,6 +28,7 @@ exports.handler = async (event, context, callback) => {
     var body = JSON.parse(event.body);
     
     var username = body.username;
+    var bio = body.bio;
 
     var response = {
         "statusCode": 200,
@@ -36,7 +37,7 @@ exports.handler = async (event, context, callback) => {
     }
     
     try{
-        var result = await getUsrImg(username).then((result) => {
+        var result = await getUsrImg(bio,username).then((result) => {
             return result;
         });
         

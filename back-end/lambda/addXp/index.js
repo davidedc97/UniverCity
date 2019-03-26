@@ -11,16 +11,29 @@ const psql = new Pool ({
     port: 5432
 })
 
-function getUsrImg(username){
+function getUsrImg(xp,username){
+
     return new Promise((resolve, reject) => {
-        psql.query("SELECT image from utilitator where username = $1", [username], {
-            onSucces: function(res){
-                resolve(res.rows);
-            },
-            onFailure: function(err){
-                resolve("err");
-            },
-        });
+        var newXp;
+        psql.query("SELECT xp from utilitator where username = $1", [username], function(err,res){
+            if (err) newXp = "err";
+            else{
+                var tmp = res.rows;
+                newXp = tmp.xp + xp;
+            }
+        })
+        if (newXp == "err") resolve("err");
+
+        else{
+            psql.query("UPDATE xp VALUE ($1) from utilitator where username = $2", [newXp,username], {
+                onSucces: function(res){
+                    resolve(res.rows);
+                },
+                onFailure: function(err){
+                    resolve("err");
+                },
+            });
+        }
     });
 }
 
@@ -28,6 +41,7 @@ exports.handler = async (event, context, callback) => {
     var body = JSON.parse(event.body);
     
     var username = body.username;
+    var xp = body.xp;
 
     var response = {
         "statusCode": 200,
@@ -36,7 +50,7 @@ exports.handler = async (event, context, callback) => {
     }
     
     try{
-        var result = await getUsrImg(username).then((result) => {
+        var result = await getUsrImg(xp,username).then((result) => {
             return result;
         });
         

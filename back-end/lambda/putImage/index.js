@@ -1,5 +1,7 @@
 const AWS = require('aws-sdk');
 global.fetch = require('node-fetch');
+const multer = require('multer');
+const multerS3 = require('multer-s3');
 
 var Pool = require('pg').Pool;
 
@@ -11,16 +13,39 @@ const psql = new Pool ({
     port: 5432
 })
 
-function getUsrImg(username){
+AWS.config.update({
+    secretAccesKey: "",
+    accesKeyId: "",
+    region: "eu-west-2"
+})
+
+var s3 = new AWS.S3();
+
+var params = {
+    Bucket: "uni-user-profile-image",
+    Key: "",
+    Body: "",
+    ACL: "public-read"
+}
+
+function putImg(img, username){
+    var path = "https://uni-user-profile-image.s3.amazonaws.com/" + username + "-img"; //da definisre e studiare
+    params.body = img;
+
     return new Promise((resolve, reject) => {
-        psql.query("SELECT image from utilitator where username = $1", [username], {
-            onSucces: function(res){
-                resolve(res.rows);
-            },
-            onFailure: function(err){
-                resolve("err");
-            },
-        });
+        s3.putObject(params, function(err,res){
+            if (err) resolve("err");
+            else{
+                psql.query("UPDATE image VALUE ($1) from utilitator where username = $2", [path,username], {
+                    onSucces: function(res){
+                        resolve(res.rows);
+                    },
+                    onFailure: function(err){
+                        resolve("err");
+                    },
+                });
+            } 
+        })
     });
 }
 
@@ -28,6 +53,7 @@ exports.handler = async (event, context, callback) => {
     var body = JSON.parse(event.body);
     
     var username = body.username;
+    var img = body.img;
 
     var response = {
         "statusCode": 200,
@@ -36,7 +62,7 @@ exports.handler = async (event, context, callback) => {
     }
     
     try{
-        var result = await getUsrImg(username).then((result) => {
+        var result = await putImg(img, username).then((result) => {
             return result;
         });
         

@@ -12,12 +12,20 @@ Widget buildDocDialog(BuildContext context, String titolo,String proprietario, S
       children: <Widget>[
         Column(
           children: <Widget>[
-            SizedBox(
-              height: 150,
-              width: MediaQuery.of(context).size.width,
-              child: Image(
-                image: AssetImage((tBloc.state)?'assets/img/sfondo_login.png':'assets/img/sfondo_login_dark.png'),
-                fit: BoxFit.fitWidth,
+            Container(
+              decoration: BoxDecoration(
+                  gradient: LinearGradient(colors: [
+                    tBloc.firstColorGradient,
+                    Theme.of(context).accentColor,
+                  ])
+              ),
+              child: SizedBox(
+                height: 150,
+                width: MediaQuery.of(context).size.width,
+                child: Image(
+                  image: AssetImage('assets/img/sfondo-login.png'),
+                  fit: BoxFit.fitWidth,
+                ),
               ),
             ),
             Expanded(
@@ -80,7 +88,7 @@ Widget buildDocDialog(BuildContext context, String titolo,String proprietario, S
                   height: 50,
                   width: 200,
                   child: FloatingActionButton.extended(
-                    backgroundColor: Color(0xFF393E46),
+                    backgroundColor: (tBloc.state)?Color(0xFF393E46):Colors.grey[300],
                     onPressed: () {
                       cBloc.addInCronologia(CronologiaEntry(uuid, titolo, proprietario));
                     },

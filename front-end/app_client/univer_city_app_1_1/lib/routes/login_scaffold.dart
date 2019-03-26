@@ -23,7 +23,11 @@ class LoginScaffold extends StatelessWidget {
           flex: 2,
           child: Container(
             decoration: BoxDecoration(
-              image: DecorationImage(image: AssetImage((tBloc.state)?'assets/img/sfondo_login.png':'assets/img/sfondo_login_dark.png'), fit: BoxFit.fitWidth)
+              image: DecorationImage(image: AssetImage('assets/img/sfondo-login.png'),fit: BoxFit.fitWidth),
+                gradient: LinearGradient(colors: [
+                  tBloc.firstColorGradient,
+                  Theme.of(context).accentColor,
+                ])
             ),
             //color: Theme.of(context).scaffoldBackgroundColor,
           )),
@@ -64,8 +68,9 @@ class LoginScaffold extends StatelessWidget {
                               actions: <Widget>[
                                 FlatButton(
                                     onPressed: () {
-                                      Navigator.pushNamedAndRemoveUntil(context, '/home', (Route<dynamic> route) => false);
-                                     //Navigator.pop(context);
+                                      Navigator.pushNamedAndRemoveUntil(context, '/intro', (Route<dynamic> route) => false);
+                                      //Navigator.pushNamedAndRemoveUntil(context, '/home', (Route<dynamic> route) => false);
+                                      //Navigator.pop(context);
                                     },
                                     child: Text('Close'))
                               ],

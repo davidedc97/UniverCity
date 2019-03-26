@@ -152,7 +152,10 @@ class _UniverCityState extends State<UniverCity> {
         return MaterialPageRoute(builder: (context) {
           return UploadBlocProvider(child: Upload(path));
         });
-
+      case '/intro':
+        return MaterialPageRoute(builder: (context) {
+          return Intro();
+        });
       /// in caso di errore non so se mostrare una pagina 404 con vari link
       /// di reindirizzamento oppure reindirizzare nella pagina home
       default:

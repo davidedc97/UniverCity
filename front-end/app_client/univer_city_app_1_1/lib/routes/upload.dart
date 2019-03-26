@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:univer_city_app_1_1/bloc/upload_bloc_provider.dart';
 import 'package:univer_city_app_1_1/elements/elements.dart';
 import 'package:univer_city_app_1_1/http_handling/http_handler.dart';
+import 'dart:async';
 
 class Upload extends StatelessWidget {
-  BuildContext scaffoldContext;
   final String path;
   Upload(this.path);
   @override

@@ -25,6 +25,7 @@ dependencies:
   flutter_document_picker: ^2.0.0
   shared_preferences: ^0.4.3
   share: ^0.5.3
+  intro_views_flutter: ^2.4.0
 
 dev_dependencies:
   flutter_test:
@@ -47,8 +48,9 @@ flutter:
   #  - images/a_dot_burr.jpeg
   #  - images/a_dot_ham.jpeg
   assets:
-    -  assets/img/sfondo_login.png
-    -  assets/img/sfondo_login_dark.png
+    -  assets/img/sfondo-login.png
+    -  assets/img/un-tool-2.png
+    -  assets/img/mash.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.
 

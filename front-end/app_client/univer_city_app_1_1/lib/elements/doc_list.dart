@@ -11,7 +11,7 @@ class DocList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.white,
+      color: Theme.of(context).cardColor,
       child: ListTile(
         title:Text(_info.title),
         subtitle: (_info.creator != null)

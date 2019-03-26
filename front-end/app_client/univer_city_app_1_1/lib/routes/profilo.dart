@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:univer_city_app_1_1/elements/elements.dart';
-import 'package:univer_city_app_1_1/bloc/theme_bloc_provider.dart';
 
 final docTest = [
   Document('Telecomunicazioni', 'Cuomo', '550e8400-e29b-41d4-a716-446655440000',
@@ -45,7 +44,6 @@ class Profilo extends StatelessWidget {
       userName = 'userName';
   @override
   Widget build(BuildContext context) {
-    final ThemeBloc tBloc = ThemeBlocProvider.of(context);
     return Scaffold(
         body: CustomScrollView(
       slivers: <Widget>[
@@ -65,182 +63,11 @@ class Profilo extends StatelessWidget {
             (context, index) {
               return Column(
                 children: <Widget>[
-                  Padding(
-                    padding: EdgeInsets.only(
-                        top: 24, left: 16, bottom: 8, right: 16),
-                    child: Row(
-                      children: <Widget>[
-                        Container(
-                          width: 100.0,
-                          height: 100.0,
-                          decoration: new BoxDecoration(
-                            image: new DecorationImage(
-                              image: new NetworkImage(
-                                  'https://scontent-fco1-1.xx.fbcdn.net/v/t1.0-9/31674176_1973734962646218_3870591241158656000_n.jpg?_nc_cat=103&_nc_ht=scontent-fco1-1.xx&oh=912ceebe8084f258395a3dca2caf6f12&oe=5D23DF90'),
-                              fit: BoxFit.cover,
-                            ),
-                            borderRadius:
-                                BorderRadius.all(new Radius.circular(100.0)),
-                            border: new Border.all(
-                              color: Theme.of(context).accentColor,
-                              width: 4.0,
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(left: 16),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text(
-                                SessionUser().user ?? 'UserName',
-                                style: TextStyle(fontSize: 20),
-                              ),
-                              Text('Ignegneria delle merendine')
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-
-                  ///
-                  /// Header end
-                  ///
-                  Padding(
-                    padding: EdgeInsets.all(8),
-                    child: Card(
-                      child: Column(
-                        children: <Widget>[
-                          ListTile(
-                            title: Text('Livello'),
-                            leading: Text(
-                              '1',
-                              style: TextStyle(
-                                  fontSize: 20, fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                          LinearProgressIndicator(
-                              value: 0.1,
-                              backgroundColor:
-                                  Theme.of(context).accentColor.withAlpha(77))
-                        ],
-                      ),
-                    ),
-                  ),
-
-                  ///
-                  ///
-                  /// Bio
-                  ///
-                  ///
-                  Padding(
-                    padding: EdgeInsets.all(8),
-                    child: Card(
-                      child: Column(
-                        children: <Widget>[
-                          ListTile(
-                            title: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: <Widget>[
-                                Text('Descrizione'),
-                                FlatButton(
-                                    onPressed: () {
-                                      editBio(context);
-                                    },
-                                    child: Text(
-                                      'modifica',
-                                      style: TextStyle(
-                                          color: Theme.of(context).accentColor),
-                                    ))
-                              ],
-                            ),
-                            leading: Icon(
-                              Icons.book,
-                              color: Theme.of(context).accentColor,
-                            ),
-                            subtitle: Text(
-                                '''\nLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum
-                  '''),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.all(8),
-                    child: Card(
-                        child: Column(
-                      children: <Widget>[
-                            Container(
-                              width: MediaQuery.of(context).size.width,
-                              decoration: BoxDecoration(
-                                  gradient: LinearGradient(colors: [
-                                tBloc.firstColorGradient,
-                                Theme.of(context).accentColor,
-                              ])),
-                              child: Padding(
-                                padding: EdgeInsets.only(
-                                    top: 8.0, left: 16.0, bottom: 8.0),
-                                child: Text(
-                                  'Appunti caricati',
-                                  textAlign: TextAlign.left,
-                                  style: TextStyle(
-                                      fontSize: 18.0,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white),
-                                ),
-                              ),
-                            )
-                          ] +
-                          docTest
-                              .map((doc) => ListTile(
-                                    leading: Icon(
-                                      Icons.description,
-                                      color: Theme.of(context).accentColor,
-                                    ),
-                                    title: Text(doc.title),
-                                  ))
-                              .toList(),
-                    )),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.all(8),
-                    child: Card(
-                        child: Column(
-                      children: <Widget>[
-                            Container(
-                              width: MediaQuery.of(context).size.width,
-                              decoration: BoxDecoration(
-                                  gradient: LinearGradient(colors: [
-                                tBloc.firstColorGradient,
-                                Theme.of(context).accentColor,
-                              ])),
-                              child: Padding(
-                                padding: EdgeInsets.only(
-                                    top: 8.0, left: 16.0, bottom: 8.0),
-                                child: Text(
-                                  'Mashup creati',
-                                  textAlign: TextAlign.left,
-                                  style: TextStyle(
-                                      fontSize: 18.0,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white),
-                                ),
-                              ),
-                            )
-                          ] +
-                          mashTest
-                              .map((doc) => ListTile(
-                                    leading: Icon(
-                                      Icons.art_track,
-                                      color: Theme.of(context).accentColor,
-                                    ),
-                                    title: Text(doc.title),
-                                  ))
-                              .toList(),
-                    )),
-                  )
+                  HeadProfile(SessionUser().user ?? 'UserName', 'ingMerendine', 'https://scontent-fco1-1.xx.fbcdn.net/v/t1.0-9/31674176_1973734962646218_3870591241158656000_n.jpg?_nc_cat=103&_nc_ht=scontent-fco1-1.xx&oh=912ceebe8084f258395a3dca2caf6f12&oe=5D23DF90'),
+                  LevelBar(33670),
+                  ProfileBio('\nLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'),
+                  ShowDoc(docTest),
+                  ShowMashups(mashTest)
                 ],
               );
             },
@@ -252,37 +79,3 @@ class Profilo extends StatelessWidget {
   }
 }
 
-editBio(context) {
-  showDialog(
-      context: context,
-      builder: (context) => Dialog(
-              child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 18, vertical: 24),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                Text('Modifica la tua descrizione'),
-                SizedBox(
-                  height: 18,
-                ),
-                TextField(
-                  cursorColor: Theme.of(context).accentColor,
-                  maxLines: 5,
-                  decoration: InputDecoration(
-                      hintText: 'Inserisci la tua descrizione...',
-                      border: OutlineInputBorder(),
-                      focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                              color: Theme.of(context).accentColor))),
-                ),
-                SizedBox(
-                  height: 18,
-                ),
-                FlatButton.icon(
-                    onPressed: () {},
-                    icon: Icon(Icons.edit),
-                    label: Text('SALVA'))
-              ],
-            ),
-          )));
-}

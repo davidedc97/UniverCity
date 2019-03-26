@@ -11,7 +11,7 @@ class TitleDivider extends StatelessWidget {
         height: 30,
         child: Padding(
           padding: EdgeInsets.only(top: 8.0, left: 16.0),
-          child: Text(_title, textAlign: TextAlign.left, style: TextStyle(fontSize: 18.0),),
+          child: Text(_title, textAlign: TextAlign.left, style: TextStyle(fontSize: 18.0,color: Theme.of(context).accentColor),),
         )
     );
   }

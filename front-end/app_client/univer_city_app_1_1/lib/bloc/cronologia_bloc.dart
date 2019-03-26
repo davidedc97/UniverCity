@@ -1,5 +1,6 @@
 import 'package:univer_city_app_1_1/elements/cronologia_entry.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:rxdart/rxdart.dart';
 
 ///
 /// logica per salvare la cronologia dei documenti visitati nell'app
@@ -8,53 +9,86 @@ import 'package:shared_preferences/shared_preferences.dart';
 ///
 
 class CronologiaBloc {
-
+  ///
+  /// chiave con cui salvo in local storage le entry della cronologia
+  ///
   static const String CRONOLOGIA_KEY = 'cronologia';
-  final List<CronologiaEntry> _cronologia = [];
+
+  ///
+  /// Lista che contiene le entry visualizzate nella pagina drawer
+  /// della cronologia
+  ///
+  final List<CronologiaEntry> _crono = [];
+
+  ///
+  /// Stream per la lista in app
+  ///
+  final BehaviorSubject<List<CronologiaEntry>> _cronologia =
+      BehaviorSubject<List<CronologiaEntry>>();
 
   ///
   /// questo metodo è invocato durante l'inizializzazione del [BlocProvider]
-  /// riceve come input la lista di tuute le [CronologiaEntry] per poi metterle
-  /// all'interno della lista [_cronologia]
+  /// legge le entry salvate e le reiserisce all'interno della lista [_crono]
   ///
-
-  init(List<CronologiaEntry> entries) async{
+  init() async {
     SharedPreferences cron = await SharedPreferences.getInstance();
     List<String> cr = cron.getStringList(CronologiaBloc.CRONOLOGIA_KEY);
-
-    Map<String, CronologiaEntry> entriesMap = Map();
-    for(CronologiaEntry e in entries){
-      entriesMap.putIfAbsent(e.uuid, ()=>e);
-    }
-    if(cr != null){
-      for(String c in cr){
-        CronologiaEntry entry = entriesMap[c];
-        if(entry != null){
-          _cronologia.add(entry);
-        }
+    if (cr != null) {
+      for (String e in cr) {
+        addInCronologia(CronologiaEntry.fromStored(e));
       }
     }
-    _cronologia.sort((CronologiaEntry a, CronologiaEntry b){
-      return a.stamp.compareTo(b.stamp);
-    });
   }
 
-  List<CronologiaEntry> get cronologia => _cronologia;
+  ///
+  /// getter agli stream e sink
+  ///
+  Observable<List<CronologiaEntry>> get cronologia => _cronologia.stream;
+  Function get onCronologiaChanged => _cronologia.sink.add;
 
-  addInCronologia(CronologiaEntry e){
-    this._cronologia.add(e);
-    _cronologia.sort((CronologiaEntry a, CronologiaEntry b){
-      return a.stamp.compareTo(b.stamp);
+  ///
+  /// Funzione per aggiungere un elemento in [_crono] controlla se è
+  /// gia presente quel documento in un entry precedente nella cronologia
+  /// in caso positivo elimina la vecchia entry e aggiunge la nuova
+  /// altrimenti aggiunge senza modificare la lista il documento.
+  ///
+  addInCronologia(CronologiaEntry e) {
+    if(!_crono.any((s)=>s.uuid==e.uuid)){
+      /// non è presente nessun elemento e in [_crono]
+      _crono.add(e);
+    }else{
+      /// in [_crono] è presente un elemento uguale a e
+      _crono.remove(_crono.firstWhere((s)=>s.uuid==e.uuid));
+      _crono.add(e);
+    }
+    /// successivamente riordina la lista dalla entry piu recente
+    /// alla piu vecchia
+    _crono.sort((CronologiaEntry a, CronologiaEntry b) {
+      return a.stamp.isBefore(b.stamp) ? 1 : 0;
     });
+    /// poi aggiunge [_crono], la lista con le entry della cronologia
+    /// allo stream che poi verra usato nello streamBuilder della pagina cronologia
+    onCronologiaChanged(_crono);
+    ///salva tutto in locale
     _save();
   }
 
-  _save(){
-    SharedPreferences.getInstance().then((SharedPreferences cr){
-      List<String> crList = _cronologia.map((CronologiaEntry e)=> e.uuid).toList();
+  _save() async {
+    SharedPreferences.getInstance().then((SharedPreferences cr) {
+      ///
+      /// Trasformo la lista [_crono] in una list<String> per poterla salvare
+      /// in locale
+      ///
+      List<String> crList = _crono
+          .map((CronologiaEntry e) =>
+              '${e.uuid};${e.titolo};${e.proprietario};${e.stamp.microsecond};${e.stamp.millisecond};${e.stamp.second};${e.stamp.minute};${e.stamp.hour};${e.stamp.day};${e.stamp.month};${e.stamp.year}')
+          .toList();
+      /// salvo effettivamente la lista in locale
       cr.setStringList(CronologiaBloc.CRONOLOGIA_KEY, crList);
     });
   }
 
-
+  dispose(){
+    _cronologia.close();
+  }
 }

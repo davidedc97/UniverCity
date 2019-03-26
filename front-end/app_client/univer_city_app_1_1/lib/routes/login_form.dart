@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:univer_city_app_1_1/elements/button_login.dart';
 import 'package:univer_city_app_1_1/http_handling/http_handler.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginFormScaffold extends StatelessWidget {
   @override
@@ -106,7 +107,8 @@ login(BuildContext context, String id, String pw)async{
           );
         });
   } else {
-    //TODO da testare
+
+    Future<SharedPreferences> loginFlag =  SharedPreferences.getInstance();
     debugPrint('email: $id, pass: $pw ');
     showDialog(
         context: context,
@@ -140,9 +142,15 @@ login(BuildContext context, String id, String pw)async{
     debugPrint(res.toString());
 
     if(res==1){
-
-      debugPrint('dentro if');
-      Navigator.pushNamedAndRemoveUntil(context, '/home', (Route<dynamic> route) => false);
+      loginFlag.then((sp){
+        int flag = sp.getInt('intro');
+        if(flag==null){
+          sp.setInt('intro', 1);
+          Navigator.pushNamedAndRemoveUntil(context, '/intro', (Route<dynamic> route) => false);
+        }else{
+          Navigator.pushNamedAndRemoveUntil(context, '/home', (Route<dynamic> route) => false);
+        }
+      });
     }else{
       Navigator.of(context).pop();
       Navigator.pushNamed(context, '/loginForm');

@@ -10,7 +10,10 @@ class CronologiaBlocProvider extends InheritedWidget {
 
   CronologiaBlocProvider({Key key, Widget child})
       : bloc = CronologiaBloc(),
-        super(key: key, child: child);
+        super(key: key, child: child){
+      /// All the entries are loaded, we can fill in the [favoritesBloc]...
+      bloc.init();
+  }
 
   static CronologiaBloc of(BuildContext context) {
     return (context.inheritFromWidgetOfExactType(CronologiaBlocProvider)

@@ -1,6 +1,10 @@
 import 'package:univer_city_app_1_1/elements/elements.dart';
+import 'dart:async';
 
 class DocSearch extends SearchDelegate<Document> {
+
+
+
   final docTest = [
     Document('Telecomunicazioni', 'Cuomo',
         '550e8400-e29b-41d4-a716-446655440000', 'O'),
@@ -89,36 +93,61 @@ class DocSearch extends SearchDelegate<Document> {
     return null;
   }
 
+  Timer _searchTimer;
+
+  cancelSearch() {
+    if (_searchTimer != null && _searchTimer.isActive) {
+      /// rimuove il vecchio timer.
+      _searchTimer.cancel();
+      _searchTimer = null;
+    }
+  }
+  updateSearch() {
+    cancelSearch();
+    /// Un [Timer] è usato per evitare richieste inutili
+    _searchTimer = Timer(Duration(milliseconds: query.isEmpty ? 0 : 350), () {
+      /// TODO qui funzione fetch per ricerca
+      debugPrint('cerca');
+
+    });
+  }
+
+
   @override
   Widget buildSuggestions(BuildContext context) {
-    // show when search for anythings
-    final risultatiList = query.isEmpty
+    updateSearch();
+    List<Document> risultatiList  = query.isEmpty
         ? recentDocs
         : docTest
-            .where((p) => p.title.toLowerCase().contains(query.toLowerCase()))
-            .toList();
+        .where((p) => p.title.toLowerCase().contains(query.toLowerCase()))
+        .toList();
+
+    // show when search for anythings
+
+
 
     return ListView.builder(
       itemBuilder: (context, index) => index == 0
           ? Container(child: Filtri())
           : ListTile(
-              leading: query.isEmpty
-                  ? Icon(Icons.history)
-                  : Icon((risultatiList[index - 1].type == 'O')
-                      ? Icons.description
-                      : Icons.art_track),
-              title: Text(risultatiList[index - 1].title),
-              onTap: () {
-                showDialog(
-                    context: context,
-                    builder: (context) => buildDocDialog(
-                        context,
-                        risultatiList[index - 1].title,
-                        risultatiList[index - 1].creator,
-                        risultatiList[index - 1].uuid));
-              },
-            ),
+        leading: query.isEmpty
+            ? Icon(Icons.history)
+            : Icon((risultatiList[index - 1].type == 'O')
+            ? Icons.description
+            : Icons.art_track),
+        title: Text(risultatiList[index - 1].title),
+        onTap: () {
+          showDialog(
+              context: context,
+              builder: (context) => buildDocDialog(
+                  context,
+                  risultatiList[index - 1].title,
+                  risultatiList[index - 1].creator,
+                  risultatiList[index - 1].uuid));
+        },
+      ),
       itemCount: risultatiList.length + 1,
     );
+
   }
 }

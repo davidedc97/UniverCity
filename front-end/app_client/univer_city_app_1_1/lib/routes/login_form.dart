@@ -3,84 +3,110 @@ import 'package:univer_city_app_1_1/elements/button_login.dart';
 import 'package:univer_city_app_1_1/http_handling/http_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class LoginFormScaffold extends StatelessWidget {
+class LoginFormScaffold extends StatefulWidget {
+  @override
+  _LoginFormScaffoldState createState() => _LoginFormScaffoldState();
+}
+
+class _LoginFormScaffoldState extends State<LoginFormScaffold> {
+  bool _obscureText = true;
+
+  void _toggle() {
+    setState(() {
+      _obscureText = !_obscureText;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     String _usem, _pw;
+
+    print('b, ${_obscureText.toString()}');
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Stack(children: <Widget>[
-            Positioned(
-                left: 8,
-                top: 32,
-                child: IconButton(
-                    icon: Icon(Icons.arrow_back),
-                    onPressed: () => Navigator.of(context).pushNamedAndRemoveUntil('/', (Route<dynamic> route) => false))),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 64),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: <Widget>[
-                  Text(
-                    'LOGIN',
-                    style: TextStyle(fontSize: 18),
-                  ),
-                  SizedBox(
-                    height: 24,
-                  ),
-                  TextField(
-                      onChanged: (value) {
-                        //bloc.email.add(value);
-                        _usem = value;
-                      },
-                      textAlign: TextAlign.center,
-                      decoration: InputDecoration(
-                        hintText: 'User o Email',
-                          focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: Theme.of(context).accentColor))
-                      )),
-                  TextField(
-                      obscureText: true,
-                      onChanged: (value) {
-                        _pw = value;
-                      },
-                      textAlign: TextAlign.center,
-                      decoration: InputDecoration(
-                        border: InputBorder.none,
-                        hintText: 'Password',
-                          focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: Theme.of(context).accentColor))
-                      )),
-                  SizedBox(
-                    height: 42,
-                  ),
-                  //################################################################ LOGIN BUTTON
-                  BtnLogin(context,
-                    color: Theme.of(context).accentColor,
-                    title: 'LOGIN',
-                    onPressed: () {
-                      login(context, _usem ?? '', _pw ?? '');
-                    },
-                  ),
-                  //################################################## LOGIN if already have an account
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Text('Password dimenticata ?'),
-                      FlatButton(
-
-                        ///Login per ora ti rimanda nell'home page
-                        ///Poi ci saranno da gestire piu cose
-                          onPressed: () {
-                            debugPrint('Recover');
-                          },
-                          child: Text('RECUPERA',
-                              style: TextStyle(color: Theme.of(context).accentColor)))
-                    ],
-                  )
-                ],
+        Positioned(
+            left: 8,
+            top: 32,
+            child: IconButton(
+                icon: Icon(Icons.arrow_back),
+                onPressed: () => Navigator.of(context).pushNamedAndRemoveUntil(
+                    '/', (Route<dynamic> route) => false))),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 64),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: <Widget>[
+              Text(
+                'LOGIN',
+                style: TextStyle(fontSize: 18),
               ),
-            ),
-          ]),
+              SizedBox(
+                height: 24,
+              ),
+              TextField(
+                  onChanged: (value) {
+                    //bloc.email.add(value);
+                    _usem = value;
+                  },
+                  textAlign: TextAlign.center,
+                  decoration: InputDecoration(
+                      hintText: 'User',
+                      focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(
+                              color: Theme.of(context).accentColor)))),
+              TextField(
+                  obscureText: _obscureText,
+                  onChanged: (value) {
+                    _pw = value;
+                  },
+                  textAlign: TextAlign.center,
+                  decoration: InputDecoration(
+                      suffix: GestureDetector(child: Text(
+                        _obscureText
+                            ? 'mostra'
+                            : 'nascondi',
+                        style:TextStyle(color: Theme.of(context).accentColor,fontSize: 14)
+                      ),onTap: _toggle,),
+                      border: InputBorder.none,
+                      hintText: '            Password',
+                      focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(
+                              color: Theme.of(context).accentColor)))),
+              SizedBox(
+                height: 42,
+              ),
+              //################################################################ LOGIN BUTTON
+              BtnLogin(
+                context,
+                color: Theme.of(context).accentColor,
+                title: 'LOGIN',
+                onPressed: () {
+                  login(context, _usem ?? '', _pw ?? '');
+                },
+              ),
+              //################################################## LOGIN if already have an account
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text('Password dimenticata ?'),
+                  FlatButton(
+
+                      ///Login per ora ti rimanda nell'home page
+                      ///Poi ci saranno da gestire piu cose
+                      onPressed: () {
+                        debugPrint('Recover');
+                      },
+                      child: Text('RECUPERA',
+                          style:
+                              TextStyle(color: Theme.of(context).accentColor)))
+                ],
+              )
+            ],
+          ),
+        ),
+      ]),
     );
   }
 }
@@ -88,7 +114,7 @@ class LoginFormScaffold extends StatelessWidget {
 ///
 /// controllo form
 ///
-login(BuildContext context, String id, String pw)async{
+login(BuildContext context, String id, String pw) async {
   if (id == '' || pw == '') {
     Navigator.pushNamed(context, '/loginForm');
     return showDialog(
@@ -107,14 +133,15 @@ login(BuildContext context, String id, String pw)async{
           );
         });
   } else {
-
-    Future<SharedPreferences> loginFlag =  SharedPreferences.getInstance();
+    Future<SharedPreferences> loginFlag = SharedPreferences.getInstance();
     debugPrint('email: $id, pass: $pw ');
     showDialog(
         context: context,
-        builder: (context){
+        builder: (context) {
           return AlertDialog(
-            title: Text("Un attimo che controlliamo!",),
+            title: Text(
+              "Un attimo che controlliamo!",
+            ),
             content: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               mainAxisSize: MainAxisSize.min,
@@ -135,28 +162,29 @@ login(BuildContext context, String id, String pw)async{
                   child: Text('Close'))
             ],
           );
-        }
-    );
+        });
 
     int res = await HttpHandler.validateLogin(id, pw, "0");
     debugPrint(res.toString());
 
-    if(res==1){
-      loginFlag.then((sp){
+    if (res == 1) {
+      loginFlag.then((sp) {
         int flag = sp.getInt('intro');
-        if(flag==null){
+        if (flag == null) {
           sp.setInt('intro', 1);
-          Navigator.pushNamedAndRemoveUntil(context, '/intro', (Route<dynamic> route) => false);
-        }else{
-          Navigator.pushNamedAndRemoveUntil(context, '/home', (Route<dynamic> route) => false);
+          Navigator.pushNamedAndRemoveUntil(
+              context, '/intro', (Route<dynamic> route) => false);
+        } else {
+          Navigator.pushNamedAndRemoveUntil(
+              context, '/home', (Route<dynamic> route) => false);
         }
       });
-    }else{
+    } else {
       Navigator.of(context).pop();
       Navigator.pushNamed(context, '/loginForm');
       showDialog(
           context: context,
-          builder: (context){
+          builder: (context) {
             return AlertDialog(
               title: Text('Ops !'),
               content: (res == -1)
@@ -170,8 +198,7 @@ login(BuildContext context, String id, String pw)async{
                     child: Text('Close'))
               ],
             );
-          }
-      );
+          });
     }
   }
 }

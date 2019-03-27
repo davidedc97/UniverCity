@@ -23,12 +23,13 @@ class CompFormBloc{
 
   // Validators
   Observable<String> get email => _email.stream.transform(validateEmail);
-  Observable<String> get password => _password.stream.transform(validatePassword);
   Observable<String> get userName => _userName.stream.transform(validateUserName);
   Observable<String> get nome => _nome.stream.transform(validateNome);
   Observable<String> get cognome => _cognome.stream.transform(validateCognome);
   Observable<String> get facolta => _facolta.stream.transform(validateFacolta);
   Observable<String> get universita => _universita.stream.transform(validateUniversita);
+  Observable<String> get password => _password.stream.transform(validatePassword);
+
 
   String get emailValue => _email.value;
   String get passwordValue => _password.value;

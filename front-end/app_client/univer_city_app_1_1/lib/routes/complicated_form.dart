@@ -9,6 +9,14 @@ class CompFormScaffold extends StatefulWidget {
 
 class _CompFormScaffoldState extends State<CompFormScaffold> {
 
+  bool _obscureText = true;
+
+  void _toggle() {
+    setState(() {
+      _obscureText = !_obscureText;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final CompFormBloc bloc = CompFormBlocProvider.of(context);
@@ -93,10 +101,16 @@ class _CompFormScaffoldState extends State<CompFormScaffold> {
                           stream: bloc.password,
                           builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
                             return TextField(
-                              obscureText: true,
+                              obscureText: _obscureText,
                               textAlign: TextAlign.center,
                               decoration: InputDecoration(
-                                  hintText: 'Password',
+                                  suffix: GestureDetector(child: Text(
+                                      _obscureText
+                                          ? 'mostra'
+                                          : 'nascondi',
+                                      style:TextStyle(color: Theme.of(context).accentColor,fontSize: 14)
+                                  ),onTap: _toggle,),
+                                  hintText: '            Password',
                                   errorText: snapshot.error,
                                   focusedBorder: UnderlineInputBorder(
                                       borderSide: BorderSide(

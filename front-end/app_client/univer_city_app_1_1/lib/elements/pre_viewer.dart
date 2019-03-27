@@ -88,12 +88,12 @@ Widget buildDocDialog(BuildContext context, String titolo,String proprietario, S
                   height: 50,
                   width: 200,
                   child: FloatingActionButton.extended(
-                    backgroundColor: (tBloc.state)?Color(0xFF393E46):Colors.grey[300],
+                    backgroundColor: (tBloc.state)?Color(0xFF0E688D):Color(0xFF147ECC),
                     onPressed: () {
                       cBloc.addInCronologia(CronologiaEntry(uuid, titolo, proprietario));
                     },
-                    icon: Icon(Icons.play_arrow),
-                    label: Text('LEGGI'),
+                    icon: Icon(Icons.play_arrow, color: Colors.white,),
+                    label: Text('LEGGI', style: TextStyle(color: Colors.white),),
                   ),
                 ),
               ],

@@ -152,6 +152,7 @@ class _HomeUniverCityState extends State<HomeUniverCity> {
     showSearch(context: context, delegate: DocSearch(CronologiaSearchBlocProvider.of(context), FiltriBlocProvider.of(context)));
   }
   _showProfilo(context){
-    Navigator.of(context).pushNamed('/profilo');
+    Navigator.of(context).pushNamed('/profilo',arguments: <String, String>{
+    'userName': SessionUser().user??'sessionNotInit',});
   }
 }

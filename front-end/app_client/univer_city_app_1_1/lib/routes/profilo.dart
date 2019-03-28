@@ -40,41 +40,42 @@ final mashTest = [
 
 class Profilo extends StatelessWidget {
   final String uuid = '550e8400-e29b-41d4-a716-446655440017',
-      userName = 'userName';
+      userName;
+  Profilo(this.userName);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: CustomScrollView(
-      slivers: <Widget>[
-        SliverAppBar(
-          floating: true,
-          pinned: false,
-          flexibleSpace: FlexibleSpaceBar(
-            centerTitle: true,
-            title: Text(userName,
-                style: TextStyle(
-                  fontSize: 16.0,
-                )),
-          ),
-        ),
-        SliverList(
-          delegate: SliverChildBuilderDelegate(
-            (context, index) {
-              return Column(
-                children: <Widget>[
-                  HeadProfile(SessionUser().user ?? 'UserName', 'ingMerendine', 'https://scontent-fco1-1.xx.fbcdn.net/v/t1.0-9/31674176_1973734962646218_3870591241158656000_n.jpg?_nc_cat=103&_nc_ht=scontent-fco1-1.xx&oh=912ceebe8084f258395a3dca2caf6f12&oe=5D23DF90'),
-                  LevelBar(33670),
-                  ProfileBio('\nLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'),
-                  ShowNoteClp('Appunti caricati',docTest),
-                  ShowNoteClp('Mashup creati',mashTest),
-                ],
-              );
-            },
-            childCount: 1,
-          ),
-        )
-      ],
-    ));
+          slivers: <Widget>[
+            SliverAppBar(
+              floating: true,
+              pinned: false,
+              flexibleSpace: FlexibleSpaceBar(
+                centerTitle: true,
+                title: Text(userName,
+                    style: TextStyle(
+                      fontSize: 16.0,
+                    )),
+              ),
+            ),
+            SliverList(
+              delegate: SliverChildBuilderDelegate(
+                    (context, index) {
+                  return Column(
+                    children: <Widget>[
+                      HeadProfile(userName ?? 'UserName', 'ingMerendine', 'https://scontent-fco1-1.xx.fbcdn.net/v/t1.0-9/31674176_1973734962646218_3870591241158656000_n.jpg?_nc_cat=103&_nc_ht=scontent-fco1-1.xx&oh=912ceebe8084f258395a3dca2caf6f12&oe=5D23DF90'),
+                      LevelBar(33670),
+                      ProfileBio('\nLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'),
+                      ShowNoteClp('Appunti caricati',docTest),
+                      ShowNoteClp('Mashup creati',mashTest),
+                    ],
+                  );
+                },
+                childCount: 1,
+              ),
+            )
+          ],
+        ));
   }
 }
-

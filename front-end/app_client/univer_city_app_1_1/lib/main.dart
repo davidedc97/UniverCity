@@ -148,9 +148,10 @@ class _UniverCityState extends State<UniverCity> {
           );
         });
       case '/profilo':
+        final userName = (settings.arguments as Map)['userName'];
         return MaterialPageRoute(builder: (context) {
           return ProfiloBlocProvider(
-            child: Profilo(),
+            child: Profilo(userName),
           );
         });
       case '/upload':

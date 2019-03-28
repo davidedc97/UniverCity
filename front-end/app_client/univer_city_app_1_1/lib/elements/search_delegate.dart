@@ -133,7 +133,7 @@ class DocSearch extends SearchDelegate<Document> {
     List<User> risultatiUtenti = userTest.where((u)=>u.user.toLowerCase().contains(query.toLowerCase())).toList();
     List<String> crono = bloc.cronologiaValue.map((e) => e.query).toList();
     // show when search for anythings
-    
+
     int size;
     if(query.isEmpty){size = crono.length+1;}
     if(query.isNotEmpty && fBloc.filtriValue=='Utente'){size =  risultatiUtenti.length+1;}
@@ -166,7 +166,8 @@ class DocSearch extends SearchDelegate<Document> {
                 return ListTile(
                   leading: Icon(Icons.account_circle),
                   title: Text(risultatiUtenti[i-1].user),
-                  onTap: () {},
+                  onTap: () {Navigator.of(context).pushNamed('/profilo',arguments: <String, String>{
+                  'userName': risultatiUtenti[i-1].user,});},
                 );
               }else{
                 return ListTile(

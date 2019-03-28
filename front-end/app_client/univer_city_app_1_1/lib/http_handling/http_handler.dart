@@ -12,13 +12,19 @@ class HttpHandler {
   static const _URL = "https://ogv7kvalpf.execute-api.eu-west-1.amazonaws.com/dev";
   static const _FAKE_LOG_URL = "https://v1uu1cu9ld.execute-api.eu-west-1.amazonaws.com/alpha";
   static const _DOCUMENT_SERVER = "/document";
-  static const _SEARCH_SERVER = "/search";
+  static const _SEARCH_USER_SERVER = "/searchUser";
+  static const _SEARCH_DOC_SERVER = "/searchDocument";
+  static const _USER_DATA = "/userData";
+  static const _USER_IMG = "/userImg";
+  static const _USER_ADD_EXP = "/addUserExperience";
+  static const _USER_BIO = "/userBio";
   static const _LOGIN_SERVER = "/userLog";
   static const _REG_SERVER = "/userReg";
   static const _LIKE_SERVER = "/like";
   static const _MASHUP_SERVER = "/mashup";
 
-
+  //TODO (Davide) FUNZIONI DA RIVEDERE: getMyUserById, getOtherUserById
+  
                                 /*########     USER  HANDLING     ########*/
 
   /*
@@ -71,9 +77,7 @@ class HttpHandler {
     ** The value of flag must be "0" (user is login in with username) or "1" (user is login in with email)
   */
   static Future<int> validateLogin(String user, String pw,String flag) async {
-
     SessionUser().setUser = user;
-
 
     final response =
       await http.post(
@@ -86,7 +90,7 @@ class HttpHandler {
             );
     print(response.statusCode);
     print('BODY :' + response.body);
-    //return 1;
+
     if(response.statusCode == 200) {
       _sessionToken = response.headers['token'];
       SessionUser().setToken = _sessionToken;
@@ -100,6 +104,136 @@ class HttpHandler {
     }
     else {
       throw ServerException.withCode(response.statusCode);
+    }
+  }
+
+  static Future<User> getUserData(String user) async {
+    final response =
+      await http.get(
+        _URL+_USER_DATA + "?username=" + user,
+        headers:{
+          'Authorization':_sessionToken,
+          'Content-type' : 'application/json',
+          'Accept': 'application/json',
+        }
+    );
+
+    print(response.statusCode);
+    print('BODY :' + response.body);
+
+    if(response.statusCode == 200) {
+      return User.metadataFromJson(json.decode(response.body));
+    }
+    else if(response.statusCode == 404) {
+      print("############### UTENTE NON TROVATO");
+    }
+    else if(response.statusCode == 500) {
+      print("############### SERVER INTERNAL ERROR");
+    }
+
+  }
+
+  static Future<Uint8List> getUserImg(String user) async {
+    final response =
+    await http.get(
+        _URL+_USER_IMG + "?username=" + user,
+        headers:{
+          'Authorization':_sessionToken,
+          'Content-type' : 'application/json',
+          'Accept': 'application/img',
+        }
+    );
+
+    print(response.statusCode);
+    print('BODY :' + response.body);
+
+    if(response.statusCode == 200) {
+      return response.bodyBytes;
+    }
+    else if(response.statusCode == 500) {
+      print("############### SERVER INTERNAL ERROR");
+    }
+
+  }
+
+  static Future<int> changeUserImg(String user, String file) async {
+    final response =
+    await http.put(
+        _URL + _USER_IMG,
+        headers:{
+          'Authorization':_sessionToken,
+          'Content-type' : 'application/json',
+          'Accept': 'application/json',
+        },
+        body: json.encode({
+          "username": user,
+          "file": file
+        }));
+    if(response.statusCode == 200){
+      // img succesfully uploaded
+      return 1;
+    }
+    else if(response.statusCode == 400){
+      // bad input
+      return -1;
+    }
+    else if(response.statusCode == 500){
+      // server internal error
+      return -2;
+    }
+  }
+
+  static Future<int> addUserExp(String user, int expToAdd) async {
+    final response =
+    await http.put(
+        _URL + _USER_ADD_EXP,
+        headers:{
+          'Authorization':_sessionToken,
+          'Content-type' : 'application/json',
+          'Accept': 'application/json',
+        },
+        body: json.encode({
+          "username": user,
+          "xp": expToAdd
+        }));
+    if(response.statusCode == 200){
+      // exp succesfully added
+      return 1;
+    }
+    else if(response.statusCode == 400){
+      // bad input
+      return -1;
+    }
+    else if(response.statusCode == 500){
+      // server internal error
+      return -2;
+    }
+  }
+
+  static Future<int> changeUserBio(String user, String bio) async {
+    final response =
+    await http.put(
+        _URL + _USER_BIO,
+        headers:{
+          'Authorization':_sessionToken,
+          'Content-type' : 'application/json',
+          'Accept': 'application/json',
+        },
+        body: json.encode({
+          "username": user,
+          "bio": bio
+        }));
+    if(response.statusCode == 200){
+      // bio succesfully uploaded
+      return 1;
+    }
+    else if(response.statusCode == 400){
+      // bad input
+      return -1;
+    }
+    else if(response.statusCode == 500){
+      // server internal error
+      return -2;
     }
   }
 
@@ -157,8 +291,9 @@ class HttpHandler {
 
     print(res.statusCode);
 
-    if (res.statusCode == 200) {
-      //debugPrint('up1');
+    if (res.statusCode == 201) {
+      // document created
+      // nel response.body viene tornato id, titolo, tipo e creatore del documento
       return 1;
     }
     else if (res.statusCode == 400){
@@ -171,16 +306,16 @@ class HttpHandler {
     }
     else{
       //debugPrint('up4');
-      return -3;//throw ServerException.withCode(response.statusCode);
+      return -3;
     }
   }
 
 
-  static Future<Uint8List> getDocumentById( String docId) async{
+  static Future<Uint8List> getDocumentById( String docId ) async{
     final response =
       await http.get(
           _URL + _DOCUMENT_SERVER + "?id=" + docId,
-          headers: {'Authorization':_sessionToken ,'Content-type' : 'application/json', 'Accept': 'application/json'}
+          headers: {'Authorization':_sessionToken ,'Content-type' : 'application/json', 'Accept': 'application/pdf'} //qui era "application/json" e funzionava
           );
 
     if(response.statusCode == 200) {
@@ -199,29 +334,62 @@ class HttpHandler {
   */
 
   static Future<List<dynamic>> search(String query, String typeFlag) async {
-    final response =
-      await http.get(
-          _URL + _SEARCH_SERVER + "?searchString=" + query.toString() + "&flag=" + typeFlag.toString(),
-          headers: {'Authorization':_sessionToken}
-          );
 
-    if(response.statusCode == 200){
-      if(typeFlag == "0") {
-        var num = json.decode(response.body)["body"]["num"];
-        List<dynamic> docs = json.decode(response.body)["body"]["docs"];
-        List<Document> res = Document.parseJsonList(num, docs);
-        return res;
-      }
-      else if(typeFlag == "1"){
-        var num = json.decode(response.body)["body"]["num"];
-        List<dynamic> users = json.decode(response.body)["body"]["docs"];
-        List<User> res = User.parseJsonList(num, users);
-        return res;
-      }
+    if(typeFlag == "0") {
+      var res = searchDocument(query);
+      return res;
+    }
+    else if(typeFlag == "1"){
+      var res = searchUser(query);
+      return res;
     }
     else{
-      throw ServerException.withCode(response.statusCode);
+      print("######## BAD FLAG INPUT");
     }
+  }
+
+  static Future<List<Document>> searchDocument(String query) async {
+    final response =
+        await http.get(
+          _URL + _SEARCH_DOC_SERVER + "?searchString=" + query.toString(),
+          headers: {'Authorization':_sessionToken}
+        );
+
+    if(response.statusCode == 200){
+      var num = json.decode(response.body)["body"]["num"];
+      List<dynamic> docs = json.decode(response.body)["body"]["docs"];
+      List<Document> res = Document.parseJsonList(num, docs);
+      return res;
+    }
+    else if(response.statusCode == 400){
+      print("######### BAD INPUT PARAMENTER");
+    }
+    else if(response.statusCode == 500){
+      print("######### SERVER INTERNAL ERROR");
+    }
+
+  }
+
+  static Future<List<User>> searchUser(String query) async {
+    final response =
+    await http.get(
+        _URL + _SEARCH_USER_SERVER + "?searchString=" + query.toString(),
+        headers: {'Authorization':_sessionToken}
+    );
+
+    if(response.statusCode == 200){
+      var num = json.decode(response.body)["body"]["num"];
+      List<dynamic> users = json.decode(response.body)["body"]["users"];
+      List<User> res = User.parseJsonList(num, users);
+      return res;
+    }
+    else if(response.statusCode == 400){
+      print("######### BAD INPUT PARAMENTER");
+    }
+    else if(response.statusCode == 500){
+      print("######### SERVER INTERNAL ERROR");
+    }
+
   }
 
 

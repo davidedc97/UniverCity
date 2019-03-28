@@ -133,19 +133,15 @@ class DocSearch extends SearchDelegate<Document> {
     List<User> risultatiUtenti = userTest.where((u)=>u.user.toLowerCase().contains(query.toLowerCase())).toList();
     List<String> crono = bloc.cronologiaValue.map((e) => e.query).toList();
     // show when search for anythings
-    bool _status = query.isEmpty;
-
-
-    String t = 'vuoto';
-    if(query.isEmpty){t='vuoto';}
-    if(query.isNotEmpty){t='pieno';}
+    
+    int size;
+    if(query.isEmpty){size = crono.length+1;}
+    if(query.isNotEmpty && fBloc.filtriValue=='Utente'){size =  risultatiUtenti.length+1;}
+    if(query.isNotEmpty && fBloc.filtriValue!='Utente'){size =  risultatiList.length+1;}
     return StreamBuilder(
       stream: fBloc.filtri,
       builder: (context, snapshot){
-        int size;
-        if(query.isEmpty){size = crono.length+1;}
-        if(query.isNotEmpty && fBloc.filtriValue=='Utente'){size =  risultatiUtenti.length+1;}
-        if(query.isNotEmpty && fBloc.filtriValue!='Utente'){size =  risultatiList.length+1;}
+
         return ListView.builder(
           itemBuilder: (context, i){
             if (i == 0){return Container(child: Filtri());}
@@ -156,9 +152,9 @@ class DocSearch extends SearchDelegate<Document> {
               ///
               return ListTile(
                 leading: Icon(Icons.history),
-                title: Text(crono[i - 1]),
+                title: Text(crono[i-1]),
                 onTap: () {
-                  query = crono[i - 1];
+                  query = crono[i-1];
                 },
               );
             }
@@ -169,15 +165,15 @@ class DocSearch extends SearchDelegate<Document> {
               if (fBloc.filtriValue == 'Utente') {
                 return ListTile(
                   leading: Icon(Icons.account_circle),
-                  title: Text(risultatiUtenti[i - 1].user),
+                  title: Text(risultatiUtenti[i-1].user),
                   onTap: () {},
                 );
               }else{
                 return ListTile(
-                  leading: Icon(risultatiList[i - 1].type == 'O'
+                  leading: Icon(risultatiList[i-1].type == 'O'
                       ? Icons.description
                       : Icons.art_track),
-                  title: Text(risultatiList[i - 1].title),
+                  title: Text(risultatiList[i-1].title),
                   onTap: () {
                     showDialog(
                         context: context,

@@ -39,7 +39,6 @@ final mashTest = [
 ];
 
 class Profilo extends StatelessWidget {
-  //TODO creare un bloc per storere nella sessione uuid e userName dell'utente
   final String uuid = '550e8400-e29b-41d4-a716-446655440017',
       userName = 'userName';
   @override
@@ -66,8 +65,8 @@ class Profilo extends StatelessWidget {
                   HeadProfile(SessionUser().user ?? 'UserName', 'ingMerendine', 'https://scontent-fco1-1.xx.fbcdn.net/v/t1.0-9/31674176_1973734962646218_3870591241158656000_n.jpg?_nc_cat=103&_nc_ht=scontent-fco1-1.xx&oh=912ceebe8084f258395a3dca2caf6f12&oe=5D23DF90'),
                   LevelBar(33670),
                   ProfileBio('\nLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'),
-                  ShowDoc(docTest),
-                  ShowMashups(mashTest)
+                  ShowNoteClp('Appunti caricati',docTest),
+                  ShowNoteClp('Mashup creati',mashTest),
                 ],
               );
             },

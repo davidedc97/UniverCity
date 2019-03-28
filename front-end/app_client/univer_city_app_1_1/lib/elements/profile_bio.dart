@@ -32,6 +32,7 @@ class ProfileBio extends StatelessWidget {
               ),
               subtitle: Text(bio),
             ),
+            SizedBox(height: 16,)
           ],
         ),
       ),

@@ -83,7 +83,7 @@ class HttpHandler {
           'Accept': 'application/json',
         },
         body:json.encode({"username":user,"pass": pw})
-            ); //TODO "flag": flag
+            );
     print(response.statusCode);
     print('BODY :' + response.body);
     //return 1;
@@ -130,7 +130,7 @@ class HttpHandler {
 
 
   /*
-    ** This function returns: TODO sistema alertdialog form login o registrazione (xTiziano)
+    ** This function returns:
     **   1 if the document is succesfully uploaded
     **  -1 if there's a bad input parameter
     **  -2 if there's an internal error

@@ -25,3 +25,26 @@ class CronologiaEntry {
         int.parse(cS[3]));//microsecondi
   }
 }
+
+class CronologiaSearchEntry {
+  String query;
+  DateTime stamp = DateTime.now();
+
+  CronologiaSearchEntry(this.query);
+
+  /// '${e.query};${e.stamp.microsecond};${e.stamp.millisecond};${e.stamp.second};${e.stamp.minute};${e.stamp.hour};${e.stamp.day};${e.stamp.month};${e.stamp.year}'
+  CronologiaSearchEntry.fromStored(String storedEntry) {
+    List<String> cS = storedEntry.split(';');
+    assert(cS.length==9);
+    this.query = cS[0];
+    this.stamp = DateTime(
+        int.parse(cS[8]),//anno
+        int.parse(cS[7]), //mese
+        int.parse(cS[6]), //giorno
+        int.parse(cS[5]), //ora
+        int.parse(cS[4]), //minuti
+        int.parse(cS[3]), //secondi
+        int.parse(cS[2]), //millisencondi
+        int.parse(cS[1]));//microsecondi
+  }
+}

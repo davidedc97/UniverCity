@@ -2,6 +2,8 @@ import 'package:univer_city_app_1_1/elements/elements.dart';
 import 'package:univer_city_app_1_1/body_drawer/body_drawer.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:univer_city_app_1_1/bloc/theme_bloc_provider.dart';
+import 'package:univer_city_app_1_1/bloc/filtri_bloc_provider.dart';
+import 'package:univer_city_app_1_1/bloc/cronologia_search_bloc_provider.dart';
 
 class HomeUniverCity extends StatefulWidget {
   final drawerEntry = [
@@ -28,7 +30,6 @@ class _HomeUniverCityState extends State<HomeUniverCity> {
         /// TODO insert fetch data preferiti
         return Home();
       case 1:
-        /// TODO insert fetch data cronologia
         return Cronologia();
       case 2:
         /// TODO insert fetch data mashup
@@ -148,7 +149,7 @@ class _HomeUniverCityState extends State<HomeUniverCity> {
 ///
 ///
   _showSearch(context){
-    showSearch(context: context, delegate: DocSearch());
+    showSearch(context: context, delegate: DocSearch(CronologiaSearchBlocProvider.of(context), FiltriBlocProvider.of(context)));
   }
   _showProfilo(context){
     Navigator.of(context).pushNamed('/profilo');

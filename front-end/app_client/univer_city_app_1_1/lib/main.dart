@@ -7,6 +7,8 @@ import 'package:univer_city_app_1_1/bloc/profilo_bloc_provider.dart';
 import 'package:univer_city_app_1_1/bloc/upload_bloc_provider.dart';
 import 'package:univer_city_app_1_1/bloc/cronologia_bloc_provider.dart';
 import 'package:univer_city_app_1_1/bloc/theme_bloc_provider.dart';
+import 'package:univer_city_app_1_1/bloc/cronologia_search_bloc_provider.dart';
+import 'package:univer_city_app_1_1/bloc/filtri_bloc_provider.dart';
 import 'package:univer_city_app_1_1/routes/route.dart';
 
 // TODO test pdf online
@@ -15,8 +17,12 @@ void main() {
   // rende possibile solo l'orientamento verticale
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
       .then((_) {
-    runApp(ThemeBlocProvider(
-        child: CronologiaBlocProvider(child: new UniverCity())));
+    runApp(
+      ThemeBlocProvider(
+          child: CronologiaSearchBlocProvider(
+              child: CronologiaBlocProvider(
+                  child: FiltriBlocProvider(child: new UniverCity())))),
+    );
   });
 }
 
@@ -30,50 +36,50 @@ class _UniverCityState extends State<UniverCity> {
   Widget build(BuildContext context) {
     List<ThemeData> td = <ThemeData>[
       ThemeData(
-          brightness: Brightness.light,
-          primaryColor: Colors.white,
-          primaryColorBrightness: Brightness.light,
-          primaryColorLight: Colors.white,
-          primaryColorDark: Colors.grey[400],
-          canvasColor: Colors.grey[350],
-          accentColor: Color(0xffc02641),
-          accentColorBrightness: Brightness.dark,
-          scaffoldBackgroundColor: Colors.grey[100],
-          bottomAppBarColor: Colors.grey[300],
-          cardColor: Colors.white,
-          dividerColor: Color(0x1F000000),
-          highlightColor: Color(0x66BCBCBC),
-          splashColor: Color(0x66C8C8C8),
-          splashFactory: InkSplash.splashFactory,
-          selectedRowColor: Colors.grey[100],
-          unselectedWidgetColor: Colors.black54,
-          disabledColor: Colors.black38,
-          buttonColor: Colors.grey[300],
-          secondaryHeaderColor: Colors.grey[50],
-          textSelectionColor: Colors.grey[200],
-          cursorColor: Color(0xffc02641),
-          textSelectionHandleColor: Colors.grey[300],
-          backgroundColor: Colors.grey[200],
-          dialogBackgroundColor: Colors.white,
-          indicatorColor: Color(0xffc02641),
-          hintColor: Color(0x8A000000),
-          errorColor: Color(0xffc02641),
-          toggleableActiveColor: Color(0xffc02641),
-          textTheme: Typography.blackMountainView,
-          primaryTextTheme: Typography.blackMountainView,
-          accentTextTheme: Typography.whiteMountainView,
-          inputDecorationTheme: InputDecorationTheme(),
-          iconTheme: const IconThemeData(color: Colors.black87),
-          primaryIconTheme: const IconThemeData(color: Colors.black),
-          accentIconTheme: const IconThemeData(color: Colors.black),
-          tabBarTheme: const TabBarTheme(),
-          cardTheme: CardTheme(),
-          materialTapTargetSize: MaterialTapTargetSize.padded,
-          pageTransitionsTheme: const PageTransitionsTheme(),
-          appBarTheme: const AppBarTheme(),
-          bottomAppBarTheme: const BottomAppBarTheme(),
-          dialogTheme: const DialogTheme(),
-          typography: Typography(platform: defaultTargetPlatform),
+        brightness: Brightness.light,
+        primaryColor: Colors.white,
+        primaryColorBrightness: Brightness.light,
+        primaryColorLight: Colors.white,
+        primaryColorDark: Colors.grey[400],
+        canvasColor: Colors.grey[350],
+        accentColor: Color(0xffc02641),
+        accentColorBrightness: Brightness.dark,
+        scaffoldBackgroundColor: Colors.grey[100],
+        bottomAppBarColor: Colors.grey[300],
+        cardColor: Colors.white,
+        dividerColor: Color(0x1F000000),
+        highlightColor: Color(0x66BCBCBC),
+        splashColor: Color(0x66C8C8C8),
+        splashFactory: InkSplash.splashFactory,
+        selectedRowColor: Colors.grey[100],
+        unselectedWidgetColor: Colors.black54,
+        disabledColor: Colors.black38,
+        buttonColor: Colors.grey[300],
+        secondaryHeaderColor: Colors.grey[50],
+        textSelectionColor: Colors.grey[200],
+        cursorColor: Color(0xffc02641),
+        textSelectionHandleColor: Colors.grey[300],
+        backgroundColor: Colors.grey[200],
+        dialogBackgroundColor: Colors.white,
+        indicatorColor: Color(0xffc02641),
+        hintColor: Color(0x8A000000),
+        errorColor: Color(0xffc02641),
+        toggleableActiveColor: Color(0xffc02641),
+        textTheme: Typography.blackMountainView,
+        primaryTextTheme: Typography.blackMountainView,
+        accentTextTheme: Typography.whiteMountainView,
+        inputDecorationTheme: InputDecorationTheme(),
+        iconTheme: const IconThemeData(color: Colors.black87),
+        primaryIconTheme: const IconThemeData(color: Colors.black),
+        accentIconTheme: const IconThemeData(color: Colors.black),
+        tabBarTheme: const TabBarTheme(),
+        cardTheme: CardTheme(shape: BeveledRectangleBorder()),
+        materialTapTargetSize: MaterialTapTargetSize.padded,
+        pageTransitionsTheme: const PageTransitionsTheme(),
+        appBarTheme: const AppBarTheme(),
+        bottomAppBarTheme: const BottomAppBarTheme(),
+        dialogTheme: const DialogTheme(),
+        typography: Typography(platform: defaultTargetPlatform),
       ),
       ThemeData(
         brightness: Brightness.dark,
@@ -85,6 +91,7 @@ class _UniverCityState extends State<UniverCity> {
         scaffoldBackgroundColor: Colors.grey[850],
         bottomAppBarColor: Colors.grey[800],
         cardColor: Colors.grey[800],
+        cardTheme: CardTheme(shape: BeveledRectangleBorder()),
         dividerColor: Color(0x1FFFFFFF),
         cursorColor: Color(0xffffcc00),
         dialogBackgroundColor: Colors.grey[800],
@@ -155,6 +162,7 @@ class _UniverCityState extends State<UniverCity> {
         return MaterialPageRoute(builder: (context) {
           return Intro();
         });
+
       /// in caso di errore non so se mostrare una pagina 404 con vari link
       /// di reindirizzamento oppure reindirizzare nella pagina home
       default:

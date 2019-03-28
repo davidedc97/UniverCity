@@ -214,7 +214,6 @@ compForm(BuildContext context) async{
           );
         });
   } else {
-    //TODO da testare
     debugPrint('User: ${bloc.userNameValue}, Nome: ${bloc.nomeValue}, Cognome: ${bloc.cognomeValue}, Email: ${bloc.emailValue}, Pass: ${bloc.passwordValue}, Facolta ${bloc.facoltaValue}, Universita: ${bloc.universitaValue} ');
     showDialog(
         context: context,

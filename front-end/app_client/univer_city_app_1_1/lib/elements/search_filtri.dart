@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:univer_city_app_1_1/bloc/filtri_bloc_provider.dart';
 
 class Filtri extends StatefulWidget {
   @override
@@ -6,6 +7,7 @@ class Filtri extends StatefulWidget {
 }
 
 class _FiltriState extends State<Filtri> {
+
   final List<String> _f = <String>['Utente', 'Appunto', 'Mashup'];
   List<String> _filters = <String>[];
 
@@ -37,6 +39,8 @@ class _FiltriState extends State<Filtri> {
 
   @override
   Widget build(BuildContext context) {
+    final FiltriBloc bloc = FiltriBlocProvider.of(context);
+    bloc.onFiltriChanged(_filters.isEmpty?'':_filters[0]);
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.center,

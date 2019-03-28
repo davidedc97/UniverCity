@@ -207,9 +207,7 @@ class HttpHandler {
       return res;
     }
     else if(typeFlag == "1"){
-      var num = json.decode(response.body)["body"]["num"];
-      List<dynamic> users = json.decode(response.body)["body"]["docs"];
-      List<User> res = User.parseJsonList(num, users);
+      var res = searchUser(query);
       return res;
     }
     else{

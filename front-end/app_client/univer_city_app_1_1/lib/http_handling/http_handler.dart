@@ -14,12 +14,17 @@ class HttpHandler {
   static const _DOCUMENT_SERVER = "/document";
   static const _SEARCH_USER_SERVER = "/searchUser";
   static const _SEARCH_DOC_SERVER = "/searchDocument";
+  static const _USER_DATA = "/userData";
+  static const _USER_IMG = "/userImg";
+  static const _USER_ADD_EXP = "/addUserExperience";
+  static const _USER_BIO = "/userBio";
   static const _LOGIN_SERVER = "/userLog";
   static const _REG_SERVER = "/userReg";
   static const _LIKE_SERVER = "/like";
   static const _MASHUP_SERVER = "/mashup";
 
-
+  //TODO (Davide) FUNZIONI DA RIVEDERE: getMyUserById, getOtherUserById
+  
                                 /*########     USER  HANDLING     ########*/
 
   /*
@@ -72,9 +77,7 @@ class HttpHandler {
     ** The value of flag must be "0" (user is login in with username) or "1" (user is login in with email)
   */
   static Future<int> validateLogin(String user, String pw,String flag) async {
-
     SessionUser().setUser = user;
-
 
     final response =
       await http.post(
@@ -101,6 +104,136 @@ class HttpHandler {
     }
     else {
       throw ServerException.withCode(response.statusCode);
+    }
+  }
+
+  static Future<User> getUserData(String user) async {
+    final response =
+      await http.get(
+        _URL+_USER_DATA + "?username=" + user,
+        headers:{
+          'Authorization':_sessionToken,
+          'Content-type' : 'application/json',
+          'Accept': 'application/json',
+        }
+    );
+
+    print(response.statusCode);
+    print('BODY :' + response.body);
+
+    if(response.statusCode == 200) {
+      return User.metadataFromJson(json.decode(response.body));
+    }
+    else if(response.statusCode == 404) {
+      print("############### UTENTE NON TROVATO");
+    }
+    else if(response.statusCode == 500) {
+      print("############### SERVER INTERNAL ERROR");
+    }
+
+  }
+
+  static Future<Uint8List> getUserImg(String user) async {
+    final response =
+    await http.get(
+        _URL+_USER_IMG + "?username=" + user,
+        headers:{
+          'Authorization':_sessionToken,
+          'Content-type' : 'application/json',
+          'Accept': 'application/img',
+        }
+    );
+
+    print(response.statusCode);
+    print('BODY :' + response.body);
+
+    if(response.statusCode == 200) {
+      return response.bodyBytes;
+    }
+    else if(response.statusCode == 500) {
+      print("############### SERVER INTERNAL ERROR");
+    }
+
+  }
+
+  static Future<int> changeUserImg(String user, String file) async {
+    final response =
+    await http.put(
+        _URL + _USER_IMG,
+        headers:{
+          'Authorization':_sessionToken,
+          'Content-type' : 'application/json',
+          'Accept': 'application/json',
+        },
+        body: json.encode({
+          "username": user,
+          "file": file
+        }));
+    if(response.statusCode == 200){
+      // img succesfully uploaded
+      return 1;
+    }
+    else if(response.statusCode == 400){
+      // bad input
+      return -1;
+    }
+    else if(response.statusCode == 500){
+      // server internal error
+      return -2;
+    }
+  }
+
+  static Future<int> addUserExp(String user, int expToAdd) async {
+    final response =
+    await http.put(
+        _URL + _USER_ADD_EXP,
+        headers:{
+          'Authorization':_sessionToken,
+          'Content-type' : 'application/json',
+          'Accept': 'application/json',
+        },
+        body: json.encode({
+          "username": user,
+          "xp": expToAdd
+        }));
+    if(response.statusCode == 200){
+      // exp succesfully added
+      return 1;
+    }
+    else if(response.statusCode == 400){
+      // bad input
+      return -1;
+    }
+    else if(response.statusCode == 500){
+      // server internal error
+      return -2;
+    }
+  }
+
+  static Future<int> changeUserBio(String user, String bio) async {
+    final response =
+    await http.put(
+        _URL + _USER_BIO,
+        headers:{
+          'Authorization':_sessionToken,
+          'Content-type' : 'application/json',
+          'Accept': 'application/json',
+        },
+        body: json.encode({
+          "username": user,
+          "bio": bio
+        }));
+    if(response.statusCode == 200){
+      // bio succesfully uploaded
+      return 1;
+    }
+    else if(response.statusCode == 400){
+      // bad input
+      return -1;
+    }
+    else if(response.statusCode == 500){
+      // server internal error
+      return -2;
     }
   }
 

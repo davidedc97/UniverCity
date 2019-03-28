@@ -57,11 +57,12 @@ exports.handler = async (event, context, callback) => {
             "surname": result[0].surname,
             "xp": result[0].xp,
             "bio": result[0].bio,
+            "university": result[0].university,
+            "faculty": result[0].faculty,
             "documentUploaded": {
                 "num": doc.lenght,
                 "docs": [
                     {
-                        "title": "",
                         "uuid": ""
                     }
                 ]
@@ -79,7 +80,7 @@ exports.handler = async (event, context, callback) => {
     }
 
     for (i=0; i< doc.lenght; i++){
-        response.body.docs[i] = doc[i];
+        response.body.docs[i].uuid = doc[i];
     }
     
     try{

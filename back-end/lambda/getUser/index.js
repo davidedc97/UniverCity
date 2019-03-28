@@ -12,8 +12,8 @@ const psql = new Pool ({
     port: 5432
 })
 
-var result = null;
-var doc = null;
+var result = [];
+var doc = [];
 
 function getMetadata(username){
 

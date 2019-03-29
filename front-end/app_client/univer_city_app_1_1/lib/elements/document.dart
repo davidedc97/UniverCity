@@ -14,11 +14,19 @@ class Document{
   String get type => _type;
 
   Document.fromJson(Map<String, dynamic> json) {
-    //funzione-costruttore da usare in http_handler dentro la search_document/get_document
+    //funzione-costruttore da usare in http_handler
     this._title = json["title"];
     this._creator = json["creator"];
     this._id = json["id"];
     this._type = json["type"];
+  }
+
+  static List<Document> parseJsonList(int length, List<dynamic> docs){
+    List<Document> result = [];
+    for(int i=0; i<length; i++){
+      result.add(Document.fromJson(docs[i]));
+    }
+    return result;
   }
 
   @override String toString(){
@@ -32,14 +40,6 @@ class Document{
       'type': type,
       'creator': _creator
     };
-  }
-
-  static List<Document> parseJsonList(int length, List<dynamic> docs){
-    List<Document> result = [];
-    for(int i=0; i<length; i++){
-      result.add(Document.fromJson(docs[i]));
-    }
-    return result;
   }
 
 }

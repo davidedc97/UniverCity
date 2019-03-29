@@ -182,7 +182,7 @@ class DocSearch extends SearchDelegate<Document> {
                             context,
                             risultatiList[i - 1].title,
                             risultatiList[i - 1].creator,
-                            risultatiList[i - 1].uuid));
+                            risultatiList[i - 1].id));
                   },
                 );
               }

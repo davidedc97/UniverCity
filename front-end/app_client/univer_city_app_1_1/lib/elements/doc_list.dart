@@ -25,13 +25,13 @@ class DocList extends StatelessWidget {
               //visualizzazione pre viewer
               showDialog(
                 context: context,
-                builder: (context)=>buildDocDialog(context, _info.title,_info.creator, _info.uuid)
+                builder: (context)=>buildDocDialog(context, _info.title,_info.creator, _info.id)
               );}
         ),
         onTap: ()async{
           showDialog(
               context: context,
-              builder: (context)=>buildDocDialog(context,_info.title,_info.creator , _info.uuid)
+              builder: (context)=>buildDocDialog(context,_info.title,_info.creator , _info.id)
           );
         },
       ),
@@ -66,13 +66,13 @@ class DocListDividedTitle extends StatelessWidget {
                   //visualizzazione pre viewer
                   showDialog(
                       context: context,
-                      builder: (context)=>buildDocDialog(context, _info.title,_info.creator, _info.uuid)
+                      builder: (context)=>buildDocDialog(context, _info.title,_info.creator, _info.id)
                   );}
             ),
             onTap: ()async{
               showDialog(
                   context: context,
-                  builder: (context)=>buildDocDialog(context,_info.title,_info.creator , _info.uuid)
+                  builder: (context)=>buildDocDialog(context,_info.title,_info.creator , _info.id)
               );
             },
           ),

@@ -318,7 +318,7 @@ class HttpHandler {
           headers: {'Authorization':_sessionToken ,'Content-type' : 'application/json', 'Accept': 'application/pdf'} //qui era "application/json" e funzionava
           );
 
-    print(response.statusCode)
+    print(response.statusCode);
 
     if(response.statusCode == 200) {
       return response.bodyBytes;
@@ -335,7 +335,7 @@ class HttpHandler {
         headers: {'Authorization':_sessionToken ,'Content-type' : 'application/json', 'Accept': 'application/json'}
     );
 
-    print(response.statusCode)
+    print(response.statusCode);
 
     if(response.statusCode == 200) {
       return Document.fromJson(json.decode(response.body));
@@ -427,17 +427,32 @@ class HttpHandler {
   }
 
 
-  static Future<dynamic> mashup(List<String> pageIds) async {
+  static Future<dynamic> mashup(String title, List<String> tags, String creator, List<Map<String, dynamic>> pagesData) async {
     final response =
         await http.post(
           _URL + _MASHUP_SERVER,
-          body:{"pages": json.encode(pageIds)});
+          body:{
+            "title": json.encode(title),
+            "tags": json.encode(tags),
+            "creator": json.encode(creator),
+            "pages": json.encode(pagesData)
+          });
 
-    if(response.statusCode == 201){
-      return;
+    if(response.statusCode == 201) {
+      // succesfully created
+      return 1;
     }
-    else{
-      throw ServerException.withCode(response.statusCode);
+    else if(response.statusCode == 400){
+      print("#############  bad input parameter");
+      return -1;
+    }
+    else if(response.statusCode == 404){
+      print("#############  one or more pages don't exist");
+      return -2;
+    }
+    else if(response.statusCode == 500){
+      print("#############  server internal error");
+      return -3;
     }
   }
 

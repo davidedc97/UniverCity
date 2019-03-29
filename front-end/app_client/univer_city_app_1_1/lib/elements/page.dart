@@ -10,6 +10,6 @@ class Page{
 
   String get idDoc => _idDoc;
 
-  
+
 
 }

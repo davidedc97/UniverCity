@@ -28,6 +28,7 @@ class HttpHandler {
   
                                 /*########     USER  HANDLING     ########*/
 
+
   /*
     ** This function returns:
     **   1 if the user is correctly added to the Db
@@ -67,7 +68,6 @@ class HttpHandler {
       throw ServerException.withCode(response.statusCode);
     }
   }
-
 
   /*
     ** This function returns:
@@ -191,7 +191,7 @@ class HttpHandler {
         headers:{
           'Authorization':_sessionToken,
           'Content-type' : 'application/json',
-          'Accept': 'application/json',
+          'Accept': 'application/json'
         },
         body: json.encode({
           "username": user,
@@ -260,6 +260,7 @@ class HttpHandler {
     }
   }
 
+
                                 /*########     DOCUMENT  HANDLING     ########*/
 
 
@@ -271,7 +272,6 @@ class HttpHandler {
     **  throws an exception otherwise
     **
   */
-
   static Future<int> uploadDocument(String title, List<String> tags, String typeFlag, String creator, String path) async {
 
     print('####################################################################$title ,$path');
@@ -345,11 +345,61 @@ class HttpHandler {
     }
   }
 
+  //TODO: devo capire come cazzo si fa
+  static Future<int> downloadDocument(String docId, String path) async {
+    print('scarico');
+    var response =
+        await http.get(_URL + _DOCUMENT_SERVER + "?id=" + docId, headers: {'Authorization':_sessionToken});
+
+    if(response.statusCode == 200){
+      File f = new File(path);
+      f.writeAsBytes(response.bodyBytes);
+      print('ok');
+      return 1;
+    }
+    else{
+      throw ServerException.withCode(response.statusCode);
+    }
+  }
+
+  //TODO: si può cambiare il tipo di pagesData in List<Page>
+  static Future<dynamic> mashup(String title, List<String> tags, String creator, List<Map<String, dynamic>> pagesData) async {
+    final response =
+        await http.post(
+          _URL + _MASHUP_SERVER,
+          body:{
+            "title": json.encode(title),
+            "tags": json.encode(tags),
+            "creator": json.encode(creator),
+            "pages": json.encode(pagesData)
+          });
+
+    if(response.statusCode == 201) {
+      // succesfully created
+      return 1;
+    }
+    else if(response.statusCode == 400){
+      print("#############  bad input parameter");
+      return -1;
+    }
+    else if(response.statusCode == 404){
+      print("#############  one or more pages don't exist");
+      return -2;
+    }
+    else if(response.statusCode == 500){
+      print("#############  server internal error");
+      return -3;
+    }
+  }
+
+
+                                /*########     SEARCH  HANDLING     ########*/
+
+
   /*
     ** This function returns a list of documents/users fitting the query
     ** The value of typeFlag must be "0" (searching for documents) or "1" (searching for users)
   */
-
   static Future<List<dynamic>> search(String query, String typeFlag) async {
 
     if(typeFlag == "0") {
@@ -367,10 +417,10 @@ class HttpHandler {
 
   static Future<List<Document>> searchDocument(String query) async {
     final response =
-        await http.get(
-          _URL + _SEARCH_DOC_SERVER + "?searchString=" + query.toString(),
-          headers: {'Authorization':_sessionToken}
-        );
+    await http.get(
+        _URL + _SEARCH_DOC_SERVER + "?searchString=" + query.toString(),
+        headers: {'Authorization':_sessionToken}
+    );
 
     if(response.statusCode == 200){
       var num = json.decode(response.body)["body"]["num"];
@@ -409,53 +459,6 @@ class HttpHandler {
 
   }
 
-  //TODO: devo capire come cazzo si fa
-  static Future<int> downloadDocument(String docId, String path) async {
-    print('scarico');
-    var response =
-        await http.get(_URL + _DOCUMENT_SERVER + "?id=" + docId, headers: {'Authorization':_sessionToken});
-
-    if(response.statusCode == 200){
-      File f = new File(path);
-      f.writeAsBytes(response.bodyBytes);
-      print('ok');
-      return 1;
-    }
-    else{
-      throw ServerException.withCode(response.statusCode);
-    }
-  }
-
-
-  static Future<dynamic> mashup(String title, List<String> tags, String creator, List<Map<String, dynamic>> pagesData) async {
-    final response =
-        await http.post(
-          _URL + _MASHUP_SERVER,
-          body:{
-            "title": json.encode(title),
-            "tags": json.encode(tags),
-            "creator": json.encode(creator),
-            "pages": json.encode(pagesData)
-          });
-
-    if(response.statusCode == 201) {
-      // succesfully created
-      return 1;
-    }
-    else if(response.statusCode == 400){
-      print("#############  bad input parameter");
-      return -1;
-    }
-    else if(response.statusCode == 404){
-      print("#############  one or more pages don't exist");
-      return -2;
-    }
-    else if(response.statusCode == 500){
-      print("#############  server internal error");
-      return -3;
-    }
-  }
-
 
                                 /*########     LIKES  HANDLING     ########*/
 
@@ -487,3 +490,7 @@ class HttpHandler {
     }
   }
 }
+
+
+                                /*########     FAVOURITES  HANDLING     ########*/
+

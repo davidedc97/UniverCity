@@ -12,6 +12,7 @@ class HttpHandler {
   static const _URL = "https://ogv7kvalpf.execute-api.eu-west-1.amazonaws.com/dev";
   static const _FAKE_LOG_URL = "https://v1uu1cu9ld.execute-api.eu-west-1.amazonaws.com/alpha";
   static const _DOCUMENT_SERVER = "/document";
+  static const _DOCUMENT_METADATA = "/documentMetadata";
   static const _SEARCH_USER_SERVER = "/searchUser";
   static const _SEARCH_DOC_SERVER = "/searchDocument";
   static const _USER_DATA = "/userData";
@@ -23,7 +24,7 @@ class HttpHandler {
   static const _LIKE_SERVER = "/like";
   static const _MASHUP_SERVER = "/mashup";
 
-  //TODO (Davide) FUNZIONI DA RIVEDERE: getMyUserById, getOtherUserById
+  //TODO (Davide) FUNZIONI DA RIVEDERE: getMyUserById, getOtherUserById, downloadDocument
   
                                 /*########     USER  HANDLING     ########*/
 
@@ -248,7 +249,6 @@ class HttpHandler {
     }
   }
 
-
   static Future<User> getOtherUserById(String userId) async {
     final response =
         await http.get(_URL + _LOGIN_SERVER + "/" + userId);
@@ -272,7 +272,8 @@ class HttpHandler {
     **
   */
 
-  static Future<int> uploadDocument(String title, String path) async {
+  static Future<int> uploadDocument(String title, List<String> tags, String typeFlag, String creator, String path) async {
+
     print('####################################################################$title ,$path');
     print(_sessionToken);
     var res;
@@ -281,8 +282,8 @@ class HttpHandler {
     var request = new http.MultipartRequest('POST', uri);
     var file = await http.MultipartFile.fromPath('package', path);
 
-    request.headers.addAll({'Authorization':_sessionToken});
-    request.fields.addAll({'title':_t.toString()});
+    request.headers.addAll({"Authorization":_sessionToken});
+    request.fields.addAll({"title":_t.toString(), "tags": tags.toString(), "type": typeFlag, "creator": creator});
     request.files.add(file);
 
     await request.send().then( (response) {
@@ -310,7 +311,6 @@ class HttpHandler {
     }
   }
 
-
   static Future<Uint8List> getDocumentById( String docId ) async{
     final response =
       await http.get(
@@ -318,15 +318,32 @@ class HttpHandler {
           headers: {'Authorization':_sessionToken ,'Content-type' : 'application/json', 'Accept': 'application/pdf'} //qui era "application/json" e funzionava
           );
 
+    print(response.statusCode)
+
     if(response.statusCode == 200) {
       return response.bodyBytes;
     }
     else{
-      print(response.statusCode);
-      throw ServerException.withCode(response.statusCode);
+      return null; //TODO: soluzione provvisoria in caso di errore
     }
   }
 
+  static Future<Document> getDocumentMetadata(String docId) async{
+    final response =
+      await http.get(
+        _URL + _DOCUMENT_METADATA + "?id=" + docId,
+        headers: {'Authorization':_sessionToken ,'Content-type' : 'application/json', 'Accept': 'application/json'}
+    );
+
+    print(response.statusCode)
+
+    if(response.statusCode == 200) {
+      return Document.fromJson(json.decode(response.body));
+    }
+    else{
+      return null; //TODO: soluzione provvisoria in caso di errore
+    }
+  }
 
   /*
     ** This function returns a list of documents/users fitting the query
@@ -344,7 +361,7 @@ class HttpHandler {
       return res;
     }
     else{
-      print("######## BAD FLAG INPUT");
+      print("######## SEARCH: BAD FLAG INPUT");
     }
   }
 
@@ -392,8 +409,7 @@ class HttpHandler {
 
   }
 
-
-   //TODO: devo capire come cazzo si fa
+  //TODO: devo capire come cazzo si fa
   static Future<int> downloadDocument(String docId, String path) async {
     print('scarico');
     var response =

@@ -4,7 +4,6 @@ import 'dart:convert';
 import 'dart:typed_data';
 import 'dart:io';
 import 'dart:async';
-
 import 'package:univer_city_app_1_1/elements/session_user.dart';
 
 class HttpHandler {
@@ -19,13 +18,14 @@ class HttpHandler {
   static const _USER_IMG = "/userImg";
   static const _USER_ADD_EXP = "/addUserExperience";
   static const _USER_BIO = "/userBio";
+  static const _USER_FAVOURITE = "/userFavourite";
   static const _LOGIN_SERVER = "/userLog";
   static const _REG_SERVER = "/userReg";
   static const _LIKE_SERVER = "/like";
   static const _MASHUP_SERVER = "/mashup";
 
   //TODO (Davide) FUNZIONI DA RIVEDERE: getMyUserById, getOtherUserById, downloadDocument
-  
+
                                 /*########     USER  HANDLING     ########*/
 
 
@@ -42,14 +42,14 @@ class HttpHandler {
         _FAKE_LOG_URL + _REG_SERVER,
         headers:{
                  'Content-type' : 'application/json',
-                 'Accept': 'application/json',
+                 'Accept': 'application/json'
                 },
-        body: json.encode({"username": user, 
-                           "name": name, 
-                           "surname": surname, 
-                           "email": email, 
-                           "pass": pw, 
-                           "faculty": faculty, 
+        body: json.encode({"username": user,
+                           "name": name,
+                           "surname": surname,
+                           "email": email,
+                           "pass": pw,
+                           "faculty": faculty,
                            "university":university
                           }));
 
@@ -85,7 +85,7 @@ class HttpHandler {
           _FAKE_LOG_URL+_LOGIN_SERVER,
         headers:{
           'Content-type' : 'application/json',
-          'Accept': 'application/json',
+          'Accept': 'application/json'
         },
         body:json.encode({"username":user,"pass": pw})
             );
@@ -115,12 +115,11 @@ class HttpHandler {
         headers:{
           'Authorization':_sessionToken,
           'Content-type' : 'application/json',
-          'Accept': 'application/json',
+          'Accept': 'application/json'
         }
     );
 
     print(response.statusCode);
-    print('BODY :' + response.body);
 
     if(response.statusCode == 200) {
       return User.metadataFromJson(json.decode(response.body));
@@ -141,12 +140,11 @@ class HttpHandler {
         headers:{
           'Authorization':_sessionToken,
           'Content-type' : 'application/json',
-          'Accept': 'application/img',
+          'Accept': 'application/img'
         }
     );
 
     print(response.statusCode);
-    print('BODY :' + response.body);
 
     if(response.statusCode == 200) {
       return response.bodyBytes;
@@ -164,7 +162,7 @@ class HttpHandler {
         headers:{
           'Authorization':_sessionToken,
           'Content-type' : 'application/json',
-          'Accept': 'application/json',
+          'Accept': 'application/json'
         },
         body: json.encode({
           "username": user,
@@ -218,7 +216,7 @@ class HttpHandler {
         headers:{
           'Authorization':_sessionToken,
           'Content-type' : 'application/json',
-          'Accept': 'application/json',
+          'Accept': 'application/json'
         },
         body: json.encode({
           "username": user,
@@ -477,7 +475,6 @@ class HttpHandler {
     }
   }
 
-
   static Future retrieveLikes(String docId) async{
     final response =
         await http.get( _URL + _LIKE_SERVER + "/" + docId);
@@ -489,8 +486,107 @@ class HttpHandler {
       throw ServerException.withCode(response.statusCode);
     }
   }
-}
+
 
 
                                 /*########     FAVOURITES  HANDLING     ########*/
 
+
+  static Future<dynamic> getUserFavourites(String user) async {
+    final response =
+        await http.get(
+        _URL+_USER_FAVOURITE + "?username=" + user,
+        headers:{
+          'Authorization':_sessionToken,
+          'Accept': 'application/json'
+        }
+    );
+
+    print(response.statusCode);
+
+    if(response.statusCode == 200) {
+      int num = json.decode(response.body)['num'];  //numero dei documenti nella lista
+      List<String> res = json.decode(response.body)['favourite'];
+      return res;
+    }
+    else if(response.statusCode == 404) {
+      print("############### UTENTE NON TROVATO");
+      return -1;
+    }
+    else if(response.statusCode == 500) {
+      print("############### SERVER INTERNAL ERROR");
+      return -2;
+    }
+  }
+
+  static Future<int> addUserFavourite(String user, String docId) async {
+    final response =
+      await http.post(
+        _URL + _USER_FAVOURITE,
+        headers:{
+          'Authorization':_sessionToken,
+          'Content-type' : 'application/json',
+          'Accept': 'application/json'
+        },
+        body: json.encode({
+          "username": user,
+          "uuid": docId
+        }));
+
+    print(response.statusCode);
+
+    if(response.statusCode == 200){
+      // document id succesfully added to user's favourite
+      return 1;
+    }
+    else if(response.statusCode == 400){
+      // bad input
+      return -1;
+    }
+    else if(response.statusCode == 403){
+      //document id already among user's favourites
+      return -2;
+    }
+    else if(response.statusCode == 500){
+      // server internal error
+      return -3;
+    }
+  }
+
+  static Future<int> removeUserFavourite(String user, docId) async {
+    final response =
+      await http.delete(
+          _URL + _USER_FAVOURITE + "?username=" + user + "&id=" + docId,
+            headers:{
+              'Authorization':_sessionToken,
+              'Content-type' : 'application/json',
+              'Accept': 'application/json'
+            });
+
+    print(response.statusCode);
+
+    if(response.statusCode == 200){
+      // document id succesfully added to user's favourite
+      return 1;
+    }
+    else if(response.statusCode == 400){
+      // bad input parameter
+      return -1;
+    }
+    else if(response.statusCode == 404){
+      //document id not found among user's favourites
+      return -2;
+    }
+    else if(response.statusCode == 500){
+      // server internal error
+      return -3;
+    }
+
+  }
+
+
+                                /*########     PASSWORD  RECOVERY     ########*/
+
+  
+
+}

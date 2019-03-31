@@ -64,7 +64,7 @@ class Home extends StatelessWidget {
                         background: Container(color: Colors.red,child: Center(child: Icon(Icons.delete),)),
                         onDismissed: (_){
                           HttpHandler.removeUserFavourite(SessionUser().user, snapshot.data.id);
-                        },
+                        }, key: null,
                       );
 
                     },

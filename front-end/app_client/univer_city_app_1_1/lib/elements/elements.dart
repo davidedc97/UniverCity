@@ -21,3 +21,4 @@ export 'package:univer_city_app_1_1/elements/profile_head.dart';
 export 'package:univer_city_app_1_1/elements/profile_levelbar.dart';
 export 'package:univer_city_app_1_1/elements/profile_bio.dart';
 export 'package:univer_city_app_1_1/elements/profile_show_doc.dart';
+export 'package:univer_city_app_1_1/elements/result_search.dart';

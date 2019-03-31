@@ -399,15 +399,15 @@ class HttpHandler {
     ** This function returns a list of documents/users fitting the query
     ** The value of typeFlag must be "0" (searching for documents) or "1" (searching for users)
   */
-  static Future<List<dynamic>> search(String query, String typeFlag) async {
+  static Future<List<Result>> search(String query, String typeFlag) async {
 
     if(typeFlag == "0") {
-      var res = searchDocument(query);
-      return res;
+      List<Document> res = await searchDocument(query);
+      return res?.map((doc)=>Result(doc.title, docInfo: doc))?.toList();
     }
     else if(typeFlag == "1"){
-      var res = searchUser(query);
-      return res;
+      List<User> res = await searchUser(query);
+      return res?.map((usr)=>Result(usr.user, userInfo: usr))?.toList();
     }
     else{
       print("######## SEARCH: BAD FLAG INPUT");

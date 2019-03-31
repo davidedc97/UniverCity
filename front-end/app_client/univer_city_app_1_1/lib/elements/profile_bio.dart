@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:univer_city_app_1_1/http_handling/http_handler.dart';
+import 'package:univer_city_app_1_1/elements/elements.dart';
 
 class ProfileBio extends StatelessWidget {
   final String bio;
-  ProfileBio(this.bio);
+  final String flag;
+  ProfileBio(this.bio, this.flag);
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -15,7 +18,8 @@ class ProfileBio extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   Text('Descrizione'),
-                  FlatButton(
+                  flag=='mod'
+                      ?FlatButton(
                       onPressed: () {
                         editBio(context);
                       },
@@ -24,6 +28,7 @@ class ProfileBio extends StatelessWidget {
                         style: TextStyle(
                             color: Theme.of(context).accentColor),
                       ))
+                      :Container()
                 ],
               ),
               leading: Icon(
@@ -41,6 +46,7 @@ class ProfileBio extends StatelessWidget {
 }
 
 editBio(context) {
+  String bio;
   showDialog(
       context: context,
       builder: (context) => Dialog(
@@ -54,6 +60,7 @@ editBio(context) {
                   height: 18,
                 ),
                 TextField(
+                  onChanged: (t){bio=t;},
                   cursorColor: Theme.of(context).accentColor,
                   maxLines: 5,
                   decoration: InputDecoration(
@@ -67,7 +74,7 @@ editBio(context) {
                   height: 18,
                 ),
                 FlatButton.icon(
-                    onPressed: () {},
+                    onPressed: () {HttpHandler.changeUserBio(SessionUser().user, bio);},
                     icon: Icon(Icons.edit),
                     label: Text('SALVA'))
               ],

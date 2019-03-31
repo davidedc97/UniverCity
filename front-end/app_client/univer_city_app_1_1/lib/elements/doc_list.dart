@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:univer_city_app_1_1/elements/document.dart';
 import 'package:univer_city_app_1_1/elements/pre_viewer.dart';
 import 'package:univer_city_app_1_1/elements/title_div.dart';
+import 'package:univer_city_app_1_1/http_handling/http_handler.dart';
+import 'package:flutter_pdf_viewer/flutter_pdf_viewer.dart';
 
 class DocList extends StatelessWidget {
 
@@ -29,10 +31,8 @@ class DocList extends StatelessWidget {
               );}
         ),
         onTap: ()async{
-          showDialog(
-              context: context,
-              builder: (context)=>buildDocDialog(context,_info.title,_info.creator , _info.id)
-          );
+          var byte = await HttpHandler.getDocumentById(_info.id);
+          PdfViewer.loadBytes(byte);
         },
       ),
     );
@@ -70,10 +70,8 @@ class DocListDividedTitle extends StatelessWidget {
                   );}
             ),
             onTap: ()async{
-              showDialog(
-                  context: context,
-                  builder: (context)=>buildDocDialog(context,_info.title,_info.creator , _info.id)
-              );
+              var byte = await HttpHandler.getDocumentById(_info.id);
+              PdfViewer.loadBytes(byte);
             },
           ),
         )

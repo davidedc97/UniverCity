@@ -13,6 +13,8 @@ class HttpHandler {
   static const _FAKE_LOG_URL = "https://v1uu1cu9ld.execute-api.eu-west-1.amazonaws.com/alpha";
   static const _DOCUMENT_SERVER = "/document";
   static const _DOCUMENT_METADATA = "/documentMetadata";
+  static const _DOCUMENT_TAGS = "/documentTags";
+  static const _DOCUMENT_SECONDS = "/documentSeconds";
   static const _SEARCH_USER_SERVER = "/searchUser";
   static const _SEARCH_DOC_SERVER = "/searchDocument";
   static const _USER_DATA = "/userData";
@@ -24,6 +26,8 @@ class HttpHandler {
   static const _REG_SERVER = "/userReg";
   static const _LIKE_SERVER = "/like";
   static const _MASHUP_SERVER = "/mashup";
+  static const _PASS_CODE = "/resetPassword";
+  static const _PASS_RESET = "/resetPass_aux";
 
   //TODO (Davide) FUNZIONI DA RIVEDERE: getMyUserById, getOtherUserById, downloadDocument
 
@@ -397,6 +401,54 @@ class HttpHandler {
     }
   }
 
+  static Future<int> addDocumentTags(String docId, List<String> tags) async {
+    final response =
+    await http.post(
+        _URL + _DOCUMENT_TAGS,
+        body:{
+          "id": json.encode(docId),
+          "tags": json.encode(tags)
+        });
+
+    if(response.statusCode == 201) {
+      print("############# tags succesfully added");
+      return 1;
+    }
+    else if(response.statusCode == 400){
+      print("#############  bad input parameter");
+      return -1;
+    }
+    else if(response.statusCode == 500){
+      print("#############  server internal error");
+      return -2;
+    }
+  }
+
+  static Future<int> addSpentTime(String docId, List<double> seconds) async{
+    // seconds ha in posizione i-esima il tempo passato da un utente sull'i-esima pagina del documento con id "docId"
+    final response =
+    await http.post(
+        _URL + _DOCUMENT_SECONDS,
+        body:{
+          "id": json.encode(docId),
+          "seconds": json.encode(seconds)
+        });
+
+    if(response.statusCode == 201) {
+      print("#############  seconds succesfully added");
+      return 1;
+    }
+    else if(response.statusCode == 400){
+      print("#############  bad input parameter");
+      return -1;
+    }
+    else if(response.statusCode == 500){
+      print("#############  server internal error");
+      return -2;
+    }
+
+  }
+
 
                                 /*########     SEARCH  HANDLING     ########*/
 
@@ -467,6 +519,7 @@ class HttpHandler {
 
                                 /*########     LIKES  HANDLING     ########*/
 
+  
   static Future addLike(String user, String docId) async{
     final response =
         await http.post(
@@ -536,7 +589,7 @@ class HttpHandler {
         },
         body: json.encode({
           "username": user,
-          "uuid": docId
+          "id": docId
         }));
 
     print(response.statusCode);
@@ -594,5 +647,55 @@ class HttpHandler {
                                 /*########     PASSWORD  RECOVERY     ########*/
 
 
+  static Future<int> sendVerificationCode(String user) async {
+
+    final response =
+        await http.post(
+          _URL + _PASS_CODE,
+          body: json.encode({"username": user})
+        );
+
+    print(response.statusCode);
+
+    if(response.statusCode == 200){
+      print("###########  VERIFICATION CODE SENT");
+      return 1;
+    }
+    else if(response.statusCode == 400){
+      print("###########  SOME ERROR OCCURRED");
+      return -1;
+    }
+    else if(response.statusCode == 500){
+      print("###########  INTERNAL SERVER ERROR");
+      return -2;
+    }
+  }
+
+  static Future<int> resetPassword(String user, String newPass, String verificationCode) async {
+
+    final response =
+        await http.post(
+        _URL + _PASS_RESET,
+        body: json.encode({
+          "username": user,
+          "newPass": newPass,
+          "verCode": verificationCode
+        }));
+
+    print(response.statusCode);
+
+    if(response.statusCode == 200){
+      print("###########  NEW PASSWORD CONFIRMED");
+      return 1;
+    }
+    else if(response.statusCode == 400){
+      print("###########  SOME ERROR OCCURRED");
+      return -1;
+    }
+    else if(response.statusCode == 500){
+      print("###########  INTERNAL SERVER ERROR");
+      return -2;
+    }
+  }
 
 }

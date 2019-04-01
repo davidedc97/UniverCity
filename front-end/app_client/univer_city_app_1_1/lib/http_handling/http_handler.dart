@@ -587,6 +587,6 @@ class HttpHandler {
 
                                 /*########     PASSWORD  RECOVERY     ########*/
 
-  
+
 
 }

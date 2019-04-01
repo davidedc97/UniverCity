@@ -113,13 +113,16 @@ class HttpHandler {
   static Future<User> getUserData(String user) async {
     print(user);
     final response =
-      await http.get(
-          _URL_METADATA +_USER_DATA + '?username=' + user,
+      await http.post(
+          _URL_METADATA +_USER_DATA,
         headers:{
           'Authorization':_sessionToken,
           'Content-type' : 'application/json',
           'Accept': 'application/json'
         },
+        body: {
+            'username': user
+        }
     );
 
     print(response.statusCode);

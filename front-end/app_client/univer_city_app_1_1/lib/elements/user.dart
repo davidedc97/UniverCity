@@ -41,6 +41,7 @@ class User{
   User.metadataFromJson(Map<String, dynamic> json){
     this._user = json["username"];
     this._name = json["name"];
+    this._bio = json["bio"];
     this._surname = json["surname"];
     this._faculty = json["faculty"];
     this._university = json["university"];
@@ -66,6 +67,10 @@ class User{
       result.add(User.fromJson(users[i]));
     }
     return result;
+  }
+
+  toString(){
+    return '$_user $_xp $faculty $_img ';
   }
 
 }

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:univer_city_app_1_1/bloc/theme_bloc_provider.dart';
 import 'package:univer_city_app_1_1/elements/document.dart';
+import 'package:univer_city_app_1_1/http_handling/http_handler.dart';
 
 class ShowNoteClp extends StatefulWidget {
-  final List<Document> docs;
+  final List<String> docs;
   final String title;
   ShowNoteClp(this.title, this.docs);
 
@@ -51,13 +52,24 @@ class _ShowNoteClpState extends State<ShowNoteClp> {
             ] +
             widget.docs
                 .sublist(0, _isExpanded ? null :l)
-                .map((doc) => ListTile(
-                      leading: Icon(
-                        doc.type == 'O' ? Icons.description : Icons.art_track,
-                        color: Theme.of(context).accentColor,
-                      ),
-                      title: Text(doc.title),
-                    ))
+                .map((doc)=>FutureBuilder(
+              future: HttpHandler.getDocumentMetadata(doc),
+              builder: (context,AsyncSnapshot<Document> snapshot){
+                if(snapshot.hasData){
+                  return ListTile(
+                    leading: Icon(
+                      snapshot.data.type == 'O' ? Icons.description : Icons.art_track,
+                      color: Theme.of(context).accentColor,
+                    ),
+                    title: Text(snapshot.data.title),
+                  );
+                }
+                return ListTile(
+                  leading: Container(child: SizedBox(height: 20,width: 20,),color: Colors.grey[300]),
+                  title: Container(child: SizedBox(height: 8,width: 100,),color: Colors.grey[300]),
+                );
+              },
+            ))
                 .toList() +
             [
               FlatButton.icon(

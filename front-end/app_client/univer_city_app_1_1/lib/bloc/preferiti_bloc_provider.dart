@@ -14,7 +14,7 @@ class PreferitiBlocProvider extends InheritedWidget {
 
   static PreferitiBloc of(BuildContext context) {
     return (context.inheritFromWidgetOfExactType(PreferitiBlocProvider)
-            as PreferitiBlocProvider)
+    as PreferitiBlocProvider)
         .bloc;
   }
 }

@@ -3,13 +3,11 @@ import 'package:flutter/services.dart';
 import 'package:flutter/foundation.dart';
 import 'package:univer_city_app_1_1/bloc/comp_form_bloc_provider.dart';
 import 'package:univer_city_app_1_1/bloc/preferiti_bloc_provider.dart';
-import 'package:univer_city_app_1_1/bloc/profilo_bloc_provider.dart';
 import 'package:univer_city_app_1_1/bloc/upload_bloc_provider.dart';
 import 'package:univer_city_app_1_1/bloc/cronologia_bloc_provider.dart';
 import 'package:univer_city_app_1_1/bloc/theme_bloc_provider.dart';
 import 'package:univer_city_app_1_1/bloc/cronologia_search_bloc_provider.dart';
 import 'package:univer_city_app_1_1/bloc/filtri_bloc_provider.dart';
-import 'package:univer_city_app_1_1/bloc/profilo_bloc_provider.dart';
 import 'package:univer_city_app_1_1/routes/route.dart';
 
 // TODO test pdf online
@@ -23,7 +21,7 @@ void main() {
           child: CronologiaSearchBlocProvider(
               child: CronologiaBlocProvider(
                   child: FiltriBlocProvider(
-                      child: ProfiloBlocProvider(child: new UniverCity(),))))),
+                      child: new UniverCity())))),
     );
   });
 }
@@ -152,9 +150,7 @@ class _UniverCityState extends State<UniverCity> {
       case '/profilo':
         final userName = (settings.arguments as Map)['userName'];
         return MaterialPageRoute(builder: (context) {
-          return ProfiloBlocProvider(
-            child: Profilo(userName),
-          );
+          return Profilo(userName);
         });
       case '/upload':
         final path = (settings.arguments as Map)['path'];

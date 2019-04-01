@@ -9,6 +9,7 @@ import 'package:univer_city_app_1_1/elements/session_user.dart';
 class HttpHandler {
   static String _sessionToken;
   static const _URL = "https://ogv7kvalpf.execute-api.eu-west-1.amazonaws.com/dev";
+  static const _URL_METADATA = 'https://nxpsk4j5ma.execute-api.eu-west-1.amazonaws.com/alpha';
   static const _FAKE_LOG_URL = "https://v1uu1cu9ld.execute-api.eu-west-1.amazonaws.com/alpha";
   static const _DOCUMENT_SERVER = "/document";
   static const _DOCUMENT_METADATA = "/documentMetadata";
@@ -112,19 +113,21 @@ class HttpHandler {
   }
 
   static Future<User> getUserData(String user) async {
+    print(user);
     final response =
       await http.get(
-        _URL+_USER_DATA + "?username=" + user,
+          _URL_METADATA +_USER_DATA + '?username=' + user,
         headers:{
           'Authorization':_sessionToken,
           'Content-type' : 'application/json',
           'Accept': 'application/json'
-        }
+        },
     );
 
     print(response.statusCode);
 
     if(response.statusCode == 200) {
+      print(json.decode(response.body));
       return User.metadataFromJson(json.decode(response.body));
     }
     else if(response.statusCode == 404) {
@@ -139,7 +142,7 @@ class HttpHandler {
   static Future<Uint8List> getUserImg(String user) async {
     final response =
     await http.get(
-        _URL+_USER_IMG + "?username=" + user,
+        _URL_METADATA +_USER_IMG + "?username=" + user,
         headers:{
           'Authorization':_sessionToken,
           'Content-type' : 'application/json',
@@ -161,7 +164,7 @@ class HttpHandler {
   static Future<int> changeUserImg(String user, String file) async {
     final response =
     await http.put(
-        _URL + _USER_IMG,
+        _URL_METADATA + _USER_IMG,
         headers:{
           'Authorization':_sessionToken,
           'Content-type' : 'application/json',
@@ -188,7 +191,7 @@ class HttpHandler {
   static Future<int> addUserExp(String user, int expToAdd) async {
     final response =
     await http.put(
-        _URL + _USER_ADD_EXP,
+        _URL_METADATA + _USER_ADD_EXP,
         headers:{
           'Authorization':_sessionToken,
           'Content-type' : 'application/json',
@@ -215,7 +218,7 @@ class HttpHandler {
   static Future<int> changeUserBio(String user, String bio) async {
     final response =
     await http.put(
-        _URL + _USER_BIO,
+        _URL_METADATA + _USER_BIO,
         headers:{
           'Authorization':_sessionToken,
           'Content-type' : 'application/json',
@@ -241,7 +244,7 @@ class HttpHandler {
 
   static Future<User> getMyUserById(String userId) async {
     final response =
-    await http.get(_URL + _LOGIN_SERVER + "/" + userId);
+    await http.get(_URL_METADATA + _LOGIN_SERVER + "/" + userId);
     if(response.statusCode == 200){
       return User.fromJson(json.decode(response.body));
     }
@@ -252,7 +255,7 @@ class HttpHandler {
 
   static Future<User> getOtherUserById(String userId) async {
     final response =
-        await http.get(_URL + _LOGIN_SERVER + "/" + userId);
+        await http.get(_URL_METADATA + _LOGIN_SERVER + "/" + userId);
     if(response.statusCode == 200){
       return User.secureFromJson(json.decode(response.body));
     }
@@ -441,7 +444,7 @@ class HttpHandler {
   static Future<List<User>> searchUser(String query) async {
     final response =
     await http.get(
-        _URL + _SEARCH_USER_SERVER + "?searchString=" + query.toString(),
+        _URL_METADATA + _SEARCH_USER_SERVER + "?searchString=" + query.toString(),
         headers: {'Authorization':_sessionToken}
     );
 

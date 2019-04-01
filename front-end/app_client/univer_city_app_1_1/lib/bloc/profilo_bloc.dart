@@ -40,11 +40,11 @@ class ProfiloBloc {
     _caricatiMashup.sink.add(_docListFromJson(utente.mashupCreated));
   }
 
-  _docListFromJson(Map<String,dynamic> m){
-    var l = m[num];
-    List<dynamic> docs = m['docs'];
-    List<Document> documentList = Document.parseJsonList(l,docs);
-    return documentList;
+  List<Document> _docListFromJson(Map<String,dynamic> m){
+    //var l = m['num'];
+    //List<dynamic> docs = m['docs'];
+    //List<Document> documentList = Document.parseJsonList(l,docs);
+    return <Document>[];//documentList;
   }
 
   dispose(){

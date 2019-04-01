@@ -13,6 +13,8 @@ class HttpHandler {
   static const _FAKE_LOG_URL = "https://v1uu1cu9ld.execute-api.eu-west-1.amazonaws.com/alpha";
   static const _DOCUMENT_SERVER = "/document";
   static const _DOCUMENT_METADATA = "/documentMetadata";
+  static const _DOCUMENT_TAGS = "/documentTags";
+  static const _DOCUMENT_SECONDS = "/documentSeconds";
   static const _SEARCH_USER_SERVER = "/searchUser";
   static const _SEARCH_DOC_SERVER = "/searchDocument";
   static const _USER_DATA = "/userData";
@@ -396,6 +398,54 @@ class HttpHandler {
     }
   }
 
+  static Future<int> addDocumentTags(String docId, List<String> tags) async {
+    final response =
+    await http.post(
+        _URL + _DOCUMENT_TAGS,
+        body:{
+          "id": json.encode(docId),
+          "tags": json.encode(tags)
+        });
+
+    if(response.statusCode == 201) {
+      print("############# tags succesfully added");
+      return 1;
+    }
+    else if(response.statusCode == 400){
+      print("#############  bad input parameter");
+      return -1;
+    }
+    else if(response.statusCode == 500){
+      print("#############  server internal error");
+      return -2;
+    }
+  }
+
+  static Future<int> addSpentTime(String docId, List<double> seconds) async{
+    // seconds ha in posizione i-esima il tempo passato da un utente sull'i-esima pagina del documento con id "docId"
+    final response =
+    await http.post(
+        _URL + _DOCUMENT_SECONDS,
+        body:{
+          "id": json.encode(docId),
+          "seconds": json.encode(seconds)
+        });
+
+    if(response.statusCode == 201) {
+      print("#############  seconds succesfully added");
+      return 1;
+    }
+    else if(response.statusCode == 400){
+      print("#############  bad input parameter");
+      return -1;
+    }
+    else if(response.statusCode == 500){
+      print("#############  server internal error");
+      return -2;
+    }
+
+  }
+
 
                                 /*########     SEARCH  HANDLING     ########*/
 
@@ -466,6 +516,7 @@ class HttpHandler {
 
                                 /*########     LIKES  HANDLING     ########*/
 
+  
   static Future addLike(String user, String docId) async{
     final response =
         await http.post(
@@ -535,7 +586,7 @@ class HttpHandler {
         },
         body: json.encode({
           "username": user,
-          "uuid": docId
+          "id": docId
         }));
 
     print(response.statusCode);

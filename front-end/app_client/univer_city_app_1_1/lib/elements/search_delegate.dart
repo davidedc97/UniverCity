@@ -2,60 +2,47 @@ import 'package:univer_city_app_1_1/elements/elements.dart';
 import 'package:univer_city_app_1_1/elements/user.dart';
 import 'package:univer_city_app_1_1/bloc/cronologia_search_bloc_provider.dart';
 import 'package:univer_city_app_1_1/bloc/filtri_bloc_provider.dart';
+import 'package:univer_city_app_1_1/http_handling/http_handler.dart';
 import 'dart:async';
 
 class DocSearch extends SearchDelegate<Document> {
   final CronologiaSearchBloc bloc;
   final FiltriBloc fBloc;
   DocSearch(this.bloc, this.fBloc);
-  final docTest = [
-    Document('Telecomunicazioni', 'Cuomo',
-        '550e8400-e29b-41d4-a716-446655440000', 'O'),
-    Document('Architetture dei calcolatori', 'Ciciani',
-        '550e8400-e29b-41d4-a716-446655440001', 'M'),
-    Document('Reti dei calcolatori', 'Vitaletti',
-        '550e8400-e29b-41d4-a716-446655440002', 'O'),
-    Document('Sistemi di calcolo I', 'Demetrescu',
-        '550e8400-e29b-41d4-a716-446655440003', 'O'),
-    Document('Sistemi di calcolo II', 'Demetrescu',
-        '550e8400-e29b-41d4-a716-446655440004', 'O'),
-    Document('Teoria dei ststemi', 'Catardi',
-        '550e8400-e29b-41d4-a716-446655440005', 'O'),
-    Document('Fondamenti di automatica', 'Marchetti',
-        '550e8400-e29b-41d4-a716-446655440006', 'O'),
-    Document(
-        'Economia', 'Nastasi', '550e8400-e29b-41d4-a716-446655440007', 'O'),
-    Document('Controlli automatici', 'Nardi',
-        '550e8400-e29b-41d4-a716-446655440008', 'O'),
-    Document('EoA', 'Nardi', '550e8400-e29b-41d4-a716-446655440009', 'O'),
-    Document(
-        'Analisi I', 'Camilli', '550e8400-e29b-41d4-a716-446655440010', 'O'),
-    Document('Analisi II', 'Camilli II', '550e8400-e29b-41d4-a716-446655440011',
-        'O'),
-    Document('Fisica', 'Sibilia', '550e8400-e29b-41d4-a716-446655440012', 'O'),
-    Document('Probabilità e statistica', 'Toaldo',
-        '550e8400-e29b-41d4-a716-446655440013', 'O'),
-    Document('Sicurezza Informatica', 'Franco',
-        '550e8400-e29b-41d4-a716-446655440014', 'O'),
-    Document('Fodamenti di informatica', 'Shaerf',
-        '550e8400-e29b-41d4-a716-446655440015', 'O'),
-    Document('Algoritmi e strutture dati', 'D\'amore',
-        '550e8400-e29b-41d4-a716-446655440016', 'O'),
-    Document('Proggettazione software', 'de giacomo',
-        '550e8400-e29b-41d4-a716-446655440017', 'O'),
-  ];
-  
-  final List<User> userTest = <User>[
-    User('Tiziano', '', '', '', '', ''),
-    User('Davide', '', '', '', '', ''),
-    User('Lucian', '', '', '', '', ''),
-    User('Michele', '', '', '', '', ''),
-    User('Riccardo', '', '', '', '', ''),
-    User('Marco', '', '', '', '', ''),
-    User('Matteo', '', '', '', '', ''),
-    User('Damiano', '', '', '', '', ''),
-  ];
+  List<Result> res = <Result>[];
 
+  Timer _searchTimer;
+
+  cancelSearch() {
+    if (_searchTimer != null && _searchTimer.isActive) {
+      /// rimuove il vecchio timer.
+      _searchTimer.cancel();
+      _searchTimer = null;
+    }
+  }
+
+  updateSearch() async{
+    cancelSearch();
+
+    /// Un [Timer] è usato per evitare richieste inutili
+    _searchTimer = Timer(
+        Duration(
+            milliseconds: query.isEmpty ? 0 : 350,
+            hours: query.isEmpty ? 1 : 0), () {
+      /// TODO qui funzione fetch per ricerca
+      if(fBloc.filtriValue=='Utente'){
+        HttpHandler.search(query, '1').then((l){res = l;});
+      }
+      if(fBloc.filtriValue!='Utente'){
+        HttpHandler.search(query, '0').then((l){res = l;});
+      }
+      debugPrint('cerca');
+    });
+  }
+
+  ///
+  ///Indica quale tema deve usare il search delegate
+  ///
   @override
   ThemeData appBarTheme(BuildContext context) {
     final ThemeData theme = Theme.of(context);
@@ -68,6 +55,10 @@ class DocSearch extends SearchDelegate<Document> {
     );
   }
 
+  ///
+  /// Si occupa di creare le actions che verranno mostrare affianco
+  /// alla search bar, per ora c'è solo la X per cancelare il campo [query]
+  ///
   @override
   List<Widget> buildActions(BuildContext context) {
     //  action for app bar
@@ -81,6 +72,10 @@ class DocSearch extends SearchDelegate<Document> {
     ];
   }
 
+  ///
+  /// Si occupa di creare l'icona che apparira alla sinistra della search
+  /// bar, qui è l'icona per tornare indietro
+  ///
   @override
   Widget buildLeading(BuildContext context) {
     //  leading icon
@@ -93,104 +88,86 @@ class DocSearch extends SearchDelegate<Document> {
     );
   }
 
+  ///
+  /// È la funzione che si occupa di creare i risultati della ricerca
+  ///
   @override
   Widget buildResults(BuildContext context) {
     // show result based from selections
     bloc.addInCronologia(CronologiaSearchEntry(query));
-    // todo get con i risultati
-    return Container();
+    return _showResults(context);
   }
 
-  Timer _searchTimer;
 
-  cancelSearch() {
-    if (_searchTimer != null && _searchTimer.isActive) {
-      /// rimuove il vecchio timer.
-      _searchTimer.cancel();
-      _searchTimer = null;
-    }
-  }
-
-  updateSearch() {
-    cancelSearch();
-
-    /// Un [Timer] è usato per evitare richieste inutili
-    _searchTimer = Timer(
-        Duration(
-            milliseconds: query.isEmpty ? 0 : 350,
-            hours: query.isEmpty ? 1 : 0), () {
-      /// TODO qui funzione fetch per ricerca
-      debugPrint('cerca');
-    });
-  }
-
+  ///
+  /// È la funzione che si occupa di creare i suggerimenti della ricerca
+  ///
   @override
   Widget buildSuggestions(BuildContext context) {
-    updateSearch();
-    List<Document> risultatiList = docTest
-        .where((p) => p.title.toLowerCase().contains(query.toLowerCase()))
-        .toList();
-    List<User> risultatiUtenti = userTest.where((u)=>u.user.toLowerCase().contains(query.toLowerCase())).toList();
-    List<String> crono = bloc.cronologiaValue.map((e) => e.query).toList();
-    // show when search for anythings
+    return _showResults(context);
+  }
 
+  _showResults(context){
+    updateSearch();
     int size;
-    if(query.isEmpty){size = crono.length+1;}
-    if(query.isNotEmpty && fBloc.filtriValue=='Utente'){size =  risultatiUtenti.length+1;}
-    if(query.isNotEmpty && fBloc.filtriValue!='Utente'){size =  risultatiList.length+1;}
+    List<Result> resF = res?.where((r)=>r.title.toLowerCase()?.contains(query.toLowerCase()))?.toList();
+    List<String> crono = bloc.cronologiaValue.map((e) => e.query).toList()??[];
+    if(fBloc.filtriValue=='Appunto'){
+      resF = resF?.where((r)=>r.docInfo.type=='O')?.toList();
+    }
+    if(fBloc.filtriValue=='Mashup'){
+      resF = resF?.where((r)=>r.docInfo.type=='M')?.toList();
+    }
+    if(query.isEmpty){
+      size = crono?.length??0;
+    }else{
+      size = resF?.length??0;
+    }
+
     return StreamBuilder(
       stream: fBloc.filtri,
       builder: (context, snapshot){
-
         return ListView.builder(
-          itemBuilder: (context, i){
-            if (i == 0){return Container(child: Filtri());}
-            if (query.isEmpty){
-              ///
-              /// Mostra la cronologia
-              /// perche il campo query è vuoto
-              ///
-              return ListTile(
-                leading: Icon(Icons.history),
-                title: Text(crono[i-1]),
-                onTap: () {
-                  query = crono[i-1];
-                },
-              );
-            }
-            else{
-              ///
-              /// mostra i suggerimenti in base alla query
-              ///
-              if (fBloc.filtriValue == 'Utente') {
+            itemBuilder: (context, i){
+              if(i==0) return Container(child: Filtri());
+              if(query.isEmpty){
+                /// mostro la cronologia
                 return ListTile(
-                  leading: Icon(Icons.account_circle),
-                  title: Text(risultatiUtenti[i-1].user),
-                  onTap: () {Navigator.of(context).pushNamed('/profilo',arguments: <String, String>{
-                  'userName': risultatiUtenti[i-1].user,});},
-                );
-              }else{
-                return ListTile(
-                  leading: Icon(risultatiList[i-1].type == 'O'
-                      ? Icons.description
-                      : Icons.art_track),
-                  title: Text(risultatiList[i-1].title),
+                  leading: Icon(Icons.history),
+                  title: Text(crono[i-1]),
                   onTap: () {
-                    showDialog(
-                        context: context,
-                        builder: (context) => buildDocDialog(
-                            context,
-                            risultatiList[i - 1].title,
-                            risultatiList[i - 1].creator,
-                            risultatiList[i - 1].id));
+                    query = crono[i-1];
                   },
                 );
+              }// chiusura query empty (cornologia)
+              if(fBloc.filtriValue=='Utente'){
+                return ListTile(
+                  leading: Icon(Icons.account_circle),
+                  title: Text(resF[i-1].title),
+                  onTap: (){Navigator.of(context).pushNamed('/profilo',arguments: <String, String>{
+                    'userName': resF[i-1].title,});},
+                );
               }
-            }
-          },
-          itemCount: size,
+              return ListTile(
+                leading: Icon(resF[i-1].docInfo.type=='O'?Icons.description:Icons.art_track),
+                title: Text(resF[i-1].title),
+                onTap: (){
+                  showDialog(
+                      context: context,
+                      builder: (context) => buildDocDialog(
+                          context,
+                          resF[i-1].title,
+                          resF[i-1].docInfo.creator,
+                          resF[i-1].docInfo.id));
+                },
+              );
+            },
+          itemCount: size+1,
         );
       },
     );
   }
 }
+
+
+

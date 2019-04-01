@@ -129,7 +129,8 @@ carica(context) {
   //Navigator.of(context).pop();
   debugPrint('dopo del pop');
   debugPrint('show dialog 137');
-  Future<int> futureHttp = HttpHandler.uploadDocument(_bloc.titoloValue, _bloc.pathValue);
+  ///String title, List<String> tags, String typeFlag, String creator, String path
+  Future<int> futureHttp = HttpHandler.uploadDocument(_bloc.titoloValue,_bloc.tagsValue,'O',SessionUser().user ,_bloc.pathValue);
   showDialog(
       context: context,
       builder: (context) {

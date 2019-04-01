@@ -1,5 +1,6 @@
 import 'package:univer_city_app_1_1/elements/elements.dart';
 import 'package:univer_city_app_1_1/bloc/preferiti_bloc_provider.dart';
+import 'package:univer_city_app_1_1/http_handling/http_handler.dart';
 
 class Home extends StatelessWidget {
 
@@ -43,7 +44,31 @@ class Home extends StatelessWidget {
                     child: TitleDivider('Preferiti'),
                   );
                 default:
-                  return snapshot.data[index - 1];
+                  var f = HttpHandler.getDocumentMetadata(snapshot.data[index - 1]);
+                  return FutureBuilder(
+                    future: f,
+                    builder: (context, AsyncSnapshot<Document> snapshot){
+                      if(snapshot.hasError)
+                        return Text('Error: ${snapshot.error}');
+                      if(!snapshot.hasData){
+                        return ListTile(
+                          title: Container(child: SizedBox(height: 20,width: 200,),),
+                          subtitle: Container(child: SizedBox(height: 10,width: 300,),),
+                          leading: Container(child: SizedBox(height: 20,width: 20,),),
+                          trailing: Icon(Icons.more_vert),
+                        );
+                      }
+                      return Dismissible(
+                        direction: DismissDirection.horizontal,
+                        child: DocList(snapshot.data),
+                        background: Container(color: Colors.red,child: Center(child: Icon(Icons.delete),)),
+                        onDismissed: (_){
+                          HttpHandler.removeUserFavourite(SessionUser().user, snapshot.data.id);
+                        }, key: null,
+                      );
+
+                    },
+                  );
               }
             });
       },

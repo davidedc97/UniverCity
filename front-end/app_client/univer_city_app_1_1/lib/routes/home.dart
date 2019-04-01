@@ -4,6 +4,8 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:univer_city_app_1_1/bloc/theme_bloc_provider.dart';
 import 'package:univer_city_app_1_1/bloc/filtri_bloc_provider.dart';
 import 'package:univer_city_app_1_1/bloc/cronologia_search_bloc_provider.dart';
+import 'package:univer_city_app_1_1/bloc/profilo_bloc_provider.dart';
+import 'package:univer_city_app_1_1/bloc/preferiti_bloc_provider.dart';
 
 class HomeUniverCity extends StatefulWidget {
   final drawerEntry = [
@@ -27,12 +29,12 @@ class _HomeUniverCityState extends State<HomeUniverCity> {
 
     switch (index) {
       case 0:
-        /// TODO insert fetch data preferiti
+        PreferitiBloc _bloc = PreferitiBlocProvider.of(context);
+        _bloc.fetchData();
         return Home();
       case 1:
         return Cronologia();
       case 2:
-        /// TODO insert fetch data mashup
         return Mashup();
       case 3:
         launch('https://docs.google.com/forms/d/e/1FAIpQLSd4qR7oz1D4rFhSpGLhL_tduI27CZdOt-tG-4nO6xGRnhGSwA/viewform');
@@ -152,6 +154,8 @@ class _HomeUniverCityState extends State<HomeUniverCity> {
     showSearch(context: context, delegate: DocSearch(CronologiaSearchBlocProvider.of(context), FiltriBlocProvider.of(context)));
   }
   _showProfilo(context){
+    ProfiloBloc bloc = ProfiloBlocProvider.of(context);
+    bloc.fetchData(SessionUser().user);
     Navigator.of(context).pushNamed('/profilo',arguments: <String, String>{
     'userName': SessionUser().user??'sessionNotInit',});
   }

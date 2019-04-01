@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:univer_city_app_1_1/elements/elements.dart';
 import 'package:univer_city_app_1_1/bloc/cronologia_bloc_provider.dart';
 import 'package:univer_city_app_1_1/bloc/theme_bloc_provider.dart';
+import 'package:univer_city_app_1_1/http_handling/http_handler.dart';
+import 'package:flutter_pdf_viewer/flutter_pdf_viewer.dart';
 import 'package:share/share.dart';
 
 Widget buildDocDialog(BuildContext context, String titolo,String proprietario, String uuid) {
@@ -37,11 +39,11 @@ Widget buildDocDialog(BuildContext context, String titolo,String proprietario, S
                     ),
                     ListTile(leading: Icon(Icons.info), title: Text(titolo)),
                     Divider(),
-                    PreViewRowButton(),
+                    PreViewRowButton(uuid),
                     Divider(),
                     InfoRow('Proprietario', proprietario),
-                    InfoRow('Rank', 'todo'),
-                    InfoRow('Downloads', 'todo'),
+                    //InfoRow('Rank', 'todo'),
+                    //InfoRow('Downloads', 'todo'),
                     Divider(),
                     ListTile(
                       leading: Icon(Icons.feedback),
@@ -89,8 +91,10 @@ Widget buildDocDialog(BuildContext context, String titolo,String proprietario, S
                   width: 200,
                   child: FloatingActionButton.extended(
                     backgroundColor: (tBloc.state)?Color(0xFF0E688D):Color(0xFF147ECC),
-                    onPressed: () {
+                    onPressed: () async{
                       cBloc.addInCronologia(CronologiaEntry(uuid, titolo, proprietario));
+                      var byte = await HttpHandler.getDocumentById(uuid);
+                      PdfViewer.loadBytes(byte);
                     },
                     icon: Icon(Icons.play_arrow, color: Colors.white,),
                     label: Text('LEGGI', style: TextStyle(color: Colors.white),),
@@ -106,6 +110,8 @@ Widget buildDocDialog(BuildContext context, String titolo,String proprietario, S
 
 
 class PreViewRowButton extends StatefulWidget {
+  String uuid;
+  PreViewRowButton(this.uuid);
   @override
   _PreViewRowButtonState createState() => _PreViewRowButtonState();
 }
@@ -117,22 +123,27 @@ class _PreViewRowButtonState extends State<PreViewRowButton> {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
           FlatButton.icon(
-            onPressed: () {},
+            onPressed: () async{
+              HttpHandler.addLike(SessionUser().user, widget.uuid);
+            },
             icon: Icon(Icons.thumb_up),
             label: Text('Like'),
             textColor: Colors.greenAccent,
             highlightColor: Colors.greenAccent[100],
           ),
           FlatButton.icon(
-            onPressed: () {},
+            onPressed: () {
+              HttpHandler.retrieveLikes(widget.uuid);
+            },
             icon: Icon(Icons.thumb_down),
             label: Text('Dislike'),
             textColor: Colors.redAccent,
             highlightColor: Colors.redAccent[100],
           ),
           FlatButton.icon(
-            onPressed: () {
-
+            onPressed: () async{
+              //TODO vedi come si puo migliorare il fatto che se gia sta tra i preferiti è da eliminare
+              HttpHandler.addUserFavourite(SessionUser().user, widget.uuid);
             },
             icon: Icon(Icons.favorite_border),
             label: Text('Save'),

@@ -26,6 +26,7 @@ class HttpHandler {
 
   //TODO (Davide) FUNZIONI DA RIVEDERE: getMyUserById, getOtherUserById, downloadDocument
 
+
                                 /*########     USER  HANDLING     ########*/
 
 
@@ -132,7 +133,7 @@ class HttpHandler {
     }
 
   }
-
+//TODO (Tizio)
   static Future<Uint8List> getUserImg(String user) async {
     final response =
     await http.get(
@@ -154,7 +155,7 @@ class HttpHandler {
     }
 
   }
-
+//TODO (Tizio)
   static Future<int> changeUserImg(String user, String file) async {
     final response =
     await http.put(
@@ -181,7 +182,7 @@ class HttpHandler {
       return -2;
     }
   }
-
+//TODO (Tizio)
   static Future<int> addUserExp(String user, int expToAdd) async {
     final response =
     await http.put(
@@ -398,15 +399,15 @@ class HttpHandler {
     ** This function returns a list of documents/users fitting the query
     ** The value of typeFlag must be "0" (searching for documents) or "1" (searching for users)
   */
-  static Future<List<dynamic>> search(String query, String typeFlag) async {
+  static Future<List<Result>> search(String query, String typeFlag) async {
 
     if(typeFlag == "0") {
-      var res = searchDocument(query);
-      return res;
+      List<Document> res = await searchDocument(query);
+      return res?.map((doc)=>Result(doc.title, docInfo: doc))?.toList();
     }
     else if(typeFlag == "1"){
-      var res = searchUser(query);
-      return res;
+      List<User> res = await searchUser(query);
+      return res?.map((usr)=>Result(usr.user, userInfo: usr))?.toList();
     }
     else{
       print("######## SEARCH: BAD FLAG INPUT");
@@ -460,7 +461,6 @@ class HttpHandler {
 
                                 /*########     LIKES  HANDLING     ########*/
 
-
   static Future addLike(String user, String docId) async{
     final response =
         await http.post(
@@ -492,7 +492,7 @@ class HttpHandler {
                                 /*########     FAVOURITES  HANDLING     ########*/
 
 
-  static Future<dynamic> getUserFavourites(String user) async {
+  static Future<List<String>> getUserFavourites(String user) async {
     final response =
         await http.get(
         _URL+_USER_FAVOURITE + "?username=" + user,
@@ -511,11 +511,11 @@ class HttpHandler {
     }
     else if(response.statusCode == 404) {
       print("############### UTENTE NON TROVATO");
-      return -1;
+      return ['-1'];
     }
     else if(response.statusCode == 500) {
       print("############### SERVER INTERNAL ERROR");
-      return -2;
+      return ['-2'];
     }
   }
 

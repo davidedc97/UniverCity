@@ -26,6 +26,7 @@ dependencies:
   shared_preferences: ^0.4.3
   share: ^0.5.3
   intro_views_flutter: ^2.4.0
+  flutter_pdf_viewer: ^0.2.2
 
 dev_dependencies:
   flutter_test:

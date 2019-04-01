@@ -9,6 +9,7 @@ import 'package:univer_city_app_1_1/bloc/cronologia_bloc_provider.dart';
 import 'package:univer_city_app_1_1/bloc/theme_bloc_provider.dart';
 import 'package:univer_city_app_1_1/bloc/cronologia_search_bloc_provider.dart';
 import 'package:univer_city_app_1_1/bloc/filtri_bloc_provider.dart';
+import 'package:univer_city_app_1_1/bloc/profilo_bloc_provider.dart';
 import 'package:univer_city_app_1_1/routes/route.dart';
 
 // TODO test pdf online
@@ -21,7 +22,8 @@ void main() {
       ThemeBlocProvider(
           child: CronologiaSearchBlocProvider(
               child: CronologiaBlocProvider(
-                  child: FiltriBlocProvider(child: new UniverCity())))),
+                  child: FiltriBlocProvider(
+                      child: ProfiloBlocProvider(child: new UniverCity(),))))),
     );
   });
 }

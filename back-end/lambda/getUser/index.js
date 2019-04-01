@@ -7,7 +7,7 @@ var Pool = require('pg').Pool;
 const psql = new Pool ({
     host: 'metadata.czzhwg1jheui.eu-west-1.rds.amazonaws.com',
     user: 'univercity',
-    password: '',
+    password: 'googleworkshop',
     database: 'metadata',
     port: 5432
 })
@@ -15,96 +15,100 @@ const psql = new Pool ({
 var result = [];
 var doc = [];
 
-function getMetadata(username){
-
-    return new Promise((resolve, reject) => {
-        psql.query("SELECT * from utilitator where username = $1", [username], function(err, res){
-            if (err) result = "err";
-            else {
-                result = res.rows;
+/*async function getMetadata(username){
+    await psql.query("SELECT * from utilitator where username = $1", [username], function(err, res1){
+        if (err) result = "err";
+        else {
+            result = res1.rows;
+        }
+    })
+    if(result == "err") return "err";
+    else {
+        await psql.query("SELECT * from creator where student = $1", [username], function(err, res2) {
+            if (err) return "err";
+            else { 
+                for (i = 0; i<res2.rows.lenght; i++){
+                    doc[i] = res2.rows[i].document;
+                }
             }
         })
-        if(result == "err") resolve(result);
-        else {
-            psql.query("SELECT * from creator where student = $1", [username], {
-                onSucces: function(rsl){
-                    for (i = 0; i<rsl.rows.lenght; i++){
-                        doc[i] = rsl.rows[i].document;
-                    }
-                    resolve(result);
-                },
-                onFailure: function(error){
-                    result = "err";
-                    resolve(result);
-                }
-            });
-        }
-    });
+    }
+}*/
+
+async function getMetadataUti(username){
+    return await psql.query("SELECT * from utilitator where username = $1", [username])
 }
 
-exports.handler = async (event, context, callback) => {
-    var body = JSON.parse(event.body);
-    
-    var username = body.username;
+async function getMetadataCreator(student){
+    return await psql.query("SELECT * from creator where student = $1", [student])
+}
 
-    var response = {
-        "statusCode": 200,
-        "isBase64Encoded": false,
-        "body": {
-            "imgUserPath": result[0].image,
-            "username": result[0].username,
-            "name": result[0].name,
-            "surname": result[0].surname,
-            "xp": result[0].xp,
-            "bio": result[0].bio,
-            "university": result[0].university,
-            "faculty": result[0].faculty,
-            "documentUploaded": {
-                "num": doc.lenght,
-                "docs": [
-                    {
-                        "uuid": ""
-                    }
-                ]
-             },
-            "mashupCreated": {
-                "num": 0,
-                "docs": [
-                    {
-                        "title": "",
-                        "uuid": ""
-                    }
-                ]
-            }
-        },
-    }
-
-    for (i=0; i< doc.lenght; i++){
-        response.body.docs[i].uuid = doc[i];
-    }
+exports.handler = async (event) => {
+    //var body = JSON.parse(event.body);
     
-    try{
-        var result = await getMetadata(username).then((result) => {
-            return result;
-        });
+    var username = event.username;
+    var resultUti = await getMetadataUti(username)
+    var resultCreator = await getMetadataCreator(username)
         
-        var statusCode = 200;
-        if(result == "err"){
-            statusCode = 400;
-            body = "user not found";
-        }
-        
-        response.statusCode = statusCode;
-        
-        callback(null,response);
-    }
-    catch(e){
-        callback(e,{
+    if(resultUti == "err"){
+        return {
+            "statusCode": 404,
             "isBase64Encoded": false,
-            "headers": {},
-            "body": "err",
-            "statusCode": 501
-        });
+            "body": JSON.stringify({message: 'User not found'}),
+        }
     }
-};
 
+     else if (resultCreator == "err"){
+        return {
+            "statusCode": 404,
+            "isBase64Encoded": false,
+            "body": JSON.stringify({message: 'User not found'}),
+        }
+    }
+    else{
+
+        var c;
+        for (c = 0; c<resultCreator.rows.length; c++){
+            doc.push(resultCreator.rows[c].document)
+        }
+
+        var response = {
+            "statusCode": 200,
+            "isBase64Encoded": false,
+             "body": {
+                "imgUserPath": resultUti.rows[0].image,
+                "username": resultUti.rows[0].username,
+                "name": resultUti.rows[0].name,
+                "surname": resultUti.rows[0].surname,
+                "xp": resultUti.rows[0].xp,
+                "bio": resultUti.rows[0].bio,
+                "university": resultUti.rows[0].university,
+                "faculty": resultUti.rows[0].faculty,
+                "documentUploaded": {
+                    "num": doc.lenght,
+                    "docs": doc
+                },
+                "mashupCreated": {
+                    "num": 0,
+                    "docs": [
+                        {
+                            "title": "",
+                            "uuid": ""
+                        }
+                    ]
+                 }
+            },
+        }
+        var i;
+        for (i=0; i< doc.lenght; i++){
+            response.body.docs[i].uuid = doc[i];
+        }
+        /*return {
+            "statusCode": 200,
+            "isBase64Encoded": false,
+            "body": resultUti
+          }*/
+        return response;
+    }
+
+}

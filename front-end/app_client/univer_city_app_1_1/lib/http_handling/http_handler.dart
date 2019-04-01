@@ -23,6 +23,8 @@ class HttpHandler {
   static const _REG_SERVER = "/userReg";
   static const _LIKE_SERVER = "/like";
   static const _MASHUP_SERVER = "/mashup";
+  static const _PASS_CODE = "/resetPassword";
+  static const _PASS_RESET = "/resetPass_aux";
 
   //TODO (Davide) FUNZIONI DA RIVEDERE: getMyUserById, getOtherUserById, downloadDocument
 
@@ -588,5 +590,55 @@ class HttpHandler {
                                 /*########     PASSWORD  RECOVERY     ########*/
 
 
+  static Future<int> sendVerificationCode(String user) async {
+
+    final response =
+        await http.post(
+          _URL + _PASS_CODE,
+          body: json.encode({"username": user})
+        );
+
+    print(response.statusCode);
+
+    if(response.statusCode == 200){
+      print("###########  VERIFICATION CODE SENT");
+      return 1;
+    }
+    else if(response.statusCode == 400){
+      print("###########  SOME ERROR OCCURRED");
+      return -1;
+    }
+    else if(response.statusCode == 500){
+      print("###########  INTERNAL SERVER ERROR");
+      return -2;
+    }
+  }
+
+  static Future<int> resetPassword(String user, String newPass, String verificationCode) async {
+
+    final response =
+        await http.post(
+        _URL + _PASS_RESET,
+        body: json.encode({
+          "username": user,
+          "newPass": newPass,
+          "verCode": verificationCode
+        }));
+
+    print(response.statusCode);
+
+    if(response.statusCode == 200){
+      print("###########  NEW PASSWORD CONFIRMED");
+      return 1;
+    }
+    else if(response.statusCode == 400){
+      print("###########  SOME ERROR OCCURRED");
+      return -1;
+    }
+    else if(response.statusCode == 500){
+      print("###########  INTERNAL SERVER ERROR");
+      return -2;
+    }
+  }
 
 }

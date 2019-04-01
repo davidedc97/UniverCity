@@ -158,7 +158,7 @@ class DocSearch extends SearchDelegate<Document> {
                           context,
                           resF[i-1].title,
                           resF[i-1].docInfo.creator,
-                          resF[i-1].docInfo.id));
+                          resF[i-1].docInfo.uuid));
                 },
               );
             },

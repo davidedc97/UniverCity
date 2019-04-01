@@ -300,7 +300,7 @@ class HttpHandler {
 
     if (res.statusCode == 201) {
       // document created
-      // nel response.body viene tornato id, titolo, tipo e creatore del documento
+      // nel response.body viene tornato uuid, titolo, tipo e creatore del documento
       return 1;
     }
     else if (res.statusCode == 400){
@@ -320,7 +320,7 @@ class HttpHandler {
   static Future<Uint8List> getDocumentById( String docId ) async{
     final response =
       await http.get(
-          _URL + _DOCUMENT_SERVER + "?id=" + docId,
+          _URL + _DOCUMENT_SERVER + "?uuid=" + docId,
           headers: {'Authorization':_sessionToken ,'Content-type' : 'application/json', 'Accept': 'application/pdf'} //qui era "application/json" e funzionava
           );
 
@@ -337,7 +337,7 @@ class HttpHandler {
   static Future<Document> getDocumentMetadata(String docId) async{
     final response =
       await http.get(
-        _URL + _DOCUMENT_METADATA + "?id=" + docId,
+        _URL + _DOCUMENT_METADATA + "?uuid=" + docId,
         headers: {'Authorization':_sessionToken ,'Content-type' : 'application/json', 'Accept': 'application/json'}
     );
 
@@ -355,7 +355,7 @@ class HttpHandler {
   static Future<int> downloadDocument(String docId, String path) async {
     print('scarico');
     var response =
-        await http.get(_URL + _DOCUMENT_SERVER + "?id=" + docId, headers: {'Authorization':_sessionToken});
+        await http.get(_URL + _DOCUMENT_SERVER + "?uuid=" + docId, headers: {'Authorization':_sessionToken});
 
     if(response.statusCode == 200){
       File f = new File(path);
@@ -395,6 +395,53 @@ class HttpHandler {
     else if(response.statusCode == 500){
       print("#############  server internal error");
       return -3;
+    }
+  }
+
+  static Future<int> addDocumentTags(String docId, List<String> tags) async {
+    final response =
+    await http.post(
+        _URL + _DOCUMENT_TAGS,
+        body:{
+          "uuid": json.encode(docId),
+          "tags": json.encode(tags)
+        });
+
+    if(response.statusCode == 201) {
+      print("############# tags succesfully added");
+      return 1;
+    }
+    else if(response.statusCode == 400){
+      print("#############  bad input parameter");
+      return -1;
+    }
+    else if(response.statusCode == 500){
+      print("#############  server internal error");
+      return -2;
+    }
+  }
+
+  static Future<int> addSpentTime(String docId, List<double> seconds) async {
+    // seconds ha in posizione i-esima il tempo passato da un utente sull'i-esima pagina del documento con uuid "docId"
+    final response =
+    await http.post(
+        _URL + _DOCUMENT_SECONDS,
+        body: {
+          "uuid": json.encode(docId),
+          "seconds": json.encode(seconds)
+        });
+
+    if (response.statusCode == 201) {
+      print("#############  seconds succesfully added");
+      return 1;
+    }
+    else if (response.statusCode == 400) {
+      print("#############  bad input parameter");
+      return -1;
+    }
+    else if (response.statusCode == 500) {
+      print("#############  server internal error");
+      return -2;
     }
   }
 
@@ -594,6 +641,7 @@ class HttpHandler {
 
                                 /*########     PASSWORD  RECOVERY     ########*/
 
+
   static Future<int> sendVerificationCode(String user) async {
 
     final response =
@@ -643,54 +691,6 @@ class HttpHandler {
       print("###########  INTERNAL SERVER ERROR");
       return -2;
     }
-  }
-
-  static Future<int> addDocumentTags(String docId, List<String> tags) async {
-    final response =
-    await http.post(
-        _URL + _DOCUMENT_TAGS,
-        body:{
-          "id": json.encode(docId),
-          "tags": json.encode(tags)
-        });
-
-    if(response.statusCode == 201) {
-      print("############# tags succesfully added");
-      return 1;
-    }
-    else if(response.statusCode == 400){
-      print("#############  bad input parameter");
-      return -1;
-    }
-    else if(response.statusCode == 500){
-      print("#############  server internal error");
-      return -2;
-    }
-  }
-
-  static Future<int> addSpentTime(String docId, List<double> seconds) async{
-    // seconds ha in posizione i-esima il tempo passato da un utente sull'i-esima pagina del documento con id "docId"
-    final response =
-    await http.post(
-        _URL + _DOCUMENT_SECONDS,
-        body:{
-          "id": json.encode(docId),
-          "seconds": json.encode(seconds)
-        });
-
-    if(response.statusCode == 201) {
-      print("#############  seconds succesfully added");
-      return 1;
-    }
-    else if(response.statusCode == 400){
-      print("#############  bad input parameter");
-      return -1;
-    }
-    else if(response.statusCode == 500){
-      print("#############  server internal error");
-      return -2;
-    }
-
   }
 
 }

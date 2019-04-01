@@ -27,11 +27,11 @@ class DocList extends StatelessWidget {
               //visualizzazione pre viewer
               showDialog(
                 context: context,
-                builder: (context)=>buildDocDialog(context, _info.title,_info.creator, _info.id)
+                builder: (context)=>buildDocDialog(context, _info.title,_info.creator, _info.uuid)
               );}
         ),
         onTap: ()async{
-          var byte = await HttpHandler.getDocumentById(_info.id);
+          var byte = await HttpHandler.getDocumentById(_info.uuid);
           PdfViewer.loadBytes(byte);
         },
       ),
@@ -66,11 +66,11 @@ class DocListDividedTitle extends StatelessWidget {
                   //visualizzazione pre viewer
                   showDialog(
                       context: context,
-                      builder: (context)=>buildDocDialog(context, _info.title,_info.creator, _info.id)
+                      builder: (context)=>buildDocDialog(context, _info.title,_info.creator, _info.uuid)
                   );}
             ),
             onTap: ()async{
-              var byte = await HttpHandler.getDocumentById(_info.id);
+              var byte = await HttpHandler.getDocumentById(_info.uuid);
               PdfViewer.loadBytes(byte);
             },
           ),

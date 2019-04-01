@@ -472,7 +472,7 @@ class HttpHandler {
     final response =
         await http.post(
           _URL + _LIKE_SERVER,
-          body: {"username": user, "doc_id": docId});
+          body: {"username": user, "uuid": docId});
 
     if(response.statusCode == 200) {
       return json.decode(response.body);
@@ -543,7 +543,7 @@ class HttpHandler {
     print(response.statusCode);
 
     if(response.statusCode == 200){
-      // document id succesfully added to user's favourite
+      // document uuid succesfully added to user's favourite
       return 1;
     }
     else if(response.statusCode == 400){
@@ -551,7 +551,7 @@ class HttpHandler {
       return -1;
     }
     else if(response.statusCode == 403){
-      //document id already among user's favourites
+      //document uuid already among user's favourites
       return -2;
     }
     else if(response.statusCode == 500){
@@ -563,7 +563,7 @@ class HttpHandler {
   static Future<int> removeUserFavourite(String user, docId) async {
     final response =
       await http.delete(
-          _URL + _USER_FAVOURITE + "?username=" + user + "&id=" + docId,
+          _URL + _USER_FAVOURITE + "?username=" + user + "&uuid=" + docId,
             headers:{
               'Authorization':_sessionToken,
               'Content-type' : 'application/json',
@@ -573,7 +573,7 @@ class HttpHandler {
     print(response.statusCode);
 
     if(response.statusCode == 200){
-      // document id succesfully added to user's favourite
+      // document uuid succesfully added to user's favourite
       return 1;
     }
     else if(response.statusCode == 400){
@@ -581,7 +581,7 @@ class HttpHandler {
       return -1;
     }
     else if(response.statusCode == 404){
-      //document id not found among user's favourites
+      //document uuid not found among user's favourites
       return -2;
     }
     else if(response.statusCode == 500){

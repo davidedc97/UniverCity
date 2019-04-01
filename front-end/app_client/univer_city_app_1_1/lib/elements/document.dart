@@ -2,22 +2,22 @@ class Document{
 
   String _title;
   String _creator;
-  String _id;
+  String _uuid;
   String _type; // it can be "M" (mashup) or "O" (original)
 
 
-  Document(this._title, this._creator, this._id, this._type);
+  Document(this._title, this._creator, this._uuid, this._type);
 
   String get title => _title;
   String get creator => _creator;
-  String get id => _id;
+  String get uuid => _uuid;
   String get type => _type;
 
   Document.fromJson(Map<String, dynamic> json) {
     //funzione-costruttore da usare in http_handler
     this._title = json["title"];
     this._creator = json["creator"];
-    this._id = json["id"];
+    this._uuid = json["uuid"];
     this._type = json["type"];
   }
 
@@ -30,12 +30,12 @@ class Document{
   }
 
   @override String toString(){
-    return "titolo: " + this.title + "; creatore: " + this.creator + "; id: " + this.id + ", tipo: " + this.type + "\n";
+    return "titolo: " + this.title + "; creatore: " + this.creator + "; uuid: " + this.uuid + ", tipo: " + this.type + "\n";
   }
 
   Map<String, dynamic> toMap(){
     return <String, dynamic> {
-      'id': _id,
+      'uuid': _uuid,
       'title': _title,
       'type': type,
       'creator': _creator

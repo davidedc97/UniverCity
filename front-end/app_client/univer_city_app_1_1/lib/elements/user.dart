@@ -6,7 +6,6 @@ class User{
   String _email;
   String _faculty;
   String _university;
-  String _id;
   String _img;
   int _xp;
   String _bio;
@@ -21,7 +20,6 @@ class User{
   String get email => _email;
   String get faculty => _faculty;
   String get university => _university;
-  String get id => _id;
   String get img => _img;
   int get xp => _xp;
   String get bio => _bio;

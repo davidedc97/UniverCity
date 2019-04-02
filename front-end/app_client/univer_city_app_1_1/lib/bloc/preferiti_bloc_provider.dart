@@ -10,7 +10,9 @@ class PreferitiBlocProvider extends InheritedWidget {
 
   PreferitiBlocProvider({Key key, Widget child})
       : bloc = PreferitiBloc(),
-        super(key: key, child: child);
+        super(key: key, child: child){
+    bloc.fetchData();
+  }
 
   static PreferitiBloc of(BuildContext context) {
     return (context.inheritFromWidgetOfExactType(PreferitiBlocProvider)

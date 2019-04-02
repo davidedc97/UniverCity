@@ -3,10 +3,13 @@ import 'package:univer_city_app_1_1/bloc/preferiti_bloc_provider.dart';
 import 'package:univer_city_app_1_1/http_handling/http_handler.dart';
 
 class Home extends StatelessWidget {
+  final PreferitiBloc _bloc;
+  Home(this._bloc);
+
+
 
   @override
   Widget build(BuildContext context) {
-    final PreferitiBloc _bloc = PreferitiBlocProvider.of(context);
     return StreamBuilder(
       stream: _bloc.preferiti,
       builder: (context,AsyncSnapshot<List<dynamic>> snapshot){

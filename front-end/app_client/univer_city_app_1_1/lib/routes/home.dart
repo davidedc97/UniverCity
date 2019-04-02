@@ -29,8 +29,7 @@ class _HomeUniverCityState extends State<HomeUniverCity> {
     switch (index) {
       case 0:
         PreferitiBloc _bloc = PreferitiBlocProvider.of(context);
-        _bloc.fetchData();
-        return Home();
+        return Home(_bloc);
       case 1:
         return Cronologia();
       case 2:

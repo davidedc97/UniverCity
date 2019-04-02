@@ -438,8 +438,8 @@ class HttpHandler {
       return res?.map((doc)=>Result(doc.title, docInfo: doc))?.toList();
     }
     else if(typeFlag == "1"){
-      List<User> res = await searchUser(query);
-      return res?.map((usr)=>Result(usr.user, userInfo: usr))?.toList();
+      List<String> res = await searchUser(query);
+      return res?.map((usr)=>Result(usr, userInfo: User.fromUsername(usr)))?.toList();
     }
     else{
       print("######## SEARCH: BAD FLAG INPUT");
@@ -468,18 +468,23 @@ class HttpHandler {
 
   }
 
-  static Future<List<User>> searchUser(String query) async {
+  static Future<List<String>> searchUser(String query) async {
     final response =
     await http.get(
         _URL_METADATA + _SEARCH_USER_SERVER + "?searchString=" + query.toString(),
-        headers: {'Authorization':_sessionToken}
+      headers:{
+        'Authorization':_sessionToken,
+        'Content-type' : 'application/json',
+        'Accept': 'application/json'
+      }
     );
+
+    print(response.statusCode);
 
     if(response.statusCode == 200){
       var num = json.decode(response.body)["num"];
-      List<dynamic> users = json.decode(response.body)["users"];
-      List<User> res = User.parseJsonList(num, users);
-      return res;
+      List<String> users = json.decode(response.body)["users"];
+      return users;
     }
     else if(response.statusCode == 400){
       print("######### BAD INPUT PARAMENTER");

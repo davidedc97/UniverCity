@@ -13,6 +13,7 @@ class User{
   Map<String, dynamic> _mashupCreated;
 
   User(this._user, this._name, this._surname, this._email, this._faculty, this._university);
+  User.fromUsername(this._user);
 
   String get user => _user;
   String get name => _name;

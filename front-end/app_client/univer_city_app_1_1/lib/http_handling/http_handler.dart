@@ -282,16 +282,10 @@ class HttpHandler {
       return 1;
     }
     else if (res.statusCode == 400){
-      //debugPrint('up2');
       return -1;
     }
     else if (res.statusCode == 500){
-      //debugPrint('up3');
       return -2;
-    }
-    else{
-      //debugPrint('up4');
-      return -3;
     }
   }
 

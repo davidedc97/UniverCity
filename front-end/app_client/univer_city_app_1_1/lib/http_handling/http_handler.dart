@@ -29,7 +29,7 @@ class HttpHandler {
   static const _PASS_CODE = "/resetPassword";
   static const _PASS_RESET = "/resetPass_aux";
 
-  //TODO (Davide) FUNZIONI DA RIVEDERE: getMyUserById, getOtherUserById, downloadDocument
+  //TODO (Davide) FUNZIONI DA RIVEDERE: downloadDocument
 
 
                                 /*########     USER  HANDLING     ########*/
@@ -244,28 +244,6 @@ class HttpHandler {
     }
   }
 
-  static Future<User> getMyUserById(String userId) async {
-    final response =
-    await http.get(_URL_METADATA + _LOGIN_SERVER + "/" + userId);
-    if(response.statusCode == 200){
-      return User.fromJson(json.decode(response.body));
-    }
-    else{
-      throw ServerException.withCode(response.statusCode);
-    }
-  }
-
-  static Future<User> getOtherUserById(String userId) async {
-    final response =
-        await http.get(_URL_METADATA + _LOGIN_SERVER + "/" + userId);
-    if(response.statusCode == 200){
-      return User.secureFromJson(json.decode(response.body));
-    }
-    else{
-      throw ServerException.withCode(response.statusCode);
-    }
-  }
-
 
                                 /*########     DOCUMENT  HANDLING     ########*/
 
@@ -369,7 +347,7 @@ class HttpHandler {
   }
 
   //TODO: si può cambiare il tipo di pagesData in List<Page>
-  static Future<dynamic> mashup(String title, List<String> tags, String creator, List<Map<String, dynamic>> pagesData) async {
+  static Future<dynamic> mashup(String title, List<String> tags, String creator, List<Page> pagesData) async {
     final response =
         await http.post(
           _URL + _MASHUP_SERVER,

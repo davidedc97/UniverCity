@@ -309,11 +309,12 @@ class HttpHandler {
   static Future<Document> getDocumentMetadata(String docId) async{
     final response =
       await http.get(
-        _URL + _DOCUMENT_METADATA + "?uuid=" + docId,
+        _URL_METADATA + _DOCUMENT_METADATA + "?uuid=" + docId,
         headers: {'Authorization':_sessionToken ,'Content-type' : 'application/json', 'Accept': 'application/json'}
     );
 
     print(response.statusCode);
+    print(json.decode(response.body));
 
     if(response.statusCode == 200) {
       return Document.fromJson(json.decode(response.body));

@@ -25,16 +25,16 @@ class Cronologia extends StatelessWidget {
             itemBuilder: (context, i){
               if(snapshot.data[i].stamp.isBefore(unaSettimanaFa)&&!r){
                 r=true;
-                return DocListDividedTitle('Questa settimana', Document(snapshot.data[i].titolo, snapshot.data[i].proprietario, snapshot.data[i].uuid, 'C'));
+                return DocListDividedTitle('Questa settimana', Document(snapshot.data[i].titolo, snapshot.data[i].proprietario, snapshot.data[i].uuid, true));
               }else if(snapshot.data[i].stamp.isBefore(unMeseFa)&&!s){
                 s=true;
-                return DocListDividedTitle('Questa settimana', Document(snapshot.data[i].titolo, snapshot.data[i].proprietario, snapshot.data[i].uuid, 'C'));
+                return DocListDividedTitle('Questa settimana', Document(snapshot.data[i].titolo, snapshot.data[i].proprietario, snapshot.data[i].uuid, true));
               }else if(snapshot.data[i].stamp.isAfter(unMeseFa)&&!m){
                 m=true;
-                return DocListDividedTitle('Questa settimana', Document(snapshot.data[i].titolo, snapshot.data[i].proprietario, snapshot.data[i].uuid, 'C'));
+                return DocListDividedTitle('Questa settimana', Document(snapshot.data[i].titolo, snapshot.data[i].proprietario, snapshot.data[i].uuid, true));
               }else{
                 return DocList(Document(
-                     snapshot.data[i].titolo, snapshot.data[i].proprietario, snapshot.data[i].uuid, 'C'));
+                     snapshot.data[i].titolo, snapshot.data[i].proprietario, snapshot.data[i].uuid, true));
               }
 
             },

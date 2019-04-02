@@ -3,7 +3,7 @@ class Document{
   String _title;
   String _creator;
   String _uuid;
-  String _type; // it can be "M" (mashup) or "O" (original)
+  bool _type; // it can be "M" (mashup) or "O" (original)
 
 
   Document(this._title, this._creator, this._uuid, this._type);
@@ -11,7 +11,7 @@ class Document{
   String get title => _title;
   String get creator => _creator;
   String get uuid => _uuid;
-  String get type => _type;
+  bool get type => _type;
 
   Document.fromJson(Map<String, dynamic> json) {
     //funzione-costruttore da usare in http_handler
@@ -30,7 +30,7 @@ class Document{
   }
 
   @override String toString(){
-    return "titolo: " + this.title + "; creatore: " + this.creator + "; uuid: " + this.uuid + ", tipo: " + this.type + "\n";
+    return "titolo: " + this.title + "; creatore: " + this.creator + "; uuid: " + this.uuid + ", tipo: " + this.type.toString() + "\n";
   }
 
   Map<String, dynamic> toMap(){

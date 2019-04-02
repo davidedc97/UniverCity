@@ -4,7 +4,7 @@ import 'package:univer_city_app_1_1/elements/document.dart';
 import 'package:univer_city_app_1_1/http_handling/http_handler.dart';
 
 class ShowNoteClp extends StatefulWidget {
-  final List<String> docs;
+  final List<dynamic> docs;
   final String title;
   ShowNoteClp(this.title, this.docs);
 

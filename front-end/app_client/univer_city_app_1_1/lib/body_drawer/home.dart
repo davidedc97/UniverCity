@@ -9,10 +9,10 @@ class Home extends StatelessWidget {
     final PreferitiBloc _bloc = PreferitiBlocProvider.of(context);
     return StreamBuilder(
       stream: _bloc.preferiti,
-      builder: (context, snapshot){
+      builder: (context,AsyncSnapshot<List<dynamic>> snapshot){
         if (snapshot.hasError)
           return Center(child: Text('Error: ${snapshot.error}'),);
-        if(!snapshot.hasData){
+        if(!snapshot.hasData || snapshot.data?.length == 0){
           return Column(children: <Widget>[
             Padding(
               padding: EdgeInsets.symmetric(vertical: 16),
@@ -52,9 +52,9 @@ class Home extends StatelessWidget {
                         return Text('Error: ${snapshot.error}');
                       if(!snapshot.hasData){
                         return ListTile(
-                          title: Container(child: SizedBox(height: 20,width: 200,),),
-                          subtitle: Container(child: SizedBox(height: 10,width: 300,),),
-                          leading: Container(child: SizedBox(height: 20,width: 20,),),
+                          title: Container(child: SizedBox(height: 20,width: 200,),color: Colors.grey[300],),
+                          subtitle: Container(child: SizedBox(height: 10,width: 300,),color: Colors.grey[300],),
+                          leading: Container(child: SizedBox(height: 20,width: 20,),color: Colors.grey[300],),
                           trailing: Icon(Icons.more_vert),
                         );
                       }

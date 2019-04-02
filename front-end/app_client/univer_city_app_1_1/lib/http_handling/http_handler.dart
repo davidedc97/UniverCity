@@ -546,10 +546,10 @@ class HttpHandler {
                                 /*########     FAVOURITES  HANDLING     ########*/
 
 
-  static Future<List<String>> getUserFavourites(String user) async {
+  static Future<List<dynamic>> getUserFavourites(String user) async {
     final response =
         await http.get(
-        _URL+_USER_FAVOURITE + "?username=" + user,
+        _URL_METADATA+_USER_FAVOURITE + "?username=" + user,
         headers:{
           'Authorization':_sessionToken,
           'Accept': 'application/json'
@@ -557,10 +557,10 @@ class HttpHandler {
     );
 
     print(response.statusCode);
-
+    print(json.decode(response.body));
     if(response.statusCode == 200) {
       int num = json.decode(response.body)['num'];  //numero dei documenti nella lista
-      List<String> res = json.decode(response.body)['favourite'];
+      List<dynamic> res = json.decode(response.body)['favourite'];
       return res;
     }
     else if(response.statusCode == 404) {
@@ -576,7 +576,7 @@ class HttpHandler {
   static Future<int> addUserFavourite(String user, String docId) async {
     final response =
       await http.post(
-        _URL + _USER_FAVOURITE,
+        _URL_METADATA + _USER_FAVOURITE,
         headers:{
           'Authorization':_sessionToken,
           'Content-type' : 'application/json',
@@ -610,7 +610,7 @@ class HttpHandler {
   static Future<int> removeUserFavourite(String user, docId) async {
     final response =
       await http.delete(
-          _URL + _USER_FAVOURITE + "?username=" + user + "&uuid=" + docId,
+          _URL_METADATA + _USER_FAVOURITE + "?username=" + user + "&uuid=" + docId,
             headers:{
               'Authorization':_sessionToken,
               'Content-type' : 'application/json',

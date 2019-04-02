@@ -10,7 +10,7 @@ class LoginFormScaffold extends StatefulWidget {
 
 class _LoginFormScaffoldState extends State<LoginFormScaffold> {
   bool _obscureText = true;
-
+  String _usem, _pw;
   void _toggle() {
     setState(() {
       _obscureText = !_obscureText;
@@ -19,7 +19,7 @@ class _LoginFormScaffoldState extends State<LoginFormScaffold> {
 
   @override
   Widget build(BuildContext context) {
-    String _usem, _pw;
+
 
     print('b, ${_obscureText.toString()}');
     return Scaffold(
@@ -82,6 +82,7 @@ class _LoginFormScaffoldState extends State<LoginFormScaffold> {
                 color: Theme.of(context).accentColor,
                 title: 'LOGIN',
                 onPressed: () {
+                  print('$_usem , $_pw');
                   login(context, _usem ?? '', _pw ?? '');
                 },
               ),

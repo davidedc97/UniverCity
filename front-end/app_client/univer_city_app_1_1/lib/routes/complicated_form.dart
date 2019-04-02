@@ -8,6 +8,7 @@ class CompFormScaffold extends StatefulWidget {
 }
 
 class _CompFormScaffoldState extends State<CompFormScaffold> {
+  String _us, _nm, _cg, _em, _pw, _fa, _un;
 
   bool _obscureText = true;
 
@@ -51,7 +52,7 @@ class _CompFormScaffoldState extends State<CompFormScaffold> {
                                   focusedBorder: UnderlineInputBorder(
                                       borderSide: BorderSide(
                                           color: Theme.of(context).accentColor))),
-                              onChanged: bloc.onUserNameChanged,
+                              onChanged: (v){_us = v;bloc.onUserNameChanged(v);},
                             );
                           }),
                       StreamBuilder<String>(
@@ -65,7 +66,7 @@ class _CompFormScaffoldState extends State<CompFormScaffold> {
                                   focusedBorder: UnderlineInputBorder(
                                       borderSide: BorderSide(
                                           color: Theme.of(context).accentColor))),
-                              onChanged: bloc.onNomeChanged,
+                              onChanged: (v){_nm = v; bloc.onNomeChanged(v);},
                             );
                           }),
                       StreamBuilder<String>(
@@ -79,7 +80,7 @@ class _CompFormScaffoldState extends State<CompFormScaffold> {
                                   focusedBorder: UnderlineInputBorder(
                                       borderSide: BorderSide(
                                           color: Theme.of(context).accentColor))),
-                              onChanged: bloc.onCognomeChanged,
+                              onChanged: (v){_cg = v; bloc.onCognomeChanged(v);},
                             );
                           }),
                       StreamBuilder<String>(
@@ -93,7 +94,7 @@ class _CompFormScaffoldState extends State<CompFormScaffold> {
                                   focusedBorder: UnderlineInputBorder(
                                       borderSide: BorderSide(
                                           color: Theme.of(context).accentColor))),
-                              onChanged: bloc.onEmailChanged,
+                              onChanged: (v){_em = v; bloc.onEmailChanged(v);},
                               keyboardType: TextInputType.emailAddress,
                             );
                           }),
@@ -115,7 +116,7 @@ class _CompFormScaffoldState extends State<CompFormScaffold> {
                                   focusedBorder: UnderlineInputBorder(
                                       borderSide: BorderSide(
                                           color: Theme.of(context).accentColor))),
-                              onChanged: bloc.onPasswordChanged,
+                              onChanged: (v){_pw = v; bloc.onPasswordChanged(v);},
                               keyboardType: TextInputType.emailAddress,
                             );
                           }),
@@ -130,7 +131,7 @@ class _CompFormScaffoldState extends State<CompFormScaffold> {
                                   focusedBorder: UnderlineInputBorder(
                                       borderSide: BorderSide(
                                           color: Theme.of(context).accentColor))),
-                              onChanged: bloc.onFacoltaChanged,
+                              onChanged: (v){_fa = v; bloc.onFacoltaChanged(v);},
                             );
                           }),
                       StreamBuilder<String>(
@@ -144,7 +145,7 @@ class _CompFormScaffoldState extends State<CompFormScaffold> {
                                   focusedBorder: UnderlineInputBorder(
                                       borderSide: BorderSide(
                                           color: Theme.of(context).accentColor))),
-                              onChanged: bloc.onUniversitaChanged,
+                              onChanged: (v){_un = v; bloc.onUniversitaChanged(v);},
                             );
                           }),
                       SizedBox(
@@ -154,7 +155,7 @@ class _CompFormScaffoldState extends State<CompFormScaffold> {
                       BtnLogin(context,
                         color: Theme.of(context).accentColor,
                         title: 'REGISTRATI',
-                        onPressed: () => compForm(context),
+                        onPressed: () => compForm(context, _us, _nm, _cg, _em, _pw, _fa, _un),
                       ),
                       //################################################## LOGIN if already have an account
                       Row(
@@ -188,15 +189,14 @@ class _CompFormScaffoldState extends State<CompFormScaffold> {
   }
 }
 
-compForm(BuildContext context) async{
-  final CompFormBloc bloc = CompFormBlocProvider.of(context);
-  if (bloc.userNameValue == '' ||
-      bloc.nomeValue == '' ||
-      bloc.cognomeValue == '' ||
-      bloc.emailValue == '' ||
-      bloc.passwordValue == '' ||
-      bloc.facoltaValue == '' ||
-      bloc.universitaValue == '') {
+compForm(BuildContext context, String us, String nm, String cg, String em, String pw, String fa, String un ) async{
+  if (us == '' ||
+      nm == '' ||
+      cg == '' ||
+      em == '' ||
+      pw == '' ||
+      fa == '' ||
+      un == '') {
     //Navigator.pushNamed(context, '/complicatedForm');
     return showDialog(
         context: context,
@@ -214,7 +214,7 @@ compForm(BuildContext context) async{
           );
         });
   } else {
-    debugPrint('User: ${bloc.userNameValue}, Nome: ${bloc.nomeValue}, Cognome: ${bloc.cognomeValue}, Email: ${bloc.emailValue}, Pass: ${bloc.passwordValue}, Facolta ${bloc.facoltaValue}, Universita: ${bloc.universitaValue} ');
+    debugPrint('User: $us, Nome: $nm, Cognome: $cg, Email: $em, Pass: $pw, Facolta $fa, Universita: $un');
     showDialog(
         context: context,
         builder: (context){
@@ -242,7 +242,7 @@ compForm(BuildContext context) async{
           );
         }
     );
-    int res = await HttpHandler.userFormRegistration(bloc.userNameValue, bloc.nomeValue, bloc.cognomeValue, bloc.emailValue, bloc.passwordValue, bloc.facoltaValue, bloc.universitaValue);
+    int res = await HttpHandler.userFormRegistration(us, nm, cg, em, pw, fa, un);
     debugPrint(res.toString());
 
     if(res==1){

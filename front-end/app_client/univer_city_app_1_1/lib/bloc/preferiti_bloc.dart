@@ -4,14 +4,14 @@ import 'package:univer_city_app_1_1/http_handling/http_handler.dart';
 
 class PreferitiBloc {
 
-  final BehaviorSubject<List<String>> _preferiti = BehaviorSubject<List<String>>();
+  final BehaviorSubject<List<dynamic>> _preferiti = BehaviorSubject<List<dynamic>>();
   final BehaviorSubject<int> _num = BehaviorSubject<int>();
 
-  Observable<List<String>> get preferiti => _preferiti.stream;
-  Function(List<String>) get onPreferitiChanged => _preferiti.sink.add;
+  Observable<List<dynamic>> get preferiti => _preferiti.stream;
+  Function(List<dynamic>) get onPreferitiChanged => _preferiti.sink.add;
 
   fetchData()async{
-    HttpHandler.getUserFavourites(SessionUser().user).then((List<String> list){
+    HttpHandler.getUserFavourites(SessionUser().user).then((List<dynamic> list){
       if(list != null){
         if(list.isNotEmpty){
           if(list[0]=='-1'||list[0]=='-2'){

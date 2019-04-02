@@ -59,9 +59,20 @@ class Profilo extends StatelessWidget {
                           if (snapshot.hasData){
 
                             //snapshot.data.documentUploaded['docs'].map((uuid)=>uuid.toString()).toList();
-                            return ShowNoteClp('Appunti caricati', ["bf6a5e06-490b-11e9-b404-46a1abcb3bd6","caaae290-490b-11e9-b321-aac8ccbdb6a1","c7b71ce6-4cb4-11e9-9fbc-3ed937668553","d4261c20-4cb4-11e9-9fbc-3ed937668553","227de77c-4d5f-11e9-b474-3ae076d3bff6","46c157ea-4d5f-11e9-a7e5-fe78be2a438f","6da448c2-4d5f-11e9-8d9e-a6150fd4980c","9e9063ee-4d5f-11e9-943f-3ae076d3bff6","e6265dbc-4d5f-11e9-9af7-de41be2c71f5","e494726c-4d60-11e9-9af7-de41be2c71f5","ee88a694-4d60-11e9-9af7-de41be2c71f5","f58e2676-4d60-11e9-9af7-de41be2c71f5","310a6ca0-4d61-11e9-9af7-de41be2c71f5"]);
+                            return ShowNoteClp('Appunti caricati', snapshot.data.documentUploaded['docs']);
                           }
                           return ShowNoteClp('Appunti caricati',[]);
+                        },
+                      ),
+                      FutureBuilder(
+                        future: user,
+                        builder: (context, AsyncSnapshot<User> snapshot) {
+                          if (snapshot.hasData){
+
+                            //snapshot.data.documentUploaded['docs'].map((uuid)=>uuid.toString()).toList();
+                            return ShowNoteClp('Mashup creati', []);
+                          }
+                          return ShowNoteClp('Mashup creati',[]);
                         },
                       ),
 

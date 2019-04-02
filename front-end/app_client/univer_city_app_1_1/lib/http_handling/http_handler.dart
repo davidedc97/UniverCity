@@ -476,8 +476,8 @@ class HttpHandler {
     );
 
     if(response.statusCode == 200){
-      var num = json.decode(response.body)["body"]["num"];
-      List<dynamic> users = json.decode(response.body)["body"]["users"];
+      var num = json.decode(response.body)["num"];
+      List<dynamic> users = json.decode(response.body)["users"];
       List<User> res = User.parseJsonList(num, users);
       return res;
     }

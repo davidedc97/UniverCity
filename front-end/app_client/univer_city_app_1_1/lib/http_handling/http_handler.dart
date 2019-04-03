@@ -430,11 +430,11 @@ class HttpHandler {
 
     if(typeFlag == "0") {
       List<Document> res = await searchDocument(query);
-      return res?.map((doc)=>Result(doc.title, docInfo: doc))?.toList();
+      return res?.map((doc)=>Result(doc.title?.trim(), docInfo: doc))?.toList();
     }
     else if(typeFlag == "1"){
-      List<String> res = await searchUser(query);
-      return res?.map((usr)=>Result(usr, userInfo: User.fromUsername(usr)))?.toList();
+      List<dynamic> res = await searchUser(query);
+      return res?.map((usr)=>Result(usr?.trim(), userInfo: User.fromUsername(usr?.trim())))?.toList();
     }
     else{
       print("######## SEARCH: BAD FLAG INPUT");
@@ -444,10 +444,11 @@ class HttpHandler {
   static Future<List<Document>> searchDocument(String query) async {
     final response =
     await http.get(
-        _URL + _SEARCH_DOC_SERVER + "?searchString=" + query.toString(),
+        _URL_METADATA + _SEARCH_DOC_SERVER + "?searchString=" + query.toString(),
         headers: {'Authorization':_sessionToken}
     );
 
+    print(json.decode(response.body)["body"]["docs"]);
     if(response.statusCode == 200){
       var num = json.decode(response.body)["body"]["num"];
       List<dynamic> docs = json.decode(response.body)["body"]["docs"];
@@ -463,7 +464,7 @@ class HttpHandler {
 
   }
 
-  static Future<List<String>> searchUser(String query) async {
+  static Future<List<dynamic>> searchUser(String query) async {
     final response =
     await http.get(
         _URL_METADATA + _SEARCH_USER_SERVER + "?searchString=" + query.toString(),
@@ -475,10 +476,9 @@ class HttpHandler {
     );
 
     print(response.statusCode);
-
     if(response.statusCode == 200){
       var num = json.decode(response.body)["num"];
-      List<String> users = json.decode(response.body)["users"];
+      List<dynamic> users = json.decode(response.body)["users"];
       return users;
     }
     else if(response.statusCode == 400){

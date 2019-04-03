@@ -9,7 +9,7 @@ class DocSearch extends SearchDelegate<Document> {
   final CronologiaSearchBloc bloc;
   final FiltriBloc fBloc;
   DocSearch(this.bloc, this.fBloc);
-  List<Result> res = <Result>[];
+  Future<List<Result>> l;
 
   Timer _searchTimer;
 
@@ -21,7 +21,7 @@ class DocSearch extends SearchDelegate<Document> {
     }
   }
 
-  updateSearch() async{
+  updateSearch() async {
     cancelSearch();
 
     /// Un [Timer] è usato per evitare richieste inutili
@@ -29,14 +29,15 @@ class DocSearch extends SearchDelegate<Document> {
         Duration(
             milliseconds: query.isEmpty ? 0 : 350,
             hours: query.isEmpty ? 1 : 0), () {
-      /// TODO qui funzione fetch per ricerca
-      if(fBloc.filtriValue=='Utente'){
-        HttpHandler.search(query, '1').then((l){res = l;});
-      }
-      if(fBloc.filtriValue!='Utente'){
-        HttpHandler.search(query, '0').then((l){res = l;});
-      }
       debugPrint('cerca');
+
+      /// TODO qui funzione fetch per ricerca
+      if (fBloc.filtriValue == 1) {
+        l = HttpHandler.search(query, '1');
+      }
+      if (fBloc.filtriValue != 1) {
+        l = HttpHandler.search(query, '0');
+      }
     });
   }
 
@@ -98,7 +99,6 @@ class DocSearch extends SearchDelegate<Document> {
     return _showResults(context, 0);
   }
 
-
   ///
   /// È la funzione che si occupa di creare i suggerimenti della ricerca
   ///
@@ -107,67 +107,56 @@ class DocSearch extends SearchDelegate<Document> {
     return _showResults(context, 1);
   }
 
-  _showResults(context, int f){
-    updateSearch();
-    int size;
-    List<Result> resF = res?.where((r)=>r.title.toLowerCase()?.contains(query.toLowerCase()))?.toList();
-    List<String> crono = bloc.cronologiaValue.map((e) => e.query).toList()??[];
-    if(fBloc.filtriValue=='Appunto'){
-      resF = resF?.where((r)=>r.docInfo.type=='O')?.toList();
-    }
-    if(fBloc.filtriValue=='Mashup'){
-      resF = resF?.where((r)=>r.docInfo.type=='M')?.toList();
-    }
-    if(query.isEmpty){
-      size = crono?.length??0;
-    }else{
-      size = resF?.length??0;
-    }
 
+  int size = 0;
+
+  _showResults(context, int f) {
+    fBloc.filtri.listen((_) {
+      print('data on 112');
+    });
     return StreamBuilder(
-      stream: fBloc.filtri,
-      builder: (context, snapshot){
-        return ListView.builder(
-            itemBuilder: (context, i){
-              if(i==0 && f==1) return Container(child: Filtri());
-              if(query.isEmpty){
+        stream: fBloc.filtri,
+        builder: (context, snapshot) {
+          updateSearch();
+          List<String> crono =
+              bloc.cronologiaValue.map((e) => e.query).toList() ?? [];
+          if (query.isEmpty) {
+            size = crono?.length ?? 0;
+          }else{
+            size = 2;
+          }
+          return ListView.builder(
+            itemBuilder: (context, i) {
+              if (i == 0 && f == 1) {
+                return Container(
+                  child: SizedBox(
+                    height: 50,
+                    child: Filtri(),
+                  ),
+                );
+              }
+              if (query.isEmpty) {
                 /// mostro la cronologia
                 return ListTile(
                   leading: Icon(Icons.history),
-                  title: Text(crono[i-f]),
+                  title: Text(crono[i - f]),
                   onTap: () {
-                    query = crono[i-1];
+                    query = crono[i - 1];
                   },
                 );
-              }// chiusura query empty (cornologia)
-              if(fBloc.filtriValue=='Utente'){
-                return ListTile(
-                  leading: Icon(Icons.account_circle),
-                  title: Text(resF[i-f].title),
-                  onTap: (){Navigator.of(context).pushNamed('/profilo',arguments: <String, String>{
-                    'userName': resF[i-f].title,});},
-                );
               }
-              return ListTile(
-                leading: Icon(resF[i-f].docInfo.type=='O'?Icons.description:Icons.art_track),
-                title: Text(resF[i-f].title),
-                onTap: (){
-                  showDialog(
-                      context: context,
-                      builder: (context) => buildDocDialog(
-                          context,
-                          resF[i-f].title,
-                          resF[i-f].docInfo.creator,
-                          resF[i-f].docInfo.uuid));
+              return FutureBuilder(
+                future: l,
+                builder: (context, AsyncSnapshot<List<Result>> snapshot){
+                  if(!snapshot.hasData){
+                    return ListTile(leading: CircularProgressIndicator(),title: Text('Stiamo cercando...'));
+                  }
+                  return ListTile(leading: Icon(Icons.art_track),title: Text('Trovato'));
                 },
               );
             },
-          itemCount: size+f,
-        );
-      },
-    );
+            itemCount: size+f,
+          );
+        });
   }
 }
-
-
-

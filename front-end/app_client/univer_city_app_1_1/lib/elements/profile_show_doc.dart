@@ -58,7 +58,7 @@ class _ShowNoteClpState extends State<ShowNoteClp> {
                 if(snapshot.hasData){
                   return ListTile(
                     leading: Icon(
-                      snapshot.data.type == 'O' ? Icons.description : Icons.art_track,
+                      snapshot.data.type == false ? Icons.description : Icons.art_track,
                       color: Theme.of(context).accentColor,
                     ),
                     title: Text(snapshot.data.title),

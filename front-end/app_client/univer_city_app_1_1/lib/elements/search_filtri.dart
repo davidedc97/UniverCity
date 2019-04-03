@@ -8,19 +8,19 @@ class Filtri extends StatefulWidget {
 
 class _FiltriState extends State<Filtri> {
   final List<String> _f = <String>[
-    'Appunti & Mashups',
     'Utenti',
+    'Appunti & Mashups',
     'Appunti',
     'Mashups'
   ];
   final List<IconData> _i = <IconData>[
-    Icons.all_inclusive,
     Icons.account_circle,
+    Icons.all_inclusive,
     Icons.description,
     Icons.art_track
   ];
   final PageController _controller =
-      PageController(initialPage: 0, keepPage: true, viewportFraction: 0.7);
+      PageController(initialPage: 1, keepPage: true, viewportFraction: 0.7);
   @override
   Widget build(BuildContext context) {
     final FiltriBloc bloc = FiltriBlocProvider.of(context);

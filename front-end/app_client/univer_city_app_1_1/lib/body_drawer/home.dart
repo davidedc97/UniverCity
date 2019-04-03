@@ -2,16 +2,18 @@ import 'package:univer_city_app_1_1/elements/elements.dart';
 import 'package:univer_city_app_1_1/bloc/preferiti_bloc_provider.dart';
 import 'package:univer_city_app_1_1/http_handling/http_handler.dart';
 
-class Home extends StatelessWidget {
-  final PreferitiBloc _bloc;
-  Home(this._bloc);
+class Home extends StatefulWidget {
+  final PreferitiBloc bloc;
+  Home(this.bloc);
+  @override
+  _HomeState createState() => _HomeState();
+}
 
-
-
+class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-      stream: _bloc.preferiti,
+      stream: widget.bloc.preferiti,
       builder: (context,AsyncSnapshot<List<dynamic>> snapshot){
         if (snapshot.hasError)
           return Center(child: Text('Error: ${snapshot.error}'),);
@@ -64,9 +66,9 @@ class Home extends StatelessWidget {
                       return Dismissible(
                         direction: DismissDirection.horizontal,
                         child: DocList(snapshot.data),
-                        background: Container(color: Colors.red,child: Center(child: Icon(Icons.delete),)),
+                        background: Container(color: Colors.red,child: Center(child: Row(mainAxisAlignment: MainAxisAlignment.spaceAround,children: <Widget>[Icon(Icons.delete),Icon(Icons.delete)],),)),
                         onDismissed: (_){
-                          HttpHandler.removeUserFavourite(SessionUser().user, snapshot.data.uuid);
+                            HttpHandler.removeUserFavourite(SessionUser().user, snapshot.data.uuid);
                         }, key: Key(snapshot.data.uuid),
                       );
 

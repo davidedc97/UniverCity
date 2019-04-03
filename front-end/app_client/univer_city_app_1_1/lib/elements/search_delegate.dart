@@ -9,7 +9,6 @@ class DocSearch extends SearchDelegate<Document> {
   final CronologiaSearchBloc bloc;
   final FiltriBloc fBloc;
   DocSearch(this.bloc, this.fBloc);
-  Future<List<Result>> l;
 
   Timer _searchTimer;
 
@@ -21,6 +20,8 @@ class DocSearch extends SearchDelegate<Document> {
     }
   }
 
+  int size = 0;
+
   updateSearch() async {
     cancelSearch();
 
@@ -29,14 +30,14 @@ class DocSearch extends SearchDelegate<Document> {
         Duration(
             milliseconds: query.isEmpty ? 0 : 350,
             hours: query.isEmpty ? 1 : 0), () {
-      debugPrint('cerca');
-
       /// TODO qui funzione fetch per ricerca
-      if (fBloc.filtriValue == 1) {
-        l = HttpHandler.search(query, '1');
+      if (fBloc.filtriValue == 0) {
+        debugPrint('cerca');
+        fBloc.searchUser(query);
       }
-      if (fBloc.filtriValue != 1) {
-        l = HttpHandler.search(query, '0');
+      if (fBloc.filtriValue != 0) {
+        debugPrint('cerca');
+        fBloc.searchDoc(query, fBloc.filtriValue);
       }
     });
   }
@@ -107,56 +108,83 @@ class DocSearch extends SearchDelegate<Document> {
     return _showResults(context, 1);
   }
 
-
-  int size = 0;
-
   _showResults(context, int f) {
-    fBloc.filtri.listen((_) {
-      print('data on 112');
-    });
     return StreamBuilder(
-        stream: fBloc.filtri,
-        builder: (context, snapshot) {
-          updateSearch();
-          List<String> crono =
-              bloc.cronologiaValue.map((e) => e.query).toList() ?? [];
-          if (query.isEmpty) {
-            size = crono?.length ?? 0;
-          }else{
-            size = 2;
-          }
-          return ListView.builder(
-            itemBuilder: (context, i) {
-              if (i == 0 && f == 1) {
-                return Container(
-                  child: SizedBox(
-                    height: 50,
-                    child: Filtri(),
-                  ),
-                );
-              }
-              if (query.isEmpty) {
-                /// mostro la cronologia
-                return ListTile(
-                  leading: Icon(Icons.history),
-                  title: Text(crono[i - f]),
-                  onTap: () {
-                    query = crono[i - 1];
-                  },
-                );
-              }
-              return FutureBuilder(
-                future: l,
-                builder: (context, AsyncSnapshot<List<Result>> snapshot){
-                  if(!snapshot.hasData){
-                    return ListTile(leading: CircularProgressIndicator(),title: Text('Stiamo cercando...'));
+      stream: fBloc.filtri,
+      builder: (context, snapshot) {
+        print('build');
+        updateSearch();
+        List<String> crono =
+            bloc.cronologiaValue.map((e) => e.query).toList() ?? [];
+        return Column(
+          children: <Widget>[
+            f == 1
+                ? Container(
+                    child: SizedBox(
+                      height: 50,
+                      child: Filtri(),
+                    ),
+                  )
+                : Container(),
+            Container(
+              child: Expanded(
+                  child: StreamBuilder(
+                stream: fBloc.result,
+                builder: (context, AsyncSnapshot<List<Result>> snapshot) {
+                  debugPrint('builder future');
+                  if (query.isEmpty) {
+                    return ListView.builder(
+                        itemCount: crono.length,
+                        itemBuilder: (context, i) {
+                          return ListTile(
+                            leading: Icon(Icons.history),
+                            title: Text(crono[i]),
+                            onTap: () {
+                              query = crono[i];
+                            },
+                          );
+                        });
                   }
-                  return ListTile(leading: Icon(Icons.art_track),title: Text('Trovato'));
+                  if (!snapshot.hasData) {
+                    return ListTile(
+                      leading: SizedBox(height: 18,width: 18, child: CircularProgressIndicator(strokeWidth: 1)),
+                      title: Text('Stiamo cercando...'),
+                    );
+                  }
+                  return ListView.builder(
+                      itemCount: snapshot.data.length,
+                      itemBuilder: (context, i) {
+                          return ListTile(
+                            leading: Icon(snapshot.data[i].docInfo == null
+                                ? Icons.account_circle
+                                : (snapshot.data[i].docInfo.type == true)
+                                ? Icons.art_track
+                                : Icons.description),
+                            title: Text(snapshot.data[i].title),
+                            onTap: () {
+                              if (snapshot.data[i].docInfo == null) {
+                                Navigator.of(context).pushNamed('/profilo',
+                                    arguments: <String, String>{
+                                      'userName': snapshot.data[i].title
+                                    });
+                              } else {
+                                showDialog(
+                                    context: context,
+                                    builder: (context) => buildDocDialog(
+                                        context,
+                                        snapshot.data[i]?.title,
+                                        snapshot.data[i]?.docInfo?.creator,
+                                        snapshot.data[i]?.docInfo?.uuid));
+                              }
+                            },
+                          );
+                      });
                 },
-              );
-            },
-            itemCount: size+f,
-          );
-        });
+              )),
+            )
+          ],
+        );
+      },
+    );
   }
 }

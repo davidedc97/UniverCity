@@ -274,7 +274,7 @@ class HttpHandler {
       res = response;
     });
 
-    print(res.statusCode);
+    print('upload ${res.statusCode}');
 
     if (res.statusCode == 201) {
       // document created
@@ -287,6 +287,7 @@ class HttpHandler {
     else if (res.statusCode == 500){
       return -2;
     }
+    return -3;
   }
 
   static Future<Uint8List> getDocumentById( String docId ) async{
@@ -448,11 +449,14 @@ class HttpHandler {
         headers: {'Authorization':_sessionToken}
     );
 
-    print(json.decode(response.body)["body"]["docs"]);
+    print(json.decode(response.body)["body"]);
     if(response.statusCode == 200){
-      var num = json.decode(response.body)["body"]["num"];
-      List<dynamic> docs = json.decode(response.body)["body"]["docs"];
-      List<Document> res = Document.parseJsonList(num, docs);
+      print('-__________________________________________________- ${json.decode(response.body)}');
+      print('-__________________________________________________- ${json.decode(response.body)['num']}');
+      print('-__________________________________________________- ${json.decode(response.body)['docs']}');
+      var num = json.decode(response.body)["num"];
+      List<dynamic> docs = json.decode(response.body)["docs"];
+      List<Document> res = Document.parseJsonListRiccardo(num, docs);
       return res;
     }
     else if(response.statusCode == 400){
@@ -479,6 +483,7 @@ class HttpHandler {
     if(response.statusCode == 200){
       var num = json.decode(response.body)["num"];
       List<dynamic> users = json.decode(response.body)["users"];
+      print(json.decode(response.body)["users"]);
       return users;
     }
     else if(response.statusCode == 400){
@@ -527,7 +532,7 @@ class HttpHandler {
   static Future<List<dynamic>> getUserFavourites(String user) async {
     final response =
         await http.get(
-        _URL_METADATA+_USER_FAVOURITE + "?username=" + user,
+        _URL_METADATA+_USER_FAVOURITE + "?username=" + user??'',
         headers:{
           'Authorization':_sessionToken,
           'Accept': 'application/json'
@@ -552,6 +557,7 @@ class HttpHandler {
   }
 
   static Future<int> addUserFavourite(String user, String docId) async {
+    debugPrint('user $user, uuid $docId');
     final response =
       await http.post(
         _URL_METADATA + _USER_FAVOURITE,
@@ -566,6 +572,7 @@ class HttpHandler {
         }));
 
     print(response.statusCode);
+    print(response.body);
 
     if(response.statusCode == 200){
       // document uuid succesfully added to user's favourite

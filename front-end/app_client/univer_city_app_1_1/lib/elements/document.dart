@@ -21,6 +21,22 @@ class Document{
     this._type = json["type"];
   }
 
+  Document.fromJsonRiccardo(Map<String, dynamic> json) {
+    //funzione-costruttore da usare in http_handler
+    this._title = json["title"];
+    this._creator = json["creator"];
+    this._uuid = json["id"];
+    this._type = json["flag"];
+  }
+
+  static List<Document> parseJsonListRiccardo(int length, List<dynamic> docs){
+    List<Document> result = [];
+    for(int i=0; i<length; i++){
+      result.add(Document.fromJsonRiccardo(docs[i]));
+    }
+    return result;
+  }
+
   static List<Document> parseJsonList(int length, List<dynamic> docs){
     List<Document> result = [];
     for(int i=0; i<length; i++){

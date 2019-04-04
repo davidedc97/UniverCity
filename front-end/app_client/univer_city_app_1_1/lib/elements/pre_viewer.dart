@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:univer_city_app_1_1/bloc/preferiti_bloc_provider.dart';
 import 'package:univer_city_app_1_1/elements/elements.dart';
 import 'package:univer_city_app_1_1/bloc/cronologia_bloc_provider.dart';
 import 'package:univer_city_app_1_1/bloc/theme_bloc_provider.dart';
@@ -39,7 +40,7 @@ Widget buildDocDialog(BuildContext context, String titolo,String proprietario, S
                     ),
                     ListTile(leading: Icon(Icons.info), title: Text(titolo)),
                     Divider(),
-                    PreViewRowButton(uuid),
+                    PreViewRowButton(uuid, PreferitiBlocProvider.of(context)),
                     Divider(),
                     InfoRow('Proprietario', proprietario),
                     //InfoRow('Rank', 'todo'),
@@ -111,7 +112,8 @@ Widget buildDocDialog(BuildContext context, String titolo,String proprietario, S
 
 class PreViewRowButton extends StatefulWidget {
   String uuid;
-  PreViewRowButton(this.uuid);
+  PreferitiBloc bloc;
+  PreViewRowButton(this.uuid, this.bloc);
   @override
   _PreViewRowButtonState createState() => _PreViewRowButtonState();
 }
@@ -142,10 +144,13 @@ class _PreViewRowButtonState extends State<PreViewRowButton> {
           ),
           FlatButton.icon(
             onPressed: () async{
-              //TODO vedi come si puo migliorare il fatto che se gia sta tra i preferiti è da eliminare
-              HttpHandler.addUserFavourite(SessionUser().user, widget.uuid);
+              if(widget.bloc.preferitiValue.contains(widget.uuid)){
+                widget.bloc.removeFavourite(widget.uuid);
+              }else{
+                widget.bloc.addFavourite(widget.uuid);
+              }
             },
-            icon: Icon(Icons.favorite_border),
+            icon: Icon(widget.bloc.preferitiValue.contains(widget.uuid)?Icons.favorite:Icons.favorite_border),
             label: Text('Save'),
             textColor: Colors.blueAccent,
             highlightColor: Colors.blueAccent[100],

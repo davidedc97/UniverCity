@@ -553,6 +553,8 @@ class HttpHandler {
     else if(response.statusCode == 500) {
       print("############### SERVER INTERNAL ERROR");
       return ['-2'];
+    }else{
+      return ['-3'];
     }
   }
 
@@ -589,6 +591,8 @@ class HttpHandler {
     else if(response.statusCode == 500){
       // server internal error
       return -3;
+    } else{
+      return -4;
     }
   }
 

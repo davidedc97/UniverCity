@@ -10,6 +10,8 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  // List<String>
+  List<dynamic> fav;
 
   @override
   void initState() {
@@ -17,8 +19,9 @@ class _HomeState extends State<Home> {
     super.initState();
     print('init state home');
     widget.bloc.fetchData();
+
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(

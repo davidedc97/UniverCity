@@ -10,6 +10,15 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    print('init state home');
+    widget.bloc.fetchData();
+  }
+  
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(

@@ -21,7 +21,8 @@ void main() {
           child: CronologiaSearchBlocProvider(
               child: CronologiaBlocProvider(
                   child: FiltriBlocProvider(
-                      child: new UniverCity())))),
+                    child: PreferitiBlocProvider(
+                      child: new UniverCity()))))),
     );
   });
 }
@@ -143,9 +144,7 @@ class _UniverCityState extends State<UniverCity> {
       // #######################################################################Schermata Home (MainScaffold)
       case '/home':
         return MaterialPageRoute(builder: (context) {
-          return PreferitiBlocProvider(
-            child: HomeUniverCity(),
-          );
+          return HomeUniverCity();
         });
       case '/profilo':
         final userName = (settings.arguments as Map)['userName'];

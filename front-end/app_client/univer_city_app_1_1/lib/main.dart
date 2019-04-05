@@ -11,8 +11,6 @@ import 'package:univer_city_app_1_1/bloc/filtri_bloc_provider.dart';
 import 'package:univer_city_app_1_1/routes/route.dart';
 import 'package:univer_city_app_1_1/bloc/mash_bloc_provider.dart';
 
-// TODO test pdf online
-
 void main() {
   // rende possibile solo l'orientamento verticale
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])

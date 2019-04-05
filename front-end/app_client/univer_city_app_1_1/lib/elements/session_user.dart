@@ -16,6 +16,12 @@ class SessionUser{
     _preferiti = value;
   }
 
+  static logout(){
+    _user=null;
+    _token=null;
+    _preferiti=null;
+  }
+
 
   static String get user => _user;
   static String get token => _token;

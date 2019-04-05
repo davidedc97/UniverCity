@@ -126,7 +126,7 @@ class _PreViewRowButtonState extends State<PreViewRowButton> {
         children: <Widget>[
           FlatButton.icon(
             onPressed: () async{
-              HttpHandler.addLike(SessionUser.user, widget.uuid);
+              // TODO
             },
             icon: Icon(Icons.thumb_up),
             label: Text('Like'),
@@ -135,7 +135,7 @@ class _PreViewRowButtonState extends State<PreViewRowButton> {
           ),
           FlatButton.icon(
             onPressed: () {
-              HttpHandler.retrieveLikes(widget.uuid);
+              // TODO
             },
             icon: Icon(Icons.thumb_down),
             label: Text('Dislike'),
@@ -144,7 +144,9 @@ class _PreViewRowButtonState extends State<PreViewRowButton> {
           ),
           FlatButton.icon(
             onPressed: () async{
-              widget.bloc.addInFavourite(widget.uuid);
+              SessionUser.pref.contains(widget.uuid)
+                  ?widget.bloc.removeInFavourite(widget.uuid)
+                  :widget.bloc.addInFavourite(widget.uuid);
             },
             icon: SessionUser.pref.contains(widget.uuid)?Icon(Icons.favorite):Icon(Icons.favorite_border),
             label: Text('Save'),

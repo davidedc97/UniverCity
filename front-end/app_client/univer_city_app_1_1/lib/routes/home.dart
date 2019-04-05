@@ -68,7 +68,7 @@ class _HomeUniverCityState extends State<HomeUniverCity> {
       setState(() => _selectedDrawerIndex = index);
       Navigator.of(context).pop();
     } else {
-      //TODO funzione di logout e poi v questo qua sotto per riportare alla schermata do login
+      SessionUser.logout;
       Navigator.pushNamedAndRemoveUntil(
           context, '/', (Route<dynamic> route) => false);
       //Navigator.popAndPushNamed(context, '/login');

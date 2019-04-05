@@ -5,6 +5,7 @@ import 'package:univer_city_app_1_1/bloc/theme_bloc_provider.dart';
 import 'package:univer_city_app_1_1/bloc/filtri_bloc_provider.dart';
 import 'package:univer_city_app_1_1/bloc/cronologia_search_bloc_provider.dart';
 import 'package:univer_city_app_1_1/bloc/preferiti_bloc_provider.dart';
+import 'package:univer_city_app_1_1/bloc/mash_bloc_provider.dart';
 
 class HomeUniverCity extends StatefulWidget {
   final drawerEntry = [
@@ -23,17 +24,34 @@ class HomeUniverCity extends StatefulWidget {
 class _HomeUniverCityState extends State<HomeUniverCity> {
 
   int _selectedDrawerIndex = 0;
+  final GlobalKey<RefreshIndicatorState> _rIKPreferiti =new GlobalKey<RefreshIndicatorState>();
+  final GlobalKey<RefreshIndicatorState> _rIKMash =new GlobalKey<RefreshIndicatorState>();
 
   _getDrawerItemWidget(int index) {
 
     switch (index) {
       case 0:
         PreferitiBloc _bloc = PreferitiBlocProvider.of(context);
-        return Home(_bloc);
+        return RefreshIndicator(
+          key: _rIKPreferiti,
+          child: Home(_bloc),
+          onRefresh: () async {
+              await _bloc.init();
+              setState((){});
+            },
+        );
       case 1:
         return Cronologia();
       case 2:
-        return Mashup();
+        MashupBloc _mBloc = MashupBlocProvider.of(context);
+        return RefreshIndicator(
+          key: _rIKMash,
+          child: Mashup(_mBloc),
+          onRefresh: () async{
+            await _mBloc.init();
+            setState(() {});
+          },
+        );
       case 3:
         launch('https://docs.google.com/forms/d/e/1FAIpQLSd4qR7oz1D4rFhSpGLhL_tduI27CZdOt-tG-4nO6xGRnhGSwA/viewform');
         return Feed();
@@ -153,6 +171,6 @@ class _HomeUniverCityState extends State<HomeUniverCity> {
   }
   _showProfilo(context){
     Navigator.of(context).pushNamed('/profilo',arguments: <String, String>{
-    'userName': SessionUser().user??'sessionNotInit',});
+    'userName': SessionUser.user??'sessionNotInit',});
   }
 }

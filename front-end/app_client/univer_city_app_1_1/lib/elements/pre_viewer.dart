@@ -126,7 +126,7 @@ class _PreViewRowButtonState extends State<PreViewRowButton> {
         children: <Widget>[
           FlatButton.icon(
             onPressed: () async{
-              HttpHandler.addLike(SessionUser().user, widget.uuid);
+              HttpHandler.addLike(SessionUser.user, widget.uuid);
             },
             icon: Icon(Icons.thumb_up),
             label: Text('Like'),
@@ -144,13 +144,9 @@ class _PreViewRowButtonState extends State<PreViewRowButton> {
           ),
           FlatButton.icon(
             onPressed: () async{
-              if(widget.bloc.preferitiValue.contains(widget.uuid)){
-                widget.bloc.removeFavourite(widget.uuid);
-              }else{
-                widget.bloc.addFavourite(widget.uuid);
-              }
+              widget.bloc.addInFavourite(widget.uuid);
             },
-            icon: Icon(widget.bloc.preferitiValue.contains(widget.uuid)?Icons.favorite:Icons.favorite_border),
+            icon: SessionUser.pref.contains(widget.uuid)?Icon(Icons.favorite):Icon(Icons.favorite_border),
             label: Text('Save'),
             textColor: Colors.blueAccent,
             highlightColor: Colors.blueAccent[100],

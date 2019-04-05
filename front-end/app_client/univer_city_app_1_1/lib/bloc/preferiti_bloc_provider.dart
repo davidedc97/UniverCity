@@ -11,8 +11,8 @@ class PreferitiBlocProvider extends InheritedWidget {
   PreferitiBlocProvider({Key key, Widget child})
       : bloc = PreferitiBloc(),
         super(key: key, child: child){
-    print('obj init');
-    //bloc.fetchData();
+    /// All the entries are loaded, we can fill in the [favoritesBloc]...
+    bloc.init();
   }
 
   static PreferitiBloc of(BuildContext context) {

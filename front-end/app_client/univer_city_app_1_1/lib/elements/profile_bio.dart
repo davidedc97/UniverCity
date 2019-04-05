@@ -74,7 +74,7 @@ editBio(context) {
                   height: 18,
                 ),
                 FlatButton.icon(
-                    onPressed: () {HttpHandler.changeUserBio(SessionUser().user, bio);},
+                    onPressed: () {HttpHandler.changeUserBio(SessionUser.user, bio);},
                     icon: Icon(Icons.edit),
                     label: Text('SALVA'))
               ],

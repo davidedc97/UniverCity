@@ -19,7 +19,7 @@ class UploadBloc {
   Observable<String> get path => _path.stream;
 
   String get titoloValue => _titolo.value;
-  List<String> get tagsValue => _tags.value.split('').toList();
+  List<String> get tagsValue => _tags.value.split(' ').toList();
   String get pathValue => _path.value;
 
 

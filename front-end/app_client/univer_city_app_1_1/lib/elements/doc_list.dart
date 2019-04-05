@@ -80,3 +80,33 @@ class DocListDividedTitle extends StatelessWidget {
   }
 }
 
+class DocListFuture extends StatelessWidget{
+  final String _uuid;
+  DocListFuture(this._uuid);
+
+  @override
+  Widget build(BuildContext context) {
+    var f = HttpHandler.getDocumentMetadata(_uuid);
+    return FutureBuilder(
+      future: f,
+      builder: (context, AsyncSnapshot<Document> snapshot) {
+        if (snapshot.hasError)
+          return Text('Error: ${snapshot.error}');
+        if (!snapshot.hasData) {
+          return ListTile(
+            title: Container(child: SizedBox(height: 20, width: 200,),
+              color: Colors.grey[300],),
+            subtitle: Container(child: SizedBox(height: 10, width: 300,),
+              color: Colors.grey[300],),
+            leading: Container(child: SizedBox(height: 20, width: 20,),
+              color: Colors.grey[300],),
+            trailing: Container(child: SizedBox(height: 20, width: 8,),
+              color: Colors.grey[300],),
+          );
+        }
+        return DocList(snapshot.data);
+      }
+    );
+  }
+}
+

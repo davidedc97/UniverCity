@@ -2,16 +2,23 @@ class SessionUser{
 
   static String _user;
   static String _token;
+  static List<String> _preferiti = [];
 
 
-  set setUser(value){
+  static set setUser(value){
     _user = value;
   }
-  set setToken(value){
+  static set setToken(value){
     _token = value;
   }
 
-  String get user => _user;
-  String get token => _token;
+  static set setPreferiti(dynamic value){
+    _preferiti = value;
+  }
+
+
+  static String get user => _user;
+  static String get token => _token;
+  static List<String> get pref => _preferiti;
 
 }

@@ -6,6 +6,7 @@ import 'dart:io';
 import 'dart:async';
 import 'package:univer_city_app_1_1/elements/session_user.dart';
 import 'package:univer_city_app_1_1/bloc/preferiti_bloc_provider.dart';
+import 'package:univer_city_app_1_1/bloc/mash_bloc_provider.dart';
 
 class HttpHandler {
   static String _sessionToken;
@@ -86,7 +87,7 @@ class HttpHandler {
     **  throws an exception otherwise
     ** The value of flag must be "0" (user is login in with username) or "1" (user is login in with email)
   */
-  static Future<int> validateLogin(String user, String pw,String flag, PreferitiBloc bloc) async {
+  static Future<int> validateLogin(String user, String pw,String flag, PreferitiBloc bloc, MashupBloc mBloc) async {
     SessionUser.setUser = user;
 
     final response =
@@ -107,6 +108,7 @@ class HttpHandler {
       //fetch preferiti
       print('init preferiti bloc');
       bloc.init();
+      mBloc.init();
       return 1;
     }
     else if(response.statusCode == 400 || response.statusCode == 403) {

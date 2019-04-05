@@ -3,6 +3,7 @@ import 'package:univer_city_app_1_1/elements/button_login.dart';
 import 'package:univer_city_app_1_1/http_handling/http_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:univer_city_app_1_1/bloc/preferiti_bloc_provider.dart';
+import 'package:univer_city_app_1_1/bloc/mash_bloc_provider.dart';
 
 class LoginFormScaffold extends StatefulWidget {
   @override
@@ -166,7 +167,7 @@ login(BuildContext context, String id, String pw) async {
           );
         });
 
-    int res = await HttpHandler.validateLogin(id, pw, "0", PreferitiBlocProvider.of(context));
+    int res = await HttpHandler.validateLogin(id, pw, "0", PreferitiBlocProvider.of(context), MashupBlocProvider.of(context));
     debugPrint(res.toString());
 
     if (res == 1) {

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:univer_city_app_1_1/elements/elements.dart';
-import 'package:univer_city_app_1_1/http_handling/http_handler.dart';
 import 'package:univer_city_app_1_1/bloc/mash_bloc_provider.dart';
 
 class Mashup extends StatefulWidget {

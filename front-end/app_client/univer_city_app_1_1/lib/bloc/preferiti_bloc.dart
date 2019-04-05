@@ -21,7 +21,7 @@ class PreferitiBloc {
   /// legge le entry salvate e le reiserisce all'interno della lista [_preferiti]
   ///
   Future<List<dynamic>> init() async {
-    return HttpHandler.getUserFavourites('pippo')
+    return HttpHandler.getUserFavourites(SessionUser.user)
         .then((val){
           _pref = [];
           for(dynamic e in val){

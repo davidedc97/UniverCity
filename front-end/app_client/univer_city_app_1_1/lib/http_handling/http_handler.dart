@@ -300,8 +300,8 @@ class HttpHandler {
   static Future<Uint8List> getDocumentById( String docId ) async{
     final response =
       await http.get(
-          _URL + _DOCUMENT_SERVER + docId,
-          headers: {'Credential':'','Signature':'', 'SignedHeaders':'' ,'Authorization':_sessionToken ,'Content-type' : 'application/json', 'Accept': 'application/pdf'} //qui era "application/json" e funzionava
+          _URL + _DOCUMENT_SERVER+docId,
+          headers: {'Authorization':_sessionToken ,'Content-type' : 'application/json', 'Accept': 'application/pdf'} //qui era "application/json" e funzionava
           );
 
     print(response.statusCode);
@@ -459,9 +459,9 @@ class HttpHandler {
 
     print(json.decode(response.body)["body"]);
     if(response.statusCode == 200){
-      print('-__________________________________________________- ${json.decode(response.body)}');
-      print('-__________________________________________________- ${json.decode(response.body)['num']}');
-      print('-__________________________________________________- ${json.decode(response.body)['docs']}');
+      //print('-__________________________________________________- ${json.decode(response.body)}');
+      //print('-__________________________________________________- ${json.decode(response.body)['num']}');
+      //print('-__________________________________________________- ${json.decode(response.body)['docs']}');
       var num = json.decode(response.body)["num"];
       List<dynamic> docs = json.decode(response.body)["docs"];
       List<Document> res = Document.parseJsonListRiccardo(num, docs);

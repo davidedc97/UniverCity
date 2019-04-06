@@ -23,7 +23,19 @@ class _ShowNoteClpState extends State<ShowNoteClp> {
   @override
   Widget build(BuildContext context) {
     int l = widget.docs.length;
-    if(l>=5){l=5;}
+    if (l == 0)
+      return Padding(
+        padding: EdgeInsets.all(8),
+        child: Card(
+          child: Center(
+              child: Padding(
+            padding: EdgeInsets.symmetric(vertical: 16),
+            child: Text(widget.title[0] == 'A'
+                ? 'nessun appunto caricato'
+                : 'nessun mashup creato'),
+          )),
+        ),
+      );
     final ThemeBloc tBloc = ThemeBlocProvider.of(context);
     return Padding(
       padding: EdgeInsets.all(8),
@@ -51,25 +63,37 @@ class _ShowNoteClpState extends State<ShowNoteClp> {
               )
             ] +
             widget.docs
-                .sublist(0, _isExpanded ? null :l)
-                .map((doc)=>FutureBuilder(
-              future: HttpHandler.getDocumentMetadata(doc),
-              builder: (context,AsyncSnapshot<Document> snapshot){
-                if(snapshot.hasData){
-                  return ListTile(
-                    leading: Icon(
-                      snapshot.data.type == false ? Icons.description : Icons.art_track,
-                      color: Theme.of(context).accentColor,
-                    ),
-                    title: Text(snapshot.data.title),
-                  );
-                }
-                return ListTile(
-                  leading: Container(child: SizedBox(height: 20,width: 20,),color: Colors.grey[300]),
-                  title: Container(child: SizedBox(height: 8,width: 100,),color: Colors.grey[300]),
-                );
-              },
-            ))
+                .sublist(0, _isExpanded ? null : l)
+                .map((doc) => FutureBuilder(
+                      future: HttpHandler.getDocumentMetadata(doc),
+                      builder: (context, AsyncSnapshot<Document> snapshot) {
+                        if (snapshot.hasData) {
+                          return ListTile(
+                            leading: Icon(
+                              snapshot.data.type == false
+                                  ? Icons.description
+                                  : Icons.art_track,
+                              color: Theme.of(context).accentColor,
+                            ),
+                            title: Text(snapshot.data.title),
+                          );
+                        }
+                        return ListTile(
+                          leading: Container(
+                              child: SizedBox(
+                                height: 20,
+                                width: 20,
+                              ),
+                              color: Colors.grey[300]),
+                          title: Container(
+                              child: SizedBox(
+                                height: 8,
+                                width: 100,
+                              ),
+                              color: Colors.grey[300]),
+                        );
+                      },
+                    ))
                 .toList() +
             [
               FlatButton.icon(

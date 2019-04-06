@@ -30,7 +30,7 @@ class _HomeState extends State<Home> {
                   child: TitleDivider('Preferiti'),
                 );
               }
-              if(i==fav.length+2)return SizedBox(height: 72,);
+              if(i==fav.length+1)return SizedBox(height: 72,);
               return Dismissible(
                   key: Key(fav[i-1]),
                   background: Container(color: Theme.of(context).accentColor,child: Center(child: Padding(padding: EdgeInsets.symmetric(horizontal: 18), child: Row(mainAxisAlignment: MainAxisAlignment.start,children: <Widget>[Icon(Icons.delete)])))),

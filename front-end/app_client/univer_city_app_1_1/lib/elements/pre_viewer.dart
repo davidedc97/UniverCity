@@ -54,7 +54,7 @@ Widget buildDocDialog(BuildContext context, String titolo,String proprietario, S
                     ListTile(
                       leading: Icon(Icons.local_offer),
                       title: Text('Aiutaci con i tag'),
-                      onTap: () {},
+                      onTap: () {dialogSendTag(context);},
                       dense: true,
                     ),
                     ListTile(
@@ -95,7 +95,7 @@ Widget buildDocDialog(BuildContext context, String titolo,String proprietario, S
                       cBloc.addInCronologia(CronologiaEntry(uuid, titolo, proprietario));
                       pdfLoadViewer(context, uuid);
                     },
-                    icon: Icon(Icons.play_arrow, color: Colors.white,),
+                    icon: Icon(Icons.play_circle_outline, color: Colors.white,),
                     label: Text('LEGGI', style: TextStyle(color: Colors.white),),
                   ),
                 ),
@@ -176,7 +176,55 @@ dialogSegnala (BuildContext context){
   );
 }
 
+dialogSendTag (BuildContext context){
+  //Navigator.of(context).pop();
+  showDialog(
+      context: context,
+      builder: (context){
+        return AlertDialog(
+          title: Text('Quali tag vuoi aggiungere ?'),
+          content: Padding(padding: EdgeInsets.all(8),
+            child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              TextField(
+                  textAlign: TextAlign.center,
+                  decoration: InputDecoration(
+                      hintText: 'Tags',
+                      focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(
+                              color: Theme.of(context).accentColor)))
+              ),
+              FlatButton.icon(onPressed: ()async{
+                Navigator.of(context).pop();
+                Navigator.of(context).pop();
+                await Future.delayed(Duration(milliseconds: 50));
+                showSnackBarSendTags(context);}, icon: Icon(Icons.add_circle_outline), label: Text('invia'))
+            ],
+          ),
+          )
+        );
+      }
+  );
+}
+
+///
+/// funzione che mostra nello scaffold uno snackbar che indica che la
+/// segnalazione è stata inviata
+///
 showSnackBarReport(context){
+  // TODO send data
   ThemeBloc tBloc = ThemeBlocProvider.of(context);
   tBloc.scaffoldKey.currentState.showSnackBar(SnackBar(content: Text('Segnalazione inviata')));
+}
+
+
+///
+/// funzione che mostra nello scaffold uno snackbar che indica che
+/// i nuovi tag sono stati inviati
+///
+showSnackBarSendTags(context){
+  // TODO send data
+  ThemeBloc tBloc = ThemeBlocProvider.of(context);
+  tBloc.scaffoldKey.currentState.showSnackBar(SnackBar(content: Text('Nuovi tags inviati grazie !')));
 }

@@ -12,7 +12,7 @@ class LoginFormScaffold extends StatefulWidget {
 
 class _LoginFormScaffoldState extends State<LoginFormScaffold> {
   bool _obscureText = true;
-  String _usem, _pw;
+  String _usem, _pw ;
   void _toggle() {
     setState(() {
       _obscureText = !_obscureText;

@@ -2,11 +2,13 @@ import 'package:http/http.dart' as http;
 import 'package:univer_city_app_1_1/elements/elements.dart';
 import 'dart:convert';
 import 'dart:typed_data';
+import 'package:http_parser/http_parser.dart';
 import 'dart:io';
 import 'dart:async';
 import 'package:univer_city_app_1_1/elements/session_user.dart';
 import 'package:univer_city_app_1_1/bloc/preferiti_bloc_provider.dart';
 import 'package:univer_city_app_1_1/bloc/mash_bloc_provider.dart';
+
 
 class HttpHandler {
   static String _sessionToken;
@@ -108,6 +110,7 @@ class HttpHandler {
 
     if(response.statusCode == 200) {
       _sessionToken = response.headers['token'];
+      print(_sessionToken);
       SessionUser.setToken = _sessionToken;
       //fetch preferiti
       print('init preferiti bloc');
@@ -274,21 +277,27 @@ class HttpHandler {
     print(_sessionToken);
     var res;
     String _t = title;
-    var uri = Uri.parse(_URL + _DOCUMENT_SERVER);
+    var uri = Uri.parse(_URL + _DOCUMENT_SERVER_UPLOAD);
     var request = new http.MultipartRequest('POST', uri);
-    var file = await http.MultipartFile.fromPath('package', path);
-
-    request.headers.addAll({"Authorization":_sessionToken});
-    request.fields.addAll({"title":_t.toString(), "tags": tags.toString(), "type": typeFlag, "creator": creator});
+    var file = await http.MultipartFile.fromPath('data', path  ); //contentType: MediaType('multipart','form-data')
+    print(path);
+    //request.headers.addAll({"Content-Type": "multipart/form-data", "Authorization":_sessionToken, "Accept":"multipart/form-data"});
+    request.headers["Content-Type"]="multipart/form-data";
+    request.headers["Authorization"]=_sessionToken;
+    request.fields.addAll({"title":_t.toString(),"tags": tags.toString(), "type": typeFlag, "creator": creator});//
     request.files.add(file);
-
     await request.send().then( (response) {
       res = response;
-    });
+      http.Response.fromStream(response).then((r){
+        return r.body;
+      }).then((r){
+        print(r);
+      });
 
+    });
     print('upload ${res.statusCode}');
 
-    if (res.statusCode == 201) {
+    if (res.statusCode == 201 || res.statusCode == 200) {
       // document created
       // nel response.body viene tornato uuid, titolo, tipo e creatore del documento
       return 1;

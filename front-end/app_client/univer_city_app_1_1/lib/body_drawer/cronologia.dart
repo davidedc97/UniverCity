@@ -28,10 +28,10 @@ class Cronologia extends StatelessWidget {
                 return DocListDividedTitle('Questa settimana', Document(snapshot.data[i].titolo, snapshot.data[i].proprietario, snapshot.data[i].uuid, true));
               }else if(snapshot.data[i].stamp.isBefore(unMeseFa)&&!s){
                 s=true;
-                return DocListDividedTitle('Questa settimana', Document(snapshot.data[i].titolo, snapshot.data[i].proprietario, snapshot.data[i].uuid, true));
+                return DocListDividedTitle('Questo mese', Document(snapshot.data[i].titolo, snapshot.data[i].proprietario, snapshot.data[i].uuid, true));
               }else if(snapshot.data[i].stamp.isAfter(unMeseFa)&&!m){
                 m=true;
-                return DocListDividedTitle('Questa settimana', Document(snapshot.data[i].titolo, snapshot.data[i].proprietario, snapshot.data[i].uuid, true));
+                return DocListDividedTitle('Meno recenti', Document(snapshot.data[i].titolo, snapshot.data[i].proprietario, snapshot.data[i].uuid, true));
               }else{
                 return DocList(Document(
                      snapshot.data[i].titolo, snapshot.data[i].proprietario, snapshot.data[i].uuid, true));

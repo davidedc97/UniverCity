@@ -40,9 +40,9 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         // TODO prima di buildare per 32 bit <arch> with armeabi-v7a
         // TODO prima di buildare per 64 bit <arch> with arm64-v8a
-        //ndk {
-        //   abiFilters "armeabi-v7a"
-        //}
+        ndk {
+           abiFilters "armeabi-v7a"
+        }
     }
 
     buildTypes {

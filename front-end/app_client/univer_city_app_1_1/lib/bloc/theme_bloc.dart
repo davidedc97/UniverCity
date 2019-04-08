@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class ThemeBloc {
  final BehaviorSubject<int> _themeIndex = BehaviorSubject<int>();
+ final BehaviorSubject<GlobalKey<ScaffoldState>> _scaffoldKey = BehaviorSubject<GlobalKey<ScaffoldState>>(seedValue: null);
   ThemeBloc(){
     SharedPreferences.getInstance().then((SharedPreferences tm){
       if(tm.getInt('themeIndex')==null){
@@ -24,6 +25,9 @@ class ThemeBloc {
   Function get onChangedThemeIndex => _themeIndex.sink.add;
 
   bool get state => themeIndexValue==0;
+
+  Function(GlobalKey<ScaffoldState>) get onScaffoldKeyChange => _scaffoldKey.sink.add;
+ GlobalKey<ScaffoldState> get scaffoldKey => _scaffoldKey.value;
 
   get firstColorGradient => state?Color(0xffd95a41):Color(0xfff2d16d);
 
@@ -52,5 +56,6 @@ class ThemeBloc {
 
   dispose(){
     _themeIndex.close();
+    _scaffoldKey.close();
   }
 }

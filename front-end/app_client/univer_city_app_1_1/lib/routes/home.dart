@@ -77,7 +77,9 @@ class _HomeUniverCityState extends State<HomeUniverCity> {
 
   @override
   Widget build(BuildContext context) {
+    final _scaffoldKey = GlobalKey<ScaffoldState>();
     ThemeBloc tBloc = ThemeBlocProvider.of(context);
+    tBloc.onScaffoldKeyChange(_scaffoldKey);
     ///
     ///Assemblo le entry nel drawer prendendo i valori in drawerEntry
     ///
@@ -114,6 +116,7 @@ class _HomeUniverCityState extends State<HomeUniverCity> {
     ///
     ///
     return Scaffold(
+        key: _scaffoldKey,
         drawer: Drawer(
           child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -121,7 +124,7 @@ class _HomeUniverCityState extends State<HomeUniverCity> {
         ),
         ///
         ///
-        /// App bar 
+        /// App bar
         ///
         ///
         appBar: AppBar(

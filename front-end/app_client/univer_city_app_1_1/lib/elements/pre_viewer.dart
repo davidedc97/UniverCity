@@ -4,7 +4,6 @@ import 'package:univer_city_app_1_1/elements/elements.dart';
 import 'package:univer_city_app_1_1/bloc/cronologia_bloc_provider.dart';
 import 'package:univer_city_app_1_1/bloc/theme_bloc_provider.dart';
 import 'package:univer_city_app_1_1/http_handling/http_handler.dart';
-import 'package:flutter_pdf_viewer/flutter_pdf_viewer.dart';
 import 'package:share/share.dart';
 
 Widget buildDocDialog(BuildContext context, String titolo,String proprietario, String uuid) {
@@ -49,7 +48,7 @@ Widget buildDocDialog(BuildContext context, String titolo,String proprietario, S
                     ListTile(
                       leading: Icon(Icons.feedback),
                       title: Text('Segnala'),
-                      onTap: () {},
+                      onTap: () {dialogSegnala(context);},
                       dense: true,
                     ),
                     ListTile(
@@ -68,7 +67,7 @@ Widget buildDocDialog(BuildContext context, String titolo,String proprietario, S
                       leading: Icon(Icons.share),
                       title: Text('Condividi link'),
                       onTap: () {
-                        Share.share('Dai un occhiata a $titolo, lo trovi qui: URLDELFILERAGGIUNGIBILE DA INTERNET');
+                        Share.share('Dai un occhiata a $titolo, lo trovi qui: ${HttpHandler.urlDocument(uuid)}');
                       },
                       dense: true,
                     ),
@@ -94,8 +93,7 @@ Widget buildDocDialog(BuildContext context, String titolo,String proprietario, S
                     backgroundColor: (tBloc.state)?Color(0xFF0E688D):Color(0xFF147ECC),
                     onPressed: () async{
                       cBloc.addInCronologia(CronologiaEntry(uuid, titolo, proprietario));
-                      var byte = await HttpHandler.getDocumentById(uuid);
-                      PdfViewer.loadBytes(byte);
+                      pdfLoadViewer(context, uuid);
                     },
                     icon: Icon(Icons.play_arrow, color: Colors.white,),
                     label: Text('LEGGI', style: TextStyle(color: Colors.white),),
@@ -147,6 +145,7 @@ class _PreViewRowButtonState extends State<PreViewRowButton> {
               SessionUser.pref.contains(widget.uuid)
                   ?widget.bloc.removeInFavourite(widget.uuid)
                   :widget.bloc.addInFavourite(widget.uuid);
+              setState(() {});
             },
             icon: SessionUser.pref.contains(widget.uuid)?Icon(Icons.favorite):Icon(Icons.favorite_border),
             label: Text('Save'),
@@ -155,4 +154,29 @@ class _PreViewRowButtonState extends State<PreViewRowButton> {
           ),
         ]);
   }
+}
+
+dialogSegnala (BuildContext context){
+  Navigator.of(context).pop();
+  showDialog(
+    context: context,
+    builder: (context){
+      return Dialog(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            ListTile(title: Text('Documento illegibile'), onTap: (){showSnackBarReport(context);Navigator.of(context).pop();}),
+            ListTile(title: Text('Argomenti errati'), onTap: (){showSnackBarReport(context);Navigator.of(context).pop();}),
+            ListTile(title: Text('Titolo non valido'), onTap: (){showSnackBarReport(context);Navigator.of(context).pop();}),
+            ListTile(title: Text('Contenuto blasfemo'), onTap: (){showSnackBarReport(context);Navigator.of(context).pop();}),
+          ],
+        ),
+      );
+    }
+  );
+}
+
+showSnackBarReport(context){
+  ThemeBloc tBloc = ThemeBlocProvider.of(context);
+  tBloc.scaffoldKey.currentState.showSnackBar(SnackBar(content: Text('Segnalazione inviata')));
 }

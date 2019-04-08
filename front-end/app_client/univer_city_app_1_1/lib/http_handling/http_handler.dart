@@ -33,6 +33,10 @@ class HttpHandler {
   static const _PASS_CODE = "/resetPassword";
   static const _PASS_RESET = "/resetPass_aux";
 
+  static String urlDocument (String uuid){
+    return _URL+_DOCUMENT_SERVER+uuid;
+  }
+
   //TODO (Davide) FUNZIONI DA RIVEDERE: downloadDocument
 
 

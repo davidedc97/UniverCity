@@ -3,7 +3,9 @@ import 'package:univer_city_app_1_1/elements/document.dart';
 import 'package:univer_city_app_1_1/elements/pre_viewer.dart';
 import 'package:univer_city_app_1_1/elements/title_div.dart';
 import 'package:univer_city_app_1_1/http_handling/http_handler.dart';
-import 'package:flutter_pdf_viewer/flutter_pdf_viewer.dart';
+import 'package:univer_city_app_1_1/bloc/cronologia_bloc_provider.dart';
+import 'package:univer_city_app_1_1/elements/cronologia_entry.dart';
+import 'package:univer_city_app_1_1/elements/pdf_load_viewer.dart';
 
 const _SPESSORE = 0.4;
 
@@ -34,8 +36,9 @@ class DocList extends StatelessWidget {
               );}
         ),
         onTap: ()async{
-          var byte = await HttpHandler.getDocumentById(_info.uuid);
-          PdfViewer.loadBytes(byte);
+          CronologiaBloc cBloc = CronologiaBlocProvider.of(context);
+          cBloc.addInCronologia(CronologiaEntry(_info.uuid, _info.title, _info.creator));
+          pdfLoadViewer(context, _info.uuid);
         },
       ),
     );
@@ -73,8 +76,9 @@ class DocListDividedTitle extends StatelessWidget {
                   );}
             ),
             onTap: ()async{
-              var byte = await HttpHandler.getDocumentById(_info.uuid);
-              PdfViewer.loadBytes(byte);
+              CronologiaBloc cBloc = CronologiaBlocProvider.of(context);
+              cBloc.addInCronologia(CronologiaEntry(_info.uuid, _info.title, _info.creator));
+              pdfLoadViewer(context, _info.uuid);
             },
           ),
         )

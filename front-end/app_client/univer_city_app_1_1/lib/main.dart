@@ -9,8 +9,7 @@ import 'package:univer_city_app_1_1/bloc/theme_bloc_provider.dart';
 import 'package:univer_city_app_1_1/bloc/cronologia_search_bloc_provider.dart';
 import 'package:univer_city_app_1_1/bloc/filtri_bloc_provider.dart';
 import 'package:univer_city_app_1_1/routes/route.dart';
-
-// TODO test pdf online
+import 'package:univer_city_app_1_1/bloc/mash_bloc_provider.dart';
 
 void main() {
   // rende possibile solo l'orientamento verticale
@@ -21,7 +20,9 @@ void main() {
           child: CronologiaSearchBlocProvider(
               child: CronologiaBlocProvider(
                   child: FiltriBlocProvider(
-                      child: new UniverCity())))),
+                    child: PreferitiBlocProvider(
+                      child: MashupBlocProvider(
+                        child: new UniverCity())))))),
     );
   });
 }
@@ -143,9 +144,7 @@ class _UniverCityState extends State<UniverCity> {
       // #######################################################################Schermata Home (MainScaffold)
       case '/home':
         return MaterialPageRoute(builder: (context) {
-          return PreferitiBlocProvider(
-            child: HomeUniverCity(),
-          );
+          return HomeUniverCity();
         });
       case '/profilo':
         final userName = (settings.arguments as Map)['userName'];

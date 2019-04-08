@@ -5,13 +5,16 @@ import 'dart:typed_data';
 import 'dart:io';
 import 'dart:async';
 import 'package:univer_city_app_1_1/elements/session_user.dart';
+import 'package:univer_city_app_1_1/bloc/preferiti_bloc_provider.dart';
+import 'package:univer_city_app_1_1/bloc/mash_bloc_provider.dart';
 
 class HttpHandler {
   static String _sessionToken;
   static const _URL = "https://ogv7kvalpf.execute-api.eu-west-1.amazonaws.com/dev";
   static const _URL_METADATA = 'https://nxpsk4j5ma.execute-api.eu-west-1.amazonaws.com/alpha';
   static const _FAKE_LOG_URL = "https://v1uu1cu9ld.execute-api.eu-west-1.amazonaws.com/alpha";
-  static const _DOCUMENT_SERVER = "/document";
+  static const _DOCUMENT_SERVER = "/document/";
+  static const _DOCUMENT_SERVER_UPLOAD = "/document";
   static const _DOCUMENT_METADATA = "/documentMetadata";
   static const _DOCUMENT_TAGS = "/documentTags";
   static const _DOCUMENT_SECONDS = "/documentSeconds";
@@ -22,6 +25,7 @@ class HttpHandler {
   static const _USER_ADD_EXP = "/addUserExperience";
   static const _USER_BIO = "/userBio";
   static const _USER_FAVOURITE = "/userFavourite";
+  static const _USER_MASHUPS = "/getMashup";
   static const _LOGIN_SERVER = "/userLog";
   static const _REG_SERVER = "/userReg";
   static const _LIKE_SERVER = "/like";
@@ -83,8 +87,8 @@ class HttpHandler {
     **  throws an exception otherwise
     ** The value of flag must be "0" (user is login in with username) or "1" (user is login in with email)
   */
-  static Future<int> validateLogin(String user, String pw,String flag) async {
-    SessionUser().setUser = user;
+  static Future<int> validateLogin(String user, String pw,String flag, PreferitiBloc bloc, MashupBloc mBloc) async {
+    SessionUser.setUser = user;
 
     final response =
       await http.post(
@@ -100,7 +104,11 @@ class HttpHandler {
 
     if(response.statusCode == 200) {
       _sessionToken = response.headers['token'];
-      SessionUser().setToken = _sessionToken;
+      SessionUser.setToken = _sessionToken;
+      //fetch preferiti
+      print('init preferiti bloc');
+      bloc.init();
+      mBloc.init();
       return 1;
     }
     else if(response.statusCode == 400 || response.statusCode == 403) {
@@ -290,14 +298,16 @@ class HttpHandler {
     return -3;
   }
 
+
   static Future<Uint8List> getDocumentById( String docId ) async{
     final response =
       await http.get(
-          _URL + _DOCUMENT_SERVER + "?uuid=" + docId,
+          _URL + _DOCUMENT_SERVER+docId,
           headers: {'Authorization':_sessionToken ,'Content-type' : 'application/json', 'Accept': 'application/pdf'} //qui era "application/json" e funzionava
           );
 
     print(response.statusCode);
+    print(response.body);
 
     if(response.statusCode == 200) {
       return response.bodyBytes;
@@ -451,9 +461,9 @@ class HttpHandler {
 
     print(json.decode(response.body)["body"]);
     if(response.statusCode == 200){
-      print('-__________________________________________________- ${json.decode(response.body)}');
-      print('-__________________________________________________- ${json.decode(response.body)['num']}');
-      print('-__________________________________________________- ${json.decode(response.body)['docs']}');
+      //print('-__________________________________________________- ${json.decode(response.body)}');
+      //print('-__________________________________________________- ${json.decode(response.body)['num']}');
+      //print('-__________________________________________________- ${json.decode(response.body)['docs']}');
       var num = json.decode(response.body)["num"];
       List<dynamic> docs = json.decode(response.body)["docs"];
       List<Document> res = Document.parseJsonListRiccardo(num, docs);
@@ -529,10 +539,39 @@ class HttpHandler {
                                 /*########     FAVOURITES  HANDLING     ########*/
 
 
+  static Future<List<dynamic>> getUserMashup(String user) async {
+    final response =
+    await http.get(
+        _URL_METADATA+_USER_MASHUPS + "?username=" + 'pippo',//user,
+        headers:{
+          'Authorization':_sessionToken,
+          'Content-type' : 'application/json',
+          'Accept': 'application/json'
+        }
+    );
+
+    print(response.statusCode);
+    print(json.decode(response.body));
+    if(response.statusCode == 200) {
+      List<dynamic> res = json.decode(response.body)['docs'];
+      return res;
+    }
+    else if(response.statusCode == 404) {
+      print("############### UTENTE NON TROVATO");
+      return ['-1'];
+    }
+    else if(response.statusCode == 500) {
+      print("############### SERVER INTERNAL ERROR");
+      return ['-2'];
+    }else{
+      return ['-3'];
+    }
+  }
+
   static Future<List<dynamic>> getUserFavourites(String user) async {
     final response =
         await http.get(
-        _URL_METADATA+_USER_FAVOURITE + "?username=" + user??'',
+        _URL_METADATA+_USER_FAVOURITE + "?username=" + user,
         headers:{
           'Authorization':_sessionToken,
           'Accept': 'application/json'
@@ -553,6 +592,8 @@ class HttpHandler {
     else if(response.statusCode == 500) {
       print("############### SERVER INTERNAL ERROR");
       return ['-2'];
+    }else{
+      return ['-3'];
     }
   }
 
@@ -589,6 +630,8 @@ class HttpHandler {
     else if(response.statusCode == 500){
       // server internal error
       return -3;
+    } else{
+      return -4;
     }
   }
 

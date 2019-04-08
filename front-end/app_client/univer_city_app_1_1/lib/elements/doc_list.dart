@@ -5,16 +5,19 @@ import 'package:univer_city_app_1_1/elements/title_div.dart';
 import 'package:univer_city_app_1_1/http_handling/http_handler.dart';
 import 'package:flutter_pdf_viewer/flutter_pdf_viewer.dart';
 
+const _SPESSORE = 0.4;
+
 class DocList extends StatelessWidget {
 
   final Document _info;
+
 
   DocList(this._info);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(color: Theme.of(context).cardColor,border: BorderDirectional(bottom: BorderSide(color: Theme.of(context).dividerColor))),
+      decoration: BoxDecoration(color: Theme.of(context).cardColor,border: BorderDirectional(bottom: BorderSide(width: _SPESSORE, color: Theme.of(context).dividerColor),)),
       child: ListTile(
         title:Text(_info.title),
         subtitle: (_info.creator != null)
@@ -52,7 +55,7 @@ class DocListDividedTitle extends StatelessWidget {
       children: <Widget>[
         TitleDivider(_title),
         Container(
-          decoration: BoxDecoration(color: Theme.of(context).cardColor,border: BorderDirectional(bottom: BorderSide(color: Theme.of(context).dividerColor))),
+          decoration: BoxDecoration(color: Theme.of(context).cardColor,border: BorderDirectional(bottom: BorderSide(width: _SPESSORE,color: Theme.of(context).dividerColor))),
 
           child: ListTile(
             title:Text(_info.title),
@@ -76,6 +79,36 @@ class DocListDividedTitle extends StatelessWidget {
           ),
         )
       ],
+    );
+  }
+}
+
+class DocListFuture extends StatelessWidget{
+  final String _uuid;
+  DocListFuture(this._uuid);
+
+  @override
+  Widget build(BuildContext context) {
+    var f = HttpHandler.getDocumentMetadata(_uuid);
+    return FutureBuilder(
+      future: f,
+      builder: (context, AsyncSnapshot<Document> snapshot) {
+        if (snapshot.hasError)
+          return Text('Error: ${snapshot.error}');
+        if (!snapshot.hasData) {
+          return ListTile(
+            title: Container(child: SizedBox(height: 20, width: 200,),
+              color: Colors.grey[300],),
+            subtitle: Container(child: SizedBox(height: 10, width: 300,),
+              color: Colors.grey[300],),
+            leading: Container(child: SizedBox(height: 20, width: 20,),
+              color: Colors.grey[300],),
+            trailing: Container(child: SizedBox(height: 20, width: 8,),
+              color: Colors.grey[300],),
+          );
+        }
+        return DocList(snapshot.data);
+      }
     );
   }
 }

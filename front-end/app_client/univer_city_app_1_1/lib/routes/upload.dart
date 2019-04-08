@@ -46,7 +46,7 @@ class UploadFormBody extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: 52, vertical: 32),
           child: Column(
             children: <Widget>[
-              Text('Hey, ${SessionUser().user} cosa vuoi caricare oggi ?   ;)', style: TextStyle(fontSize: 24), textAlign: TextAlign.center,),
+              Text('Hey, ${SessionUser.user} cosa vuoi caricare oggi ?   ;)', style: TextStyle(fontSize: 24), textAlign: TextAlign.center,),
               SizedBox(height: 18),
               StreamBuilder<String>(
                   stream: _bloc.titolo,
@@ -130,7 +130,7 @@ carica(context) {
   debugPrint('dopo del pop');
   debugPrint('show dialog 137');
   ///String title, List<String> tags, String typeFlag, String creator, String path
-  Future<int> futureHttp = HttpHandler.uploadDocument(_bloc.titoloValue,_bloc.tagsValue,'O',SessionUser().user ,_bloc.pathValue);
+  Future<int> futureHttp = HttpHandler.uploadDocument(_bloc.titoloValue,_bloc.tagsValue,'O',SessionUser.user ,_bloc.pathValue);
   showDialog(
       context: context,
       builder: (context) {

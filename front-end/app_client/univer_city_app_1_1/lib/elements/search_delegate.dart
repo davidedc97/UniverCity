@@ -30,7 +30,6 @@ class DocSearch extends SearchDelegate<Document> {
         Duration(
             milliseconds: query.isEmpty ? 0 : 350,
             hours: query.isEmpty ? 1 : 0), () {
-      /// TODO qui funzione fetch per ricerca
       if (fBloc.filtriValue == 0) {
         debugPrint('cerca');
         fBloc.searchUser(query);
@@ -147,8 +146,9 @@ class DocSearch extends SearchDelegate<Document> {
                   }
                   if (!snapshot.hasData) {
                     return ListTile(
-                      leading: SizedBox(height: 18,width: 18, child: CircularProgressIndicator(strokeWidth: 1)),
+                      leading: Icon(Icons.search),
                       title: Text('Stiamo cercando...'),
+                      trailing: SizedBox(height: 18,width: 18, child: CircularProgressIndicator(strokeWidth: 1)),
                     );
                   }
                   return ListView.builder(

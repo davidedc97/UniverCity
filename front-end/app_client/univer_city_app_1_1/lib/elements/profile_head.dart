@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:univer_city_app_1_1/http_handling/http_handler.dart';
+import 'package:flutter_document_picker/flutter_document_picker.dart';
+import 'package:univer_city_app_1_1/elements/session_user.dart';
 
 class HeadProfile extends StatelessWidget {
   final String userName, pathImage, corsoStudi;
@@ -12,7 +15,24 @@ class HeadProfile extends StatelessWidget {
       child: Row(
         children: <Widget>[
           GestureDetector(
-            onTap: flag=='mod'?(){debugPrint('cambia');}:null,
+            onTap: ()async{
+              if(flag=='mod'){
+                FlutterDocumentPickerParams params = FlutterDocumentPickerParams(
+                  allowedFileExtensions: ['png', 'jpg'],
+                );
+
+                try{
+                  final String path = await FlutterDocumentPicker.openDocument(params: params) ??'';
+                  if(path != ''){
+                    int v = await HttpHandler.changeUserImg(SessionUser.user, path);
+                    debugPrint(v.toString());
+                  }
+                }catch(e){
+                  // TODO show only img
+                  showDialog(context: context, builder: (context)=>AlertDialog(title: Text('Attenzione !'),content: Text('puoi caricare solo immagini')));
+                }
+              }
+            },
             child: Container(
               width: 100.0,
               height: 100.0,

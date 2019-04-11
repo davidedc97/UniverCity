@@ -62,12 +62,8 @@ class CronoSfondo extends StatelessWidget {
             color: Colors.grey,
           )),
       Padding(
-          padding: EdgeInsets.symmetric(vertical: 32.0),
-          child: Icon(
-            Icons.history,
-            color: Colors.grey,
-            size: 150,
-          ))
+          padding: EdgeInsets.symmetric(vertical: 32.0, horizontal: 32.0),
+          child: Center(child: Image.asset('assets/img/listDoc.png'),))
     ]);
   }
 }

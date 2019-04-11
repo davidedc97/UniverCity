@@ -59,12 +59,8 @@ class MashSfondo extends StatelessWidget {
             color: Colors.grey,
           )),
       Padding(
-          padding: EdgeInsets.symmetric(vertical: 32.0),
-          child: Icon(
-            Icons.insert_drive_file,
-            color: Colors.grey,
-            size: 150,
-          ))
+          padding: EdgeInsets.symmetric(vertical: 32.0, horizontal: 32.0),
+          child: Center(child: Image.asset('assets/img/mash.png')))
     ]);
   }
 }

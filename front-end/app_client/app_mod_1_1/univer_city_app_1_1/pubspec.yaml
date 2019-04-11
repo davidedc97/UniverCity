@@ -52,6 +52,8 @@ flutter:
     -  assets/img/sfondo-login.png
     -  assets/img/un-tool-2.png
     -  assets/img/mash.png
+    -  assets/img/listDoc.png
+    -  assets/img/preferitiDoc.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.
 

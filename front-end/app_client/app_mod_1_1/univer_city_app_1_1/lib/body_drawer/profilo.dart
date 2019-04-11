@@ -26,109 +26,61 @@ class _ProfiloState extends State<Profilo> {
   @override
   Widget build(BuildContext context) {
     ThemeBloc tBloc = ThemeBlocProvider.of(context);
-    return Scaffold(
-        body: RefreshIndicator(
+    return RefreshIndicator(
             key: _rIKProfilo,
             onRefresh: () async{
               user = HttpHandler.getUserData(widget.userName);
               setState(() {});
             },
-            child: CustomScrollView(
-              slivers: <Widget>[
-                SliverAppBar(
-                  actions: <Widget>[
-                    IconButton(
-                      icon: Icon(Icons.exit_to_app),
-                      onPressed: (){
-                        SessionUser.logout();
-                        Navigator.pushNamedAndRemoveUntil(
-                            context, '/', (Route<dynamic> route) => false);
-
-                      },
-                    ),
-                    PopupMenuButton<String>(
-                      onSelected: choiceAction,
-                      itemBuilder: (context) {
-                        return [
-                          PopupMenuItem(
-                            child: Text('Segnala un bug'),
-                            value: 'bug',
-                          ),
-                        ];
-                      },
-                    )
-                  ],
-                  floating: true,
-                  pinned: false,
-                  flexibleSpace: FlexibleSpaceBar(
-                    title: Text(
-                      'UniverCity',
-                      style: TextStyle(
-                        color: tBloc.state ? Color(0xFF262526) : Colors.white,
-                        fontFamily: 'Collegiate',
-                      ),
-                    ),
-                  ),
+            child: Column(
+              children: <Widget>[
+                FutureBuilder(
+                  future: user,
+                  builder: (context, AsyncSnapshot<User> snapshot) {
+                    if (snapshot.hasData) return HeadProfile(snapshot.data.user.trim(), snapshot.data.faculty.trim(), snapshot.data.img.trim(), SessionUser.user==snapshot.data.user.trim()?'mod':'nomod');
+                    return HeadProfile('Caricamento...', 'Caricamento...', 'http://www.jdevoto.cl/web/wp-content/uploads/2018/04/default-user-img.jpg', 'nomod');
+                  },
                 ),
-                SliverList(
-                  delegate: SliverChildBuilderDelegate(
-                        (context, index) {
-                      return Column(
-                        children: <Widget>[
-                          FutureBuilder(
-                            future: user,
-                            builder: (context, AsyncSnapshot<User> snapshot) {
-                              if (snapshot.hasData) return HeadProfile(snapshot.data.user.trim(), snapshot.data.faculty.trim(), snapshot.data.img.trim(), SessionUser.user==snapshot.data.user.trim()?'mod':'nomod');
-                              return HeadProfile('Caricamento...', 'Caricamento...', 'http://www.jdevoto.cl/web/wp-content/uploads/2018/04/default-user-img.jpg', 'nomod');
-                            },
-                          ),
-                          FutureBuilder(
-                            future: user,
-                            builder: (context, AsyncSnapshot<User> snapshot) {
-                              if (snapshot.hasData) return LevelBar(snapshot.data.xp);
-                              return LevelBar(0);
-                            },
-                          ),
-                          FutureBuilder(
-                            future: user,
-                            builder: (context, AsyncSnapshot<User> snapshot) {
-                              if (snapshot.hasData)return ProfileBio(snapshot.data.bio?.trim(), SessionUser.user==snapshot.data.user.trim()?'mod':'nomod');
-                              return ProfileBio('caricamento...', 'nomod');
-                            },
-                          ),
-                          FutureBuilder(
-                            future: user,
-                            builder: (context, AsyncSnapshot<User> snapshot) {
-                              if (snapshot.hasData){
+                FutureBuilder(
+                  future: user,
+                  builder: (context, AsyncSnapshot<User> snapshot) {
+                    if (snapshot.hasData) return LevelBar(snapshot.data.xp);
+                    return LevelBar(0);
+                  },
+                ),
+                FutureBuilder(
+                  future: user,
+                  builder: (context, AsyncSnapshot<User> snapshot) {
+                    if (snapshot.hasData)return ProfileBio(snapshot.data.bio?.trim(), SessionUser.user==snapshot.data.user.trim()?'mod':'nomod');
+                    return ProfileBio('caricamento...', 'nomod');
+                  },
+                ),
+                FutureBuilder(
+                  future: user,
+                  builder: (context, AsyncSnapshot<User> snapshot) {
+                    if (snapshot.hasData){
 
-                                //snapshot.data.documentUploaded['docs'].map((uuid)=>uuid.toString()).toList();
-                                return ShowNoteClp('Appunti caricati', snapshot.data.documentUploaded['docs']);
-                              }
-                              return ShowNoteClp('Appunti caricati',[]);
-                            },
-                          ),
-                          FutureBuilder(
-                            future: user,
-                            builder: (context, AsyncSnapshot<User> snapshot) {
-                              if (snapshot.hasData){
+                      //snapshot.data.documentUploaded['docs'].map((uuid)=>uuid.toString()).toList();
+                      return ShowNoteClp('Appunti caricati', snapshot.data.documentUploaded['docs']);
+                    }
+                    return ShowNoteClp('Appunti caricati',[]);
+                  },
+                ),
+                FutureBuilder(
+                  future: user,
+                  builder: (context, AsyncSnapshot<User> snapshot) {
+                    if (snapshot.hasData){
 
-                                //snapshot.data.documentUploaded['docs'].map((uuid)=>uuid.toString()).toList();
-                                return ShowNoteClp('Mashup creati', []);
-                              }
-                              return ShowNoteClp('Mashup creati',[]);
-                            },
-                          ),
+                      //snapshot.data.documentUploaded['docs'].map((uuid)=>uuid.toString()).toList();
+                      return ShowNoteClp('Mashup creati', []);
+                    }
+                    return ShowNoteClp('Mashup creati',[]);
+                  },
+                ),
 
-                        ],
-                      );
-                    },
-                    childCount: 1,
-                  ),
-                )
               ],
             ),
-        )
-    );
+        );
   }
   choiceAction(String choice) {
     if (choice == 'bug') {

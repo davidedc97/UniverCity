@@ -155,7 +155,11 @@ class _UniverCityState extends State<UniverCity> {
         return MaterialPageRoute(builder: (context) {
           return Intro();
         });
-
+      case '/profilo':
+        final userName = (settings.arguments as Map)['userName'];
+        return MaterialPageRoute(builder: (context) {
+          return Profilo(userName);
+        });
       /// in caso di errore non so se mostrare una pagina 404 con vari link
       /// di reindirizzamento oppure reindirizzare nella pagina home
       default:

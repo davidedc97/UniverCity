@@ -79,36 +79,55 @@ class _HomeUniverCityState extends State<HomeUniverCity> {
         ///
         ///
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        appBar: _selectedDrawerIndex!=3?AppBar(
+        appBar: AppBar(
             elevation: 2,
-
             title: Text(
-                'UniverCity',
-                style: TextStyle(
-                  color: tBloc.state ? Color(0xFF262526) : Colors.white,
-                  fontFamily: 'Collegiate',
-                ),
+              'UniverCity',
+              style: TextStyle(
+                color: tBloc.state ? Color(0xFF262526) : Colors.white,
+                fontFamily: 'Collegiate',
               ),
-            actions: (_selectedDrawerIndex == 4 || _selectedDrawerIndex == 3)
-                ? null
-                : <Widget>[
-              Switch(
-                  value: tBloc.state,
-                  onChanged: (_) {
-                    tBloc.change();
-                  }),
-              PopupMenuButton<String>(
-                onSelected: choiceAction,
-                itemBuilder: (context) {
-                  return [
-                    PopupMenuItem(
-                      child: Text('Segnala un bug'),
-                      value: 'bug',
+            ),
+            actions: _selectedDrawerIndex == 3
+                ? <Widget>[
+                    IconButton(
+                      icon: Icon(Icons.exit_to_app),
+                      onPressed: () {
+                        SessionUser.logout();
+                        Navigator.pushNamedAndRemoveUntil(
+                            context, '/', (Route<dynamic> route) => false);
+                      },
                     ),
-                  ];
-                },
-              )
-            ]):null,
+                    PopupMenuButton<String>(
+                      onSelected: choiceAction,
+                      itemBuilder: (context) {
+                        return [
+                          PopupMenuItem(
+                            child: Text('Segnala un bug'),
+                            value: 'bug',
+                          ),
+                        ];
+                      },
+                    )
+                  ]
+                : <Widget>[
+                    Switch(
+                        value: tBloc.state,
+                        onChanged: (_) {
+                          tBloc.change();
+                        }),
+                    PopupMenuButton<String>(
+                      onSelected: choiceAction,
+                      itemBuilder: (context) {
+                        return [
+                          PopupMenuItem(
+                            child: Text('Segnala un bug'),
+                            value: 'bug',
+                          ),
+                        ];
+                      },
+                    )
+                  ]),
         body: _getDrawerItemWidget(_selectedDrawerIndex),
         bottomNavigationBar: Container(
           child: BottomAppBar(
@@ -182,12 +201,6 @@ class _HomeUniverCityState extends State<HomeUniverCity> {
         context: context,
         delegate: DocSearch(CronologiaSearchBlocProvider.of(context),
             FiltriBlocProvider.of(context)));
-  }
-
-  _showProfilo(context) {
-    Navigator.of(context).pushNamed('/profilo', arguments: <String, String>{
-      'userName': SessionUser.user ?? 'sessionNotInit',
-    });
   }
 
   choiceAction(String choice) {

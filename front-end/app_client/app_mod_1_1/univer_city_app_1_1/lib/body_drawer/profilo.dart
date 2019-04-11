@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:univer_city_app_1_1/elements/elements.dart';
 import 'package:univer_city_app_1_1/http_handling/http_handler.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:univer_city_app_1_1/bloc/theme_bloc_provider.dart';
 
 class Profilo extends StatefulWidget {
   final String userName;
@@ -24,7 +25,7 @@ class _ProfiloState extends State<Profilo> {
 
   @override
   Widget build(BuildContext context) {
-    //ProfiloBloc bloc = ProfiloBlocProvider.of(context);
+    ThemeBloc tBloc = ThemeBlocProvider.of(context);
     return Scaffold(
         body: RefreshIndicator(
             key: _rIKProfilo,
@@ -60,11 +61,13 @@ class _ProfiloState extends State<Profilo> {
                   floating: true,
                   pinned: false,
                   flexibleSpace: FlexibleSpaceBar(
-                    centerTitle: true,
-                    title: Text('Profilo',
-                        style: TextStyle(
-                          fontSize: 16.0,
-                        )),
+                    title: Text(
+                      'UniverCity',
+                      style: TextStyle(
+                        color: tBloc.state ? Color(0xFF262526) : Colors.white,
+                        fontFamily: 'Collegiate',
+                      ),
+                    ),
                   ),
                 ),
                 SliverList(

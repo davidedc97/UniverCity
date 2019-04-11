@@ -82,16 +82,13 @@ class _HomeUniverCityState extends State<HomeUniverCity> {
         appBar: _selectedDrawerIndex!=3?AppBar(
             elevation: 2,
 
-            title: Padding(
-              padding: EdgeInsets.symmetric(vertical: 14.0),
-              child: Text(
+            title: Text(
                 'UniverCity',
                 style: TextStyle(
                   color: tBloc.state ? Color(0xFF262526) : Colors.white,
                   fontFamily: 'Collegiate',
                 ),
               ),
-            ),
             actions: (_selectedDrawerIndex == 4 || _selectedDrawerIndex == 3)
                 ? null
                 : <Widget>[

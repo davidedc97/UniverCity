@@ -24,7 +24,7 @@ class _FiltriState extends State<Filtri> {
 
 
   PageController _controller =
-      PageController(initialPage: 1, keepPage: true, viewportFraction: 0.7);
+      PageController(initialPage: 1, keepPage: true, viewportFraction: 0.65);
 
   @override
   void initState() {

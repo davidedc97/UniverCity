@@ -95,7 +95,9 @@ class DocSearch extends SearchDelegate<Document> {
   @override
   Widget buildResults(BuildContext context) {
     // show result based from selections
-    bloc.addInCronologia(CronologiaSearchEntry(query));
+    if(query!=''){
+      bloc.addInCronologia(CronologiaSearchEntry(query));
+    }
     return _showResults(context, 0);
   }
 

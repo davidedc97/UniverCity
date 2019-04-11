@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:univer_city_app_1_1/elements/elements.dart';
 import 'package:univer_city_app_1_1/http_handling/http_handler.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Profilo extends StatefulWidget {
   final String userName;
@@ -34,6 +35,28 @@ class _ProfiloState extends State<Profilo> {
             child: CustomScrollView(
               slivers: <Widget>[
                 SliverAppBar(
+                  actions: <Widget>[
+                    IconButton(
+                      icon: Icon(Icons.exit_to_app),
+                      onPressed: (){
+                        SessionUser.logout();
+                        Navigator.pushNamedAndRemoveUntil(
+                            context, '/', (Route<dynamic> route) => false);
+
+                      },
+                    ),
+                    PopupMenuButton<String>(
+                      onSelected: choiceAction,
+                      itemBuilder: (context) {
+                        return [
+                          PopupMenuItem(
+                            child: Text('Segnala un bug'),
+                            value: 'bug',
+                          ),
+                        ];
+                      },
+                    )
+                  ],
                   floating: true,
                   pinned: false,
                   flexibleSpace: FlexibleSpaceBar(
@@ -103,5 +126,10 @@ class _ProfiloState extends State<Profilo> {
             ),
         )
     );
+  }
+  choiceAction(String choice) {
+    if (choice == 'bug') {
+      launch('https://github.com/davidedc97/UniverCity/issues/new/');
+    }
   }
 }

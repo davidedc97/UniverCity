@@ -146,11 +146,6 @@ class _UniverCityState extends State<UniverCity> {
         return MaterialPageRoute(builder: (context) {
           return HomeUniverCity();
         });
-      case '/profilo':
-        final userName = (settings.arguments as Map)['userName'];
-        return MaterialPageRoute(builder: (context) {
-          return Profilo(userName);
-        });
       case '/upload':
         final path = (settings.arguments as Map)['path'];
         return MaterialPageRoute(builder: (context) {

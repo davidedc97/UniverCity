@@ -178,31 +178,39 @@ class HttpHandler {
 
   }
 //TODO (Tizio)
-  static Future<int> changeUserImg(String user, String file) async {
-    final response =
-    await http.put(
-        _URL_METADATA + _USER_IMG,
-        headers:{
-          'Authorization':_sessionToken,
-          'Content-type' : 'application/json',
-          'Accept': 'application/json'
-        },
-        body: json.encode({
-          "username": user,
-          "file": file
-        }));
-    if(response.statusCode == 200){
-      // img succesfully uploaded
+  static Future<int> changeUserImg(String user, String path) async {
+    var res;
+    var uri = Uri.parse(_URL_METADATA + _USER_IMG);
+    var request = new http.MultipartRequest('POST', uri);
+    var file = await http.MultipartFile.fromPath('data', path  ); //contentType: MediaType('multipart','form-data')
+    print(path);
+    //request.headers.addAll({"Content-Type": "multipart/form-data", "Authorization":_sessionToken, "Accept":"multipart/form-data"});
+    request.headers["Authorization"]=_sessionToken;
+    request.fields.addAll({"path":path, "user":user});
+    request.files.add(file);
+    await request.send().then( (response) {
+      res = response;
+      http.Response.fromStream(response).then((r){
+        return r.body;
+      }).then((r){
+        print(r);
+      });
+
+    });
+    print('upload ${res.statusCode}');
+
+    if (res.statusCode == 201 || res.statusCode == 200) {
+      // document created
+      // nel response.body viene tornato uuid, titolo, tipo e creatore del documento
       return 1;
     }
-    else if(response.statusCode == 400){
-      // bad input
+    else if (res.statusCode == 400){
       return -1;
     }
-    else if(response.statusCode == 500){
-      // server internal error
+    else if (res.statusCode == 500){
       return -2;
     }
+    return -3;
   }
 //TODO (Tizio)
   static Future<int> addUserExp(String user, int expToAdd) async {

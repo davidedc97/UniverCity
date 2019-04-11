@@ -43,6 +43,8 @@ class _HomeUniverCityState extends State<HomeUniverCity> {
             setState(() {});
           },
         );
+      case 3:
+        return Profilo(SessionUser.user);
       default:
         return Text('Errore switch Drawer outOfIndex ;) ');
     }
@@ -77,7 +79,7 @@ class _HomeUniverCityState extends State<HomeUniverCity> {
         ///
         ///
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        appBar: AppBar(
+        appBar: _selectedDrawerIndex!=3?AppBar(
             elevation: 2,
 
             title: Padding(
@@ -93,34 +95,23 @@ class _HomeUniverCityState extends State<HomeUniverCity> {
             actions: (_selectedDrawerIndex == 4 || _selectedDrawerIndex == 3)
                 ? null
                 : <Widget>[
-                    Switch(
-                        value: tBloc.state,
-                        onChanged: (_) {
-                          tBloc.change();
-                        }),
-                    PopupMenuButton<String>(
-                      onSelected: choiceAction,
-                      itemBuilder: (context) {
-                        return [
-                          PopupMenuItem(
-                            child: Text('Segnala un bug'),
-                            value: 'bug',
-                          ),
-                        ];
-                      },
+              Switch(
+                  value: tBloc.state,
+                  onChanged: (_) {
+                    tBloc.change();
+                  }),
+              PopupMenuButton<String>(
+                onSelected: choiceAction,
+                itemBuilder: (context) {
+                  return [
+                    PopupMenuItem(
+                      child: Text('Segnala un bug'),
+                      value: 'bug',
                     ),
-                    PopupMenuButton<String>(
-                      onSelected: choiceAction,
-                      itemBuilder: (context) {
-                        return [
-                          PopupMenuItem(
-                            child: Text('Logout'),
-                            value: 'logout',
-                          ),
-                        ];
-                      },
-                    )
-                  ]),
+                  ];
+                },
+              )
+            ]):null,
         body: _getDrawerItemWidget(_selectedDrawerIndex),
         bottomNavigationBar: Container(
           child: BottomAppBar(
@@ -144,7 +135,7 @@ class _HomeUniverCityState extends State<HomeUniverCity> {
                     IconButton(
                       icon: Icon(Icons.account_circle),
                       onPressed: () {
-                        _showProfilo(context);
+                        _onSelectItem(3);
                       },
                     ),
                   ],
@@ -205,10 +196,6 @@ class _HomeUniverCityState extends State<HomeUniverCity> {
   choiceAction(String choice) {
     if (choice == 'bug') {
       launch('https://github.com/davidedc97/UniverCity/issues/new/');
-    }else if(choice == 'logout'){
-            SessionUser.logout();
-            Navigator.pushNamedAndRemoveUntil(
-                context, '/', (Route<dynamic> route) => false);
     }
   }
 }

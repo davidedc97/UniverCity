@@ -6,60 +6,37 @@ var Pool = require('pg').Pool;
 const psql = new Pool ({
     host: 'metadata.czzhwg1jheui.eu-west-1.rds.amazonaws.com',
     user: 'univercity',
-    password: '',
+    password: 'googleworkshop',
     database: 'metadata',
     port: 5432
 })
 
-function getUsrImg(bio,username){
-    return new Promise((resolve, reject) => {
-        psql.query("UPDATE bio VALUE ($1) from utilitator where username = $2", [bio,username], {
-            onSucces: function(res){
-                resolve(res.rows);
-            },
-            onFailure: function(err){
-                resolve("err");
-            },
-        });
-    });
-}
+async function searchUser(username,bio){
+  return await psql.query("UPDATE student set bio = $1 where username = $2", [bio,username])
+  };
 
-exports.handler = async (event, context, callback) => {
-    var body = JSON.parse(event.body);
-    
-    var username = body.username;
-    var bio = body.bio;
+exports.handler = async (event) => {
+    const username = event.username;
+    const bio = event.bio;
 
-    var response = {
-        "statusCode": 200,
+    const result = await searchUser(username,bio)
+  
+    var i;
+    for (i = 0; i< result.rows.length; i++){
+        ret.push(result.rows[i].username);
+    }
+    if (result == "err") {
+      return {
+        "statusCode": 404,
         "isBase64Encoded": false,
-        "body": {},
+        "body": JSON.stringify({message: 'User not found'}),
+      }
     }
-    
-    try{
-        var result = await getUsrImg(bio,username).then((result) => {
-            return result;
-        });
-        
-        var statusCode = 200;
-        var body = result;
-        if(result == "err"){
-            statusCode = 400;
-            body = "user not found";
-        }
-        
-        response.statusCode = statusCode;
-        response.body = body;
-        
-        callback(null,response);
+    return {
+      "statusCode": 200,
+      "isBase64Encoded": false,
+      "body": JSON.stringify({message: 'ok'}),
     }
-    catch(e){
-        callback(e,{
-            "isBase64Encoded": false,
-            "headers": {},
-            "body": "err",
-            "statusCode": 501
-        });
-    }
+  
 };
 

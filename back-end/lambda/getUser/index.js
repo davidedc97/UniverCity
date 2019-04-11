@@ -27,7 +27,7 @@ var doc = [];
         await psql.query("SELECT * from creator where student = $1", [username], function(err, res2) {
             if (err) return "err";
             else { 
-                for (i = 0; i<res2.rows.lenght; i++){
+                for (i = ; i<res2.rows.lenght; i++){
                     doc[i] = res2.rows[i].document;
                 }
             }
@@ -36,17 +36,16 @@ var doc = [];
 }*/
 
 async function getMetadataUti(username){
-    return await psql.query("SELECT * from utilitator where username = $1", [username])
-}
+    return await psql.query("SELECT * from student where username = $1", [username])
+};
 
 async function getMetadataCreator(student){
     return await psql.query("SELECT * from creator where student = $1", [student])
-}
+};
 
-exports.handler = async (event) => {
-    //var body = JSON.parse(event.body);
-    
-    var username = event.username;
+exports.handler = async (event, context, callback) => {
+    //var body = JSON.parse(event.body)
+    var username = event.queryStringParameters.username;
     var resultUti = await getMetadataUti(username)
     var resultCreator = await getMetadataCreator(username)
         
@@ -54,7 +53,8 @@ exports.handler = async (event) => {
         return {
             "statusCode": 404,
             "isBase64Encoded": false,
-            "body": JSON.stringify({message: 'User not found'}),
+            "headers": {},
+            "body": JSON.stringify({"message": 'User not found'}),
         }
     }
 
@@ -62,7 +62,8 @@ exports.handler = async (event) => {
         return {
             "statusCode": 404,
             "isBase64Encoded": false,
-            "body": JSON.stringify({message: 'User not found'}),
+            "headers": {},
+            "body": JSON.stringify({"message": 'User not found'}),
         }
     }
     else{
@@ -72,42 +73,37 @@ exports.handler = async (event) => {
             doc.push(resultCreator.rows[c].document)
         }
 
-        var response = {
-            "statusCode": 200,
-            "isBase64Encoded": false,
-             "body": {
-                "imgUserPath": resultUti.rows[0].image,
-                "username": resultUti.rows[0].username,
-                "name": resultUti.rows[0].name,
-                "surname": resultUti.rows[0].surname,
-                "xp": resultUti.rows[0].xp,
-                "bio": resultUti.rows[0].bio,
-                "university": resultUti.rows[0].university,
-                "faculty": resultUti.rows[0].faculty,
-                "documentUploaded": {
-                    "num": doc.lenght,
-                    "docs": doc
-                },
-                "mashupCreated": {
-                    "num": 0,
-                    "docs": [
-                        {
-                            "title": "",
-                            "uuid": ""
-                        }
-                    ]
-                 }
+        var responseBody = {
+            imgUserPath: resultUti.rows[0].image,
+            username: resultUti.rows[0].username,
+            name: resultUti.rows[0].name,
+            surname: resultUti.rows[0].surname,
+            xp: resultUti.rows[0].xp,
+            bio: resultUti.rows[0].bio,
+            university: resultUti.rows[0].university,
+            faculty: resultUti.rows[0].faculty,
+            documentUploaded: {
+                num: doc.length,
+                docs: doc
             },
+            mashupCreated: {
+                num: 0,
+                docs: [
+                ]
+            }
         }
+
         var i;
-        for (i=0; i< doc.lenght; i++){
-            response.body.docs[i].uuid = doc[i];
+        for (i=0; i< doc.length; i++){
+            responseBody.documentUploaded.docs[i].uuid = doc[i];
         }
-        /*return {
-            "statusCode": 200,
-            "isBase64Encoded": false,
-            "body": resultUti
-          }*/
+        var response = {
+            statusCode: 200,
+            isBase64Encoded: false,
+            headers: {},
+            body: JSON.stringify(responseBody)
+        }
+        doc = [];
         return response;
     }
 

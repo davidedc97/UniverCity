@@ -53,40 +53,39 @@ exports.handler = async (event) => {
   };
 */
 
-async function searchUser(username){
-    return await psql.query('SELECT username FROM utilitator where username LIKE $1', [`%${username}%`])
-  };
+async function getMashup(username){
+    return await psql.query('SELECT * FROM document where creator = $1 and flag = true', [username])
+};
 
-  exports.handler = async (event) => {
-    //const body = JSON.parse(event.body);
-    var ret = [];
-    const username = event.queryStringParameters.searchString;
+exports.handler = async (event) => {
   
-    const result = await searchUser(username)
+  const username = event.queryStringParameters.username;
   
-    var i;
-    for (i = 0; i< result.rows.length; i++){
-        ret.push(result.rows[i].username);
+  const result = await getMashup(username)
+  
+  if (result == "err") {
+    return {
+      "statusCode": 404,
+      "isBase64Encoded": false,
+      "body": JSON.stringify({message: 'Doc not found'}),
     }
-    if (result == "err") {
-      return {
-        "statusCode": 404,
-        "isBase64Encoded": false,
-        "body": JSON.stringify({message: 'User not found'}),
-      }
-    }
-    else{
+  }
+  else{
       
-      var responseBody = {
-          "num": ret.length,
-          "users": ret
-      }
-      ret = [];
-      return {
-          "statusCode": 200,
-          "isBase64Encoded": false,
-          "body": JSON.stringify(responseBody),
-      }
+    var responseBody = {
+        "num": result.rows.length,
+        "docs": []
     }
+      
+    var c
+      for (c = 0; c<result.rows.length; c++){
+        responseBody.docs[c] = result.rows[c].id;
+      }
+      return {
+        "statusCode": 200,
+        "isBase64Encoded": false,
+        "body": JSON.stringify(responseBody),
+    }
+  }
   
 };

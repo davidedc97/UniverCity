@@ -6,61 +6,73 @@ var Pool = require('pg').Pool;
 const psql = new Pool ({
     host: 'metadata.czzhwg1jheui.eu-west-1.rds.amazonaws.com',
     user: 'univercity',
-    password: '',
+    password: 'googleworkshop',
     database: 'metadata',
     port: 5432
 })
 
-function getUsrImg(favourite,username){
+var fav = null;
 
+/*function getFavourite(username){
     return new Promise((resolve, reject) => {
-        psql.query("DELETE FROM favourite WHERE docs = $1 and username = $2", [favourite,username], {
+        psql.query("SELECT * from favourite where username = $1", [username], {
             onSucces: function(res){
-                resolve(res);
+                for(i = 0; i<res.rows.lenght; i++){
+                    fav[i] = res.rows[i].docs;
+                }
+                resolve(fav);
             },
-            onFailure: function(err){
+            onFailure: function(error){
                 resolve("err");
             }
-        })
+        });
     });
-}
+}*/
 
-exports.handler = async (event, context, callback) => {
-    var body = JSON.parse(event.body);
-    
-    var username = body.username;
-    var favourite = body.favourite;
-
-    var response = {
-        "statusCode": 200,
-        "isBase64Encoded": false,
-        "body": {},
-    }
-    
-    try{
-        var result = await getUsrImg(favourite,username).then((result) => {
-            return result;
-        });
-        
-        var statusCode = 200;
-        var body = result;
-        if(result == "err"){
-            statusCode = 400;
-            body = "user not found";
-        }
-        
-        response.statusCode = statusCode;
-        response.body = body;
-        
-        callback(null,response);
-    }
-    catch(e){
-        callback(e,{
-            "isBase64Encoded": false,
-            "headers": {},
-            "body": "err",
-            "statusCode": 501
-        });
-    }
+async function delFav(fav,username){
+    return await psql.query("DELETE FROM favourite WHERE docs = $1 and username = $2", [fav,username])
 };
 
+async function getFav(fav,username){
+    return await psql.query("SELECT * FROM favourite WHERE docs = $1 and username = $2", [fav,username])
+}
+
+exports.handler = async (event) => {
+    
+    var username = event.queryStringParameters.username;
+    var fav = event.queryStringParameters.uuid;
+    var resultGet = await getFav(fav,username);
+    var resultDel = await delFav(fav,username);
+    
+    if (resultGet.rows.length == 0 || resultGet == 'err'){
+        return {
+          "statusCode": 404,
+          "isBase64Encoded": false,
+          "headers": {},
+          "body": JSON.stringify({message: 'User not found or document not found'}),
+        }
+    }
+    else if (resultDel == 'err'){
+        return {
+          "statusCode": 400,
+          "isBase64Encoded": false,
+          "headers": {},
+          "body": JSON.stringify({message: 'Deletion failed'}),
+        }
+    }
+    
+    else{
+        return {
+          "statusCode": 200,
+          "isBase64Encoded": false,
+          "headers": {},
+          "body": JSON.stringify({message: 'ok'}),
+        }
+    }
+
+        /*return {
+        "statusCode": 200,
+        "isBase64Encoded": false,
+        "body": JSON.stringify(result),
+        }*/
+}

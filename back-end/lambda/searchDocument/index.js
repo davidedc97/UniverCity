@@ -53,35 +53,34 @@ exports.handler = async (event) => {
   };
 */
 
-async function searchUser(username){
-    return await psql.query('SELECT username FROM utilitator where username LIKE $1', [`%${username}%`])
+async function searchDoc(title){
+    return await psql.query('SELECT * FROM document where title LIKE $1', [`%${title}%`])
   };
 
   exports.handler = async (event) => {
-    //const body = JSON.parse(event.body);
-    var ret = [];
-    const username = event.queryStringParameters.searchString;
+
+    const title = event.queryStringParameters.searchString;
   
-    const result = await searchUser(username)
+    const result = await searchDoc(title)
   
-    var i;
-    for (i = 0; i< result.rows.length; i++){
-        ret.push(result.rows[i].username);
-    }
     if (result == "err") {
       return {
         "statusCode": 404,
         "isBase64Encoded": false,
-        "body": JSON.stringify({message: 'User not found'}),
+        "body": JSON.stringify({message: 'Doc not found'}),
       }
     }
     else{
       
       var responseBody = {
-          "num": ret.length,
-          "users": ret
+          "num": result.rows.length,
+          "docs": []
       }
-      ret = [];
+      
+      var c
+      for (c = 0; c<result.rows.length; c++){
+        responseBody.docs[c] = result.rows[c];
+      }
       return {
           "statusCode": 200,
           "isBase64Encoded": false,

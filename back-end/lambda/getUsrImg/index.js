@@ -6,18 +6,18 @@ var Pool = require('pg').Pool;
 const psql = new Pool ({
     host: 'metadata.czzhwg1jheui.eu-west-1.rds.amazonaws.com',
     user: 'univercity',
-    password: '',
+    password: 'googleworkshop',
     database: 'metadata',
     port: 5432
 })
 
 function getUsrImg(username){
     return new Promise((resolve, reject) => {
-        psql.query("SELECT image from utilitator where username = $1", [username], {
+        psql.query("SELECT image from student where username = $1", [username], {
             onSucces: function(res){
                 resolve(res.rows);
             },
-            onFailure: function(err){
+            onFailure: function(error){
                 resolve("err");
             },
         });

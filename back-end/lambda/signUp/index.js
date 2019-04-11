@@ -2,7 +2,6 @@ const AmazonCognitoIdentity = require('amazon-cognito-identity-js');
 const CognitoUserPool = AmazonCognitoIdentity.CognitoUserPool;
 const AWS = require('aws-sdk');
 global.fetch = require('node-fetch');
-var Pool = require('pg').Pool;
 
 const poolData = {
     UserPoolId: "eu-west-2_TBU678aQA",
@@ -11,19 +10,12 @@ const poolData = {
 
 const userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
 
-const psql = new Pool ({
-    host: 'metadata.czzhwg1jheui.eu-west-1.rds.amazonaws.com',
-    user: 'univercity',
-    password: '',
-    database: 'metadata',
-    port: 5432
-})
-
-function SignUp(username,pass,name,surname,email,faculty,university){
+function SignUp(username,pass,name,surname,email,faculty,university,User){
     return new Promise((resolve,reject) => {
 
         var attList = [];
         //attList.push(new AmazonCognitoIdentity.CognitoUserAttribute({Name: "id", Value: id}));
+        attList.push(new AmazonCognitoIdentity.CognitoUserAttribute({Name: "custom:user", Value: User}));
         attList.push(new AmazonCognitoIdentity.CognitoUserAttribute({Name: "name", Value: name}));
         attList.push(new AmazonCognitoIdentity.CognitoUserAttribute({Name: "custom:surname", Value: surname}));
         attList.push(new AmazonCognitoIdentity.CognitoUserAttribute({Name: "email", Value: email}));
@@ -38,7 +30,6 @@ function SignUp(username,pass,name,surname,email,faculty,university){
                 return;
             }
 
-            psql.query("INSERT INTO utilitator VALUE ($1, $2, $3, $4, $5)", [faculty,university,username,name,surname]);
             var cognitoUser = res.user;
             var user = cognitoUser.getUsername();
             console.log("[*] User: " + cognitoUser);
@@ -65,6 +56,7 @@ exports.handler = async (event, context, callback) => {
     var email = body.email;
     var university = body.university;
     var faculty = body.faculty;
+    var User = username;
     
     var response = {
         "isBase64Encoded": false,
@@ -72,7 +64,7 @@ exports.handler = async (event, context, callback) => {
     }
     
     try {
-        await SignUp(username,pass,name,surname,email,faculty,university).then((user) =>{
+        await SignUp(username,pass,name,surname,email,faculty,university,User).then((user) =>{
             response.statusCode = 200;
             response.body = user;
         }).catch((err) => {

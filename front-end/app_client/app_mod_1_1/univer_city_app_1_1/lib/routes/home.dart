@@ -79,13 +79,7 @@ class _HomeUniverCityState extends State<HomeUniverCity> {
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         appBar: AppBar(
             elevation: 2,
-            leading: IconButton(
-                icon: Icon(Icons.exit_to_app),
-                onPressed: () {
-                  SessionUser.logout();
-                  Navigator.pushNamedAndRemoveUntil(
-                      context, '/', (Route<dynamic> route) => false);
-                }),
+
             title: Padding(
               padding: EdgeInsets.symmetric(vertical: 14.0),
               child: Text(
@@ -111,6 +105,17 @@ class _HomeUniverCityState extends State<HomeUniverCity> {
                           PopupMenuItem(
                             child: Text('Segnala un bug'),
                             value: 'bug',
+                          ),
+                        ];
+                      },
+                    ),
+                    PopupMenuButton<String>(
+                      onSelected: choiceAction,
+                      itemBuilder: (context) {
+                        return [
+                          PopupMenuItem(
+                            child: Text('Logout'),
+                            value: 'logout',
                           ),
                         ];
                       },
@@ -200,6 +205,10 @@ class _HomeUniverCityState extends State<HomeUniverCity> {
   choiceAction(String choice) {
     if (choice == 'bug') {
       launch('https://github.com/davidedc97/UniverCity/issues/new/');
+    }else if(choice == 'logout'){
+            SessionUser.logout();
+            Navigator.pushNamedAndRemoveUntil(
+                context, '/', (Route<dynamic> route) => false);
     }
   }
 }

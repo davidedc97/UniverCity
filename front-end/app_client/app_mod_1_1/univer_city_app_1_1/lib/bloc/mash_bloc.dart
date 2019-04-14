@@ -14,7 +14,7 @@ class MashupBloc {
   /// Stream per la lista in app
   ///
   final BehaviorSubject<List<String>> _mashup =
-  BehaviorSubject<List<String>>(seedValue: []);
+  BehaviorSubject<List<String>>.seeded([]);
 
   ///
   /// questo metodo è invocato durante l'inizializzazione del [BlocProvider]

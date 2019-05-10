@@ -24,7 +24,7 @@ class CronologiaSearchBloc {
   /// Stream per la lista in app
   ///
   final BehaviorSubject<List<CronologiaSearchEntry>> _cronologia =
-  BehaviorSubject<List<CronologiaSearchEntry>>(seedValue: []);
+  BehaviorSubject<List<CronologiaSearchEntry>>.seeded([]);
 
   ///
   /// questo metodo è invocato durante l'inizializzazione del [BlocProvider]

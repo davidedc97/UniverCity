@@ -4,7 +4,7 @@ import 'package:univer_city_app_1_1/http_handling/http_handler.dart';
 
 class FiltriBloc {
 
-  final BehaviorSubject<int> _filtri = BehaviorSubject<int>(seedValue: 1);
+  final BehaviorSubject<int> _filtri = BehaviorSubject<int>.seeded(1);
   final BehaviorSubject<List<Result>> _result = BehaviorSubject<List<Result>>();
 
   static List<Result> _res = [];

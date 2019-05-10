@@ -55,13 +55,14 @@ class _HomeUniverCityState extends State<HomeUniverCity> {
     //chiude il drawer
   }
 
+  BuildContext _cntx;
   @override
   Widget build(BuildContext context) {
     final accentColor = Theme.of(context).accentColor;
-
     final _scaffoldKey = GlobalKey<ScaffoldState>();
     ThemeBloc tBloc = ThemeBlocProvider.of(context);
     tBloc.onScaffoldKeyChange(_scaffoldKey);
+    _cntx = context;
 
     ///
     ///
@@ -123,7 +124,7 @@ class _HomeUniverCityState extends State<HomeUniverCity> {
                           PopupMenuItem(
                             child: Text('Segnala un bug'),
                             value: 'bug',
-                          ),
+                          )
                         ];
                       },
                     )

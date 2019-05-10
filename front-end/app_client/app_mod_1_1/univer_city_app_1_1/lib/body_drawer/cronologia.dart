@@ -63,7 +63,7 @@ class CronoSfondo extends StatelessWidget {
           )),
       Padding(
           padding: EdgeInsets.symmetric(vertical: 32.0, horizontal: 32.0),
-          child: Center(child: Image.asset('assets/img/listDoc.png'),))
+          child: Center(child: Image.asset('assets/img/listDocOmb.png'),))
     ]);
   }
 }

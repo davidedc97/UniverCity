@@ -60,7 +60,7 @@ class MashSfondo extends StatelessWidget {
           )),
       Padding(
           padding: EdgeInsets.symmetric(vertical: 32.0, horizontal: 32.0),
-          child: Center(child: Image.asset('assets/img/mash.png')))
+          child: Center(child: Image.asset('assets/img/mashOmb.png')))
     ]);
   }
 }

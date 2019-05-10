@@ -5,7 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class ThemeBloc {
   final BehaviorSubject<int> _themeIndex = BehaviorSubject<int>();
-  final BehaviorSubject<GlobalKey<ScaffoldState>> _scaffoldKey = BehaviorSubject<GlobalKey<ScaffoldState>>(seedValue: null);
+  final BehaviorSubject<GlobalKey<ScaffoldState>> _scaffoldKey = BehaviorSubject<GlobalKey<ScaffoldState>>.seeded(null);
   ThemeBloc(){
     SharedPreferences.getInstance().then((SharedPreferences tm){
       if(tm.getInt('themeIndex')==null){

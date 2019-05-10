@@ -34,6 +34,8 @@ class HttpHandler {
   static const _MASHUP_SERVER = "/mashup";
   static const _PASS_CODE = "/resetPassword";
   static const _PASS_RESET = "/resetPass_aux";
+  static const _LIKE = '/documentLike';
+  static const _DISLIKE = '/documentDislike';
 
   static String urlDocument (String uuid){
     return _URL+_DOCUMENT_SERVER+uuid;
@@ -529,33 +531,119 @@ class HttpHandler {
 
   /*########     LIKES  HANDLING     ########*/
 
-  static Future addLike(String user, String docId) async{
+  static Future<int> like(String user, String uuid) async {
     final response =
-    await http.post(
-        _URL + _LIKE_SERVER,
-        body: {"username": user, "uuid": docId});
+    await http.put(
+        _URL_METADATA + _LIKE,
+        headers:{
+          'Authorization':_sessionToken,
+          'Content-type' : 'application/json',
+          'Accept': 'application/json'
+        },
+        body: json.encode({
+          "username": user,
+          "uuid": uuid
+        }));
+    if(response.statusCode == 200){
+      //like added updated
+      return 1;
+    }
+    else if(response.statusCode == 400){
+      // like already put
+      return -1;
+    }
+    else if(response.statusCode == 500){
+      // server internal error
+      return -2;
+    }
+  }
+
+  static Future<int> dislike(String user, String uuid) async {
+    final response =
+    await http.put(
+        _URL_METADATA + _DISLIKE,
+        headers:{
+          'Authorization':_sessionToken,
+          'Content-type' : 'application/json',
+          'Accept': 'application/json'
+        },
+        body: json.encode({
+          "username": user,
+          "uuid": uuid
+        }));
+    if(response.statusCode == 200){
+      //dislike added updated
+      return 1;
+    }
+    else if(response.statusCode == 400){
+      // dislike already put
+      return -1;
+    }
+    else if(response.statusCode == 500){
+      // server internal error
+      return -2;
+    }
+  }
+
+  static Future<int> getLike (String uuid) async {
+
+    final response =
+    await http.get(
+      _URL_METADATA +_LIKE + '?uuid=' + uuid,
+      headers:{
+        'Authorization':_sessionToken,
+        'Content-type' : 'application/json',
+        'Accept': 'application/json'
+      },
+    );
+
+    print(response.statusCode);
 
     if(response.statusCode == 200) {
-      return json.decode(response.body);
+      print(json.decode(response.body));
+      return json.decode(response.body)["likes"];
     }
-    else{
-      throw ServerException.withCode(response.statusCode);
+    else if(response.statusCode == 400) {
+      print("############### BAD INPUT PARAMETER");
     }
+    else if(response.statusCode == 404) {
+      print("############### NO DOC WITH THIS ID");
+    }
+    else if(response.statusCode == 500) {
+      print("############### SERVER INTERNAL ERROR");
+    }
+
   }
 
-  static Future retrieveLikes(String docId) async{
+  static Future<int> getDislike (String uuid) async {
+
     final response =
-    await http.get( _URL + _LIKE_SERVER + "/" + docId);
+    await http.get(
+      _URL_METADATA +_DISLIKE + '?uuid=' + uuid,
+      headers:{
+        'Authorization':_sessionToken,
+        'Content-type' : 'application/json',
+        'Accept': 'application/json'
+      },
+    );
 
-    if(response.statusCode == 200){
-      return json.decode(response.body);
+    print(response.statusCode);
+
+    if(response.statusCode == 200) {
+      print(json.decode(response.body));
+      return json.decode(response.body)["dislikes"];
     }
-    else{
-      throw ServerException.withCode(response.statusCode);
+    else if(response.statusCode == 400) {
+      print("############### BAD INPUT PARAMETER");
     }
+    else if(response.statusCode == 404) {
+      print("############### NO DOC WITH THIS ID");
+    }
+    else if(response.statusCode == 500) {
+      print("############### SERVER INTERNAL ERROR");
+    }
+
   }
-
-
 
   /*########     FAVOURITES  HANDLING     ########*/
 

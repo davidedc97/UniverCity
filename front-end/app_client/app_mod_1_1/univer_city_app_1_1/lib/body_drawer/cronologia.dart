@@ -25,13 +25,13 @@ class Cronologia extends StatelessWidget {
             itemBuilder: (context, i){
               if(snapshot.data[i].stamp.isBefore(unaSettimanaFa)&&!r){
                 r=true;
-                return DocListDividedTitle('Questa settimana', Document(snapshot.data[i].titolo, snapshot.data[i].proprietario, snapshot.data[i].uuid, null));
+                return DocListDividedTitle('Questo mese', Document(snapshot.data[i].titolo, snapshot.data[i].proprietario, snapshot.data[i].uuid, null));
               }else if(snapshot.data[i].stamp.isBefore(unMeseFa)&&!s){
                 s=true;
-                return DocListDividedTitle('Questa settimana', Document(snapshot.data[i].titolo, snapshot.data[i].proprietario, snapshot.data[i].uuid, null));
+                return DocListDividedTitle('Più antichi', Document(snapshot.data[i].titolo, snapshot.data[i].proprietario, snapshot.data[i].uuid, null));
               }else if(snapshot.data[i].stamp.isAfter(unMeseFa)&&!m){
                 m=true;
-                return DocListDividedTitle('Questa settimana', Document(snapshot.data[i].titolo, snapshot.data[i].proprietario, snapshot.data[i].uuid, null));
+                return DocListDividedTitle('Recenti', Document(snapshot.data[i].titolo, snapshot.data[i].proprietario, snapshot.data[i].uuid, null));
               }else{
                 return DocList(Document(
                      snapshot.data[i].titolo, snapshot.data[i].proprietario, snapshot.data[i].uuid, null));

@@ -82,14 +82,15 @@ class _LoginFormScaffoldState extends State<LoginFormScaffold> {
               BtnLogin(
                 context,
                 color: Theme.of(context).accentColor,
-                title: 'LOGIN',
+                title: 'ACCEDI',
                 onPressed: () {
                   print('$_usem , $_pw');
                   login(context, _usem ?? '', _pw ?? '');
                 },
               ),
+              SizedBox(height: 32,)
               //################################################## LOGIN if already have an account
-              Row(
+              /*Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
@@ -105,7 +106,7 @@ class _LoginFormScaffoldState extends State<LoginFormScaffold> {
                           style:
                               TextStyle(color: Theme.of(context).accentColor)))
                 ],
-              )
+              )*/
             ],
           ),
         ),

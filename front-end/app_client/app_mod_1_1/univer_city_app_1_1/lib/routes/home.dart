@@ -183,12 +183,13 @@ class _HomeUniverCityState extends State<HomeUniverCity> {
         ),
         floatingActionButton: (_selectedDrawerIndex == 0)
             ? HomeFab()
-            : FloatingActionButton(
+            : FloatingActionButton.extended(
                 backgroundColor: tBloc.fabColor,
+                label: Text('Preferiti'),
                 onPressed: () {
                   _onSelectItem(0);
                 },
-                child: Icon(Icons.home)));
+                icon: Icon(Icons.favorite_border)));
   }
 
   ///

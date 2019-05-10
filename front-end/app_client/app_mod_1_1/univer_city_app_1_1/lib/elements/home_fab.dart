@@ -6,7 +6,7 @@ class HomeFab extends StatelessWidget {
   Widget build(BuildContext context) {
     return FloatingActionButton.extended(
         icon: Icon(Icons.add),
-        label: Text('CARICA'),
+        label: Text('Carica'),
         onPressed: () {
           _scegliDocumento(context);
         });

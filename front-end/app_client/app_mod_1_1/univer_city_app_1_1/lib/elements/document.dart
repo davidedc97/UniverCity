@@ -25,7 +25,7 @@ class Document{
     //funzione-costruttore da usare in http_handler
     this._title = json["title"];
     this._creator = json["creator"];
-    this._uuid = json["id"];
+    this._uuid = json["uuid"];
     this._type = json["flag"];
   }
 

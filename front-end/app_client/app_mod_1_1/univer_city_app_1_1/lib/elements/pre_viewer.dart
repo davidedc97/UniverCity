@@ -5,6 +5,7 @@ import 'package:univer_city_app_1_1/bloc/cronologia_bloc_provider.dart';
 import 'package:univer_city_app_1_1/bloc/theme_bloc_provider.dart';
 import 'package:univer_city_app_1_1/http_handling/http_handler.dart';
 import 'package:share/share.dart';
+import 'package:univer_city_app_1_1/elements/session_user.dart';
 
 Widget buildDocDialog(BuildContext context, String titolo,String proprietario, String uuid) {
   CronologiaBloc cBloc = CronologiaBlocProvider.of(context);
@@ -42,6 +43,22 @@ Widget buildDocDialog(BuildContext context, String titolo,String proprietario, S
                     PreViewRowButton(uuid, PreferitiBlocProvider.of(context)),
                     Divider(),
                     InfoRow('Proprietario', proprietario),
+                    FutureBuilder(
+                      future: HttpHandler.getLike(uuid) ,
+                        builder: (context, snapshot){
+                          if(snapshot.hasData){
+                            return InfoRow('Like', '${snapshot.data}');
+                          }
+                          return InfoRow('Like', '...');
+                        }),
+                    FutureBuilder(
+                        future: HttpHandler.getDislike(uuid) ,
+                        builder: (context, snapshot){
+                          if(snapshot.hasData){
+                            return InfoRow('Dislike', '${snapshot.data}');
+                          }
+                          return InfoRow('Dislike', '...');
+                        }),
                     //InfoRow('Rank', 'todo'),
                     //InfoRow('Downloads', 'todo'),
                     Divider(),
@@ -54,7 +71,7 @@ Widget buildDocDialog(BuildContext context, String titolo,String proprietario, S
                     ListTile(
                       leading: Icon(Icons.local_offer),
                       title: Text('Aiutaci con i tag'),
-                      onTap: () {dialogSendTag(context);},
+                      onTap: () {dialogSendTag(context, uuid);},
                       dense: true,
                     ),
                     ListTile(
@@ -124,6 +141,9 @@ class _PreViewRowButtonState extends State<PreViewRowButton> {
         children: <Widget>[
           FlatButton.icon(
             onPressed: () async{
+              HttpHandler.like(SessionUser.user, widget.uuid);
+              ThemeBloc tBloc = ThemeBlocProvider.of(context);
+              tBloc.scaffoldKey.currentState.showSnackBar(SnackBar(content: Text('Like inviato')));
               // TODO
             },
             icon: Icon(Icons.thumb_up),
@@ -133,6 +153,9 @@ class _PreViewRowButtonState extends State<PreViewRowButton> {
           ),
           FlatButton.icon(
             onPressed: () {
+              HttpHandler.dislike(SessionUser.user, widget.uuid);
+              ThemeBloc tBloc = ThemeBlocProvider.of(context);
+              tBloc.scaffoldKey.currentState.showSnackBar(SnackBar(content: Text('Dislike inviato')));
               // TODO
             },
             icon: Icon(Icons.thumb_down),
@@ -176,7 +199,8 @@ dialogSegnala (BuildContext context){
   );
 }
 
-dialogSendTag (BuildContext context){
+dialogSendTag (BuildContext context,String docId){
+  List<String> tags = [];
   //Navigator.of(context).pop();
   showDialog(
       context: context,
@@ -188,6 +212,7 @@ dialogSendTag (BuildContext context){
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   TextField(
+                      onChanged:(val){tags = val.split(' ');},
                       textAlign: TextAlign.center,
                       decoration: InputDecoration(
                           hintText: 'Tags',
@@ -199,6 +224,7 @@ dialogSendTag (BuildContext context){
                     Navigator.of(context).pop();
                     Navigator.of(context).pop();
                     await Future.delayed(Duration(milliseconds: 50));
+                    await HttpHandler.addDocumentTags(docId, tags);
                     showSnackBarSendTags(context);}, icon: Icon(Icons.add_circle_outline), label: Text('invia'))
                 ],
               ),

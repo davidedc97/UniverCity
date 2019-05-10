@@ -35,7 +35,7 @@ class _CompFormScaffoldState extends State<CompFormScaffold> {
                         height: MediaQuery.of(context).size.height-500,
                       ),
                       Text(
-                        'COMPLICATED FORM',
+                        'FORM COMPLICATA',
                         style: TextStyle(fontSize: 18),
                       ),
                       SizedBox(
@@ -167,7 +167,7 @@ class _CompFormScaffoldState extends State<CompFormScaffold> {
                               onPressed: () {
                                 Navigator.popAndPushNamed(context, '/loginForm');
                               },
-                              child: Text('LOGIN',
+                              child: Text('ACCEDI',
                                   style: TextStyle(color: Theme.of(context).accentColor)))
                         ],
                       )

@@ -40,7 +40,7 @@ class LoginScaffold extends StatelessWidget {
       Expanded(
         child: SizedBox.expand(
             child: Container(
-                padding: EdgeInsets.only(top: 25),
+                padding: EdgeInsets.only(top: 25, bottom: 25),
                 decoration: boxBgeOmbra(Theme.of(context).scaffoldBackgroundColor), // Applico sfondo bianco e ombra
                 child: Column(
                   ///
@@ -56,7 +56,7 @@ class LoginScaffold extends StatelessWidget {
                     /// personalizzati da me e per comodita nel caso voglia
                     /// modificarli modofico la classe e sono apposto
                     //##################################################inizio bottone google
-                    BtnLogin(context,
+                    /*BtnLogin(context,
                       title: 'REGISTRATI CON GOOGLE',
                       color: Theme.of(context).accentColor,
                       onPressed: () => showDialog(
@@ -79,18 +79,25 @@ class LoginScaffold extends StatelessWidget {
                       ),
                       //Navigator.pushNamedAndRemoveUntil(
                       //                          context, '/home', (Route<dynamic> route) => false)
+                    ),*/
+                    BtnLogin(context,
+                      title: 'ACCEDI',
+                      color: Theme.of(context).accentColor,
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/loginForm');
+                      },
                     ),
                     //################################################## ------------ OR -----------
                     DividerTextOr(),
                     //################################################## bottone form complicata
                     BtnLogin(context,
-                      title: 'COMPILA LA NOSTRA FORM',
+                      title: 'REGISTRATI CON LA NOSTRA FORM',
                       color: Theme.of(context).accentColor,
                       onPressed: () =>
                           Navigator.pushNamed(context, '/complicatedForm'),
                     ),
                     //################################################## LOGIN if already have an account
-                    Row(
+                    /*Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
@@ -106,7 +113,7 @@ class LoginScaffold extends StatelessWidget {
                                 style: TextStyle(
                                     color: Theme.of(context).accentColor)))
                       ],
-                    )
+                    )*/
                   ],
                 ))),
       ),

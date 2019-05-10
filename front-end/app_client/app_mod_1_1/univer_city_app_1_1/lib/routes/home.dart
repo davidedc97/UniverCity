@@ -107,6 +107,10 @@ class _HomeUniverCityState extends State<HomeUniverCity> {
                             child: Text('Segnala un bug'),
                             value: 'bug',
                           ),
+                          PopupMenuItem(
+                            child: Text('Info'),
+                            value: 'info',
+                          ),
                         ];
                       },
                     )
@@ -208,6 +212,9 @@ class _HomeUniverCityState extends State<HomeUniverCity> {
   choiceAction(String choice) {
     if (choice == 'bug') {
       launch('https://github.com/davidedc97/UniverCity/issues/new/');
+    }
+    if (choice == 'info'){
+      Navigator.of(context).pushNamed('/intro');
     }
   }
 }

@@ -7,7 +7,6 @@ We are six students that attend the third year of computer science at " La Sapie
 - Davide Di Campi
 - Riccardo Pagliuca
 - Michele Dilollo
-- Marco Collalti
 - Lucian Medrihan
 - Tiziano Colagrossi
 

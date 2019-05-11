@@ -5,10 +5,10 @@ global.fetch = require('node-fetch');
 var Pool = require('pg').Pool;
 
 const psql = new Pool ({
-    host: 'metadata.czzhwg1jheui.eu-west-1.rds.amazonaws.com',
-    user: 'univercity',
-    password: 'googleworkshop',
-    database: 'metadata',
+    host: '',
+    user: '',
+    password: '',
+    database: '',
     port: 5432
 })
 

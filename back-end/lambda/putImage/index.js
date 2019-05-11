@@ -6,10 +6,10 @@ const multerS3 = require('multer-s3');
 var Pool = require('pg').Pool;
 
 const psql = new Pool ({
-    host: 'metadata.czzhwg1jheui.eu-west-1.rds.amazonaws.com',
-    user: 'univercity',
+    host: '',
+    user: '',
     password: '',
-    database: 'metadata',
+    database: '',
     port: 5432
 })
 

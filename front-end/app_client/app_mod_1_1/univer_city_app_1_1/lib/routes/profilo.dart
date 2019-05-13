@@ -18,6 +18,7 @@ class _ProfiloState extends State<Profilo> {
   @override
   initState(){
     super.initState();
+    print('init state profilo');
     user = HttpHandler.getUserData(widget.userName);
   }
 

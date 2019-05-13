@@ -147,6 +147,7 @@ class HttpHandler {
 
     if(response.statusCode == 200) {
       print(json.decode(response.body));
+      print('return constructor');
       return User.metadataFromJson(json.decode(response.body));
     }
     else if(response.statusCode == 404) {

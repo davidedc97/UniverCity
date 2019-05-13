@@ -47,7 +47,7 @@ class User{
     this._faculty = json["faculty"];
     this._university = json["university"];
     this._img = json["imgUserPath"];
-    this._xp = json["xp"];
+    this._xp = int.parse(json["xp"]);
     this._documentUploaded = json["documentUploaded"];
     this._mashupCreated = json["mashupCreated"];
   }

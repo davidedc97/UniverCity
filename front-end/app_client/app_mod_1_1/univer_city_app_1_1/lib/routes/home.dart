@@ -35,6 +35,7 @@ class _HomeUniverCityState extends State<HomeUniverCity> {
         return Cronologia();
       case 2:
         MashupBloc _mBloc = MashupBlocProvider.of(context);
+        _mBloc.init();
         return RefreshIndicator(
           key: _rIKMash,
           child: Mashup(_mBloc),

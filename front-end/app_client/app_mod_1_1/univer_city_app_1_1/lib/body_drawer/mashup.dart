@@ -11,7 +11,9 @@ class Mashup extends StatefulWidget {
 
 class _MashupState extends State<Mashup> {
   // List<String>
-  List<String> fav = [];
+  List<String> mash = [];
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -19,8 +21,8 @@ class _MashupState extends State<Mashup> {
       stream: widget.bloc.mashup,
       builder: (context, snapshot){
         print('refresh builder Mash');
-        fav = widget.bloc.mashupValue;
-        if(fav.isEmpty){
+        mash = widget.bloc.mashupValue;
+        if(mash.isEmpty){
           return Center(child: MashSfondo(),);
         }else {
           return ListView.builder(
@@ -32,9 +34,9 @@ class _MashupState extends State<Mashup> {
                       'I tuoi Mashups'),
                 );
               }
-              return DocListFuture(fav[i-1]);
+              return DocListFuture(mash[i-1]);
             },
-            itemCount: fav.length+1,
+            itemCount: mash.length+1,
           );
         }
       },

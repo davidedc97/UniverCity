@@ -23,6 +23,7 @@ class MashupBloc {
   Future<List<dynamic>> init() async {
     return HttpHandler.getUserMashup(SessionUser.user)
         .then((val){
+          print(val);
       _mash = [];
       for(dynamic e in val){
         print('add e in fav');

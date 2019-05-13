@@ -651,7 +651,7 @@ class HttpHandler {
   static Future<List<dynamic>> getUserMashup(String user) async {
     final response =
     await http.get(
-        _URL_METADATA+_USER_MASHUPS + "?username=" + 'pippo',//user,
+        _URL_METADATA+_USER_MASHUPS + "?username=" + user,
         headers:{
           'Authorization':_sessionToken,
           'Content-type' : 'application/json',
@@ -662,7 +662,11 @@ class HttpHandler {
     print(response.statusCode);
     print(json.decode(response.body));
     if(response.statusCode == 200) {
+
       List<dynamic> res = json.decode(response.body)['docs'];
+      print('httphandler');
+      print(res);
+      print(json.decode(response.body));
       return res;
     }
     else if(response.statusCode == 404) {

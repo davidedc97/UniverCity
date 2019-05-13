@@ -11,6 +11,7 @@ class MashupBlocProvider extends InheritedWidget {
   MashupBlocProvider({Key key, Widget child})
       : bloc = MashupBloc(),
         super(key: key, child: child){
+    print('init mash');
     bloc.init();
   }
 

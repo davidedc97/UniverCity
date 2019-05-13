@@ -9,11 +9,11 @@ class Intro extends StatelessWidget {
         pageColor: Color(0xffc02641),
         bubble: Icon(Icons.description),
         body: Text(
-          '''Basta cercare su diversi drive prima di trovare un appunto decente. Cerca, gratuitamente, in un unica app tutti gli appunti, di qualsiasi facoltà, caricati da studenti''',
+          '''Cerca gratuitamente e comodamente in un unica app tutti gli appunti, di qualsiasi facoltà, caricati da studenti''',
           style: TextStyle(fontSize: 18),
         ),
         title: Text(
-          'Un tool per tutto',
+          'Comodità',
         ),
         textStyle: TextStyle(fontFamily: 'Bahnschrift', color: Colors.white),
         mainImage: Image.asset(
@@ -26,7 +26,7 @@ class Intro extends StatelessWidget {
       pageColor: Colors.blueGrey[800],
       bubble: Icon(Icons.art_track),
       body: Text(
-        '''Crea un documento con le migliori parti degli appunti che troverai, per avere un unico documento con tutto quello che ti serve. Provalo nella nostra applicazione web! ''',
+        '''Componi, nel nostro sito, una collezione con le migliori parti dei tuoi appunti preferiti da tenere sempre con te!''',
         style: TextStyle(fontSize: 18,color: Colors.white),
       ),
       title: Text('Mashup',style: TextStyle(color: Colors.white),),

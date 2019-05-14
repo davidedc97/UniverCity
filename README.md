@@ -9,19 +9,24 @@ Our team was composed by:
 
 - Davide Di Campi - 
   Client-Server interaction. 
-  WebApp Logic Developers
+  WebApp Logic Developers.
+  JavaScript Developers
   
 - Riccardo Pagliuca - 
   AWS and Document Upload, Download and MashUp Developers
+  Javascript and Python Developers
   
 - Michele Dilollo - 
   AWS and Metadata Server Developers. DB Management
+  JavaScript and Postgres Manager
   
 - Lucian Medrihan - 
   WebApp Designer
+  BootStrap 4 and Javascript Developers
   
 - Tiziano Colagrossi - 
   MobileApp and WebApp Designer
+  Dart and Bootstrap 4 Developers
 
 ## What is UniverCity
 UniverCity will be a platform where everyone, students and teacher, can share and search for notes written in any format (hand-written or formatted text and many others).

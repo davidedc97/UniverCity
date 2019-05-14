@@ -13,19 +13,19 @@ Our team was composed by:
   JavaScript Developers
   
 - Riccardo Pagliuca - 
-  AWS and Document Upload, Download and MashUp Developers
+  AWS and Document Upload, Download and MashUp Developers.
   Javascript and Python Developers
   
 - Michele Dilollo - 
-  AWS and Metadata Server Developers. DB Management
+  AWS and Metadata Server Developers. DB Management.
   JavaScript and Postgres Manager
   
 - Lucian Medrihan - 
-  WebApp Designer
+  WebApp Designer.
   BootStrap 4 and Javascript Developers
   
 - Tiziano Colagrossi - 
-  MobileApp and WebApp Designer
+  MobileApp and WebApp Designer.
   Dart and Bootstrap 4 Developers
 
 ## What is UniverCity

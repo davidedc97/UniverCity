@@ -18,7 +18,7 @@ Our team was composed by:
   
 - Michele Dilollo - 
   AWS and Metadata Server Developers. DB Management.
-  JavaScript and Postgres Manager
+  JavaScript Developers (NodeJS) and Postgres Manager
   
 - Lucian Medrihan - 
   WebApp Designer.

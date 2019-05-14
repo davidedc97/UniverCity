@@ -8,11 +8,20 @@ We are five students that attend the third year of computer science at " La Sapi
 Our team was composed by:
 
 - Davide Di Campi
+  Client-Server interaction. 
+  WebApp Logic Developers
   
 - Riccardo Pagliuca
+  AWS and Document Upload, Download and MashUp Developers
+  
 - Michele Dilollo
+  AWS and Metadata Server Developers. DB Management
+  
 - Lucian Medrihan
+  WebApp Designer
+  
 - Tiziano Colagrossi
+  MobileApp and WebApp Designer
 
 ## What is UniverCity
 UniverCity will be a platform where everyone, students and teacher, can share and search for notes written in any format (hand-written or formatted text and many others).

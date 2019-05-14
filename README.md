@@ -32,9 +32,9 @@ Our team was composed by:
 UniverCity will be a platform where everyone, students and teacher, can share and search for notes written in any format (hand-written or formatted text and many others).
 
 ### Main features [__SEE WIKI FOR FEATURES DESCRIPTION__](https://github.com/davidedc97/UniverCity/wiki/1.-List-of-possible-features)
-- Mashup notes from different users
-- Automatic tag management
-- Digital sign on documents
+- Mashup notes from different users' notes
+- Good Indexing of notes
+- Notes Ranking
 
 # 1st Milestone
 - [Presentation](https://docs.google.com/presentation/d/13HP_5mVvMxjHJI0JxrQ7UOg4eFrssTTWkLIBHwEaEN8/edit?usp=sharing)

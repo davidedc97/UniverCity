@@ -3,8 +3,12 @@ Project for the Google Workshop 2018/19
 [__WIKI OF UNIVERCITY__](https://github.com/davidedc97/UniverCity/wiki "Wiki of UniverCity")
 
 ## Who are we?
-We are six students that attend the third year of computer science at " La Sapienza" University of Rome.
+We are five students that attend the third year of computer science at " La Sapienza" University of Rome. For this reason we are the right people to solve main students' problem that is to find good quality notes in the easiest way!
+
+Our team was composed by:
+
 - Davide Di Campi
+  
 - Riccardo Pagliuca
 - Michele Dilollo
 - Lucian Medrihan

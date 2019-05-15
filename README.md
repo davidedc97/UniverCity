@@ -22,7 +22,7 @@ Our team was composed by:
   
 - Lucian Medrihan - 
   WebApp Designer.
-  BootStrap 4 and Javascript Developers
+  BootStrap 4 and PHP Developers
   
 - Tiziano Colagrossi - 
   MobileApp and WebApp Designer.

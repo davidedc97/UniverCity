@@ -366,7 +366,7 @@ class HttpHandler {
   }
 
   //TODO: si può cambiare il tipo di pagesData in List<Page>
-  static Future<dynamic> mashup(String title, List<String> tags, String creator, List<Page> pagesData) async {
+  static Future<dynamic> createMashup(String title, List<String> tags, String creator, List<Page> pagesData) async {
     final response =
         await http.post(
           _URL + _MASHUP_SERVER,

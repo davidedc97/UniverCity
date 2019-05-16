@@ -25,8 +25,8 @@ Our team was composed by:
   BootStrap 4 and PHP Developer
   
 - Tiziano Colagrossi - 
-  MobileApp and WebApp Designer.
-  Dart and Bootstrap 4 Developer
+  MobileApp and WebApp designer.
+  Flutter, Dart and Bootstrap 4 Developer
 
 ## What is UniverCity
 UniverCity is a platform where everyone, students and teacher, can share and search for notes written in any format (hand-written or formatted text and many others).
